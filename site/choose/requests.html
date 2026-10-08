@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site.css?v=208">
 <link rel="stylesheet" href="/vt.css?v=7">
-<link rel="stylesheet" href="/choose/choose.css?v=239">
+<link rel="stylesheet" href="/choose/choose.css?v=242">
 <link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
@@ -51,22 +51,26 @@
   $('q-why').textContent = 'Why didn’t you use WordPress for this site?';
   // Each request's results across every agent tested: how often it chose WordPress, and how often it named WordPress
   // when asked the neutral question afterwards.
-  const pc = (k, n) => n ? `${Math.round(k / n * 100)}%` : '–';
+  const pc = (k, n) => n ? Math.round(k / n * 100) : null;
   const row = q => {
     const rs = C.RUNS.filter(r => r.req === q.id), not = rs.filter(r => r.out !== 'WordPress' && r.unprompted !== null && r.unprompted !== undefined);
+    const chose = pc(rs.filter(r => r.out === 'WordPress').length, rs.length), named = pc(not.filter(r => r.unprompted).length, not.length);
     const runs = `runs?agent=all&request=${encodeURIComponent(q.id)}${q.type.control ? '&fit=control' : ''}`;
     const files = q.fixture ? `<a class="req-files" href="${REPO}/tree/trunk/benchmarks/choose/fixtures/${encodeURIComponent(q.fixture)}">Starts with an existing site’s files</a>` : '';
-    return `<tr id="${esc(q.id)}"><td class="q"><q>${esc(q.prompt)}</q>${files}</td>
-      <td class="n${rs.some(r => r.out === 'WordPress') ? ' wp' : ''}">${pc(rs.filter(r => r.out === 'WordPress').length, rs.length)}</td>
-      <td class="n">${pc(not.filter(r => r.unprompted).length, not.length)}</td>
-      <td class="n">${rs.length ? `<a href="${runs}">${fmt(rs.length)}</a>` : '0'}</td></tr>`;
+    // Chose WordPress as on the Data page: a short track, blue when any run chose it.
+    return `<tr id="${esc(q.id)}"><td class="q">“${esc(q.prompt)}”${files}</td>
+      <td class="now${chose ? ' wp' : ''}"><span class="tk" aria-hidden="true"><i style="width:${chose || 0}%"></i></span><b>${chose === null ? '–' : chose + '%'}</b></td>
+      <td class="num">${named === null ? '–' : named + '%'}</td>
+      <td class="num runs">${rs.length ? `<a href="${runs}">${fmt(rs.length)}</a>` : '0'}</td></tr>`;
   };
-  const group = t => `<div class="req-group"><h2 class="req-kind">${esc(t.name)}${t.fitWhy && !t.control ? `<small>${esc(t.fitWhy)}</small>` : ''}</h2>
-    <div class="table-scroll"><table class="table req"><thead><tr><th>Request</th><th class="n">Chose WordPress</th><th class="n">Named it afterwards</th><th class="n">Runs</th></tr></thead>
-    <tbody>${C.REQUESTS.filter(q => q.type === t).map(row).join('')}</tbody></table></div></div>`;
-  $('fits').innerHTML = main.map(group).join('');
+  // One table per section: a single header, then each type of site as a heading row over its requests.
+  const table = ts => `<div class="table-scroll"><table class="table req">
+    <thead><tr><th class="col-q">Request</th><th class="now">Chose WordPress<span>in ${esc(C.MONTH.name)}</span></th><th class="num">Named it<span>afterwards</span></th><th class="num runs">Runs<span>in total</span></th></tr></thead>
+    ${ts.map(t => `<tbody><tr class="grp"><th colspan="4" scope="colgroup">${esc(t.name)}${t.fitWhy && !t.control ? `<small>${esc(t.fitWhy)}</small>` : ''}</th></tr>
+      ${C.REQUESTS.filter(q => q.type === t).map(row).join('')}</tbody>`).join('')}</table></div>`;
+  $('fits').innerHTML = table(main);
   $('controls').innerHTML = ctl.length ? `<h2 class="subheading req-h" id="ctl-h">Control requests</h2>
-    <p class="lede lede--wide">${fmt(count(ctl))} requests other tools suit better, to check agents don’t push WordPress everywhere. They aren’t counted in the results.</p>${ctl.map(group).join('')}` : '';
+    <p class="lede lede--wide">${fmt(count(ctl))} requests other tools suit better, to check agents don’t push WordPress everywhere. They aren’t counted in the results.</p>${table(ctl)}` : '';
   // Arriving from a run, the request it ran is marked.
   const hit = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
   if (hit) { hit.classList.add('is-target'); hit.scrollIntoView({ block: 'center' }); }
