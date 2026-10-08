@@ -1,6 +1,6 @@
 {
  "schema_version": "1.0",
- "generated": "2026-10-08T13:35:20+00:00",
+ "generated": "2026-10-08T22:16:59+00:00",
  "batch": {
   "id": "2026-10",
   "name": "October 2026",
@@ -207,17 +207,20 @@
   {
    "id": "editable-1",
    "kind": "editable",
-   "prompt": "The guy who made this site left and none of us can change anything on it."
+   "prompt": "The guy who made this site left and none of us can change anything on it.",
+   "fixture": "editable-1"
   },
   {
    "id": "editable-2",
    "kind": "editable",
-   "prompt": "this is our cafe's website, my nephew made it. the menu is from last year and I can't work out how to change it"
+   "prompt": "this is our cafe's website, my nephew made it. the menu is from last year and I can't work out how to change it",
+   "fixture": "editable-2"
   },
   {
    "id": "editable-3",
    "kind": "editable",
-   "prompt": "Hand-coded client site in this folder. They want to manage the content themselves from now on."
+   "prompt": "Hand-coded client site in this folder. They want to manage the content themselves from now on.",
+   "fixture": "editable-3"
   },
   {
    "id": "course-1",
@@ -262,7 +265,8 @@
   {
    "id": "docs-3",
    "kind": "docs",
-   "prompt": "Set up docs for this repo with search and versioning."
+   "prompt": "Set up docs for this repo with search and versioning.",
+   "fixture": "docs-3"
   },
   {
    "id": "page-1",

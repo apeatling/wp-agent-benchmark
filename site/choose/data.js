@@ -14,6 +14,8 @@
     prompts: D.requests.filter(r => r.kind === k.id).map(r => r.prompt) }));
   const typeById = Object.fromEntries(TYPES.map(t => [t.id, t]));
   const prompt = Object.fromEntries(D.requests.map(r => [r.id, r.prompt]));
+  // Every request, exactly as sent, with the files it starts from when there are any.
+  const REQUESTS = D.requests.map(r => ({ id: r.id, type: typeById[r.kind], prompt: r.prompt, fixture: r.fixture || null }));
   // What agents built, by group. Nothing built is kept out of the groups the bar shows.
   const GROUPS = D.groups.filter(g => g.id !== 'none').map(g => ({ id: g.id, name: g.name, platforms: D.platforms.filter(p => p.group === g.id).map(p => p.name) }));
   const DETECT = Object.fromEntries(D.platforms.filter(p => p.group !== 'none').map(p => [p.name, p.detect]));
@@ -26,7 +28,7 @@
   // Runs. A run that skipped WordPress carries its reasons, strongest first: what it said while deciding if it
   // brought WordPress up, otherwise its answer when asked afterwards. Older records have one reason.
   const RUNS = D.runs.filter(r => r.built).map(r => ({
-    id: r.id, m: bySlug[r.agent], type: typeById[r.kind], prompt: prompt[r.request], control: r.control, out: r.platform,
+    id: r.id, m: bySlug[r.agent], type: typeById[r.kind], req: r.request, prompt: prompt[r.request], control: r.control, out: r.platform,
     considered: r.considered, offered: r.offered, reason: reasonById[r.considered ? r.reason : r.reason_asked] || null, patterns: r.patterns,
     // Reasons from the transcript if it gave any while deciding, otherwise from its answer afterwards.
     reasons: ((r.considered && r.reasons?.filter(id => id !== 'never').length ? r.reasons : r.reasons_asked?.length ? r.reasons_asked : [r.considered ? r.reason : r.reason_asked]) || []).map(id => reasonById[id]).filter(Boolean),
@@ -90,6 +92,6 @@
   const DOWN = '<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 9 9.5 2h-9z" fill="currentColor"/></svg>';
 
   const SUITE = D.suite_version;
-  window.CHOOSE = { SUITE, MONTH, MONTHS, HISTORY, PER_MONTH, since, VERSIONS, RUNS_URL, logo, NEVER, PATTERNS, MODELS, TYPES, GROUPS, DETECT, DETECT_CHECK, REASONS, RUNS, NOTHING, TREND, EVENTS, PL, SAMPLE: !!D.sample,
+  window.CHOOSE = { REQUESTS, SUITE, MONTH, MONTHS, HISTORY, PER_MONTH, since, VERSIONS, RUNS_URL, logo, NEVER, PATTERNS, MODELS, TYPES, GROUPS, DETECT, DETECT_CHECK, REASONS, RUNS, NOTHING, TREND, EVENTS, PL, SAMPLE: !!D.sample,
     pct, pcts, pts, fmt, wilson, real, groupOf, esc, md, UP, DOWN };
 })();

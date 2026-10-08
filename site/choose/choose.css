@@ -1028,3 +1028,46 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
 .answer.said details[open] summary { margin-bottom: var(--space-16); }
 .answer.said:has(details[open]) .said-open { display: none; }
 .answer.said + .rf-note { margin-top: var(--space-16); }
+
+/* Requests: one table, a heading row for each type of site, columns as on the Data page's agents table */
+.req-h { max-width: none; margin-bottom: var(--space-8); }
+#controls .table-scroll { margin-top: var(--space-40); }
+.table.req { font-size: var(--fs-body); }
+.table.req thead th { padding: 0 0 var(--space-12); font-weight: 600; font-size: var(--fs-small); color: var(--ink-2); white-space: nowrap; vertical-align: bottom; }
+.table.req thead th span { display: block; font-weight: 400; font-size: var(--fs-caption); color: var(--muted); }
+.table.req th.now, .table.req td.now { width: 170px; padding-left: var(--space-24); }
+.table.req th.num, .table.req td.num { width: 110px; padding-left: var(--space-24); text-align: right; }
+.table.req th.runs, .table.req td.runs { width: 80px; }
+.table.req tr.grp th { padding: var(--space-40) 0 var(--space-12); border-bottom: 1px solid var(--rule-strong); font: 500 24px/1.2 var(--serif); color: var(--ink); text-align: left; }
+.table.req tbody:first-of-type tr.grp th { padding-top: var(--space-24); }
+.table.req tr.grp small { margin-left: var(--space-12); font: 400 var(--fs-small)/1.4 var(--sans); color: var(--muted); }
+.table.req td { padding: var(--space-12) 0; vertical-align: baseline; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.table.req td.q { padding-right: var(--space-16); line-height: 1.5; color: var(--ink); max-width: 0; }
+.table.req td.now { white-space: nowrap; }
+.table.req td.now .tk { display: inline-block; width: 88px; height: 6px; margin-right: var(--space-12); vertical-align: 2px; background: var(--track); border-radius: 3px; overflow: hidden; }
+.table.req td.now .tk i { display: block; height: 100%; background: var(--wp); }
+.table.req td.now b { font-weight: 600; color: var(--muted); }
+.table.req td.now.wp b { color: var(--wp); }
+.table.req td.runs a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.table.req td.runs a:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
+.table.req tbody tr:not(.grp):hover td { background: var(--hover-row); }
+.req-files { display: block; width: fit-content; margin-top: var(--space-4); font-size: var(--fs-small); color: var(--muted); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.req-files:hover { color: var(--ink-2); }
+.table.req tr.is-target td { background: var(--hover-row); }
+.req-steps { margin: var(--space-24) 0 0; padding-left: 1.4em; max-width: 62ch; }
+.req-steps li { padding-left: var(--space-8); font-size: var(--fs-lede); color: var(--ink); }
+.req-steps li + li { margin-top: var(--space-16); }
+.req-steps li span { display: block; margin-top: var(--space-4); font-size: var(--fs-small); color: var(--muted); }
+/* Narrow screens: each request on its own line, its figures labelled underneath */
+@media (max-width: 720px) {
+  .table.req thead { display: none; }
+  .table.req, .table.req tbody, .table.req tr.grp, .table.req tr.grp th { display: block; }
+  .table.req tbody tr:not(.grp) { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-12); padding: var(--space-12) 0; border-bottom: 1px solid var(--rule); }
+  .table.req td, .table.req td.now, .table.req td.num, .table.req td.runs { width: auto; padding: 0; border: 0; text-align: left; font-size: var(--fs-small); }
+  .table.req td.q { flex: 1 0 100%; max-width: none; font-size: var(--fs-body); }
+  .table.req td.now .tk { display: none; }
+  .table.req td.now b { font-weight: 400; }
+  .table.req td.now::after { content: " chose WordPress"; color: var(--muted); }
+  .table.req td.num:not(.runs)::after { content: " named it later"; color: var(--muted); }
+  .table.req td.runs::after { content: " runs"; color: var(--muted); }
+}

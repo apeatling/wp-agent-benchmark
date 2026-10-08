@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site.css?v=208">
 <link rel="stylesheet" href="/vt.css?v=7">
-<link rel="stylesheet" href="/choose/choose.css?v=238">
+<link rel="stylesheet" href="/choose/choose.css?v=242">
 <link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
@@ -33,6 +33,7 @@
     <div class="rf-extra" id="rf-extra" hidden>
       <label>WordPress<select id="f-wp"></select></label>
       <label>Sites<select id="f-fit"></select></label>
+      <label>Prompt<select id="f-req"></select></label>
     </div>
   </div>
   <section class="section section--tight section--last">
@@ -47,9 +48,9 @@
     <button type="button" class="btn-quiet runs-more" id="more">Show 50 more</button>
   </section>
 </main>
-<script src="chrome.js?v=54"></script>
-<script src="../data/choose.js?v=13"></script>
-<script src="data.js?v=65"></script>
+<script src="chrome.js?v=57"></script>
+<script src="../data/choose.js?v=14"></script>
+<script src="data.js?v=66"></script>
 <script>
 (function () {
   const C = window.CHOOSE, { fmt, esc } = C;
@@ -79,9 +80,14 @@
   $('f-reason').innerHTML = opt('', 'Any reason') + group('Reasons', reasons.map(r => opt(r.id, r.name)).join('')) +
     (pats.length ? group('Patterns across runs', pats.map(p => opt('p:' + p.id, p.short)).join('')) : '');
 
+  // Prompts, grouped by type of site, shortened to fit; the full text is on the Prompts page.
+  const short = t => t.length > 64 ? t.slice(0, 62).replace(/\s+\S*$/, '') + '…' : t;
+  $('f-req').innerHTML = opt('', 'Any prompt') + C.TYPES.map(t => { const rs = C.REQUESTS.filter(q => q.type === t && has(r => r.req === q.id));
+    return rs.length ? group(esc(t.name), rs.map(q => opt(q.id, `“${short(q.prompt)}”`)).join('')) : ''; }).join('');
+
   // Filters live in the URL, so every view can be linked to.
-  const KEYS = { agent: 'f-agent', type: 'f-type', fit: 'f-fit', built: 'f-built', wp: 'f-wp', reason: 'f-reason' };
-  const EXTRA = ['f-wp', 'f-fit'];
+  const KEYS = { agent: 'f-agent', type: 'f-type', fit: 'f-fit', built: 'f-built', wp: 'f-wp', reason: 'f-reason', request: 'f-req' };
+  const EXTRA = ['f-wp', 'f-fit', 'f-req'];
   const params = new URLSearchParams(location.search);
   if (params.get('pattern')) params.set('reason', 'p:' + params.get('pattern'));
   Object.entries(KEYS).forEach(([k, id]) => { const v = params.get(k); if (v !== null && [...$(id).options].some(o => o.value === v)) $(id).value = v; });
@@ -94,6 +100,7 @@
     const a = $('f-agent').value, t = $('f-type').value, b = $('f-built').value, why = $('f-reason').value;
     if (a === 'head' ? !r.m.head : a !== 'all' && r.m.id !== a) return false;
     if (t && r.type.id !== t) return false;
+    const q = $('f-req').value; if (q && r.req !== q) return false;
     const f = $('f-fit').value; if (f === '' ? r.control : f === 'control' && !r.control) return false;
     if (b === 'not' ? r.out === 'WordPress' : b && !(r.out === b || C.GROUPS.find(g => g.id === b)?.platforms.includes(r.out))) return false;
     if (why.startsWith('p:') ? !(r.patterns || []).includes(why.slice(2)) : why && !r.reasons.some(x => x.id === why)) return false;
