@@ -18,3 +18,7 @@ site/data/*/runs/
 data/local/
 site/data-local/
 **/trajectory.json
+
+# The Building dashboard design, kept locally as a reference until Building has real runs. It runs on
+# generated numbers, so it's never committed or published.
+site/build/
