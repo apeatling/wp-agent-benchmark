@@ -33,7 +33,7 @@
     <div class="rf-extra" id="rf-extra" hidden>
       <label>WordPress<select id="f-wp"></select></label>
       <label>Sites<select id="f-fit"></select></label>
-      <label>Request<select id="f-req"></select></label>
+      <label>Prompt<select id="f-req"></select></label>
     </div>
   </div>
   <section class="section section--tight section--last">
@@ -48,7 +48,7 @@
     <button type="button" class="btn-quiet runs-more" id="more">Show 50 more</button>
   </section>
 </main>
-<script src="chrome.js?v=55"></script>
+<script src="chrome.js?v=56"></script>
 <script src="../data/choose.js?v=14"></script>
 <script src="data.js?v=66"></script>
 <script>
@@ -80,9 +80,9 @@
   $('f-reason').innerHTML = opt('', 'Any reason') + group('Reasons', reasons.map(r => opt(r.id, r.name)).join('')) +
     (pats.length ? group('Patterns across runs', pats.map(p => opt('p:' + p.id, p.short)).join('')) : '');
 
-  // Requests, grouped by type of site, shortened to fit; the full text is on the Requests page.
+  // Prompts, grouped by type of site, shortened to fit; the full text is on the Prompts page.
   const short = t => t.length > 64 ? t.slice(0, 62).replace(/\s+\S*$/, '') + '…' : t;
-  $('f-req').innerHTML = opt('', 'Any request') + C.TYPES.map(t => { const rs = C.REQUESTS.filter(q => q.type === t && has(r => r.req === q.id));
+  $('f-req').innerHTML = opt('', 'Any prompt') + C.TYPES.map(t => { const rs = C.REQUESTS.filter(q => q.type === t && has(r => r.req === q.id));
     return rs.length ? group(esc(t.name), rs.map(q => opt(q.id, `“${short(q.prompt)}”`)).join('')) : ''; }).join('');
 
   // Filters live in the URL, so every view can be linked to.

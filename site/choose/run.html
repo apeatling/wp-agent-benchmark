@@ -18,7 +18,7 @@
 </head>
 <body data-page="run">
 <main class="container run-page" id="run"></main>
-<script src="chrome.js?v=55"></script>
+<script src="chrome.js?v=56"></script>
 <script src="../data/choose.js?v=14"></script>
 <script src="data.js?v=66"></script>
 <script>
@@ -56,7 +56,7 @@
     </header>
     <section class="section section--tight section--last grid run-body">
       <div class="run-main" id="run-main">
-        ${fact('Asked', `<p class="rf-ask">“${esc(r.prompt)}”</p>`, `No platform named. <a href="requests#${encodeURIComponent(r.req)}">All requests</a>`)}
+        ${fact('Asked', `<p class="rf-ask">“${esc(r.prompt)}”</p>`, `No platform named. <a href="prompts#${encodeURIComponent(r.req)}">All prompts</a>`)}
         ${r.control ? fact('Control request', '<p>Other tools suit this better.</p>', 'Run to check agents don’t push WordPress everywhere. Not counted in the results.') : ''}
         ${wp ? '' : fact('While deciding', `<p>${before}</p>`)
           + (r.consideredAnswer ? fact('What else it considered', answer(r.consideredAnswer), `Its answer when asked “What did you build this with, and what else did you consider?”, before WordPress was named. ${r.unprompted ? 'It named WordPress.' : 'It didn’t name WordPress.'}`) : '')

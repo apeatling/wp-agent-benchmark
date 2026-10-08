@@ -14,19 +14,19 @@
 <meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://wpab.view.fast/social-card.png?v=1">
 <!-- /shared head -->
-<title>Requests · Choosing WordPress · Agent Benchmarks</title>
+<title>Prompts · Choosing WordPress · Agent Benchmarks</title>
 </head>
-<body data-page="requests">
+<body data-page="prompts">
 <main class="container page-req">
   <header class="page-head">
-    <h1 class="title">Requests</h1>
+    <h1 class="title">Prompts</h1>
     <p class="lede lede--wide" id="lede"></p>
     <p class="adv-when" id="when"></p>
   </header>
-  <section class="section section--tight" aria-label="Requests where WordPress fits" id="fits"></section>
+  <section class="section section--tight" aria-label="Prompts for sites WordPress suits" id="fits"></section>
   <section class="section section--tight" aria-labelledby="ctl-h" id="controls"></section>
   <section class="section section--tight section--last" aria-labelledby="after-h">
-    <h2 class="subheading req-h" id="after-h">After the request</h2>
+    <h2 class="subheading req-h" id="after-h">After the first prompt</h2>
     <p class="lede lede--wide">Each agent works alone in a fresh sandbox. If it didn’t build with WordPress, it gets two questions in the same session, in this order:</p>
     <ol class="req-steps">
       <li><q id="q-considered"></q><span>Doesn’t name WordPress, so we can see whether the agent brings it up on its own.</span></li>
@@ -35,7 +35,7 @@
     <p class="note">If the agent stops to ask questions before building, it gets one reply: <q>Use your best judgement and go ahead.</q></p>
   </section>
 </main>
-<script src="chrome.js?v=55"></script>
+<script src="chrome.js?v=56"></script>
 <script src="../data/choose.js?v=14"></script>
 <script src="data.js?v=66"></script>
 <script>
@@ -45,8 +45,8 @@
   const REPO = 'https://github.com/apeatling/wp-agent-benchmark';
   const main = C.TYPES.filter(t => !t.control), ctl = C.TYPES.filter(t => t.control);
   const count = ts => C.REQUESTS.filter(q => ts.includes(q.type)).length;
-  $('lede').textContent = `The ${fmt(C.REQUESTS.length)} requests every agent gets, sent exactly as written: ${fmt(count(main))} for kinds of site WordPress suits${ctl.length ? `, and ${fmt(count(ctl))} controls` : ''}. None names a platform. Each runs twice per agent every month.`;
-  $('when').innerHTML = `Version ${C.SUITE}, ${C.MONTH.name} batch. <a href="${REPO}/blob/trunk/benchmarks/choose/requests.toml">The requests on GitHub</a>`;
+  $('lede').textContent = `The ${fmt(C.REQUESTS.length)} prompts every agent starts with, sent exactly as written: ${fmt(count(main))} for kinds of site WordPress suits${ctl.length ? `, and ${fmt(count(ctl))} controls` : ''}. None names a platform. Each runs twice per agent every month.`;
+  $('when').innerHTML = `Version ${C.SUITE}, ${C.MONTH.name} batch. <a href="${REPO}/blob/trunk/benchmarks/choose/requests.toml">The prompts on GitHub</a>`;
   $('q-considered').textContent = 'What did you build this with, and what else did you consider?';
   $('q-why').textContent = 'Why didn’t you use WordPress for this site?';
   // Each request's results across every agent tested: how often it chose WordPress, and how often it named WordPress
@@ -63,15 +63,15 @@
       <td class="num">${named === null ? '–' : named + '%'}</td>
       <td class="num runs">${rs.length ? `<a href="${runs}">${fmt(rs.length)}</a>` : '0'}</td></tr>`;
   };
-  // One table per section: a single header, then each type of site as a heading row over its requests.
+  // One table per section: a single header, then each type of site as a heading row over its prompts.
   const table = ts => `<div class="table-scroll"><table class="table req">
-    <thead><tr><th class="col-q">Request</th><th class="now">Chose WordPress<span>in ${esc(C.MONTH.name)}</span></th><th class="num">Named it<span>afterwards</span></th><th class="num runs">Runs<span>in total</span></th></tr></thead>
+    <thead><tr><th class="col-q">Prompt</th><th class="now">Chose WordPress<span>in ${esc(C.MONTH.name)}</span></th><th class="num">Named it<span>afterwards</span></th><th class="num runs">Runs<span>in total</span></th></tr></thead>
     ${ts.map(t => `<tbody><tr class="grp"><th colspan="4" scope="colgroup">${esc(t.name)}${t.fitWhy && !t.control ? `<small>${esc(t.fitWhy)}</small>` : ''}</th></tr>
       ${C.REQUESTS.filter(q => q.type === t).map(row).join('')}</tbody>`).join('')}</table></div>`;
   $('fits').innerHTML = table(main);
-  $('controls').innerHTML = ctl.length ? `<h2 class="subheading req-h" id="ctl-h">Control requests</h2>
-    <p class="lede lede--wide">${fmt(count(ctl))} requests other tools suit better, to check agents don’t push WordPress everywhere. They aren’t counted in the results.</p>${table(ctl)}` : '';
-  // Arriving from a run, the request it ran is marked.
+  $('controls').innerHTML = ctl.length ? `<h2 class="subheading req-h" id="ctl-h">Control prompts</h2>
+    <p class="lede lede--wide">${fmt(count(ctl))} prompts for sites other tools suit better, to check agents don’t push WordPress everywhere. They aren’t counted in the results.</p>${table(ctl)}` : '';
+  // Arriving from a run, the prompt it ran is marked.
   const hit = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
   if (hit) { hit.classList.add('is-target'); hit.scrollIntoView({ block: 'center' }); }
 })();
