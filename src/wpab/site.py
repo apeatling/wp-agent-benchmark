@@ -112,7 +112,7 @@ def choose(batch):
         'agents': [{'id': a['id'], 'name': a['name'], 'harness': a['harness_name'], 'logo': logo_key(a), 'head': a['head'],
                     'auth': sorted({r['auth'] for r in runs if r['agent'] == a['id']})} for a in agents],
         'kinds': cat['kind'],
-        'requests': [{'id': r['id'], 'kind': r['kind'], 'prompt': r['prompt']} for r in reqs['request']],
+        'requests': [{'id': r['id'], 'kind': r['kind'], 'prompt': r['prompt'], **({'fixture': r['fixture']} if r.get('fixture') else {})} for r in reqs['request']],
         'groups': cat['group'],
         'platforms': cat['platform'],
         'reasons': [{k: r.get(k) for k in ('id', 'name', 'owner', 'lever', 'pattern')} | {'quote': quotes.get(r['id'])} for r in cat['reason']],
