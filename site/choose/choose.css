@@ -820,8 +820,16 @@ dl.adv-step-d { padding-left: var(--space-12); padding-right: var(--space-12); }
 body main .go.back.go.back::after { content: none; }
 .run-page .back { display: inline-block; margin-bottom: var(--space-32); }
 .run-page .title { max-width: 40ch; text-wrap: pretty; }
-.run-sub { display: flex; flex-wrap: wrap; gap: var(--space-8) var(--space-24); }
-.run-sub .wp { color: var(--wp); }
+/* Under the title: what happened, as label and value pairs like the overview's hero figures */
+.run-sub { display: flex; flex-wrap: wrap; gap: var(--space-16) var(--space-40); margin: var(--space-24) 0 0; }
+.run-sub > div { display: flex; flex-direction: column; gap: var(--space-4); }
+.run-sub dt { font-size: var(--fs-caption); color: var(--muted); }
+.run-sub dd { margin: 0; display: inline-flex; align-items: center; gap: var(--space-8); font-size: var(--fs-lede); font-weight: 500; color: var(--ink); }
+.run-sub dd i { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--muted); }
+.run-sub dd.wp { color: var(--wp); }
+.run-sub dd.wp i { background: var(--wp); border-color: var(--wp); }
+.run-sub a { text-decoration: underline; text-decoration-color: var(--rule-strong); }
+.run-sub a:hover { text-decoration-color: var(--ink-2); }
 .run-body { row-gap: var(--space-48); }
 .run-main { grid-column: 1 / 9; }
 .run-side { grid-column: 10 / 13; position: sticky; top: var(--space-24); }
