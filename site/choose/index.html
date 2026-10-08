@@ -9,7 +9,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../site.css?v=208">
-<link rel="stylesheet" href="choose.css?v=228">
+<link rel="stylesheet" href="choose.css?v=229">
 <link rel="stylesheet" href="../vt.css?v=7">
 <title>Data · Choosing WordPress · Agent Benchmarks</title>
 </head>
@@ -56,14 +56,6 @@
       </table>
     </div>
   </section>
-  <section class="section" aria-labelledby="why-h">
-    <div class="section-head">
-      <h2 class="heading" id="why-h"></h2>
-      <p class="lede lede--wide" id="why-lede"></p>
-    </div>
-    <div class="why-head"><span class="wh-l"><span>Reason given</span><span>Share of the <b id="why-n"></b> sites. A site can give several.</span></span><span>What could help</span></div>
-    <ul class="why-list" id="reasons"></ul>
-  </section>
   <section class="section grid c-sec" aria-labelledby="built-h">
     <div class="col-1-5">
       <h2 class="heading" id="built-h"></h2>
@@ -72,6 +64,14 @@
     <div class="col-7-12">
       <ul class="bars" id="built"></ul>
     </div>
+  </section>
+  <section class="section" aria-labelledby="why-h">
+    <div class="section-head">
+      <h2 class="heading" id="why-h"></h2>
+      <p class="lede lede--wide" id="why-lede"></p>
+    </div>
+    <div class="why-head"><span class="wh-l"><span>Reason given</span><span>Share of the <b id="why-n"></b> sites. A site can give several.</span></span><span>What could help</span></div>
+    <ul class="why-list" id="reasons"></ul>
   </section>
   <section class="section section--last c-sec dig" aria-labelledby="dig-h">
     <div class="dig-col">
@@ -159,7 +159,7 @@
     const r = (assigned && assigned[rid]) || rs[0];
     const n = r.ways.length + r.more;
     return `<a class="help-idea" href="recommendations#${esc(r.id)}">${esc(r.title)}</a>`
-      + (n ? `<a class="help-more" href="recommendations#${esc(r.id)}">${n} ${n === 1 ? 'idea' : 'ideas'}</a>` : ''); };
+      + (n ? `<a class="help-more" href="recommendations#${esc(r.id)}">+${n} ${n === 1 ? 'idea' : 'ideas'}</a>` : ''); };
   // Where WordPress drops out: knowing it, thinking of it while deciding, building with it. Same sites as the
   // headline. A site built with WordPress counts at every step. "Named it" comes from the neutral question
   // asked after the build ("what else did you consider?"), so batches without it skip that step.
@@ -258,9 +258,12 @@
   // The list repeats the shares, so the lede compares the leader with WordPress across every site built.
   // Same runs on both sides as the list above: every agent, controls aside.
   const built = C.RUNS.filter(r => !r.control), leadAll = Math.round(plats[0].k / built.length * 100), wpAll = Math.round(rate(built) * 100);
-  $('built-lede').textContent = wpAll && leadAll > wpAll
-    ? `${plats[0].pl} alone was used for ${leadAll}% of all the sites agents built, more than WordPress’s ${wpAll}%.`
-    : `Shares of the ${fmt(lost.length)} sites agents built with something else.`;
+  // What the owner is left with: custom code means every change is a code change; only some platforms come with a place to edit content.
+  const groupPlatforms = ids => C.GROUPS.filter(g => ids.includes(g.id)).flatMap(g => g.platforms);
+  const share = ids => pct(lost.filter(r => groupPlatforms(ids).includes(r.out)).length, lost.length);
+  const codeOnly = share(['code']), platform = share(['cms', 'hosted', 'shop']);
+  $('built-lede').textContent = (wpAll && leadAll > wpAll ? `${plats[0].pl} alone was used for ${leadAll}% of all the sites agents built, more than WordPress’s ${wpAll}%. ` : `Of the ${fmt(lost.length)} sites agents built with something else, `)
+    + `${codeOnly}% were custom code, so the owner needs a developer, or an agent, to change anything. Only ${platform}% used a CMS or hosted platform with a place to edit content.`;
   // 5. Every agent, as a reference, most first. Agents within the margin of error of the leader are named together in the heading.
   let leader = null, group = 0;
   agents.forEach(a => { if (!leader || C.real(leader.pf, a.pf, a.nf)) { leader = a; group++; } a.rank = group; });

@@ -1011,7 +1011,6 @@ body .why-help .help-ways { list-style: none; margin: var(--space-8) 0 0; paddin
 body .why-help .help-ways li + li { margin-top: var(--space-8); }
 body .why-help .help-ways a { display: inline; font-size: var(--fs-body); line-height: 1.45; color: var(--ink-2); }
 body .why-help a.help-more { display: inline-block; margin-top: var(--space-8); font-size: var(--fs-small); color: var(--muted); }
-body .why-help a.help-more::after { content: none; }
 .why-help .help-none { font-size: var(--fs-small); color: var(--muted); }
 .why-list .help-ways li { display: block; padding: 0; border: 0; gap: 0; }
 /* One idea and a count of the rest */
