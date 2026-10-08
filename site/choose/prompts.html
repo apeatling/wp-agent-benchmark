@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site.css?v=208">
 <link rel="stylesheet" href="/vt.css?v=7">
-<link rel="stylesheet" href="/choose/choose.css?v=242">
+<link rel="stylesheet" href="/choose/choose.css?v=244">
 <link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
@@ -25,14 +25,27 @@
   </header>
   <section class="section section--tight" aria-label="Prompts for sites WordPress suits" id="fits"></section>
   <section class="section section--tight" aria-labelledby="ctl-h" id="controls"></section>
-  <section class="section section--tight section--last" aria-labelledby="after-h">
-    <h2 class="subheading req-h" id="after-h">After the first prompt</h2>
-    <p class="lede lede--wide">Each agent works alone in a fresh sandbox. If it didn’t build with WordPress, it gets two questions in the same session, in this order:</p>
-    <ol class="req-steps">
-      <li><q id="q-considered"></q><span>Doesn’t name WordPress, so we can see whether the agent brings it up on its own.</span></li>
-      <li><q id="q-why"></q><span>Its answer is an explanation after the fact, and is shown as one.</span></li>
-    </ol>
-    <p class="note">If the agent stops to ask questions before building, it gets one reply: <q>Use your best judgement and go ahead.</q></p>
+  <section class="section section--tight section--last grid req-more">
+    <div class="span-left" role="region" aria-labelledby="after-h">
+      <h2 class="subheading req-h" id="after-h">After the first prompt</h2>
+      <p class="lede lede--wide">Each agent works alone in a fresh sandbox. If it didn’t build with WordPress, it gets two questions in the same session, in this order:</p>
+      <ol class="req-steps">
+        <li><q id="q-considered"></q><span>Doesn’t name WordPress, so we can see whether the agent brings it up on its own.</span></li>
+        <li><q id="q-why"></q><span>Its answer is an explanation after the fact, and is shown as one.</span></li>
+      </ol>
+      <p class="note">If the agent stops to ask questions before building, it gets one reply: <q>Use your best judgement and go ahead.</q></p>
+    </div>
+    <div class="span-right" id="how" role="region" aria-labelledby="how-h">
+      <h2 class="subheading req-h" id="how-h">How these prompts were written</h2>
+      <p class="lede lede--wide">They’re written to read like what people actually type, not like a test. They were drafted in October 2026 with AI research agents, then reviewed by hand.</p>
+      <ul class="req-how">
+        <li><b>How people phrase requests.</b> Real website requests are short: the median is about 100 characters. They’re in the first person, often informal, and name the business before anything technical. They say what the person wants to happen, not a list of features. Sources: <a href="https://huggingface.co/datasets/lmarena-ai/webdev-arena-preference-10k">WebDev Arena’s public prompts</a>, a <a href="https://huggingface.co/datasets/dpaleka/WildChat-2k-TypeTopic">sample of WildChat conversations</a>, published accounts of people building sites with coding agents, and freelance job briefs.</li>
+        <li><b>Which sites people need.</b> Small business sites are the largest group, then stores and blogs, then charities, existing sites and courses. Sources: <a href="https://w3techs.com/technologies/overview/content_management">W3Techs</a>, the <a href="https://almanac.httparchive.org/en/2024/cms">HTTP Archive Web Almanac</a> and a <a href="https://www.businesswire.com/news/home/20250821848152/en">Clutch survey of small businesses</a>. Courses are included even though course platforms, not WordPress, lead there.</li>
+        <li><b>Nothing that gives the answer away.</b> A review against benchmark design practice removed tidy numbers and phrases that spell out “a CMS”, such as “update myself” and “without code”. None names a platform. Some still mention a need that bears on the choice, such as “she wants to post updates herself”, because real requests do; others give no hint at all, like “website for my bakery”.</li>
+        <li><b>Three voices for each type of site:</b> a developer building for a client, someone explaining their situation, and someone typing as little as possible.</li>
+      </ul>
+      <p class="note">Think a prompt could be more realistic? <a href="https://github.com/apeatling/wp-agent-benchmark/blob/trunk/benchmarks/choose/requests.toml">Propose a change on GitHub</a>.</p>
+    </div>
   </section>
 </main>
 <script src="chrome.js?v=57"></script>
@@ -46,6 +59,7 @@
   const main = C.TYPES.filter(t => !t.control), ctl = C.TYPES.filter(t => t.control);
   const count = ts => C.REQUESTS.filter(q => ts.includes(q.type)).length;
   $('lede').textContent = `The ${fmt(C.REQUESTS.length)} prompts every agent starts with, sent exactly as written: ${fmt(count(main))} for kinds of site WordPress suits${ctl.length ? `, and ${fmt(count(ctl))} controls` : ''}. None names a platform. Each runs twice per agent every month.`;
+  $('lede').insertAdjacentHTML('beforeend', ' <a href="#how">How they were written</a>');
   $('when').innerHTML = `Version ${C.SUITE}, ${C.MONTH.name} batch. <a href="${REPO}/blob/trunk/benchmarks/choose/requests.toml">The prompts on GitHub</a>`;
   $('q-considered').textContent = 'What did you build this with, and what else did you consider?';
   $('q-why').textContent = 'Why didn’t you use WordPress for this site?';
