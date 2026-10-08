@@ -34,12 +34,7 @@
     </ol>
     <p class="note">If the agent stops to ask questions before building, it gets one reply: <q>Use your best judgement and go ahead.</q></p>
   </section>
-  <section class="section section--tight" aria-labelledby="env-h" id="sandboxes">
-    <h2 class="subheading req-h" id="env-h">Where each agent works</h2>
-    <p class="lede lede--wide">Each agent runs in a fresh sandbox set up like the one its maker documents for that agent, so it has the tools it would normally have. Agents whose makers don’t document one get a typical developer machine. Every sandbox has open internet and lets the agent install anything, and none has anything WordPress-specific installed.</p>
-    <div class="table-scroll"><table class="table req env"><thead><tr><th class="col-q">Sandbox</th><th>Agents</th><th class="src">Based on</th></tr></thead><tbody id="envs"></tbody></table></div>
-  </section>
-  <section class="section section--tight section--last req-more" id="how" aria-labelledby="how-h">
+  <section class="section section--tight req-more" id="how" aria-labelledby="how-h">
     <h2 class="subheading req-h" id="how-h">How these prompts were written</h2>
     <p class="lede lede--wide">They’re written to read like what people actually type, not like a test. They were drafted in October 2026 with AI research agents, then reviewed by hand.</p>
     <ul class="req-how">
@@ -49,6 +44,11 @@
       <li><b>Three voices for each type of site:</b> a developer building for a client, someone explaining their situation, and someone typing as little as possible.</li>
     </ul>
     <p class="note">Think a prompt could be more realistic? <a href="https://github.com/apeatling/wp-agent-benchmark/blob/trunk/benchmarks/choose/requests.toml">Propose a change on GitHub</a>.</p>
+  </section>
+  <section class="section section--tight section--last" aria-labelledby="env-h" id="sandboxes">
+    <h2 class="subheading req-h" id="env-h">Where each agent works</h2>
+    <p class="lede lede--wide">Each agent runs in a fresh sandbox set up like the one its maker documents for that agent, so it has the tools it would normally have. Agents whose makers don’t document one get a typical developer machine. Every sandbox has open internet and lets the agent install anything, and none has anything WordPress-specific installed.</p>
+    <div class="table-scroll"><table class="table req env"><thead><tr><th class="col-q">Sandbox</th><th>Agents</th><th class="src">Based on</th></tr></thead><tbody id="envs"></tbody></table></div>
   </section>
 </main>
 <script src="chrome.js?v=57"></script>
