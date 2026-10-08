@@ -1017,7 +1017,11 @@ body .why-help a.help-more { display: inline-block; margin-top: var(--space-8); 
 body .why-help a.help-idea { display: inline; font-size: var(--fs-body); line-height: 1.45; color: var(--ink-2); }
 body .why-help a.help-more { display: block; width: fit-content; margin-top: var(--space-8); }
 
-/* Run page: what the agent said, quoted. A line down the left, and its maker's logo just left of the line's top. */
-.answer.said { position: relative; margin: 0 0 0 26px; padding-left: 18px; border-left: 2px solid var(--rule-strong); }
-.said-who { position: absolute; top: 4px; left: -28px; display: flex; color: var(--muted); }
+/* Run page: what the agent said, quoted: its maker's logo level with the labels, then a hairline, then the words. */
+.answer.said { position: relative; margin: 0 0 0 22px; padding-left: 14px; border-left: 1px solid var(--rule-strong); }
+.said-who { position: absolute; top: .3em; left: -23px; display: flex; color: var(--muted); }
 .said-who .logo { margin: 0; vertical-align: 0; }
+.answer.said details summary { margin-bottom: 0; }
+.answer.said details[open] summary { margin-bottom: var(--space-12); }
+.answer.said:has(details[open]) .said-open { display: none; }
+.answer.said + .rf-note { margin-top: var(--space-16); }
