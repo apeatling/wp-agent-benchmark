@@ -2,7 +2,7 @@
 window.WPAB_DATA = window.WPAB_DATA || {};
 window.WPAB_DATA.choose = {
  "schema_version": "1.0",
- "generated": "2026-10-08T22:16:59+00:00",
+ "generated": "2026-10-08T23:09:17+00:00",
  "batch": {
   "id": "2026-10",
   "name": "October 2026",
@@ -18,7 +18,8 @@ window.WPAB_DATA.choose = {
    "head": true,
    "auth": [
     "plan"
-   ]
+   ],
+   "environment": "claude-cloud"
   },
   {
    "id": "gpt-6-1-sol-codex",
@@ -28,7 +29,8 @@ window.WPAB_DATA.choose = {
    "head": true,
    "auth": [
     "plan"
-   ]
+   ],
+   "environment": "codex-cloud"
   },
   {
    "id": "gemini-3-8-flash-antigravity",
@@ -38,7 +40,8 @@ window.WPAB_DATA.choose = {
    "head": true,
    "auth": [
     "api"
-   ]
+   ],
+   "environment": "dev-machine"
   },
   {
    "id": "grok-4-7-grok-build",
@@ -48,7 +51,8 @@ window.WPAB_DATA.choose = {
    "head": true,
    "auth": [
     "api"
-   ]
+   ],
+   "environment": "dev-machine"
   },
   {
    "id": "deepseek-v4-pro-opencode",
@@ -58,7 +62,8 @@ window.WPAB_DATA.choose = {
    "head": false,
    "auth": [
     "api"
-   ]
+   ],
+   "environment": "dev-machine"
   },
   {
    "id": "glm-5-3-opencode",
@@ -68,7 +73,8 @@ window.WPAB_DATA.choose = {
    "head": false,
    "auth": [
     "api"
-   ]
+   ],
+   "environment": "dev-machine"
   },
   {
    "id": "kimi-k3-kimi-code",
@@ -78,6 +84,40 @@ window.WPAB_DATA.choose = {
    "head": false,
    "auth": [
     "api"
+   ],
+   "environment": "dev-machine"
+  }
+ ],
+ "environments": [
+  {
+   "id": "codex-cloud",
+   "name": "Codex cloud",
+   "description": "OpenAI's published codex-universal image: Ubuntu 24.04 with Python, Node, PHP 8.2–8.5 and Composer, Ruby, Go, Rust, Java and more. No database server and no Docker.",
+   "docker": false,
+   "sources": [
+    "https://github.com/openai/codex-universal",
+    "https://learn.chatgpt.com/docs/environments/cloud-environment"
+   ]
+  },
+  {
+   "id": "claude-cloud",
+   "name": "Claude Code cloud",
+   "description": "Claude Code's documented cloud environment: Ubuntu 24.04 with Node 22, Python, PHP 8.3 and Composer, Ruby, Java 21, Go and Rust; PostgreSQL 16 and Redis installed but not running; Docker available.",
+   "docker": true,
+   "sources": [
+    "https://code.claude.com/docs/en/cloud-environments",
+    "https://code.claude.com/docs/en/claude-code-on-the-web"
+   ]
+  },
+  {
+   "id": "dev-machine",
+   "name": "Developer machine",
+   "description": "A typical developer laptop, for agents that run on the person's own computer: Node, Python and git; Docker available (about 72% of developers use it); no PHP and no database (neither ships with macOS or Windows). Google's cloud agent, Jules, also has no PHP or database, so this matches Google's documented setup too.",
+   "docker": true,
+   "sources": [
+    "https://survey.stackoverflow.co/2025/technology",
+    "https://www.php.net/install.macosx.php",
+    "https://jules.google/docs/environment/"
    ]
   }
  ],

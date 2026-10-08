@@ -7,7 +7,9 @@
   const MONTH = { id: D.batch.id, name: D.batch.name, short: D.batch.short };
   const KIND = Object.fromEntries(D.kinds.map(k => [k.id, k]));
   // Agents: id is the short key the pages and logos use (opus, gpt…); slug is the agent's full ID and URL.
-  const MODELS = D.agents.map(a => ({ id: a.logo, slug: a.id, name: a.name, where: a.harness, head: a.head, auth: a.auth }));
+  const MODELS = D.agents.map(a => ({ id: a.logo, slug: a.id, name: a.name, where: a.harness, head: a.head, auth: a.auth, env: a.environment }));
+  // Sandboxes, with the agents that work in each.
+  const ENVIRONMENTS = (D.environments || []).map(e => ({ ...e, sources: e.sources || [] }));
   const bySlug = Object.fromEntries(MODELS.map(m => [m.slug, m]));
   // Kinds of site, each with its requests.
   const TYPES = D.kinds.map(k => ({ id: k.id, name: k.name, plural: k.plural, fitWhy: k.why, control: !!k.control,
@@ -92,6 +94,6 @@
   const DOWN = '<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 9 9.5 2h-9z" fill="currentColor"/></svg>';
 
   const SUITE = D.suite_version;
-  window.CHOOSE = { REQUESTS, SUITE, MONTH, MONTHS, HISTORY, PER_MONTH, since, VERSIONS, RUNS_URL, logo, NEVER, PATTERNS, MODELS, TYPES, GROUPS, DETECT, DETECT_CHECK, REASONS, RUNS, NOTHING, TREND, EVENTS, PL, SAMPLE: !!D.sample,
+  window.CHOOSE = { ENVIRONMENTS, REQUESTS, SUITE, MONTH, MONTHS, HISTORY, PER_MONTH, since, VERSIONS, RUNS_URL, logo, NEVER, PATTERNS, MODELS, TYPES, GROUPS, DETECT, DETECT_CHECK, REASONS, RUNS, NOTHING, TREND, EVENTS, PL, SAMPLE: !!D.sample,
     pct, pcts, pts, fmt, wilson, real, groupOf, esc, md, UP, DOWN };
 })();
