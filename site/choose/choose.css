@@ -884,7 +884,6 @@ body main .go.back.go.back::after { content: none; }
 .run-tabs [role="tab"]:hover { color: var(--ink); }
 .run-tabs [role="tab"][aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
 .run-tabs [role="tab"]:focus-visible { outline: 2px solid var(--wp); outline-offset: 4px; border-radius: 3px; }
-.run-page .page-head + .run-body { border-top: 0; border-image: none; }
 .run-main[hidden] { display: none; }
 
 /* The transcript as a conversation: the person on the right in a panel, the agent on the left beside its logo */
