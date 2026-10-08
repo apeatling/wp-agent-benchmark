@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site.css?v=208">
 <link rel="stylesheet" href="/vt.css?v=7">
-<link rel="stylesheet" href="/choose/choose.css?v=244">
+<link rel="stylesheet" href="/choose/choose.css?v=248">
 <link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
@@ -25,10 +25,15 @@
   </header>
   <section class="section section--tight" aria-label="Prompts for sites WordPress suits" id="fits"></section>
   <section class="section section--tight" aria-labelledby="ctl-h" id="controls"></section>
+  <section class="section section--tight" aria-labelledby="env-h" id="sandboxes">
+    <h2 class="subheading req-h" id="env-h">Where each agent works</h2>
+    <p class="lede lede--wide">Each agent runs in a fresh sandbox set up like the one its maker documents for that agent, so it has the tools it would normally have. Agents whose makers don’t document one get a typical developer machine. Every sandbox has open internet and lets the agent install anything, and none has anything WordPress-specific installed.</p>
+    <div class="table-scroll"><table class="table req env"><thead><tr><th class="col-q">Sandbox</th><th>Agents</th><th class="src">Based on</th></tr></thead><tbody id="envs"></tbody></table></div>
+  </section>
   <section class="section section--tight section--last grid req-more">
     <div class="span-left" role="region" aria-labelledby="after-h">
       <h2 class="subheading req-h" id="after-h">After the first prompt</h2>
-      <p class="lede lede--wide">Each agent works alone in a fresh sandbox. If it didn’t build with WordPress, it gets two questions in the same session, in this order:</p>
+      <p class="lede lede--wide">Each agent works alone in a <a href="#sandboxes">fresh sandbox</a>. If it didn’t build with WordPress, it gets two questions in the same session, in this order:</p>
       <ol class="req-steps">
         <li><q id="q-considered"></q><span>Doesn’t name WordPress, so we can see whether the agent brings it up on its own.</span></li>
         <li><q id="q-why"></q><span>Its answer is an explanation after the fact, and is shown as one.</span></li>
@@ -49,8 +54,8 @@
   </section>
 </main>
 <script src="chrome.js?v=57"></script>
-<script src="../data/choose.js?v=14"></script>
-<script src="data.js?v=66"></script>
+<script src="../data/choose.js?v=15"></script>
+<script src="data.js?v=67"></script>
 <script>
 (function () {
   const C = window.CHOOSE, { esc, fmt } = C;
@@ -85,6 +90,13 @@
   $('fits').innerHTML = table(main);
   $('controls').innerHTML = ctl.length ? `<h2 class="subheading req-h" id="ctl-h">Control prompts</h2>
     <p class="lede lede--wide">${fmt(count(ctl))} prompts for sites other tools suit better, to check agents don’t push WordPress everywhere. They aren’t counted in the results.</p>${table(ctl)}` : '';
+  // Sandboxes: what each has, which agents use it, and the maker's documentation it follows.
+  // Each source as its address, so it's clear what it is and where it goes.
+  const src = u => esc(u.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''));
+  $('envs').innerHTML = C.ENVIRONMENTS.map(e => { const who = C.MODELS.filter(m => m.env === e.id && C.RUNS.some(r => r.m === m));
+    return who.length ? `<tr id="env-${esc(e.id)}"><td class="q"><b>${esc(e.name)}</b><span class="env-d">${esc(e.description)}</span></td>
+      <td class="env-who">${who.map(m => `<span>${C.logo(m, 13)}${esc(m.name)} <small>in ${esc(m.where)}</small></span>`).join('')}</td>
+      <td class="src">${e.sources.map(u => `<a href="${esc(u)}">${src(u)}</a>`).join('')}</td></tr>` : ''; }).join('');
   // Arriving from a run, the prompt it ran is marked.
   const hit = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
   if (hit) { hit.classList.add('is-target'); hit.scrollIntoView({ block: 'center' }); }

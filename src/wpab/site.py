@@ -110,7 +110,9 @@ def choose(batch):
         'batch': batch_info(batch),
         'suite_version': reqs['version'],
         'agents': [{'id': a['id'], 'name': a['name'], 'harness': a['harness_name'], 'logo': logo_key(a), 'head': a['head'],
-                    'auth': sorted({r['auth'] for r in runs if r['agent'] == a['id']})} for a in agents],
+                    'auth': sorted({r['auth'] for r in runs if r['agent'] == a['id']}), 'environment': a.get('environment')} for a in agents],
+        # The sandboxes agents work in: the maker's documented environment, or a typical developer machine.
+        'environments': [{k: e.get(k) for k in ('id', 'name', 'description', 'docker', 'sources')} for e in defs.environments().values()],
         'kinds': cat['kind'],
         'requests': [{'id': r['id'], 'kind': r['kind'], 'prompt': r['prompt'], **({'fixture': r['fixture']} if r.get('fixture') else {})} for r in reqs['request']],
         'groups': cat['group'],

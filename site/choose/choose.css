@@ -1055,12 +1055,30 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
 .req-files:hover { color: var(--ink-2); }
 .table.req tr.is-target td { background: var(--hover-row); }
 .req-how { margin: var(--space-24) 0 0; padding-left: 1.2em; }
+#sandboxes .table-scroll { margin-top: var(--space-32); }
+.table.req.env td { vertical-align: top; }
+.table.req.env td.q { max-width: none; width: 52%; }
+.table.req.env td.q b { display: block; font-weight: 600; color: var(--ink); }
+.env-d { display: block; margin-top: var(--space-4); max-width: 62ch; color: var(--ink-2); }
+.env-who span { display: block; white-space: nowrap; color: var(--ink); }
+.env-who span + span { margin-top: var(--space-4); }
+.env-who small { font-size: var(--fs-small); color: var(--muted); }
+.env-who .logo { margin-right: 6px; vertical-align: -2px; }
+.table.req.env th.src, .table.req.env td.src { width: 284px; padding-left: var(--space-24); }
+.table.req.env td.src a { display: block; max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-small); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.table.req.env td.src a + a { margin-top: var(--space-8); }
+.table.req.env td:nth-child(2) { padding-left: var(--space-24); }
+@media (max-width: 720px) {
+  .table.req.env td::after { content: none !important; }
+  .table.req.env td.q { flex-basis: 100%; }
+  .table.req.env td.env-who, .table.req.env td.src { width: auto; padding: 0; }
+}
 .req-more .lede--wide, .req-more .req-steps { max-width: none; }
 #how { scroll-margin-top: var(--space-24); }
 .req-how li { font-size: var(--fs-body); line-height: 1.6; color: var(--ink-2); }
 .req-how li + li { margin-top: var(--space-12); }
 .req-how b { font-weight: 600; color: var(--ink); }
-.req-how a, .page-req .note a, #lede a { color: inherit; text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.req-how a, .page-req .note a, #lede a, .req-more .lede a { color: inherit; text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
 .req-how a:hover, .page-req .note a:hover, #lede a:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
 .req-steps { margin: var(--space-24) 0 0; padding-left: 1.4em; max-width: 62ch; }
 .req-steps li { padding-left: var(--space-8); font-size: var(--fs-lede); color: var(--ink); }
