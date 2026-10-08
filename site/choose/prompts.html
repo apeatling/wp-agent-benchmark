@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site.css?v=209">
 <link rel="stylesheet" href="/vt.css?v=7">
-<link rel="stylesheet" href="/choose/choose.css?v=250">
+<link rel="stylesheet" href="/choose/choose.css?v=251">
 <link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
@@ -39,39 +39,23 @@
     <p class="lede lede--wide">Written to read like real requests, not a test. Drafted in October 2026 with AI research agents, then reviewed by hand.</p>
     <div class="req-how">
       <div>
-        <h3>How people phrase requests</h3>
-        <ul>
-          <li>Short: the median is about 100 characters</li>
-          <li>First person and often informal</li>
-          <li>The business first, then what should happen, not a list of features</li>
-        </ul>
+        <h3><span>How people ask</span>About 100 characters</h3>
+        <p>The median request. First person, often informal, naming the business and what should happen, not a list of features.</p>
         <p class="req-src">From <a href="https://huggingface.co/datasets/lmarena-ai/webdev-arena-preference-10k">WebDev Arena’s public prompts</a>, a <a href="https://huggingface.co/datasets/dpaleka/WildChat-2k-TypeTopic">WildChat sample</a>, published accounts of building sites with coding agents, and freelance job briefs</p>
       </div>
       <div>
-        <h3>Which sites people need</h3>
-        <ul>
-          <li>Small business sites most, then stores and blogs</li>
-          <li>Then charities, existing sites and courses</li>
-          <li>Courses are in even though course platforms, not WordPress, lead there</li>
-        </ul>
+        <h3><span>Which sites</span>Small business first</h3>
+        <p>Then stores and blogs, then charities, existing sites and courses. Courses are in even though course platforms, not WordPress, lead there.</p>
         <p class="req-src">From <a href="https://w3techs.com/technologies/overview/content_management">W3Techs</a>, the <a href="https://almanac.httparchive.org/en/2024/cms">HTTP Archive Web Almanac</a> and a <a href="https://www.businesswire.com/news/home/20250821848152/en">Clutch survey of small businesses</a></p>
       </div>
       <div>
-        <h3>Nothing that gives the answer away</h3>
-        <ul>
-          <li>No platform named</li>
-          <li>No tidy numbers, and nothing that spells out “a CMS”, like “update myself” or “without code”</li>
-          <li>Some mention a need that bears on the choice, as real requests do: “she wants to post updates herself”. Others give no hint: “website for my bakery”</li>
-        </ul>
+        <h3><span>What’s left out</span>No platform named</h3>
+        <p>No tidy numbers, and nothing that spells out “a CMS”, like “update myself”. Some state a need that bears on the choice, as real requests do (“she wants to post updates herself”); others give none (“website for my bakery”).</p>
         <p class="req-src">Checked in a review against benchmark design practice</p>
       </div>
       <div>
-        <h3>Three voices for each type of site</h3>
-        <ul>
-          <li>A developer building for a client</li>
-          <li>Someone explaining their situation</li>
-          <li>Someone typing as little as possible</li>
-        </ul>
+        <h3><span>Who’s asking</span>Three voices</h3>
+        <p>For each type of site: a developer building for a client, someone explaining their situation, and someone typing as little as possible.</p>
       </div>
     </div>
     <p class="note">Think a prompt could be more realistic? <a href="https://github.com/apeatling/wp-agent-benchmark/blob/trunk/benchmarks/choose/requests.toml">Propose a change on GitHub</a>.</p>
