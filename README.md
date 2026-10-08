@@ -4,6 +4,9 @@ When someone asks an AI agent for a website and doesn't name a platform, does th
 
 Each agent is the real tool people use (Claude Code, Codex, Antigravity, Grok Build and others), working in a fresh Docker sandbox through [Harbor](https://github.com/harbor-framework/harbor). It gets a plain request such as "website for my bakery", builds something, and we check the files to see what it chose. If it wasn't WordPress, we ask it why.
 
+### See the latest results
+The public-facing site in `site/` is currently hosted at: https://wpab.view.fast/
+
 ## Quick start
 
 You need [Docker](https://www.docker.com/products/docker-desktop/) running and [uv](https://docs.astral.sh/uv/getting-started/installation/).
