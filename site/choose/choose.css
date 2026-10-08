@@ -1054,7 +1054,9 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
 .req-files { display: block; width: fit-content; margin-top: var(--space-4); font-size: var(--fs-small); color: var(--muted); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
 .req-files:hover { color: var(--ink-2); }
 .table.req tr.is-target td { background: var(--hover-row); }
-.req-how { margin: var(--space-24) 0 0; padding-left: 1.2em; max-width: 68ch; }
+.req-how { margin: var(--space-24) 0 0; padding-left: 1.2em; }
+.req-more .lede--wide, .req-more .req-steps { max-width: none; }
+#how { scroll-margin-top: var(--space-24); }
 .req-how li { font-size: var(--fs-body); line-height: 1.6; color: var(--ink-2); }
 .req-how li + li { margin-top: var(--space-12); }
 .req-how b { font-weight: 600; color: var(--ink); }
