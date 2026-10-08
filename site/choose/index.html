@@ -252,14 +252,15 @@
   // Each reason: its share on a bar under the name, then the quote; beside it, what could help.
   assigned = assign(rs.map(r => r.x.id));
   $('reasons').innerHTML = rs.map(({ x, k }, i) =>
-    `<li><div class="why-t"><div class="why-top"><a class="why-name" href="${runsLink({ agent: 'all', reason: x.id })}">${x.name}</a><b>${rsh[i]}%</b></div>
-        <span class="tk" aria-hidden="true"><i style="width:${rsh[i]}%"></i></span>${x.quote ? `<q>${esc(x.quote)}</q>` : ''}
+    `<li><div class="why-t"><div class="why-top"><a class="why-name" href="${runsLink({ agent: 'all', reason: x.id })}">${x.name}</a><b>${rsh[i] || '<1'}%</b></div>
+        <span class="tk" aria-hidden="true"><i style="width:${rsh[i] || .5}%"></i></span>${x.quote ? `<q>${esc(x.quote)}</q>` : ''}
         <p class="why-links"><a href="${runsLink({ agent: 'all', reason: x.id })}">See ${fmt(k)} runs</a></p></div>
       <div class="why-help">${fix(x.id)}</div></li>`).join('');
   // 4. What they built instead, for the same losses. Platforms listed flat, so shares add up.
   const plats = Object.keys(C.DETECT).filter(p => p !== 'WordPress').map(pl => ({ pl, k: lost.filter(r => r.out === pl).length })).filter(p => p.k).sort((a, b) => b.k - a.k);
   const sh = pcts(plats.map(p => p.k));
-  $('built').innerHTML = plats.map((p, i) => `<li${i === 0 ? ' class="top"' : ''}><a href="${runsLink({ built: p.pl })}"><span class="l">${p.pl}</span><span class="t"><i style="width:${sh[i]}%"></i></span><span class="v">${sh[i]}%</span></a></li>`).join('');
+  // A platform some site used never reads 0%: under half a percent shows as "<1%", with a sliver of bar.
+  $('built').innerHTML = plats.map((p, i) => `<li${i === 0 ? ' class="top"' : ''}><a href="${runsLink({ built: p.pl })}"><span class="l">${p.pl}</span><span class="t"><i style="width:${sh[i] || .5}%"></i></span><span class="v">${sh[i] || '<1'}%</span></a></li>`).join('');
   $('built-h').textContent = `Instead, they mostly reached for ${plats[0].pl}.`;
   // The list repeats the shares, so the lede compares the leader with WordPress across every site built.
   // Same runs on both sides as the list above: every agent, controls aside.
