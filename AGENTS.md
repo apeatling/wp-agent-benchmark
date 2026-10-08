@@ -40,7 +40,7 @@ Every command reads and writes local data (`data/local/`, `site/data-local/`, bo
 - After editing anything in `benchmarks/choose/`, run `uv run python scripts/build_tasks.py` and commit the regenerated `tasks/` with it.
 - After changing `benchmarks/agents.toml` or `site/choose/agents/_template.html`, run `python3 site/choose/agents/generate.py`.
 - Don't commit to `trunk`; work on a branch and open a pull request. Don't skip commit hooks.
-- The site is static HTML and JS in `site/`; there's no build step. When you change a CSS or JS file, bump its `?v=` number where it's included.
+- The site is static HTML and JS in `site/`; there's no build step. Every page's head starts with a shared block copied from `templates/head.html` (fonts, stylesheets, icons). Edit that file, not the pages, then run `python3 scripts/sync_head.py`; CI fails if a page is out of date. When you change a CSS file, bump its `?v=` number in `templates/head.html`; for a JS file, bump it where the page includes it.
 
 ## Where things are
 

@@ -16,6 +16,8 @@ jobs:
       - uses: astral-sh/setup-uv@v6
       - run: uv sync
       - run: uv run python -m unittest discover -s tests
+      - name: Every page has the current shared head
+        run: python3 scripts/sync_head.py --check
 
   published-data:
     # Published results change only through the maintainer. Contributors' own runs go to data/local/, which is

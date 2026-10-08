@@ -102,6 +102,7 @@ uv run wpab site --publish
 | Agents and their versions | `benchmarks/agents.toml` | `python3 site/choose/agents/generate.py` |
 | Sandboxes | `benchmarks/environments.toml` | |
 | Requests, kinds of site, platforms, reasons | `benchmarks/choose/` | `uv run python scripts/build_tasks.py`, and commit `tasks/` |
+| The head every page shares: fonts, stylesheets and their `?v=` numbers, icons | `templates/head.html` | `python3 scripts/sync_head.py` |
 
 Each agent gets the sandbox its maker documents. Agents whose makers don't document one get a typical developer machine: Node, Python, Git and Docker, without PHP or a database.
 
@@ -115,7 +116,8 @@ data/choose/         published run records and analysis, one file per month
 data/local/          your own runs (gitignored)
 schema/              JSON Schema for run records
 site/                the results site (static HTML and JS)
-scripts/             build_tasks.py, serve.py
+scripts/             build_tasks.py, serve.py, sync_head.py
+templates/           head.html, shared by every page
 docs/data.md         how the data is stored, and the IDs it uses
 ```
 
