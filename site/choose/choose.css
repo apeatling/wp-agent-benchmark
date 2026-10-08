@@ -1016,3 +1016,8 @@ body .why-help a.help-more { display: inline-block; margin-top: var(--space-8); 
 /* One idea and a count of the rest */
 body .why-help a.help-idea { display: inline; font-size: var(--fs-body); line-height: 1.45; color: var(--ink-2); }
 body .why-help a.help-more { display: block; width: fit-content; margin-top: var(--space-8); }
+
+/* Run page: what the agent said, quoted. A line down the left, and its maker's logo just left of the line's top. */
+.answer.said { position: relative; margin: 0 0 0 26px; padding-left: 18px; border-left: 2px solid var(--rule-strong); }
+.said-who { position: absolute; top: 4px; left: -28px; display: flex; color: var(--muted); }
+.said-who .logo { margin: 0; vertical-align: 0; }
