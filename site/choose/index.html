@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<!-- Hold the first render until the page is complete, so the page transition moves the finished header and numbers -->
+<link rel="expect" href="#vt-ready" blocking="render">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css?v=208">
+<link rel="stylesheet" href="choose.css?v=228">
+<link rel="stylesheet" href="../vt.css?v=7">
+<title>Data · Choosing WordPress · Agent Benchmarks</title>
+</head>
+<body data-page="overview">
+<main class="container">
+  <section class="c-hero" aria-label="The headline result">
+    <h1 class="question">When WordPress isn’t mentioned, do agents choose it?</h1>
+    <div class="c-figure">
+      <div class="stat" id="big"></div>
+      <div class="c-cap"><p class="stat-caption" id="big-cap"></p></div>
+      <div class="changes" id="changes"></div>
+    </div>
+    <div class="share" id="share"><div class="share-bar" role="img"></div><div class="callouts" aria-hidden="true"></div><details class="how" id="how"></details></div>
+  </section>
+  <section class="section" aria-labelledby="agents-h" id="all-agents">
+    <div class="section-head">
+      <h2 class="heading" id="agents-h"></h2>
+      <p class="lede lede--wide lede--quiet" id="agents-lede"></p>
+    </div>
+    <div class="table-scroll">
+      <table class="table agents agents--c matrix">
+        <thead><tr><th class="col-model">Agent</th><th class="now">Chose WordPress<span>in September</span></th><th class="num">Named it<span>afterwards</span></th><th class="num">Brought it up<span>while deciding</span></th><th class="num chg">Change<span>over 3 months</span></th><th class="num runs">Runs<span>in total</span></th></tr></thead>
+        <tbody id="agents"></tbody>
+      </table>
+    </div>
+  </section>
+  <section class="section" aria-labelledby="drop-h" id="drop">
+    <div class="section-head">
+      <h2 class="heading" id="drop-h"></h2>
+      <p class="lede lede--wide" id="drop-lede"></p>
+    </div>
+    <div class="nest" id="drop-bar" role="img"></div>
+    <div class="nest-calls" id="drop-calls"></div>
+  </section>
+  <section class="section" aria-labelledby="fit-h">
+    <div class="section-head">
+      <h2 class="heading" id="fit-h"></h2>
+      <p class="lede lede--wide" id="fit-lede"></p>
+    </div>
+    <div class="table-scroll">
+      <table class="table fitgrid">
+        <thead id="fit-head"></thead>
+        <tbody id="fit-body"></tbody>
+      </table>
+    </div>
+  </section>
+  <section class="section" aria-labelledby="why-h">
+    <div class="section-head">
+      <h2 class="heading" id="why-h"></h2>
+      <p class="lede lede--wide" id="why-lede"></p>
+    </div>
+    <div class="why-head"><span class="wh-l"><span>Reason given</span><span>Share of the <b id="why-n"></b> sites. A site can give several.</span></span><span>What could help</span></div>
+    <ul class="why-list" id="reasons"></ul>
+  </section>
+  <section class="section grid c-sec" aria-labelledby="built-h">
+    <div class="col-1-5">
+      <h2 class="heading" id="built-h"></h2>
+      <p class="lede" id="built-lede"></p>
+    </div>
+    <div class="col-7-12">
+      <ul class="bars" id="built"></ul>
+    </div>
+  </section>
+  <section class="section section--last c-sec dig" aria-labelledby="dig-h">
+    <div class="dig-col">
+      <h2 class="heading" id="dig-h">Dig into the data</h2>
+      <p class="lede">Every run is published: the request, what the agent built, and what it said about WordPress.</p>
+    </div>
+    <div class="dig-col dig-links">
+      <a class="dig-link" id="all-runs" href="runs"><b>Explore the runs</b><span id="all-runs-n">Filter by agent, type of site, what it built and why</span></a>
+      <a class="dig-link" href="recommendations"><b>Read the recommendations</b><span>What could help agents choose WordPress</span></a>
+      <a class="dig-link" href="../about"><b>How this is measured</b><span>The requests, the agents and how runs are judged</span></a>
+    </div>
+  </section>
+</main>
+<script src="../site.js"></script>
+<script src="chrome.js?v=54"></script>
+<script src="../data/choose.js?v=13"></script>
+<script src="data.js?v=65"></script>
+<script>
+(function () {
+  const C = window.CHOOSE, { pct, pcts, pts, fmt, esc } = C;
+  const $ = id => document.getElementById(id);
+  const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const isWP = r => r.out === 'WordPress';
+  const runsLink = q => 'runs?' + new URLSearchParams(q);
+  const nb = name => name.replace(/-/g, '‑'); // keeps GPT-6.1-Sol on one line
+  const rate = runs => runs.length ? runs.filter(isWP).length / runs.length : 0;
+  // The test set: the most-used agents tested this month, on kinds of site WordPress suits. Controls are
+  // reported separately, in How this is measured.
+  const head = C.RUNS.filter(r => r.m.head), all = head.filter(r => !r.control), fits = all, controls = head.filter(r => r.control);
+  const fitNow = Math.round(rate(fits) * 100);
+  const T = C.TREND;
+  const PL = C.PL;
+  const NUM = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+  const list = xs => xs.join(', ').replace(/, ([^,]*)$/, ' and $1');
+  const headNames = C.MODELS.filter(m => m.head).map(m => m.name), headCount = headNames.length;
+  // Who the headline counts: all five most-used agents, or the ones tested so far.
+  const whoCounted = headCount >= 5 ? 'The five most-used agents' : `${NUM[headCount][0].toUpperCase() + NUM[headCount].slice(1)} of the five most-used agents (${list(headNames)})`;
+  // 1. Headline: requests where WordPress fits. All requests and the method sit right under it.
+  const [lo, hi] = C.wilson(rate(fits), fits.length);
+  $('big').textContent = fitNow + '%';
+  $('big').title = `95% confidence interval: ${Math.round(lo * 100)}–${Math.round(hi * 100)}%`;
+  // Same caption and change row as the benchmark picker, so the page transition lines up.
+  $('big-cap').textContent = 'of the sites agents built used WordPress.';
+  const pNow = T[T.length - 1] / 100;
+  // Changes need earlier batches; until there are some, the row says this is the first month.
+  const spans = [['1 month', 1], ['3 months', 3], ['6 months', 6]].filter(([, k]) => C.since(T, k) !== null);
+  $('changes').innerHTML = `<div class="chg-i"><span class="chg-l">95% CI</span><span class="chg-v ci-v">${Math.round(lo * 100)}–${Math.round(hi * 100)}%</span></div>` +
+    (spans.length ? spans.map(([l, k]) => { const d = C.pts(pNow, C.since(T, k) / 100, fits.length);
+      return `<div class="chg-i"><span class="chg-l">${l}</span>${d ? `<span class="chg-v">${d}</span>` : '<span class="chg-v steady">Steady</span>'}</div>`; }).join('')
+      : `<div class="chg-i"><span class="chg-l">Change</span><span class="chg-v steady">First month</span></div>`);
+  const main = C.TYPES.filter(t => !t.control), prompts = main.reduce((a, t) => a + t.prompts.length, 0);
+  const check = C.DETECT_CHECK.runs ? ` A second model also read each transcript; it agreed with the files on ${Math.round(C.DETECT_CHECK.agree * 100)}% of ${fmt(C.DETECT_CHECK.runs)} runs, and a person checks the rest.` : '';
+  $('how').innerHTML = `<summary>How this is measured</summary><p>${whoCounted}, weighted equally, in ${C.MONTH.name}’s batch, each given ${prompts} requests for the kinds of site WordPress suits: ${list(main.map(t => PL[t.id]))}. None mentions a platform. The platform is detected from the files the agent made.${check}</p><p>Control: agents also get requests other tools suit better, such as web apps and developer docs, to check they don’t push WordPress everywhere. They chose it for ${Math.round(rate(controls) * 100)}% of those. Controls aren’t counted here.${C.NOTHING ? ` ${fmt(C.NOTHING)} runs where the agent built nothing aren’t counted either.` : ''}</p><p>Each month counts the agents in use that month, so model updates are part of the changes over time. We don’t compare with WordPress’s 40.1% share of all websites: that counts existing sites, not new ones.</p>`;
+  // What agents built: the same five categories, in the same order, as the original dashboard.
+  const CATS = C.GROUPS.map(g => [g.id, g.name, g.platforms]);
+  const segsFor = rs => { const sh = pcts(CATS.map(([, , ps]) => rs.filter(r => ps.includes(r.out)).length)); return CATS.map(([c, name], i) => [c, name, sh[i]]).filter(r => r[2] > 0); };
+  // The bar sits under the number: the blue segment is the same 19%.
+  renderShare($('share'), segsFor(all), `What agents built in ${C.MONTH.name}`);
+
+  // What could help: for each reason, the recommendations that answer it and their ways to help, from the same
+  // advice the Recommendations page shows, so the two pages always agree. Each idea opens on that page.
+  const BY = ((window.WPAB_DATA.choose.advice || {}).by_reason) || {};
+  const recsFor = rid => { const x = BY[rid]; return !x ? [] : Array.isArray(x) ? x : [{ ...x, ways: [], more: 0 }]; };
+  // Each reason shows one recommendation and how many ideas it holds, and no recommendation shows twice. The
+  // reasons and the recommendations that answer them are matched so as many reasons as possible get their own
+  // (the biggest reasons first, each preferring the recommendation reaching most sites).
+  let assigned = null;
+  const assign = rids => {
+    const owner = {}, pick = {};
+    const tryAssign = (rid, seen) => {
+      for (const r of recsFor(rid)) {
+        if (seen.has(r.id)) continue;
+        seen.add(r.id);
+        if (!owner[r.id] || tryAssign(owner[r.id], seen)) { owner[r.id] = rid; pick[rid] = r; return true; }
+      }
+      return false;
+    };
+    rids.forEach(rid => tryAssign(rid, new Set()));
+    // A reason can't keep a recommendation another took over; recompute picks from the final owners.
+    const final = {}; Object.entries(owner).forEach(([id, rid]) => { final[rid] = recsFor(rid).find(r => r.id === id); });
+    return final;
+  };
+  const fix = rid => { const rs = recsFor(rid);
+    if (!rs.length) return '<span class="help-none">No recommendation yet</span>';
+    const r = (assigned && assigned[rid]) || rs[0];
+    const n = r.ways.length + r.more;
+    return `<a class="help-idea" href="recommendations#${esc(r.id)}">${esc(r.title)}</a>`
+      + (n ? `<a class="help-more" href="recommendations#${esc(r.id)}">${n} ${n === 1 ? 'idea' : 'ideas'}</a>` : ''); };
+  // Where WordPress drops out: knowing it, thinking of it while deciding, building with it. Same sites as the
+  // headline. A site built with WordPress counts at every step. "Named it" comes from the neutral question
+  // asked after the build ("what else did you consider?"), so batches without it skip that step.
+  const named = r => isWP(r) || r.unprompted === true, weighedIt = r => isWP(r) || !!r.considered;
+  const asked = fits.filter(r => isWP(r) || r.unprompted !== null && r.unprompted !== undefined);
+  const steps = [
+    asked.length && { k: 'named', l: 'Named it as an alternative afterwards', p: pct(asked.filter(named).length, asked.length), q: { wp: 'named' } },
+    { k: 'weighed', l: 'Brought it up while deciding', p: pct(fits.filter(weighedIt).length, fits.length), q: { wp: 'weighed' } },
+    { k: 'built', l: 'Built with it', p: fitNow, q: { built: 'WordPress' } },
+  ].filter(Boolean);
+  // One bar, nested like the hero's: named it (light) holds brought it up (solid). Built with it is the hero's
+  // number, so it isn't repeated. Labels sit at the end of each fill, nudged apart when the two are close.
+  const shown = steps.filter(x => x.k !== 'built');
+  $('drop-bar').innerHTML = shown.map(x => `<span class="${x.k === 'named' ? 'k' : 'w'}" style="width:${x.p}%"></span>`).join('');
+  $('drop-bar').setAttribute('aria-label', shown.map(x => `${x.l}: ${x.p}%`).join('. '));
+  let lastAt = -100;
+  $('drop-calls').innerHTML = [...shown].sort((a, b) => a.p - b.p).map(x => {
+    const at = Math.min(Math.max(x.p, lastAt + 22), 78); lastAt = at;
+    return `<a href="${runsLink(x.q)}" style="left:${at}%"><b>${x.p}%</b>${x.l.charAt(0).toLowerCase() + x.l.slice(1)}</a>`;
+  }).join('');
+  const offered = fits.filter(r => r.offered && !isWP(r)).length;
+  const first = steps[0], thought = steps.find(x => x.k === 'weighed').p;
+  $('drop-h').textContent = first.k === 'named' && first.p - thought >= 20
+    ? (first.p >= 50 ? 'Most agents know WordPress. Few think of it while deciding.' : 'Agents know WordPress better than they use it.')
+    : 'Where WordPress drops out.';
+  // Runs that offered WordPress, then built something else, close the lede rather than sitting under the bar.
+  const offeredNote = offered ? ` ${offered === 1 ? 'One run' : `${NUM[offered] ? NUM[offered][0].toUpperCase() + NUM[offered].slice(1) : fmt(offered)} runs`} offered WordPress as an option, then built something else when told to go ahead.` : '';
+  $('drop-lede').textContent = (first.k === 'named'
+    ? 'After building, each agent was asked what else it had considered, before WordPress was named.'
+    : `${thought}% of agents brought WordPress up while deciding; ${fitNow}% built with it.`) + offeredNote;
+
+  // 2. Where it fits: site types by agent. Losses only count where WordPress is a strong fit.
+  const agents = C.MODELS.map(m => {
+    const mine = C.RUNS.filter(r => r.m === m), mf = mine.filter(r => !r.control), lost = mf.filter(r => !isWP(r)), alt = {};
+    lost.forEach(r => alt[r.out] = (alt[r.out] || 0) + 1);
+    const mAsked = mf.filter(r => isWP(r) || r.unprompted !== null && r.unprompted !== undefined);
+    return { m, n: mine.length, nf: mf.length, p: rate(mine), pf: rate(mf), named: mAsked.length ? mAsked.filter(named).length / mAsked.length : null, weighed: mf.length ? mf.filter(weighedIt).length / mf.length : 0, never: lost.length ? lost.filter(r => !r.considered).length / lost.length : 0, alt: (Object.entries(alt).sort((a, b) => b[1] - a[1])[0] || [''])[0] };
+  }).sort((a, b) => b.pf - a.pf);
+  const heads = agents.filter(a => a.m.head);
+  $('fit-head').innerHTML = `<tr><th>Type of site</th><th class="all">Average across ${heads.length === 1 ? 'the agent' : `${NUM[heads.length] || heads.length} agents`}</th>${heads.map(a => `<th class="n">${C.logo(a.m, 13)}${nb(a.m.name)}</th>`).join('')}</tr>`;
+  let outlier = null;
+  const typeRows = C.TYPES.filter(t => !t.control).map(t => {
+    const tr = all.filter(r => r.type === t), pAll = rate(tr);
+    const cells = heads.map(a => { const c = tr.filter(r => r.m === a.m), p = rate(c);
+      const odd = C.real(p, pAll, c.length);
+      if (odd && (!outlier || Math.abs(p - pAll) > Math.abs(outlier.p - outlier.pAll))) outlier = { a, t, p, pAll };
+      return `<td class="n"><a href="${runsLink({ agent: a.m.id, type: t.id })}">${Math.round(p * 100)}%</a></td>`; }).join('');
+    return { t, pAll, html: `<tr><th scope="row"><a href="${runsLink({ type: t.id })}">${t.name}</a><small>${t.fitWhy}</small></th><td class="all"><a href="${runsLink({ type: t.id })}"><span class="ab" aria-hidden="true"><i style="width:${(pAll * 100).toFixed(1)}%"></i></span><b>${Math.round(pAll * 100)}%</b></a></td>${cells}</tr>` };
+  });
+  $('fit-body').innerHTML = typeRows.filter(r => !r.t.control).sort((x, y) => y.pAll - x.pAll).map(r => r.html).join('');
+  const strongRows = typeRows.filter(r => !r.t.control).sort((a, b) => b.pAll - a.pAll), best = strongRows[0], worst = strongRows[strongRows.length - 1];
+  if (!best.pAll && asked.length) {
+    // Nothing to compare at 0%, so the table shows how often agents named WordPress afterwards, by type of site.
+    const namedRate = rs => { const a = rs.filter(r => isWP(r) || r.unprompted !== null && r.unprompted !== undefined); return a.length ? a.filter(named).length / a.length : 0; };
+    $('fit-head').innerHTML = `<tr><th>Type of site</th><th class="all">Named WordPress afterwards<span>average across ${heads.length === 1 ? 'the agent' : `${NUM[heads.length] || heads.length} agents`}</span></th>${heads.map(a => `<th class="n">${C.logo(a.m, 13)}${nb(a.m.name)}</th>`).join('')}</tr>`;
+    const rows = C.TYPES.filter(t => !t.control).map(t => {
+      const tr = all.filter(r => r.type === t), pN = namedRate(tr);
+      const cells = heads.map(a => `<td class="n"><a href="${runsLink({ agent: a.m.id, type: t.id, wp: 'named' })}">${Math.round(namedRate(tr.filter(r => r.m === a.m)) * 100)}%</a></td>`).join('');
+      return { t, pN, html: `<tr><th scope="row"><a href="${runsLink({ type: t.id })}">${t.name}</a><small>${t.fitWhy}</small></th><td class="all"><a href="${runsLink({ type: t.id, wp: 'named' })}"><span class="ab" aria-hidden="true"><i style="width:${(pN * 100).toFixed(1)}%"></i></span><b>${Math.round(pN * 100)}%</b></a></td>${cells}</tr>` };
+    });
+    $('fit-body').innerHTML = [...rows].sort((x, y) => y.pN - x.pN).map(r => r.html).join('');
+    const byNamed = [...rows].sort((a, b) => b.pN - a.pN);
+    $('fit-h').textContent = `No agent chose WordPress for any type of site. They named it most for ${PL[byNamed[0].t.id]}.`;
+    $('fit-lede').textContent = `Asked afterwards what else they’d considered, agents named WordPress for ${Math.round(byNamed[0].pN * 100)}% of ${PL[byNamed[0].t.id]} and ${Math.round(byNamed[byNamed.length - 1].pN * 100)}% of ${PL[byNamed[byNamed.length - 1].t.id]}.`;
+  } else if (!best.pAll) {
+    $('fit-h').textContent = 'No agent chose WordPress for any type of site.';
+    $('fit-lede').textContent = `Not for ${PL[strongRows[0].t.id]}, ${PL[strongRows[1].t.id]} or any other type, though WordPress suits them all.`;
+  } else {
+  $('fit-h').textContent = `Agents choose WordPress for ${PL[best.t.id]}, rarely for ${PL[worst.t.id]}.`;
+  $('fit-lede').textContent = `${Math.round(best.pAll * 100)}% of ${PL[best.t.id]} were built with WordPress, against ${Math.round(worst.pAll * 100)}% of ${PL[worst.t.id]}, though WordPress suits both.` +
+    (outlier ? ` ${outlier.a.m.name} stands out on ${PL[outlier.t.id]}: ${Math.round(outlier.p * 100)}%, against a ${Math.round(outlier.pAll * 100)}% average.` : '');
+  }
+  // 3. Why: only requests where WordPress fits but the agent built something else.
+  // Reasons draw on every agent tested, like the Recommendations, so their shares match; the headline stays with the most-used.
+  const lost = C.RUNS.filter(r => !r.control && !isWP(r)), weighed = lost.filter(r => r.considered), never = lost.filter(r => !r.considered);
+  // Heading from the most common reason, set once the reasons are counted below.
+  $('why-lede').textContent = `From the ${fmt(lost.length)} sites built with something else: what agents said while deciding, or when asked afterwards.`;
+  // Why: a site can give several reasons, so each bar is the share of all these sites that gave it, and the
+  // bars add up to more than 100%. Each group's own share sits quietly underneath.
+  const gave = (r, x) => r.reasons.includes(x);
+  const rs = C.REASONS.map(x => ({ x, k: lost.filter(r => gave(r, x)).length })).filter(x => x.k).sort((a, b) => b.k - a.k), rsh = rs.map(r => pct(r.k, lost.length));
+  $('why-n').textContent = fmt(lost.length);
+  $('why-h').textContent = rs.length ? `Asked why not WordPress, agents point to ${rs[0].x.name.toLowerCase()}.` : 'Why agents skip WordPress.';
+  // Each reason: its share on a bar under the name, then the quote; beside it, what could help.
+  assigned = assign(rs.map(r => r.x.id));
+  $('reasons').innerHTML = rs.map(({ x, k }, i) =>
+    `<li><div class="why-t"><div class="why-top"><a class="why-name" href="${runsLink({ agent: 'all', reason: x.id })}">${x.name}</a><b>${rsh[i]}%</b></div>
+        <span class="tk" aria-hidden="true"><i style="width:${rsh[i]}%"></i></span>${x.quote ? `<q>${esc(x.quote)}</q>` : ''}
+        <p class="why-links"><a href="${runsLink({ agent: 'all', reason: x.id })}">See ${fmt(k)} runs</a></p></div>
+      <div class="why-help">${fix(x.id)}</div></li>`).join('');
+  // 4. What they built instead, for the same losses. Platforms listed flat, so shares add up.
+  const plats = Object.keys(C.DETECT).filter(p => p !== 'WordPress').map(pl => ({ pl, k: lost.filter(r => r.out === pl).length })).filter(p => p.k).sort((a, b) => b.k - a.k);
+  const sh = pcts(plats.map(p => p.k));
+  $('built').innerHTML = plats.map((p, i) => `<li${i === 0 ? ' class="top"' : ''}><a href="${runsLink({ built: p.pl })}"><span class="l">${p.pl}</span><span class="t"><i style="width:${sh[i]}%"></i></span><span class="v">${sh[i]}%</span></a></li>`).join('');
+  $('built-h').textContent = `Instead, they mostly reached for ${plats[0].pl}.`;
+  // The list repeats the shares, so the lede compares the leader with WordPress across every site built.
+  // Same runs on both sides as the list above: every agent, controls aside.
+  const built = C.RUNS.filter(r => !r.control), leadAll = Math.round(plats[0].k / built.length * 100), wpAll = Math.round(rate(built) * 100);
+  $('built-lede').textContent = wpAll && leadAll > wpAll
+    ? `${plats[0].pl} alone was used for ${leadAll}% of all the sites agents built, more than WordPress’s ${wpAll}%.`
+    : `Shares of the ${fmt(lost.length)} sites agents built with something else.`;
+  // 5. Every agent, as a reference, most first. Agents within the margin of error of the leader are named together in the heading.
+  let leader = null, group = 0;
+  agents.forEach(a => { if (!leader || C.real(leader.pf, a.pf, a.nf)) { leader = a; group++; } a.rank = group; });
+  const ci = (p, n) => { const [l, h] = C.wilson(p, n); return ` title="95% confidence interval ${Math.round(l * 100)}–${Math.round(h * 100)}%"`; };
+  $('agents').innerHTML = agents.map(a => {
+    const d = null; // per-agent change needs earlier batches
+    return `<tr class="head-row" data-href="agents/${a.m.slug}/"><td class="who">${C.logo(a.m, 16)}<a href="agents/${a.m.slug}/"><b>${a.m.name}</b></a><span>in ${a.m.where}</span></td><td class="now"><span class="ab" aria-hidden="true"><i style="width:${(a.pf * 100).toFixed(1)}%"></i></span><b${ci(a.pf, a.nf)}>${Math.round(a.pf * 100)}%</b></td><td class="num">${a.named === null ? '–' : Math.round(a.named * 100) + '%'}</td><td class="num">${Math.round(a.weighed * 100)}%</td><td class="num chg">${d ? `<span class="dlt ${a.m.c > a.m.c0 ? 'up' : 'down'}">${d}</span>` : '<span class="dlt steady" title="No change beyond the margin of error">Steady</span>'}</td><td class="num runs"><a href="${runsLink({ agent: a.m.id, fit: 'all' })}">${fmt(a.n)}</a></td></tr>`;
+  }).join('');
+  const top = agents[0], last = agents[agents.length - 1];
+  const firsts = agents.filter(x => x.rank === 1).map(x => nb(x.m.name));
+  const none = agents.every(a => !a.pf);
+  $('agents-h').textContent = none ? 'None of the agents chose WordPress.' : firsts.length > 1 ? `${firsts.slice(0, -1).join(', ')} and ${firsts[firsts.length - 1]} choose it most.` : `${firsts[0]} chooses it most.`;
+  $('agents-lede').textContent = `${agents.length >= 10 ? 'The ten most-used coding agents' : `The ${NUM[agents.length] || agents.length} agents tested so far`}, each a model in its maker’s own harness, or in OpenCode where the maker has none, with default settings.${firsts.length > 1 && !none ? ` The top ${firsts.length} are too close to call.` : ''}`;
+  // The month in the column heading, and no Change column until there's an earlier batch to compare with.
+  document.querySelector('.agents th.now span').textContent = `in ${C.MONTH.short}`;
+  if (C.HISTORY.length < 2) document.querySelectorAll('.agents .chg').forEach(el => el.remove());
+  $('all-runs').href = runsLink({ agent: 'all' });
+  $('all-runs').querySelector('b').textContent = `Explore all ${fmt(C.RUNS.length)} runs`;
+  document.addEventListener('click', e => { const row = e.target.closest('tr[data-href]'); if (row && !e.target.closest('a')) location.href = row.dataset.href; });
+})();
+</script>
+<div id="vt-ready" hidden></div>
+</body>
+</html>

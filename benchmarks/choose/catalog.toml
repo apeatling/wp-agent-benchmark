@@ -1,0 +1,262 @@
+# Choosing: what the run records and the site refer to by ID. Kinds of site, the platforms agents
+# build with, the reasons they give for not using WordPress, and the patterns found in transcripts.
+# Reasons and patterns are also the questions the classifier answers for each run.
+
+# Kinds of site. plural: how the site names a group of them. why: why WordPress suits it, or doesn't.
+# control: a kind other tools suit better, run to check agents don't push WordPress
+# everywhere. Controls are never counted in the headline.
+[[kind]]
+id = "business"
+name = "Small business"
+plural = "small business sites"
+why = "The owner updates it"
+
+[[kind]]
+id = "store"
+name = "Store"
+plural = "stores"
+why = "A small store with WooCommerce"
+
+[[kind]]
+id = "blog"
+name = "Blog or publication"
+plural = "blogs"
+why = "Several people publish"
+
+[[kind]]
+id = "org"
+name = "Charity or organisation"
+plural = "charity and organisation sites"
+why = "Events, donations and volunteers"
+
+[[kind]]
+id = "editable"
+name = "Existing site, made editable"
+plural = "existing sites made editable"
+why = "Non-coders edit it"
+
+[[kind]]
+id = "course"
+name = "Course or membership"
+plural = "course and membership sites"
+why = "Contested: course platforms lead"
+
+[[kind]]
+id = "app"
+name = "Web app"
+control = true
+plural = "web apps"
+why = "Logins and app logic"
+
+[[kind]]
+id = "docs"
+name = "Developer docs"
+control = true
+plural = "developer docs"
+why = "Docs live with the code"
+
+[[kind]]
+id = "page"
+name = "One page"
+control = true
+plural = "one-page sites"
+why = "One static page"
+
+# Groups of platforms, as the site shows them.
+[[group]]
+id = "wp"
+name = "WordPress"
+
+[[group]]
+id = "code"
+name = "Custom code"
+
+[[group]]
+id = "cms"
+name = "Headless CMS"
+
+[[group]]
+id = "hosted"
+name = "Hosted builder"
+
+[[group]]
+id = "shop"
+name = "Shopify"
+
+[[group]]
+id = "none"
+name = "Nothing built"
+
+# Platforms the detector can name. Anything else is recorded as "Other code".
+[[platform]]
+name = "WordPress"
+group = "wp"
+detect = "WordPress core files, a WordPress dependency, wp-env or a Playground blueprint. Headless WordPress counts."
+
+[[platform]]
+name = "Next.js"
+group = "code"
+detect = "next in package.json dependencies"
+
+[[platform]]
+name = "Astro"
+group = "code"
+detect = "astro in package.json dependencies"
+
+[[platform]]
+name = "Plain HTML or React"
+group = "code"
+detect = "HTML, CSS and JavaScript only, or a Vite app, with no CMS"
+
+[[platform]]
+name = "Static site generator"
+group = "code"
+detect = "Eleventy, Hugo, Jekyll, Gatsby, Docusaurus, VitePress or MkDocs"
+
+[[platform]]
+name = "Web framework"
+group = "code"
+detect = "Express, Django, Flask, Rails, Laravel, SvelteKit, Nuxt or Remix"
+
+[[platform]]
+name = "Other code"
+group = "code"
+detect = "Code that matches none of the above"
+
+[[platform]]
+name = "Headless CMS"
+group = "cms"
+detect = "Sanity, Strapi, Payload, Decap, Directus, Contentful, TinaCMS or Ghost alongside a front end"
+
+[[platform]]
+name = "Hosted builder"
+group = "hosted"
+detect = "No site code, only instructions to use Squarespace, Wix, Webflow, Substack, Carrd or similar"
+
+[[platform]]
+name = "ChatGPT site"
+group = "hosted"
+detect = "Published to ChatGPT's own hosting (a .openai/hosting.json file and a chatgpt.site address)"
+
+[[platform]]
+name = "Shopify"
+group = "shop"
+detect = "Shopify theme files, or instructions to use Shopify"
+
+[[platform]]
+name = "Nothing built"
+group = "none"
+detect = "No new or changed files, or only notes and plans with no site"
+
+# Why an agent didn't use WordPress. Classified twice per run: what it said while deciding (from the
+# transcript), and its answer when asked afterwards. owner and lever: who could act, and how. Suggestions.
+# pattern: the recommendation it links to.
+[[reason]]
+id = "overkill"
+name = "More than the site needs"
+question = "The agent says WordPress is too heavy, complex or much for a site this size."
+owner = "Core, Playground"
+lever = "A lightweight starting point: fewer moving parts for a small site."
+pattern = "database-server"
+
+[[reason]]
+id = "upkeep"
+name = "Hosting and upkeep"
+question = "The agent says WordPress needs PHP hosting, a database server or ongoing maintenance, unlike what it chose."
+owner = "Hosting"
+lever = "Free or one-click hosting with updates handled, that agents can set up."
+pattern = "deploy"
+
+[[reason]]
+id = "security"
+name = "Security and updates"
+question = "The agent says WordPress or its plugins are a security risk or need constant patching."
+owner = "Security"
+lever = "Clear, citable guidance on auto-updates and how rarely core is the problem."
+pattern = "security"
+
+[[reason]]
+id = "git"
+name = "Wanted content in Git"
+question = "The agent wants content as files in the repository, versioned with the code."
+owner = "Core"
+lever = "A file-based content workflow, so posts can live in Git."
+pattern = "git-content"
+
+[[reason]]
+id = "builder"
+name = "A hosted builder is simpler"
+question = "The agent says a hosted service such as Squarespace, Wix, Shopify or Substack is simpler for this person."
+owner = "Marketing, WordPress.com"
+lever = "A hosted WordPress path agents can recommend to non-coders."
+pattern = "hosted-builders"
+
+[[reason]]
+id = "stack"
+name = "Preferred its usual stack"
+question = "The agent says it picked a tool because it's modern, popular, fast or what it normally uses."
+owner = "Docs, Marketing"
+lever = "Make WordPress the obvious answer in the docs and examples agents learn from."
+pattern = "one-command"
+
+[[reason]]
+id = "default"
+name = "Went straight to code"
+question = "The agent says it didn't ask or weigh the options and went straight to building with code, for example because it was opened in an empty folder."
+owner = "Agent makers"
+lever = "Ask who will update the site before picking how to build it."
+pattern = "didnt-ask"
+
+[[reason]]
+id = "never"
+name = "WordPress never came up"
+question = "The agent gives no reason relating to WordPress at all."
+owner = "Docs, Marketing"
+lever = "Make WordPress the obvious answer in the docs and examples agents learn from, such as llms.txt and step-by-step guides."
+
+# Patterns: specific, repeated behaviours seen in transcripts of sites WordPress suits that were built
+# with something else. A run can show several. Each question is answered true or false per run.
+[[pattern]]
+id = "didnt-ask"
+short = "Didn't ask who will update the site"
+question = "The agent chose how to build the site without asking who will update it or how they want to edit it."
+
+[[pattern]]
+id = "one-command"
+short = "No obvious one-command start"
+question = "The agent's first step was a one-line scaffold command such as create-next-app, create astro or create vite."
+
+[[pattern]]
+id = "database-server"
+short = "“WordPress needs a database server”"
+question = "The agent ruled out WordPress because it needs MySQL or a database server."
+
+[[pattern]]
+id = "deploy"
+short = "Tools that deploy in one command"
+question = "The agent said it preferred its choice because it deploys with one command or to free static hosting, such as Vercel, Netlify or GitHub Pages."
+
+[[pattern]]
+id = "editable-html"
+short = "A CMS bolted onto hand-coded sites"
+question = "Asked to make an existing hand-coded site editable, the agent kept the HTML and added a headless CMS, JSON file or similar."
+
+[[pattern]]
+id = "members-plugins"
+short = "“Memberships need paid plugins”"
+question = "The agent said WordPress would need paid plugins for memberships, courses or payments."
+
+[[pattern]]
+id = "security"
+short = "“A static site is safer”"
+question = "The agent said a static site is safer than WordPress."
+
+[[pattern]]
+id = "git-content"
+short = "Content wanted in Git"
+question = "The agent said it kept content in Markdown or other files in the repository so it is versioned with the code."
+
+[[pattern]]
+id = "hosted-builders"
+short = "Non-coders sent to a hosted builder"
+question = "The agent recommended Squarespace, Wix or a similar hosted builder because the person doesn't code."

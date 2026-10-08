@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css?v=208">
+<link rel="stylesheet" href="choose.css?v=228">
+<link rel="stylesheet" href="../vt.css">
+<title>Recommendations · Choosing WordPress · Agent Benchmarks</title>
+</head>
+<body data-page="recs">
+<main class="container adv">
+  <header class="page-head">
+    <h1 class="title">Helping agents choose WordPress</h1>
+    <p class="adv-when" id="when"></p>
+    <div class="lede lede--wide adv-intro" id="intro"></div>
+  </header>
+  <section class="section adv-recs" aria-labelledby="recs-h">
+    <h2 class="sr-only" id="recs-h">Recommendations</h2>
+    <ul class="grid8" id="recs"></ul>
+  </section>
+  <section class="section section--last grid c-sec adv-more" aria-labelledby="more-h" id="more">
+    <div class="col-1-5">
+      <h2 class="heading" id="more-h">About these recommendations</h2>
+      <p class="lede" id="foot"></p>
+    </div>
+    <div class="col-7-12">
+      <ul class="adv-steps adv-about" id="others"></ul>
+    </div>
+  </section>
+</main>
+<script src="chrome.js?v=54"></script>
+<script src="../data/choose.js?v=13"></script>
+<script src="data.js?v=65"></script>
+<script>
+(function () {
+  // The month's advice. Each recommendation has five parts, each shown in one place: the action (title), how many
+  // sites it reaches, why (one sentence), its ways to help (each opening to its own detail), and the evidence
+  // (one toggle at the end). The build splits advice.md into those parts without changing a word (escaped
+  // Markdown, https links only); titles are plain text and escaped here.
+  const D = window.WPAB_DATA.choose, C = window.CHOOSE, { esc, fmt } = C;
+  const $ = id => document.getElementById(id);
+  const CHEV = '<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+  // ?batch=2026-10 shows an earlier month's recommendations, as they were.
+  const asked = new URLSearchParams(location.search).get('batch'), H = D.advice_history || {};
+  const batch = asked && H[asked] ? asked : D.batch.id, A = batch === D.batch.id ? D.advice : H[batch];
+  const monthName = b => new Date(b + '-01T12:00:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+  if (!A) { $('intro').innerHTML = '<p>No recommendations for this month yet.</p>'; return; }
+  const earlier = Object.keys(H).filter(b => b !== batch).sort().reverse();
+  $('when').innerHTML = `${batch === D.batch.id ? '' : 'Earlier version: '}${monthName(batch)} recommendations` +
+    (batch !== D.batch.id ? ` <a class="see-inline" href="recommendations">See the latest</a>` : '') +
+    (earlier.length ? ` <span class="adv-earlier">Earlier months: ${earlier.map(b => `<a href="?batch=${b}">${monthName(b)}</a>`).join(', ')}</span>` : '');
+  $('intro').innerHTML = A.intro_html;
+  const clean = t => t.replace(/^\d+\.\s*/, '');
+  const slug = t => clean(t).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  // Recommendations by how many sites they impacted; within each, new ways to help lead and carry a tag.
+  const recs = A.sections.filter(s => s.recommendation).sort((a, b) => b.reach.sites - a.reach.sites);
+  // Every recommendation, way to help and folded section has its own link, so each can be shared on its own.
+  const LINK = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.5 9.5a3 3 0 0 0 4.2 0l2.3-2.3a3 3 0 0 0-4.2-4.2l-.8.8M9.5 6.5a3 3 0 0 0-4.2 0L3 8.8a3 3 0 0 0 4.2 4.2l.8-.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+  const used = new Set(), uid = t => { let id = slug(t.replace(/<[^>]+>/g, '')) || 'idea', n = id, i = 2; while (used.has(n)) n = `${id}-${i++}`; used.add(n); return n; };
+  const copy = (id, label) => `<a class="adv-copy" href="#${id}" data-id="${id}">${LINK}<span>${label}</span></a>`;
+  const sites = s => `${fmt(s.reach.sites)} of ${fmt(s.reach.n)} sites`;
+
+  // Each recommendation's action, reach, why with its evidence just under it, and ways to help. Each way opens to its detail.
+  // The evidence reads like the rest of the site: a list that only introduces sub-points is a quiet label, a leading
+  // "label:" and every figure are bold, and run IDs link to their run.
+  const formatEvidence = () => document.querySelectorAll('.adv-ev .adv-body li').forEach(li => {
+    const own = [...li.childNodes].filter(n => !(n.nodeType === 1 && /^(UL|OL)$/.test(n.tagName)));
+    if (li.querySelector(':scope > ul, :scope > ol') && own.map(n => n.textContent).join('').trim().endsWith(':')) li.classList.add('ev-group');
+    const first = own.find(n => n.nodeType === 3 && n.textContent.trim());
+    const m = first && first.textContent.match(/^(\s*)([^:"“]{1,40}):(\s)/);
+    if (m && !li.classList.contains('ev-group')) {
+      const run = /^C\d{4}-\d{4}$/.test(m[2].trim()), b = document.createElement(run ? 'span' : 'b');
+      b.className = 'ev-k'; b.innerHTML = run ? `<a href="run?id=${m[2].trim()}">${m[2].trim()}</a>:` : esc(m[2]) + ':';
+      first.textContent = first.textContent.slice(m[0].length - m[3].length);
+      li.insertBefore(b, first);
+    }
+    own.filter(n => n.nodeType === 3).forEach(n => {
+      const html = esc(n.textContent)
+        .replace(/\b(C\d{4}-\d{4})\b/g, '<a href="run?id=$1">$1</a>')
+        .replace(/(?<![\w$£€])((?:\d+(?:\.\d+)?%)|(?:of the )?\d+ of \d+ sites|\(\d+\))/g, '<b>$1</b>');
+      if (html !== esc(n.textContent)) { const t = document.createElement('template'); t.innerHTML = html; n.replaceWith(t.content); }
+    });
+  });
+
+  const block = s => { const id = s.id || uid(s.title); return `<li class="b8" id="${id}" style="--s:${s.reach.value}%">
+      <p class="b8-p"><span>Impacted <b>${sites(s)}</b></span></p>
+      <h2>${esc(clean(s.title))}<a class="adv-anchor" href="#${id}" data-id="${id}" aria-label="Copy link to this recommendation">${LINK}</a></h2>
+      ${s.lead_html ? `<p class="why">${s.lead_html}</p>` : ''}
+      ${s.evidence_html ? `<details class="adv-ev"><summary>The evidence${CHEV}</summary><div class="adv-body">${s.evidence_html}</div></details>` : ''}
+      ${s.ways.length ? `<p class="ul-h">Ways to help</p>
+      <ul class="adv-steps">${[...s.ways].sort((a, b) => (a.scale === 'new' ? 0 : 1) - (b.scale === 'new' ? 0 : 1)).map(w => w.parts && w.parts.length
+        ? (wid => `<li class="adv-step"><details id="${wid}"><summary><span>${w.html}</span>${w.scale === 'new' ? '<em class="adv-new">New idea</em>' : ''}${CHEV}</summary><dl class="adv-step-d adv-body">${w.parts.map(x => `<dt>${esc(x.label)}</dt><dd>${x.html}</dd>`).join('')}<dt></dt><dd>${copy(wid, 'Copy link to this idea')}</dd></dl></details></li>`)(w.id || uid(w.html))
+        : `<li><span>${w.html}</span></li>`).join('')}</ul>` : ''}</li>`; };
+  $('recs').innerHTML = recs.map(block).join('');
+  formatEvidence();
+
+  // The rest of the advice (where WordPress isn't the best fit, about the numbers, what isn't covered) explains the
+  // recommendations, so it sits under them as rows like the ways to help, each opening in place.
+  const others = A.sections.filter(s => !s.recommendation);
+  $('others').innerHTML = others.map(s => (id => `<li class="adv-step"><details id="${id}"><summary><span>${esc(clean(s.title))}</span>${CHEV}</summary><div class="adv-body">${s.html}<p>${copy(id, 'Copy link to this section')}</p></div></details></li>`)(s.id || uid(s.title))).join('');
+
+  const fromHash = () => { const el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (!el) return; if (el.tagName === 'DETAILS') el.open = true; el.scrollIntoView({ block: 'start' }); };
+  fromHash(); addEventListener('hashchange', fromHash);
+  // A link copies the full address and updates the address bar, without jumping the page.
+  document.addEventListener('click', e => {
+    const a = e.target.closest('.adv-anchor, .adv-copy'); if (!a) return;
+    e.preventDefault(); e.stopPropagation();
+    // The month goes in the link, so a shared idea still opens after next month's recommendations replace it.
+    const url = `${location.origin}${location.pathname}?batch=${batch}#${a.dataset.id}`;
+    history.replaceState(null, '', url);
+    (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(() => {
+      a.classList.add('copied'); const t = a.querySelector('span'), was = t && t.textContent;
+      if (t) t.textContent = 'Link copied'; setTimeout(() => { a.classList.remove('copied'); if (t) t.textContent = was; }, 1600);
+    }, () => {});
+  });
+  $('foot').textContent = `“Impacted” counts the sites, of those agents built with something other than WordPress in ${monthName(batch)}, where the agent raised an obstacle the recommendation answers. Written from the runs, checked facts and the work already in flight; every quote is checked against its run. Ways to help are suggestions; anyone can pick one up.`;
+})();
+</script>
+<div id="vt-ready" hidden></div>
+</body>
+</html>

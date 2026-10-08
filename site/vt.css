@@ -1,0 +1,40 @@
+/* Page transitions between the picker and a benchmark, in three steps:
+   1. what isn't on the next page fades out,
+   2. what is on both pages moves into place,
+   3. what's new on the next page fades in.
+   Text keeps its proportions while it moves, and nothing moves for people who ask for less motion. */
+:root { --vt-out: 220ms; --vt-move: 520ms; --vt-in: 280ms; --vt-ease: cubic-bezier(.2, .7, .2, 1); }
+/* Behind the fading pages: the same background as every page (site.css body), so it stays put while pages change */
+::view-transition {
+  background:
+    radial-gradient(1100px 620px at 50% -8%, rgba(150, 175, 205, .085), transparent 62%),
+    radial-gradient(1600px 900px at 50% 120%, rgba(0, 0, 0, .35), transparent 70%),
+    #0d0f14;
+}
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in { from { opacity: 0; } }
+
+/* Shared pieces: wait for the fade out, then move */
+::view-transition-group(*) { animation-duration: var(--vt-move); animation-delay: var(--vt-out); animation-timing-function: var(--vt-ease); animation-fill-mode: both; }
+::view-transition-old(*), ::view-transition-new(*) { height: 100%; width: auto; mix-blend-mode: normal; }
+/* While moving, the old and new copies cross over without brightening each other */
+::view-transition-old(*) { animation: vt-out var(--vt-move) var(--vt-ease) var(--vt-out) both; }
+::view-transition-new(*) { animation: vt-in var(--vt-move) var(--vt-ease) var(--vt-out) both; }
+/* A named piece on only one of the pages behaves like the page: out first, or in last */
+::view-transition-old(*):only-child { animation: vt-out var(--vt-out) ease-out both; }
+::view-transition-new(*):only-child { animation: vt-in var(--vt-in) ease-in calc(var(--vt-out) + var(--vt-move)) both; }
+
+/* Everything that isn't shared (the page itself): out first, in last. After the rules above, so it wins over them. */
+::view-transition-old(root) { animation: vt-out var(--vt-out) ease-out both; }
+::view-transition-new(root) { animation: vt-in var(--vt-in) ease-in calc(var(--vt-out) + var(--vt-move)) both; }
+::view-transition-group(root) { animation: none; }
+
+/* Bars wait at zero while a dashboard arrives, then grow as it fades in (the class comes off when the fade starts) */
+html.vt-arriving .share-bar .seg, html.vt-arriving .out-bar span { width: 0 !important; }
+
+/* The prototype banner is the same on every page, so it stays still */
+::view-transition-group(vt-proto), ::view-transition-old(vt-proto), ::view-transition-new(vt-proto) { animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}

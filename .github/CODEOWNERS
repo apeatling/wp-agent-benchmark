@@ -1,0 +1,7 @@
+# Changes to the published results and to what the benchmark measures need the maintainer's review.
+/data/          @apeatling
+/site/data/     @apeatling
+/benchmarks/    @apeatling
+/tasks/         @apeatling
+/schema/        @apeatling
+/.github/       @apeatling

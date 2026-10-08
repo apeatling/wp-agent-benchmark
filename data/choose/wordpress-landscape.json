@@ -1,0 +1,1056 @@
+{
+ "checked": "2026-10-07",
+ "note": "What is in flight across WordPress and Automattic for AI agents. Researched with sources; refresh monthly; people can add what they know, with sources. Each project has a steward: the open project (WordPress.org teams, whoever employs the contributors) or a company. Company products are part of the ecosystem, not the project.",
+ "projects": [
+  {
+   "id": "wp-ai-team",
+   "name": "WordPress AI Team (make.wordpress.org/ai) and its building blocks",
+   "owner": "WordPress.org AI Team (leads include Jeff Paul, Automattic-sponsored; Anne McCarthy (@annezazu) compiles the 7.2 roadmap)",
+   "status": "in progress",
+   "what": "The core contributor team that owns the AI building blocks: PHP AI Client / WP AI Client, Abilities API, MCP Adapter, the AI plugin (formerly 'AI Experiments') and the provider connector plugins. Its stated approach is plugin-first, modelled on the Performance Team: features prove themselves in canonical plugins before any core merge.",
+   "latest": "2 Sep 2026 weekly summary: 7.2 roadmap planning, embeddings blocked on PHP AI Client 1.5.0 (later released 16 Sep), and a call for more maintainers for the PHP AI Client, the WP AI Client and three core connector plugins. 5 Aug 2026: early 'AI trust ladder' discussion (four agent autonomy levels plus a kill switch). 6 Oct 2026: AI plugin 1.4.0 post.",
+   "roadmap": "Roadmap to 7.2 (18 Sep 2026; release early Dec 2026): refine experimental abilities and explore write abilities (read-only coverage of media, taxonomies, comments); move the MCP Adapter to the latest spec and publish it in the plugin directory; MCP access switch in the AI plugin; WebMCP experiment; agent identity/delegation; knowledge and guidelines; embeddings and semantic search; streaming in the PHP AI Client. The roadmap says AI features must show adoption and value before core consideration.",
+   "gaps": "No 'agent toolkit' package or distribution plan has been published; the pieces ship separately (core APIs, AI plugin, MCP Adapter plugin, connector plugins, agent-skills repo). The team is short of maintainers. Its focus is AI features inside an existing site plus agent access to that site; there is no work stream for agents creating a site from nothing or choosing a platform.",
+   "relevance": "This is the official channel shaping how agents operate WordPress. Its plugin-first, adoption-gated stance means agent-facing primitives reach core slowly, so an agent cannot assume they exist on a typical install.",
+   "sources": [
+    "https://make.wordpress.org/ai/",
+    "https://make.wordpress.org/ai/2026/09/04/ai-contributor-weekly-summary-2-september-2026/",
+    "https://make.wordpress.org/ai/2026/08/06/ai-contributor-weekly-summary-5-august-2026/",
+    "https://make.wordpress.org/core/2026/09/18/roadmap-to-7-2/",
+    "https://www.technology.org/2025/05/28/wordpress-launches-dedicated-ai-team-to-shape-future-development/"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "ai-client-core",
+   "name": "PHP AI Client / WP AI Client (core AI Client)",
+   "owner": "WordPress AI Team",
+   "status": "shipped",
+   "what": "A provider-agnostic SDK (WordPress/php-ai-client) plus a WordPress wrapper, merged into core in 7.0, that lets plugins prompt any connected model through one API. The standalone wp-ai-client repo was archived after the merge.",
+   "latest": "WordPress 7.0 'Armstrong' released 20 May 2026 with the AI Client in core. PHP AI Client 1.5.0 (embeddings) released 16 Sep 2026. 7.1 (19 Aug 2026) refined execute_abilities() (Trac #65504).",
+   "roadmap": "Streaming responses (php-ai-client issue #100) and embeddings integration in the 7.2 cycle.",
+   "gaps": "It is an outbound client for features inside WordPress, not a surface external agents use. It needs a connector plugin and an API key before it does anything. Maintainer capacity is thin.",
+   "relevance": "Indirect. It makes WordPress 'AI-native' for in-site features but does nothing for an external agent deciding to build on WordPress.",
+   "sources": [
+    "https://wordpress.org/news/2026/05/armstrong/",
+    "https://github.com/WordPress/php-ai-client",
+    "https://github.com/WordPress/wp-ai-client",
+    "https://make.wordpress.org/core/2026/08/05/wordpress-7-1-field-guide/",
+    "https://make.wordpress.org/core/2026/09/18/roadmap-to-7-2/"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "connectors-hub",
+   "name": "Connectors API and Settings > Connectors hub",
+   "owner": "WordPress core / AI Team",
+   "status": "shipped",
+   "what": "A core screen and API (WordPress 7.0) for managing AI provider credentials. It ships with OpenAI, Google and Anthropic presets; providers are implemented as separate connector plugins (Anthropic, Google, OpenAI, Ollama).",
+   "latest": "Connector plugin releases on 19-20 Aug 2026: Anthropic 1.0.4, Google 1.1.1, Ollama 1.2.0, OpenAI 1.1.0. Work is under way on 'featured connectors' beyond the big three (WordPress/ai issue #27).",
+   "roadmap": "7.2: connector activation/deactivation (Trac #65523), performance (Trac #65215), accepting keys during provider downtime (Trac #65551). A Secrets API, approved for 7.2, gives core first-class credential storage.",
+   "gaps": "It covers model providers for in-site AI, not inbound agent access. Keys are entered by a human in wp-admin.",
+   "relevance": "Low for platform choice. It matters only if an agent-built site needs runtime AI features.",
+   "sources": [
+    "https://wordpress.org/news/2026/05/armstrong/",
+    "https://make.wordpress.org/ai/2026/08/20/ai-contributor-weekly-summary-19-august-2026/",
+    "https://make.wordpress.org/core/2026/09/18/roadmap-to-7-2/",
+    "https://make.wordpress.org/core/2026/08/25/proposal-a-secrets-api-for-wordpress-7-2/"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "abilities-api",
+   "name": "Abilities API (server-side, core)",
+   "owner": "WordPress core / AI Team (gziolo, jorgefilipecosta and others)",
+   "status": "shipped",
+   "what": "A core registry (WordPress 6.9) of named, schema-described, permission-checked units of functionality, discoverable over REST, WP-CLI and MCP. 7.1 added wp_get_abilities() filtering, a unified public exposure flag, execution lifecycle hooks (wp_ability_invoked, validate_input/output filters) and client-compatible JSON Schema preparation.",
+   "latest": "WordPress 7.1 (19 Aug 2026). Coverage: core registers only 3 abilities, all read-only: core/get-site-info, core/get-user-info and core/get-environment-info. They shipped in 6.9 and were unchanged in count through 7.1, with 5 extra profile fields added to get-user-info.",
+   "roadmap": "Core abilities tracking issue WordPress/ai #40 plans site/settings, users, content, media, taxonomy, comments, menus, themes and plugins abilities; it shows 1 of 51 tasks complete and is milestoned 'Future Release'. A CRUD naming pattern (core/content-query, -create, -update, -delete) is targeted at 7.2, polyfilled in the AI plugin first. Destructive actions (delete, uninstall, theme switch) are deliberately excluded for now.",
+   "gaps": "Coverage is tiny. An agent cannot create content, set a theme, edit templates or global styles, install plugins or configure a site through core abilities. The read abilities merge proposal for 7.1 was rejected, and nothing covers site creation or design.",
+   "relevance": "The abilities layer is WordPress's main machine interface for agents, and today it covers almost none of what an agent building a site needs, which pushes agents back to the REST API, WP-CLI or the filesystem.",
+   "sources": [
+    "https://make.wordpress.org/core/2025/12/02/abilities-api/",
+    "https://make.wordpress.org/core/2026/07/31/abilities-api-improvements-in-wordpress-7-1/",
+    "https://make.wordpress.org/core/2026/08/05/wordpress-7-1-field-guide/",
+    "https://github.com/WordPress/ai/issues/40",
+    "https://developer.wordpress.org/reference/functions/wp_register_core_abilities/",
+    "https://github.com/WordPress/abilities-api"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "core-abilities-expansion",
+   "name": "Core abilities expansion (read/CRUD abilities proposal)",
+   "owner": "WordPress AI Team / core",
+   "status": "stalled",
+   "what": "A proposal to add core/read-settings, core/read-content and core/read-users to core in 7.1, with 'manage' and CRUD abilities to follow. These now live in the AI plugin as core/content-query, core/users-query and core/settings-get.",
+   "latest": "The merge proposal (2 Jul 2026) was rejected for 7.1; release leadership asked for testing via the AI plugin first. On 19-20 Aug 2026 the team adopted a CRUD structure aimed at 7.2. AI plugin 1.4.0 (5 Oct 2026) renamed the abilities to the CRUD naming.",
+   "roadmap": "Aimed at 7.2, but the 7.2 roadmap lists AI items as 'AI plugin, not guaranteed for Core'. Open proposals include navigation menu abilities (mcp-adapter #181).",
+   "gaps": "Write abilities are still being explored. There are no abilities for themes, templates, global styles, patterns or plugin installation.",
+   "relevance": "Shows the coverage gap will not close in core during 2026, so agents relying on abilities alone cannot build a site.",
+   "sources": [
+    "https://make.wordpress.org/core/2026/07/02/merge-proposal-expanding-wordpress-core-abilities/",
+    "https://make.wordpress.org/ai/2026/08/20/ai-contributor-weekly-summary-19-august-2026/",
+    "https://make.wordpress.org/ai/2026/10/06/whats-new-in-ai-1-4-0/",
+    "https://github.com/WordPress/mcp-adapter/issues/181"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "client-side-abilities",
+   "name": "Client-side Abilities API (@wordpress/abilities, @wordpress/core-abilities)",
+   "owner": "WordPress core / Gutenberg",
+   "status": "shipped",
+   "what": "The JavaScript counterpart (WordPress 7.0) to the server Abilities API. Server abilities are auto-fetched into admin pages, and plugins can register browser-only abilities such as navigating or inserting blocks, wired to the command palette. It is described as the foundation for browser agents and WebMCP.",
+   "latest": "Shipped in 7.0 (20 May 2026). Dev note dated 24 Mar 2026.",
+   "roadmap": "Bridging to WebMCP via the AI plugin experiment (WordPress/ai #448). gziolo's 7.1 planning post lists an @wordpress/ai JS client and wp-ai/v1 REST endpoints as undecided.",
+   "gaps": "It only works inside wp-admin in a browser session. Few client abilities exist beyond core plumbing, and it is not useful to headless or CLI agents.",
+   "relevance": "Matters for in-browser agents such as ChatGPT's browser or WebMCP clients operating an existing site, not for choosing or provisioning one.",
+   "sources": [
+    "https://make.wordpress.org/core/2026/03/24/client-side-abilities-api-in-wordpress-7-0/",
+    "https://wordpress.org/news/2026/05/armstrong/",
+    "https://gziolo.pl/2026/04/25/wordpress-core-ai-7-1-planning-and-beyond/"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "mcp-adapter",
+   "name": "MCP Adapter (WordPress/mcp-adapter)",
+   "owner": "WordPress AI Team (maintainers include galatanovidiu, justlevine); successor to Automattic/wordpress-mcp",
+   "status": "beta",
+   "what": "A canonical plugin that exposes registered abilities as MCP tools, resources and prompts. It has a default server with three meta-tools (discover-abilities, get-ability-info, execute-ability), STDIO via WP-CLI and Streamable HTTP, and auth via application passwords or OAuth through the @automattic/mcp-wordpress-remote proxy. Abilities are private by default and must be flagged public.",
+   "latest": "v0.7.0, 2 Oct 2026: the first release published to the WordPress.org plugin directory (40,000+ active installs at fetch time). Adds MCP 2026-07-28 support and exact-revision schemas, still serves 2025-06-18 and 2024-11-05 clients, adds elicitation, and deprecates bundling as a Composer library. GitHub: 1.8k stars, 71 open issues. An announcement post is still being drafted (tracking issue #178).",
+   "roadmap": "7.2: keep ability definitions stable across breaking MCP revisions (#313); one-click enablement and per-ability exposure from the AI plugin's 'MCP Access' experiment (WordPress/ai PR #992); keyword search in discovery and scaling discovery for large ability catalogs (#371, #370); site-owner connection guides (#369, #375).",
+   "gaps": "It is still 0.x and only exposes what abilities exist, which in core is 3 read-only ones, so out of the box an agent can do almost nothing. Open bugs include STDIO exiting after 60s when stdin is a socket (Claude Code, #308), Streamable HTTP 'Session not found' errors, Origin header validation (#323/#333), 'authorized but no MCP server found' (#361), resources/read 500s, and non-UTF-8 output closing the transport. There is no approval UI or audit hook (#176, #228). It requires an existing, reachable site plus credentials.",
+   "relevance": "The official answer to 'how does an agent operate WordPress'. It is only useful after a site exists, and for site building it currently loses to filesystem/WP-CLI access.",
+   "sources": [
+    "https://github.com/WordPress/mcp-adapter",
+    "https://github.com/WordPress/mcp-adapter/releases/tag/v0.7.0",
+    "https://github.com/WordPress/mcp-adapter/issues/178",
+    "https://github.com/WordPress/mcp-adapter/issues/313",
+    "https://wordpress.org/plugins/mcp-adapter/",
+    "https://developer.wordpress.org/news/2026/02/from-abilities-to-ai-agents-introducing-the-wordpress-mcp-adapter/",
+    "https://make.wordpress.org/ai/2025/07/17/mcp-adapter/",
+    "https://github.com/Automattic/wordpress-mcp"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "mcp-wordpress-remote",
+   "name": "@automattic/mcp-wordpress-remote (HTTP/OAuth proxy)",
+   "owner": "Automattic",
+   "status": "beta",
+   "what": "A Node proxy that lets local MCP clients reach a remote WordPress MCP Adapter endpoint, handling OAuth or application-password auth.",
+   "latest": "v0.5.0 and v0.5.1, 6 Oct 2026: transparent forwarding, so clients negotiate the protocol version, including 2026-07-28, directly with WordPress. Support for the archived wordpress-mcp format was removed.",
+   "roadmap": "None stated.",
+   "gaps": "Needs Node.js and a site that already runs the MCP Adapter. Upgrading means re-authenticating.",
+   "relevance": "Part of the plumbing an agent needs to reach a self-hosted site, which adds setup friction compared with hosted competitors' native MCP endpoints.",
+   "sources": [
+    "https://github.com/Automattic/mcp-wordpress-remote",
+    "https://developer.wordpress.org/news/2026/02/from-abilities-to-ai-agents-introducing-the-wordpress-mcp-adapter/"
+   ],
+   "steward": "company: Automattic"
+  },
+  {
+   "id": "ai-plugin",
+   "name": "AI plugin (formerly AI Experiments; wordpress.org/plugins/ai)",
+   "owner": "WordPress AI Team",
+   "status": "beta",
+   "what": "A canonical plugin of AI features and experiments: alt text, titles, excerpts, summaries, translation, comment moderation, type-ahead, image generation, an Abilities Explorer, and experimental abilities. It is the staging ground for core abilities and MCP access.",
+   "latest": "1.4.0, 5 Oct 2026 (requires WP 7.0.3; 50,000+ installs): Markdown feeds (/feed/markdown/ and ?output_format=markdown) aimed at AI agents, an embeddings table and vector ranking, abilities renamed to the CRUD scheme. 1.3.0 (18 Aug) added five opt-in custom abilities; releases are now monthly.",
+   "roadmap": "1.5.0+: text to speech, internal link suggestions, C2PA provenance, role and user access controls, term/media/user/content CRUD abilities. MCP Access experiment (PR #992), WebMCP experiment (#448), Knowledge/Guidelines experiment (PR #949).",
+   "gaps": "Opt-in and admin-installed. Its features are in-site AI for editors, not agent site building, and its plugin page still lists MCP as 'coming soon'.",
+   "relevance": "It is where agent-facing primitives (abilities, MCP switch, Markdown output) incubate. An agent cannot rely on it being installed.",
+   "sources": [
+    "https://wordpress.org/plugins/ai/",
+    "https://make.wordpress.org/ai/2026/10/06/whats-new-in-ai-1-4-0/",
+    "https://make.wordpress.org/ai/2026/08/18/whats-new-in-ai-1-3-0/",
+    "https://github.com/WordPress/ai",
+    "https://github.com/WordPress/ai/pull/992"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "agent-identity",
+   "name": "Agent users / agent identity, AI trust ladder, Secrets API",
+   "owner": "WordPress AI Team / core",
+   "status": "proposal",
+   "what": "Proposals to give agents their own auditable identity instead of borrowing a human's application password (WordPress/ai #923), a four-level 'trust ladder' plus kill switch controlling which abilities agents see, and a core Secrets API for credentials.",
+   "latest": "#923 opened 10 Aug 2026 and was still active on 6 Oct 2026. The trust ladder was discussed on 5 Aug 2026. The Secrets API proposal (25 Aug 2026) was approved for 7.2. Application password hardening is on the 7.2 roadmap.",
+   "roadmap": "Agent identity and delegation is listed on the 7.2 roadmap as exploration work.",
+   "gaps": "Today every agent action is attributed to a human user, there is no agent-specific permission model in core, and there is no approval workflow.",
+   "relevance": "Governance and safety are a common objection to letting agents run sites. WordPress.com and VIP already offer per-tool enablement and kill switches; core does not yet.",
+   "sources": [
+    "https://github.com/WordPress/ai/issues/923",
+    "https://make.wordpress.org/ai/2026/08/06/ai-contributor-weekly-summary-5-august-2026/",
+    "https://make.wordpress.org/core/2026/08/25/proposal-a-secrets-api-for-wordpress-7-2/",
+    "https://make.wordpress.org/core/2026/09/18/roadmap-to-7-2/"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "webmcp",
+   "name": "WebMCP integration (AI plugin experiment and Playground WebMCP)",
+   "owner": "WordPress AI Team; Playground team",
+   "status": "in progress",
+   "what": "Exposes WordPress tools to in-browser agents through the draft W3C community-group WebMCP API. Playground ships 16 WebMCP tools (site management, PHP, navigation, filesystem) and proxies tools registered inside the WordPress iframe to the top-level page.",
+   "latest": "Playground WebMCP post, 5 Sep 2026: ChatGPT desktop's built-in browser supports these 'Site tools'. Playground v3.1.53 (7 Sep 2026) added proxying of tools registered inside the WordPress iframe. The AI plugin experiment (#448) was opened 20 Apr 2026 and updated 2 Oct 2026.",
+   "roadmap": "WebMCP experimentation is on the 7.2 roadmap.",
+   "gaps": "The spec is unstable and not on the W3C standards track. Registering an ability does not automatically create a WebMCP tool, and support depends on the agent's browser.",
+   "relevance": "Opens a path for consumer chat apps to build in Playground without local tooling, which is relevant to agents starting from nothing.",
+   "sources": [
+    "https://make.wordpress.org/playground/2026/09/05/wordpress-playground-and-webmcp-bringing-ai-agents-into-your-browser-workflow/",
+    "https://github.com/WordPress/ai/issues/448",
+    "https://make.wordpress.org/core/2026/09/18/roadmap-to-7-2/"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "guidelines-knowledge",
+   "name": "Guidelines and wp_knowledge (site context for agents)",
+   "owner": "WordPress AI Team / Gutenberg (gziolo)",
+   "status": "stalled",
+   "what": "A Settings > Guidelines screen for editorial and design standards, built on a proposed wp_knowledge post type that stores author- and agent-facing site knowledge.",
+   "latest": "Landed as a Gutenberg 22.7 experiment (Mar 2026). The core merge proposal (22 Jun 2026) was declined on 10 Jul 2026: Matt Mullenweg wants AI features in core only after real adoption with double-digit week-to-week growth, and pointed AI priorities at evals and benchmarking (WP-Bench). The work moved to the AI plugin (PR #949).",
+   "roadmap": "'Knowledge & guidelines' is on the 7.2 roadmap (Gutenberg issue #77230) as AI plugin work.",
+   "gaps": "No core standard place for agents to read or write site intent, brand or design rules. Studio Code uses its own DESIGN.md convention instead.",
+   "relevance": "Persistent site context is something agents need across sessions. Its absence from core means each tool invents its own.",
+   "sources": [
+    "https://make.wordpress.org/ai/2026/03/23/guidelines-lands-in-gutenberg-22-7/",
+    "https://make.wordpress.org/core/2026/06/22/merge-proposal-guidelines-built-on-knowledge/",
+    "https://github.com/WordPress/ai/pull/949",
+    "https://github.com/WordPress/gutenberg/issues/77230"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "wp-bench",
+   "name": "WP-Bench (official WordPress AI benchmark)",
+   "owner": "WordPress AI Team",
+   "status": "beta",
+   "what": "A benchmark of how well models write WordPress code. It grades with static checks and runtime assertions in a real WordPress 7.1 + SQLite Docker runtime, with a fresh site per test.",
+   "latest": "Repo active (pushed 7 Oct 2026; 73 stars, 21 open issues; runtime 2.1 on WP 7.1). WordCamp US 2026 contributor day worked on its performance. Mullenweg named evals and benchmarking as the AI priority in Jul 2026.",
+   "roadmap": "Not formally stated.",
+   "gaps": "Measures code knowledge, not whether agents choose WordPress, nor end-to-end site building or deployment.",
+   "relevance": "Leadership's preferred lever is model quality on WordPress. It is complementary to, but does not cover, the platform-choice and site-building stages.",
+   "sources": [
+    "https://github.com/WordPress/wp-bench",
+    "https://make.wordpress.org/ai/2026/08/27/ai-contributor-weekly-summary-26-august-2026/",
+    "https://make.wordpress.org/core/2026/06/22/merge-proposal-guidelines-built-on-knowledge/"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "wordpress-agent-skills",
+   "name": "WordPress/agent-skills",
+   "owner": "WordPress project (top contributors include ciampo, bgrgicak and fellyph); moved from Automattic/agent-skills, which is now archived",
+   "status": "beta",
+   "what": "Portable Agent Skills for coding assistants (Claude, Codex, Cursor, Copilot, Antigravity): wordpress-router, wp-project-triage, block development, block themes, plugin development, REST API, Interactivity API, the abilities-api/-audit/-verify skills, WP-CLI and ops, performance, PHPStan, wp-playground, blueprint, wp-env, WPDS, and plugin directory guidelines. Installed via `npx skills add` or a skillpack script.",
+   "latest": "Active (pushed 5 Oct 2026; 2.2k stars; 51 open issues and PRs). The wp-playground skill was announced on wordpress.org/news on 30 Jan 2026.",
+   "roadmap": "No formal roadmap. Open proposals cover skills for wp-admin-ui, wp-block-post-content (raw block markup), wp-knowledge, plugin-check, compromise response, WordPress VIP, hosting providers (#42), upgrading sites to newer core (#41), WP 7.0+ surfaces (#48), and Gemini CLI support. The Jan 2026 post mentioned persistent Playground sites and Blueprint generation.",
+   "gaps": "Issue #101: there is no actual eval runner; the 'eval harness' only validates frontmatter, so nobody can tell whether skills help. Issue #97: the skill catalog has drifted from CI, router and evals. Skills target developers working in an existing repo; there is no skill for starting a site from nothing, choosing hosting or deploying. Global installs break cwd-relative scripts (#86).",
+   "relevance": "The main official artifact an agent would load to 'know WordPress'. It does not help with the decision to use WordPress or with going from an empty folder to a live site.",
+   "sources": [
+    "https://github.com/WordPress/agent-skills",
+    "https://github.com/WordPress/agent-skills/issues/101",
+    "https://github.com/WordPress/agent-skills/issues/97",
+    "https://github.com/WordPress/agent-skills/issues/48",
+    "https://github.com/WordPress/agent-skills/issues/42",
+    "https://wordpress.org/news/2026/01/new-ai-agent-skill/",
+    "https://github.com/Automattic/agent-skills"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "wp-site-creator",
+   "name": "Automattic/wordpress-agent-skills (Create WP Site / WP Site Creator plugins, early Studio MCP)",
+   "owner": "Automattic (WordPress.com)",
+   "status": "stalled",
+   "what": "Prototype Claude Code and Claude Cowork plugins (/quick-build, /design-site, /create-site) that generate a block theme and content from a description and deploy it to a local Studio site through an early Studio MCP server.",
+   "latest": "Announced on the WordPress.com blog on 13 Feb 2026. Last commits are from 28 Feb 2026 and the repo was last pushed 17 Mar 2026; it has 115 stars and 5 open issues, including an unanswered May 2026 question about Claude Design. Its role appears superseded by Studio Code and `studio mcp` (inferred, not stated).",
+   "roadmap": "The FAQ says it would be ported to Codex, OpenCode and others, and Automattic would look at approaches that do not need an MCP server. No sign of this happening.",
+   "gaps": "Claude-only, requires Studio installed locally, not production-ready, and deploys only to local Studio and onward to WordPress.com or Pressable.",
+   "relevance": "The first 'agent builds a WordPress site from nothing' package. Its stalling shows Automattic consolidating into Studio.",
+   "sources": [
+    "https://github.com/Automattic/wordpress-agent-skills",
+    "https://wordpress.com/blog/2026/02/13/new-plugin-and-skills-for-claude-cowork/",
+    "https://ma.tt/2026/02/wp-ai-updates/"
+   ],
+   "steward": "company: Automattic"
+  },
+  {
+   "id": "wpcom-mcp",
+   "name": "WordPress.com MCP server",
+   "owner": "Automattic (WordPress.com)",
+   "status": "shipped",
+   "what": "A hosted, OAuth 2.1 MCP endpoint (public-api.wordpress.com/wpcom/v2/mcp/v1) for WordPress.com and Jetpack-connected sites. Its 19 tools are 8 action facades plus 11 standalone tools, covering content authoring, site editing (templates, navigation, global styles, themes), plugins, users, site settings and stats, account, create-site (site.provision), domain purchase and DNS, plans and checkout URLs.",
+   "latest": "Read-only Oct 2025, then writes on 20 Mar 2026 (19 tools across posts, pages, comments, categories, tags and media). The 19 Jun 2026 changelog added design editing, plugin management, team access, 'Create a site' and billing lookups. Docs updated 21 Sep 2026; a 6 Oct 2026 blog post covers uses.",
+   "roadmap": "Not stated publicly.",
+   "gaps": "Needs a paid plan (free sites get 30 days; self-hosted needs Jetpack AI or Complete). Write tools are off by default and a human must enable them. Purchases go through human checkout URLs. Free-plan sites cannot change design. Only WordPress.com hosting can be created. It is not built on the core MCP Adapter, so the official stack and WordPress.com differ.",
+   "relevance": "The most complete 'agent creates and runs a WordPress site' surface that exists, but it is tied to one host. It is the strongest current reason an agent might pick WordPress via WordPress.com.",
+   "sources": [
+    "https://developer.wordpress.com/docs/mcp/",
+    "https://developer.wordpress.com/docs/mcp/tools-reference/",
+    "https://wordpress.com/blog/2026/03/20/ai-agent-manage-content/",
+    "https://wordpress.com/blog/2026/06/19/changelog-image-editing-multitask/",
+    "https://wordpress.com/blog/2026/10/06/wordpress-mcp-uses/",
+    "https://wordpress.com/support/mcp/",
+    "https://wordpress.com/ai/mcp/"
+   ],
+   "steward": "company: Automattic"
+  },
+  {
+   "id": "wpcom-claude-connector",
+   "name": "WordPress.com Claude Connector and ChatGPT plugin",
+   "owner": "Automattic with Anthropic / OpenAI",
+   "status": "shipped",
+   "what": "A listing in Claude's connector directory, plus a ChatGPT integration, both backed by the WordPress.com MCP server.",
+   "latest": "Claude connector launched 5 Feb 2026 as read-only; it gained write tools as the MCP server expanded (20 Mar 2026 onward). The ChatGPT plugin is referenced on wordpress.com/ai and in the 6 Oct 2026 post; its launch date is not verified.",
+   "roadmap": "Not stated.",
+   "gaps": "The same plan and host limits as the MCP server. Self-hosted WordPress has no equivalent first-party directory listing.",
+   "relevance": "High. Directory presence inside Claude and ChatGPT is how consumer agents discover a platform, and only WordPress.com, not WordPress generically, is listed.",
+   "sources": [
+    "https://wordpress.com/blog/2026/02/05/claude-connector/",
+    "https://claude.com/connectors/wordpress-com",
+    "https://wordpress.com/ai/",
+    "https://wordpress.com/blog/2026/10/06/wordpress-mcp-uses/"
+   ],
+   "steward": "company: Automattic"
+  },
+  {
+   "id": "studio-and-cli",
+   "name": "WordPress Studio (desktop app) and Studio CLI",
+   "owner": "Automattic",
+   "status": "shipped",
+   "what": "A free local WordPress environment (Playground PHP-WASM or a native PHP runtime, SQLite) with a CLI for site create/start/stop, WP-CLI, Blueprints, WordPress.com preview sites, and push/pull sync to WordPress.com and Pressable.",
+   "latest": "v1.23.0, 5 Oct 2026: the agentic UI is now the only UI, with a Design system tab, live-site connect/publish for WordPress.com and Pressable, and `studio create --from <URL>` that rebuilds a site via Data Liberation. v1.21.0 (7 Sep) added `studio create --from` for static artifacts, directories and zips.",
+   "roadmap": "Blueprints v2 support once stable in Playground. An open PoC PR #4993 (2 Oct 2026) packages Studio as a plugin for ChatGPT/Codex and Claude Code.",
+   "gaps": "Deploy targets are only WordPress.com and Pressable (other hosts need a manual export). It needs a desktop install or CLI install plus a WordPress.com login for previews and AI.",
+   "relevance": "Automattic's main local agent runtime, and the closest thing to an end-to-end agent build-and-deploy path, though tied to Automattic hosting.",
+   "sources": [
+    "https://github.com/Automattic/studio",
+    "https://github.com/Automattic/studio/releases/tag/v1.23.0",
+    "https://github.com/Automattic/studio/releases/tag/v1.21.0",
+    "https://developer.wordpress.com/docs/developer-tools/studio/cli/",
+    "https://developer.wordpress.com/studio/",
+    "https://github.com/Automattic/studio/pull/4993"
+   ],
+   "steward": "company: Automattic"
+  },
+  {
+   "id": "studio-code",
+   "name": "Studio Code",
+   "owner": "Automattic (WordPress.com)",
+   "status": "beta",
+   "what": "A WordPress-specific coding agent in the terminal (`studio code`) and the Studio app. It builds block themes, plugins and full sites, validates block markup against the real editor, takes screenshots, offers design options saved as DESIGN.md, and publishes to WordPress.com.",
+   "latest": "Beta launched 27 Apr 2026. v1.22.0 (21 Sep): design picker and DESIGN.md, plus Fast/Balanced/Strong model tiers. v1.23.0 (5 Oct): background image generation. PR #5013, merged 6 Oct 2026, merges local and WordPress.com modes (wpcom_request) into one agent.",
+   "roadmap": "The beta post names better design intelligence, complex layouts, existing-site work and custom MCP support.",
+   "gaps": "Needs a WordPress.com account with a payment method. Balanced and Strong tiers need paid AI credits, or the user brings an Anthropic key. Publishing goes only to WordPress.com (and Pressable via Studio sync). It is a separate agent rather than something general-purpose agents get by default.",
+   "relevance": "Automattic's bet that a specialised WordPress agent beats general agents. Direct evidence of where Automattic thinks agent building should happen.",
+   "sources": [
+    "https://wordpress.com/blog/2026/04/27/studio-code-beta/",
+    "https://developer.wordpress.com/docs/developer-tools/studio/studio-code/",
+    "https://github.com/Automattic/studio/pull/5013",
+    "https://github.com/Automattic/studio/releases/tag/v1.22.0",
+    "https://wordpress.com/blog/2026/05/08/changelog-assistant-studio-code/"
+   ],
+   "steward": "company: Automattic"
+  },
+  {
+   "id": "studio-mcp",
+   "name": "Studio MCP (`studio mcp`)",
+   "owner": "Automattic",
+   "status": "beta",
+   "what": "An MCP server from the Studio CLI that lets external agents (Claude Code, Codex, Claude Desktop, Cursor) create and manage local Studio sites, write files, run WP-CLI, and now reach WordPress.com sites via wpcom_request. It serves Studio's instructions and skills on demand and renders design pickers in MCP Apps hosts.",
+   "latest": "Merged 6-7 Oct 2026: serve Studio's skills to external agents (#5007), pick look and layout from rendered options (#5009, #5016), a WordPress sidebar tab listing local and WordPress.com sites (#5018, #5031), and the unified local + WordPress.com agent (#5013).",
+   "roadmap": "PoC Studio plugin for ChatGPT/Codex and Claude Code (#4993, open).",
+   "gaps": "Needs Studio installed locally and is tied to the Studio/WordPress.com ecosystem. Very new and moving fast.",
+   "relevance": "The most direct current attempt to make general-purpose agents productive at building WordPress sites from nothing.",
+   "sources": [
+    "https://developer.wordpress.com/docs/developer-tools/studio/mcp-on-studio/",
+    "https://github.com/Automattic/studio/pull/5013",
+    "https://github.com/Automattic/studio/pull/5016",
+    "https://github.com/Automattic/studio/pull/4993"
+   ],
+   "steward": "company: Automattic"
+  },
+  {
+   "id": "wpcom-ai-builder-agent",
+   "name": "WordPress.com AI Website Builder ('Big Sky') and WordPress Agent / AI Assistant",
+   "owner": "Automattic (WordPress.com)",
+   "status": "shipped",
+   "what": "A chat-based site generator inside WordPress.com (launched as Big Sky, Apr 2025) and an in-editor assistant now branded 'WordPress Agent' that edits layouts, styles, content and images. A Telegram bot (@wordpressagentbot) offers conversational site management.",
+   "latest": "AI Assistant launched 17 Feb 2026 for Business and Commerce plans, then opt-in on all paid plans from 8 May 2026. wordpress.com/ai now lists the AI Website Builder, WordPress Agent, MCP, Studio Code, the Telegram agent, the Claude Connector and the ChatGPT plugin.",
+   "roadmap": "Not stated. Mullenweg said in 2025 the builder would 'work for any WordPress site in the future' (not delivered as of this research).",
+   "gaps": "WordPress.com only, needs a paid plan to launch, and is not available to external agents except through MCP.",
+   "relevance": "A human-facing product. It competes with external agents rather than enabling them, but shows WordPress.com's own agent UX.",
+   "sources": [
+    "https://wordpress.com/ai/",
+    "https://wordpress.com/ai-website-builder/",
+    "https://wordpress.com/blog/2026/02/17/wordpress-ai-assistant/",
+    "https://wordpress.com/blog/2026/05/08/changelog-assistant-studio-code/",
+    "https://wordpress.com/blog/2025/04/09/ai-website-builder/",
+    "https://jetpack.com/support/manage-your-site-through-telegram/",
+    "https://x.com/photomatt/status/1910018732589736194"
+   ],
+   "steward": "company: Automattic"
+  },
+  {
+   "id": "telex",
+   "name": "Telex (AI block generator)",
+   "owner": "Automattic",
+   "status": "beta",
+   "what": "An experimental browser tool at telex.automattic.ai that turns a prompt into a Gutenberg block packaged as a plugin ZIP, previewed in Playground.",
+   "latest": "A February 2026 update reportedly added image and sketch prompting, ZIP round-tripping with external editors, version recovery and 7 languages. This comes from third-party coverage; no primary 2026 changelog was found.",
+   "roadmap": "None found.",
+   "gaps": "Builds single blocks, not sites. Not an agent API (no MCP or CLI found). Output quality and security are reported as mixed.",
+   "relevance": "Low for agent platform choice. It is a human-facing generator.",
+   "sources": [
+    "https://automattic.com/for-agencies/blog/from-concept-to-production-10-tips-for-building-custom-wordpress-blocks-with-telex-ai/",
+    "https://blog.mean.ceo/startup-news-5-steps-mastering-wordpress-prototyping-telex-2026/",
+    "https://kinsta.com/blog/wordpress-blocks-telex/"
+   ],
+   "steward": "company: Automattic"
+  },
+  {
+   "id": "playground-cli-blueprints",
+   "name": "Playground CLI and Blueprints (v1 and v2)",
+   "owner": "WordPress Playground team",
+   "status": "in progress",
+   "what": "WordPress in WebAssembly (browser and Node CLI) with declarative Blueprints for reproducible sites. This is the fastest zero-install way for an agent to boot and test WordPress.",
+   "latest": "v3.1.57 on 5 Oct 2026 (weekly releases). Blueprint v2: native CLI flow, and the CLI accepts v2 without an experimental flag (v3.1.45, 16 Jul 2026). Saved-site export API deployment configured in v3.1.49 (10 Aug 2026). Dev Tools Dock with terminal and WP-CLI, 16 Sep 2026.",
+   "roadmap": "Stabilise Blueprints v2, then Studio adopts it. Mullenweg's 'WordPress Everywhere' vision adds P2P sync, version control and cloud publishing.",
+   "gaps": "SQLite rather than MySQL. Sites are ephemeral or browser-stored by default. There is no built-in deploy to an arbitrary host; export to a host is manual or via Studio/WordPress.com. The v2 schema is still settling.",
+   "relevance": "Playground is the strongest structural advantage WordPress has for agents (a seconds-fast, disposable full stack), but the path from Playground to a live host is the missing link.",
+   "sources": [
+    "https://github.com/WordPress/wordpress-playground",
+    "https://github.com/WordPress/wordpress-playground/blob/trunk/CHANGELOG.md",
+    "https://developer.wordpress.org/playground/handbook/changelog/",
+    "https://make.wordpress.org/playground/",
+    "https://make.wordpress.org/playground/2026/09/16/explore-the-wordpress-playground-terminal-with-the-new-dev-tools-dock/",
+    "https://github.com/WordPress/blueprints"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "playground-mcp",
+   "name": "Playground MCP (@wp-playground/mcp)",
+   "owner": "WordPress Playground team",
+   "status": "beta",
+   "what": "A stdio MCP server that connects coding agents to a Playground instance running in a browser tab over WebSocket. Tools cover site management, PHP execution and HTTP requests, navigation, and the filesystem.",
+   "latest": "Announced 17 Mar 2026 (updated 28 May). Mail capture exposed to MCP and WebMCP in v3.1.55 (21 Sep 2026). MCP docs guide in v3.1.56 (28 Sep 2026).",
+   "roadmap": "Not formally stated.",
+   "gaps": "Requires an open browser tab. SQLite only. Local-only connection. No publish or deploy tools.",
+   "relevance": "Lets any MCP agent get a working WordPress in seconds, a strong 'try' path, but it stops short of shipping a site.",
+   "sources": [
+    "https://make.wordpress.org/playground/2026/03/17/connect-ai-coding-agents-to-wordpress-playground-with-mcp/",
+    "https://github.com/WordPress/wordpress-playground/pull/3826",
+    "https://make.wordpress.org/playground/2026/03/30/playground-meetings-summaries-march-2026/"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "my-wordpress-net",
+   "name": "my.wordpress.net ('WordPress Everywhere')",
+   "owner": "WordPress Playground team / Matt Mullenweg (announced by Brandon Payton)",
+   "status": "beta",
+   "what": "A private, persistent WordPress that runs in the user's browser with no hosting or sign-up. It has an app catalog that includes an AI workspace able to modify plugins.",
+   "latest": "Soft-launched March 2026 (ma.tt 'WordPress Everywhere').",
+   "roadmap": "Peer-to-peer sync, version control integration and cloud publishing, per ma.tt.",
+   "gaps": "Personal and private by default. Publishing to the public web is not yet available.",
+   "relevance": "Strategic signal: leadership frames browser WordPress as 'perfect for AI to work with'. It is a potential zero-cost starting point for agents once publishing exists.",
+   "sources": [
+    "https://ma.tt/2026/03/wordpress-everywhere/",
+    "https://gutenbergtimes.com/my-wordpress-wordpress-7-0-gutenberg-22-7-and-ai-experiments-weekend-edition-361/"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "data-liberation",
+   "name": "Data Liberation (importers, Try WordPress extension)",
+   "owner": "WordPress.org (Playground team) / Automattic",
+   "status": "stalled",
+   "what": "An initiative for one-click migration into WordPress: next-gen WXR importers in Playground, structured-data import, liberation from closed platforms, and the 'Try WordPress' browser extension.",
+   "latest": "The WordPress/try-wordpress repo is archived (last push 11 Aug 2026). WordPress/data-liberation was last pushed 3 Apr 2026. The capability now lives in Studio (`studio create --from <URL>` via Data Liberation, v1.23.0, 5 Oct 2026) and in Static Site Importer. A 'liberate.sh' PoC (Studio PR #4897) was closed unmerged.",
+   "roadmap": "The five-phase plan remains on the repo; no 2026 roadmap update was found.",
+   "gaps": "No maintained community-wide importer for agents. Capability is fragmented into Automattic tools.",
+   "relevance": "Migration is a key 'choose WordPress' moment (leaving Wix or Squarespace). Agents lack an official, host-neutral migration tool.",
+   "sources": [
+    "https://github.com/WordPress/data-liberation",
+    "https://github.com/WordPress/try-wordpress",
+    "https://github.com/WordPress/wordpress-playground/issues/1894",
+    "https://github.com/Automattic/studio/pull/4897",
+    "https://github.com/Automattic/studio/releases/tag/v1.23.0"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "static-site-importer-blocks-engine",
+   "name": "Static Site Importer and Blocks Engine",
+   "owner": "Automattic",
+   "status": "beta",
+   "what": "Blocks Engine (JS/PHP) converts HTML, Markdown, generated site artifacts and Figma files into block markup and a 'wordpress-site-plan/v2'. Static Site Importer (a plugin with abilities and WP-CLI) materialises these into pages plus a companion block theme.",
+   "latest": "Static Site Importer v1.27.1 on 7 Oct 2026 (repo created 29 Apr 2026, 80 open issues). Blocks Engine was created 11 Jun 2026 and is active. Used by Studio `create --from`.",
+   "roadmap": "Plan to capture URLs with Data Liberation before import (SSI issue #1751); Playground migration path.",
+   "gaps": "Young, Automattic-run and complex. Scripts are stripped by default. It is not part of core or Gutenberg.",
+   "relevance": "Directly addresses agents that naturally emit HTML/React/Markdown: it converts their output into WordPress, lowering the cost of choosing WordPress.",
+   "sources": [
+    "https://github.com/Automattic/static-site-importer",
+    "https://github.com/Automattic/blocks-engine",
+    "https://github.com/Automattic/static-site-importer/issues/1751"
+   ],
+   "steward": "company: Automattic"
+  },
+  {
+   "id": "gutenberg-raw-handler",
+   "name": "Gutenberg HTML-to-blocks (rawHandler / pasteHandler)",
+   "owner": "Gutenberg team",
+   "status": "shipped",
+   "what": "Client-side JS conversion of arbitrary HTML or Markdown into known core blocks. Unknown markup falls back to Classic or HTML blocks.",
+   "latest": "@wordpress/blocks 15.23.0 (1 Jul 2026) replaced showdown with marked for Markdown paste. 2026 paste fixes for whitespace and images (e.g. PR #83464). Open bug #83118: classic conversion drops HTML anchors.",
+   "roadmap": "No agent-oriented or server-side (PHP) HTML-to-blocks converter is on the core roadmap.",
+   "gaps": "JS and browser only, lossy, with no PHP equivalent in core, so headless agents must use third-party converters (Blocks Engine, Alley's wp-block-converter) or hand-write block markup. Block validation also needs the editor.",
+   "relevance": "Agents produce HTML fluently but block markup poorly, so there is no official server-side bridge.",
+   "sources": [
+    "https://github.com/WordPress/gutenberg/tree/trunk/packages/blocks",
+    "https://github.com/WordPress/gutenberg/blob/trunk/packages/blocks/CHANGELOG.md",
+    "https://github.com/WordPress/gutenberg/pull/83464",
+    "https://github.com/wordpress/gutenberg/issues/83118",
+    "https://github.com/alleyinteractive/wp-block-converter"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "wporg-markdown-llms",
+   "name": "WordPress.org Markdown output and llms.txt",
+   "owner": "WordPress.org Meta team (prompted by Matt Mullenweg)",
+   "status": "shipped",
+   "what": "Most WordPress.org pages return Markdown via `Accept: text/markdown` or `?output_format=md`, with link rel=alternate auto-discovery. wordpress.org serves a /llms.txt index that includes an 'AI and Agentic Development' section.",
+   "latest": "Markdown shipped 3 Mar 2026 (after Mullenweg's 6 Feb 2026 'provocative AI thoughts' post); one example page dropped from about 68k to 11k tokens. The AI plugin added Markdown feeds for sites on 5 Oct 2026.",
+   "roadmap": "The Feb 2026 thread called for cleaner plugin and theme metadata for agent decisions; no shipped follow-up found.",
+   "gaps": "llms.txt explains what WordPress is but gives no decision guidance (when WordPress fits), no 'start a new site' path, no Playground or MCP quick-start beyond one article link, and no host-selection guidance. Markdown site output is not in core.",
+   "relevance": "Directly affects what models learn and retrieve about WordPress at decision time. Today it is descriptive rather than prescriptive.",
+   "sources": [
+    "https://make.wordpress.org/meta/2026/03/03/markdown-now-available-on-wordpress-org/",
+    "https://make.wordpress.org/meta/2026/02/06/some-provocative-ai-thoughts/",
+    "https://wordpress.org/llms.txt",
+    "https://make.wordpress.org/ai/2026/10/06/whats-new-in-ai-1-4-0/"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "plugin-directory-mcp",
+   "name": "WordPress.org Plugin Directory MCP server",
+   "owner": "WordPress.org Meta / Plugin Review team",
+   "status": "shipped",
+   "what": "An MCP server that lets agents validate readmes, check review status and feedback, read the guidelines, and submit plugins to the directory.",
+   "latest": "Announced 20 Mar 2026.",
+   "roadmap": "None found.",
+   "gaps": "Covers plugin authors only. No equivalent for searching or choosing plugins and themes, or for themes submission.",
+   "relevance": "Shows WordPress.org will expose MCP endpoints, but nothing yet helps an agent pick plugins or themes while building.",
+   "sources": [
+    "https://make.wordpress.org/meta/2026/03/20/plugin-directory-mcp-server/",
+    "https://developer.wordpress.org/plugins/wordpress-org/using-the-mcp-server/"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "agents-md",
+   "name": "AGENTS.md for core, Gutenberg and handbooks",
+   "owner": "Core / Gutenberg / Hosting teams",
+   "status": "in progress",
+   "what": "Agent instruction files for contributors working on the WordPress codebases themselves.",
+   "latest": "Gutenberg has AGENTS.md on trunk. Core: Trac #63901 'Add AGENTS.md for the project' and wordpress-develop PR #11933 (opened 22 May 2026) are still open, and there is no AGENTS.md in the wordpress-develop root. The Hosting team added claude.md/agents.md to the Advanced Administration Handbook repo (PR #417, WCUS contributor day recap, 3 Sep 2026) and adopted an AI-disclosure policy.",
+   "roadmap": "None stated.",
+   "gaps": "These guide contributors to WordPress itself, not agents building sites with WordPress. No official AGENTS.md template ships for site or theme projects.",
+   "relevance": "Low directly. A WordPress project-template AGENTS.md is a missing piece.",
+   "sources": [
+    "https://core.trac.wordpress.org/ticket/63901",
+    "https://github.com/WordPress/wordpress-develop/pull/11933",
+    "https://github.com/WordPress/gutenberg/blob/trunk/AGENTS.md",
+    "https://make.wordpress.org/hosting/2026/09/03/wordcamp-us-2026-contributor-day-recap/"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "wp-cli-ability-command",
+   "name": "WP-CLI `wp ability` command",
+   "owner": "WP-CLI team",
+   "status": "shipped",
+   "what": "Lists, shows and executes abilities and categories from WP-CLI, and powers the MCP Adapter's STDIO path.",
+   "latest": "v1.0.3, 7 Oct 2026.",
+   "roadmap": "None stated.",
+   "gaps": "Inherits the abilities coverage gap.",
+   "relevance": "CLI-first agents already favour WP-CLI. This makes abilities reachable without MCP.",
+   "sources": [
+    "https://github.com/wp-cli/ability-command",
+    "https://developer.wordpress.org/cli/commands/ability/list/"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "hosts-mcp",
+   "name": "Host MCP servers and agent APIs (Pressable, WordPress VIP, others)",
+   "owner": "Hosting companies (Pressable and VIP are Automattic-owned)",
+   "status": "shipped",
+   "what": "Host-level MCP servers that manage infrastructure. Pressable MCP (31 Mar 2026) covers site creation, PHP versions, domains, plugins, users, logs and one-time logins. WordPress VIP Secure MCP (Jul 2026) offers 50+ governed tools with audit and a kill switch. Third-party comparisons also list Hostinger, Rocket.net, Cloudways and InstaWP (infrastructure/sites), WP Engine (read-only search) and GoDaddy (domains only); Kinsta, SiteGround and Bluehost have none.",
+   "latest": "InstaWP's comparison is dated 6 Oct 2026 (third party). The WordPress.org Hosting team's recent posts contain no agent or MCP standard work.",
+   "roadmap": "No cross-host standard has been proposed by the Hosting team.",
+   "gaps": "Every host has its own proprietary tools. There is no common 'agent deploy to any WordPress host' API, and the hosting handbook gives agents no guidance.",
+   "relevance": "Deployment is where agents fall off WordPress. Fragmented host APIs compared with one-command deploys on Vercel or Netlify are a key choice factor.",
+   "sources": [
+    "https://pressable.com/blog/pressable-mcp-control-your-wordpress-hosting-with-ai/",
+    "https://docs.wpvip.com/integrations/center/secure-mcp/",
+    "https://instawp.com/best-wordpress-hosting-with-mcp/",
+    "https://make.wordpress.org/hosting/"
+   ],
+   "steward": "companies: various hosts"
+  },
+  {
+   "id": "woocommerce-abilities",
+   "name": "WooCommerce abilities / agentic commerce",
+   "owner": "Automattic (WooCommerce)",
+   "status": "shipped",
+   "what": "Canonical WooCommerce abilities exposed over REST, MCP and CLI: products-query/create/update/delete, orders-query, order-update-status, order-add-note.",
+   "latest": "WooCommerce 10.9 (reported ship date 23 Jun 2026, third-party source). Agentic commerce post on developer.woocommerce.com, Oct 2025.",
+   "roadmap": "Not verified from primary sources.",
+   "gaps": "Store operation only, not store creation or setup.",
+   "relevance": "Commerce is a common reason to pick a platform. Abilities help agents run stores, not choose WooCommerce.",
+   "sources": [
+    "https://developer.woocommerce.com/2025/10/03/ai-agentic-commerce-in-woocommerce/",
+    "https://webhosting.today/2026/06/12/woocommerce-10-9-ships-agent-abilities"
+   ],
+   "steward": "company: Automattic"
+  },
+  {
+   "id": "leadership-ai-strategy",
+   "name": "Leadership statements on AI and agents (Mullenweg, Hubbard)",
+   "owner": "Matt Mullenweg; Mary Hubbard (Executive Director)",
+   "status": "idea",
+   "what": "Not a project: these are leadership positions that shape the projects above. Mullenweg (Feb 2026) wants stronger APIs, WP-CLI and machine-friendly interfaces 'so personal agents can safely operate WordPress tasks', and sees Playground as an agent verification sandbox. In Mar 2026 he called browser WordPress 'perfect for AI to work with' with a goal of 'billions' of WordPresses. In Jul 2026 he vetoed AI core merges without double-digit week-over-week adoption and prioritised evals and WP-Bench. At WCUS (Aug 2026) he asked the community to become AI-fluent, open-weights models included. Hubbard frames a unified AI team that is plugin-first like the Performance Team.",
+   "latest": "ma.tt 'Homework from WordCamp' (Aug 2026); WCUS 2026 fireside chat (20 Aug 2026); Knowledge merge veto (10 Jul 2026).",
+   "roadmap": "No published agent strategy document.",
+   "gaps": "No stated goal around agents choosing WordPress, a default agent toolkit, or host-neutral deploy. Strategy is spread across blog posts and comment threads.",
+   "relevance": "Leadership favours machine-friendly interfaces and model quality but gates core changes on adoption. Agent-facing packaging is therefore likely to come from Automattic (Studio and WordPress.com) before core.",
+   "sources": [
+    "https://ma.tt/2026/02/wp-ai/",
+    "https://ma.tt/2026/02/wp-ai-updates/",
+    "https://ma.tt/2026/03/wordpress-everywhere/",
+    "https://ma.tt/2026/08/homework-from-wordcamp/",
+    "https://ma.tt/2026/08/our-core-division/",
+    "https://wordpress.tv/2026/08/20/keynote-fireside-chat-2/",
+    "https://make.wordpress.org/core/2026/06/22/merge-proposal-guidelines-built-on-knowledge/",
+    "https://x.com/4thhubbard/status/2097840498438250917"
+   ],
+   "steward": "open project: WordPress.org"
+  },
+  {
+   "id": "hostinger-mcp-connector",
+   "name": "Hostinger API MCP Server and Hostinger Connector",
+   "owner": "Hostinger",
+   "steward": "company: Hostinger",
+   "status": "shipped",
+   "what": "An official MCP server (open source, also a remote endpoint at mcp.hostinger.com) that exposes Hostinger's API for websites, VPS, domains/DNS, email marketing, billing and ecommerce. The Connector is a code-editor extension that sets it up. On 11 September 2026 WordPress support was added, so agents can create and deploy plugins, launch sites and push changes. Each WordPress site now appears as its own MCP server.",
+   "latest": "WordPress support came to Hostinger Connector on 11 Sep 2026. The support doc lists per-site WordPress MCPs and clients including Claude Code, Cursor, Codex and ChatGPT via the Connector (doc modified 7 Oct 2026). The GitHub repo was pushed 7 Oct 2026.",
+   "gaps": "Needs an existing Hostinger account and API token; account creation and payment happen outside the agent. Docs warn that most IDEs top out around 100 tools, so tool categories must be scoped. The public docs don't say clearly which WordPress tools exist for site creation.",
+   "relevance": "This is the most complete non-Automattic host path from 'agent in an IDE' to 'live WordPress site'. It is a direct competitor to WordPress.com's agent story and makes a cheap host an easy default for agents.",
+   "sources": [
+    "https://github.com/hostinger/api-mcp-server",
+    "https://www.hostinger.com/support/11079316-hostinger-api-mcp-server/",
+    "https://www.hostinger.com/roadmap/wordpress/wordpress-support-comes-to-hostinger-connector",
+    "https://docs.hostinger.com/hostinger-connector"
+   ]
+  },
+  {
+   "id": "hostinger-ai-builder-agent",
+   "name": "Hostinger AI Builder and Hostinger Agent (Hostinger AI plugin)",
+   "owner": "Hostinger",
+   "steward": "company: Hostinger",
+   "status": "shipped",
+   "what": "In Week 34 of 2026 Hostinger merged Horizons and Website Builder into AI Builder, which works from a prompt, PDF, screenshot or link and has agentic and manual modes. Kodee and Hostinger AI Agents became a single Hostinger Agent. New WordPress sites on Business and Cloud plans ship with the Hostinger AI plugin, which supports MCP, so external clients like Claude Code and Cursor can connect.",
+   "latest": "AI Builder and Hostinger Agent consolidation in the Week 34 2026 product update (Aug 2026). Hostinger's WordPress MCP tutorial was updated 30 Sep 2026.",
+   "gaps": "AI Builder output is Hostinger's own builder, not WordPress. The WordPress MCP is preinstalled only on certain plans, and the agent is tied to Hostinger hosting.",
+   "relevance": "Hostinger is steering users who start from a prompt toward its own non-WordPress builder while also making its WordPress sites agent-ready. That split matters when measuring whether agents pick WordPress.",
+   "sources": [
+    "https://www.hostinger.com/blog/product-updates-week-34-2026/",
+    "https://www.hostinger.com/tutorials/wordpress-mcp-integration"
+   ]
+  },
+  {
+   "id": "bluehost-mcp",
+   "name": "Bluehost MCP",
+   "owner": "Bluehost (Newfold Digital)",
+   "steward": "company: Newfold Digital",
+   "status": "shipped",
+   "what": "An MCP server that lets Claude Code and Claude Desktop buy and provision a Bluehost Self-Managed VPS, set up SSH keys, publish an app over SSH, search and register domains, and point a domain at the VPS with user confirmation.",
+   "latest": "Launched 25 Sep 2026 with support for Claude Code and Claude Desktop only.",
+   "gaps": "Covers only purchase, provisioning and first publish; ongoing server management is explicitly out of scope. Account creation and payment stay in the browser. It is aimed at VPS apps, not managed WordPress, so there is no WordPress-specific install or site tooling.",
+   "relevance": "A large WordPress host built its first agent deploy path around generic apps on a VPS rather than WordPress. That is a signal that agent-built sites may skip WordPress even at WordPress-centric hosts.",
+   "sources": [
+    "https://www.bluehost.com/blog/introducing-bluehost-mcp/"
+   ]
+  },
+  {
+   "id": "godaddy-airo-wordpress",
+   "name": "Airo for WordPress / Airo WP AI Builder plugin",
+   "owner": "GoDaddy",
+   "steward": "company: GoDaddy",
+   "status": "shipped",
+   "what": "GoDaddy's AI experience that builds a WordPress site, including a WooCommerce store, from a conversation on managed hosting. The companion Airo WP AI Builder plugin registers an MCP endpoint covering posts, pages, media, templates, navigation, global styles, plugins and themes, and works with any MCP client.",
+   "latest": "Airo for WordPress launched 11 May 2026. The plugin is at v0.4.1 on the FAIR package manager, tested to WP 7.1.",
+   "gaps": "The plugin is pre-1.0. It needs HTTPS because Application Passwords require it, and it doesn't support OAuth 2.1 yet. The full builder sits behind a GoDaddy trial or subscription.",
+   "relevance": "A major registrar is shipping a host-agnostic MCP plugin through FAIR rather than wordpress.org. It is a non-Automattic block-theme and global-styles toolset that agents could use on any WordPress site.",
+   "sources": [
+    "https://fair.pm/packages/plugins/airo-wp/",
+    "https://finviz.com/news/352945/godaddys-airo-for-wordpress-delivers-ai-that-builds-grows-and-continuously-improves-websites"
+   ]
+  },
+  {
+   "id": "cloudways-mcp",
+   "name": "Cloudways MCP Server",
+   "owner": "Cloudways (DigitalOcean)",
+   "steward": "company: DigitalOcean",
+   "status": "shipped",
+   "what": "A free MCP server with 250+ Cloudways actions: provisioning, cloning and scaling servers, Git deploys and staging, SSL, Cloudflare CDN, malware scans and WAF, monitoring, and agency billing. It supports Claude, Cursor, ChatGPT, Gemini CLI, Copilot, Windsurf, Codex and Cline.",
+   "latest": "Cloudways Managed AI Agents (OpenClaw, Hermes) reached general availability on 17 Aug 2026, and a support article documents connecting the Cloudways MCP to those hosted agents.",
+   "gaps": "Infrastructure level only. Agents still need WP-CLI or a site-level MCP to build inside WordPress. Requires an existing account and an access token.",
+   "relevance": "Agents can stand up and deploy a WordPress app end to end from a chat client. Cloudways also now hosts the agents themselves, which positions the host as the agent's runtime.",
+   "sources": [
+    "https://www.cloudways.com/en/mcp.php",
+    "https://support.cloudways.com/en/articles/14654372-how-to-use-cloudways-mcp-server-for-ai-based-server-management",
+    "https://support.cloudways.com/en/articles/16522430-how-to-connect-mcp-server-to-your-managed-ai-agent-on-cloudways",
+    "https://itbrief.co.uk/story/cloudways-launches-managed-ai-agents-with-openclaw-hermes"
+   ]
+  },
+  {
+   "id": "rocket-net-mcp",
+   "name": "Rocket.net MCP integration",
+   "owner": "Rocket.net",
+   "steward": "company: Rocket.net",
+   "status": "shipped",
+   "what": "Hosting MCP built on Rocket.net's OpenAPI-first API. Agents can create sites, run WP-CLI across a fleet, manage plugins and themes at scale, and audit and update. It comes with a new developer hub.",
+   "latest": "Launched 5 May 2026, free for all customers.",
+   "gaps": "Customers only. There is no in-site building toolset beyond WP-CLI, and no Blueprint or import path is documented.",
+   "relevance": "Site creation plus WP-CLI over MCP is close to what an agent needs to start a WordPress site from scratch on a managed host.",
+   "sources": [
+    "https://rocket.net/?p=7554",
+    "https://mcpservers.org/servers/jezweb/rocketnet-mcp"
+   ]
+  },
+  {
+   "id": "pantheon-mcp",
+   "name": "Pantheon MCP Server",
+   "owner": "Pantheon",
+   "steward": "company: Pantheon",
+   "status": "beta",
+   "what": "Lets agents such as Claude Code act on a Pantheon account through the platform API: workspaces, sites (including pantheon_create_site), environments and multidevs, builds, deploys and rollbacks, logs, upstreams and secrets. It is read-only by default and changes need approval.",
+   "latest": "Open public beta; docs last reviewed 24 Sep 2026.",
+   "gaps": "No delete operations in the beta. Docs don't call out WordPress-specific tooling, and the build tools are Next.js-oriented. It forwards the user's own token, so the user needs a Pantheon account.",
+   "relevance": "Gives enterprise-host agents create-site and multidev workflows. It is not WordPress-specific, so it doesn't steer agents toward WordPress.",
+   "sources": [
+    "https://docs.pantheon.io/guides/mcp"
+   ]
+  },
+  {
+   "id": "siteground-ai-agent-wordpress",
+   "name": "SiteGround AI Studio and AI Agent for WordPress",
+   "owner": "SiteGround",
+   "steward": "company: SiteGround",
+   "status": "shipped",
+   "what": "SiteGround's in-house agent, inside AI Studio, connects to WordPress through a plugin and makes real changes: content, media, plugins and themes (install, audit, bulk update), SEO fields, users, settings and WooCommerce. It can also manage WordPress sites hosted elsewhere.",
+   "latest": "Announced 4 Feb 2026. Free for SiteGround customers with 20k tokens a month. The plugin (sg-ai-studio) is listed on FAIR.",
+   "gaps": "SiteGround's own chat, not an open MCP endpoint for outside agents. Customers only. High-impact actions sit behind a 'Power Mode' toggle.",
+   "relevance": "The host owns the agent instead of exposing tools to Claude or ChatGPT, so it doesn't help third-party agents choose or succeed with WordPress.",
+   "sources": [
+    "https://www.siteground.com/blog/siteground-ai-agent-for-wordpress",
+    "https://fair.pm/packages/plugins/sg-ai-studio/"
+   ]
+  },
+  {
+   "id": "wp-engine-smart-search-mcp",
+   "name": "WP Engine Smart Search AI MCP",
+   "owner": "WP Engine",
+   "steward": "company: WP Engine",
+   "status": "beta",
+   "what": "An MCP server that exposes a site's indexed, published content through semantic search so external agents can query live content. It is part of WP Engine's AI Toolkit (Smart Search AI, recommendations, managed vector DB).",
+   "latest": "WP Engine's own Oct 2025 post describes a closed alpha. Later secondary reporting says it is in open beta and that Smart Search AI is now host-agnostic. WP Engine appointed a VP of AI Products in Jan 2026.",
+   "gaps": "Read-only access to public content. No site creation, build or deploy tools for agents. No WP Engine platform MCP was found.",
+   "relevance": "Targets AI search and discovery of existing sites, not agents building sites. WP Engine has no sourced agent path for starting a new WordPress site.",
+   "sources": [
+    "https://wpengine.com/blog/wp-engine-smart-search-ai-mcp/",
+    "https://wpengine.com/press-releases/wp-engine-launches-ai-toolkit/",
+    "https://www.hostingadvice.com/blog/wp-engine-frees-its-ai-search-to-chase-the-agent-ready-web/"
+   ]
+  },
+  {
+   "id": "kinsta-api-mcp",
+   "name": "Kinsta API with community MCP servers",
+   "owner": "Kinsta (API); community maintainers (MCP)",
+   "steward": "independent",
+   "status": "shipped",
+   "what": "Kinsta has no official MCP server. It publishes a tutorial MCP server over its API (list sites, environments, clear cache, clone site, plugin and theme audit, plugin update) and guides on creating WordPress sites through the API with GitHub Copilot and on the Abilities API. A separate community kinsta-mcp server exists.",
+   "latest": "MCP tutorial updated 20 May 2026; Abilities API and Claude Desktop guide updated 19 Aug 2026.",
+   "gaps": "Unofficial and unsupported; users build their own. Needs a Kinsta API key and Node 22+.",
+   "relevance": "The API can create WordPress sites, so agents could do it, but there is no supported agent product. That adds friction compared with Hostinger, Rocket.net and Cloudways.",
+   "sources": [
+    "https://kinsta.com/blog/mcp-server-kinsta-api/",
+    "https://kinsta.com/blog/automate-wordpress-management-kinsta-api/",
+    "https://mcpservers.org/servers/jacob-hartmann/kinsta-mcp"
+   ]
+  },
+  {
+   "id": "instawp-instamcp",
+   "name": "InstaWP InstaMCP, sandboxes and CLI",
+   "owner": "InstaWP",
+   "steward": "company: InstaWP",
+   "status": "shipped",
+   "what": "Disposable WordPress sandboxes (about 10 seconds, $0.07/day) with SSH, WP-CLI and Git. A built-in, toggle-on MCP (InstaMCP) offers 43 scoped tools, and a CLI with --json and an HTTPS API lets agents create and delete sites. An open-source mcp-wp server (npx @instawp/mcp-wp) works with self-hosted sites. A sandbox moves to production with a plan change.",
+   "latest": "InstaMCP is documented with 43 tools and 13 clients. The InstaWP/mcp-wp repo was pushed 10 Sep 2026.",
+   "gaps": "Production requires InstaWP hosting. PHP execution is off by default. No Blueprint-native import is documented.",
+   "relevance": "This is the closest non-Automattic match to a 'Playground for agents' loop (create, build, promote). It lowers the cost of an agent trying WordPress.",
+   "sources": [
+    "https://instawp.com/ai-builders/",
+    "https://instawp.com/wordpress-mcp-server/",
+    "https://instawp.com/best-wordpress-mcp-servers-compared/",
+    "https://github.com/InstaWP/mcp-wp"
+   ]
+  },
+  {
+   "id": "10web-agentic-builder-api",
+   "name": "10Web Agentic Website Builder and API",
+   "owner": "10Web",
+   "steward": "company: 10Web",
+   "status": "shipped",
+   "what": "An AI builder that turns prompts into hosted WordPress sites. Secondary reporting says it now runs a team of specialised agents (designer, developer, QA, SEO, writer). A white-label API lets platforms create sites programmatically on 10Web's managed infrastructure with an Elementor-based editor.",
+   "latest": "The API launched 8 May 2025. A 2026 'Agentic Website Builder' repositioning is described in 10Web material; no official MCP server was found.",
+   "gaps": "Sites are locked to 10Web hosting and its Elementor-based editor. The API targets resellers, not general-purpose coding agents. No MCP found.",
+   "relevance": "Shows prompt-to-WordPress already exists as an API, but outside the MCP and agent-client ecosystem where Claude, ChatGPT and Codex make their choices.",
+   "sources": [
+    "https://www.searchenginejournal.com/10web-releases-api-for-scaled-white-label-ai-website-building/546338/",
+    "https://10web.io/blog/best-ai-website-builder-api/"
+   ]
+  },
+  {
+   "id": "elementor-mcp",
+   "name": "Elementor MCP",
+   "owner": "Elementor",
+   "steward": "company: Elementor",
+   "status": "shipped",
+   "what": "An official MCP in Elementor 4.3 that lets Claude Code, Claude Desktop, Codex, Cursor and other clients build pages, edit elements, manage classes and variables, components, dynamic data, Theme Builder templates and popups. Setup generates an Application Password and a paste-in prompt, and every generation lands as a draft.",
+   "latest": "Shipped in Elementor 4.3.0 on 22 Sep 2026. The elementor.com/mcp page was updated 7 Oct 2026.",
+   "gaps": "Works only with Atomic (V4) elements; V3 widget layouts are 'coming soon'. Edits and redesigns, cross-plugin abilities and bulk actions need the Angie plugin. Requires admin access and Elementor Pro 4.3 or newer.",
+   "relevance": "The biggest page builder now gives outside agents a first-class build surface. Agents that target Elementor may succeed on WordPress without touching blocks.",
+   "sources": [
+    "https://elementor.com/mcp/",
+    "https://theplusaddons.com/blog/what-is-the-elementor-mcp/"
+   ]
+  },
+  {
+   "id": "elementor-angie",
+   "name": "Angie (agentic AI for WordPress)",
+   "owner": "Elementor",
+   "steward": "company: Elementor",
+   "status": "shipped",
+   "what": "A free agentic WordPress plugin that uses MCP to read the site's plugins, theme and post types. It plans and runs tasks such as page generation, WooCommerce CSV imports, promotions and debugging, tested in its own sandbox. It also unlocks advanced Elementor MCP abilities.",
+   "latest": "Announced as early access in Aug 2025; now a free download on wordpress.org, which the Elementor MCP requires for edit and bulk features (Sep 2026).",
+   "gaps": "Runs inside wp-admin as Elementor's own agent. Outside agents get its powers only indirectly through Elementor MCP.",
+   "relevance": "An in-dashboard agent that competes with external agents and with Automattic's in-product AI.",
+   "sources": [
+    "https://elementor.com/ai/angie",
+    "https://elementor.com/blog/mcp-wordpress-ai-workflows/"
+   ]
+  },
+  {
+   "id": "zip-ai-brainstorm-force",
+   "name": "ZIP AI (AI Website Builder and AI Agent)",
+   "owner": "Brainstorm Force (Astra, Spectra, Starter Templates)",
+   "steward": "company: Brainstorm Force",
+   "status": "shipped",
+   "what": "A wp-admin chat agent that builds and edits block-based sites (layouts, copy, imagery, headers, footers, pages) with Gutenberg and Spectra blocks. It works through the REST API, WP-CLI and the Abilities API via the MCP Adapter, with approve-before-apply. MCP support for external agents is listed.",
+   "latest": "v0.0.13 released 6 Oct 2026; the Beta label was dropped in 0.0.12; 1,000+ active installs.",
+   "gaps": "Full builds only on Astra or block (FSE) themes. Relies on ZipWP credit and auth servers and on Gemini and Claude. Version 0.0.x.",
+   "relevance": "A non-Automattic block-native agent builder, so evidence that agent-built block themes are being productised by theme businesses.",
+   "sources": [
+    "https://wordpress.org/plugins/zip-ai/"
+   ]
+  },
+  {
+   "id": "wpvibe-seedprod",
+   "name": "WPVibe MCP (with WPForms abilities)",
+   "owner": "SeedProd / Awesome Motive",
+   "steward": "company: Awesome Motive",
+   "status": "shipped",
+   "what": "A free plugin plus a hosted remote MCP at mcp.wpvibe.ai that connects self-hosted WordPress to Claude.ai, ChatGPT, Claude Desktop and Code, Cursor and Windsurf. It covers content, theme files, WP-CLI, Abilities API, media and site state. WPForms installs it from WPForms » Tools » AI MCP, so assistants can build and edit forms.",
+   "latest": "WPVibe launched 23 Apr 2026. WPForms write abilities (v1.10.2) were announced 18 Jun 2026.",
+   "gaps": "Routes calls through a hosted relay with metered pricing: 100 calls a day free, paid tiers from $99 to $899 a year. Pro features are still in development.",
+   "relevance": "Puts self-hosted WordPress inside web chat clients (Claude.ai, ChatGPT) where local-only adapters don't reach, and pulls the large Awesome Motive plugin base into agent workflows.",
+   "sources": [
+    "https://www.seedprod.com/wpvibe-connect-ai-mcp-wordpress/",
+    "https://wpforms.com/announcing-write-support-abilities-api/",
+    "https://mcpservers.org/servers/awesomemotive/wpvibe-ai-mcp"
+   ]
+  },
+  {
+   "id": "yoast-seo-abilities",
+   "name": "Yoast SEO Abilities",
+   "owner": "Yoast",
+   "steward": "company: Yoast",
+   "status": "shipped",
+   "what": "Yoast SEO registers Abilities API abilities that MCP clients can call through the WordPress MCP Adapter. They started as read-only score abilities and now return the full SEO field set and can write canonical, robots, cornerstone and schema type, including in bulk.",
+   "latest": "Write-capable abilities released 29 Sep 2026; read-only abilities had shipped in April 2026.",
+   "gaps": "Focus keyphrase stays read-only. Rollback depends on the agent keeping the original values. Needs the MCP Adapter and WP 6.9 or newer.",
+   "relevance": "Agent-built sites can get SEO set up properly through a standard core path. A top plugin backing Abilities API plus MCP Adapter strengthens the core standard.",
+   "sources": [
+    "https://yoast.com/yoast-seo-sept-29-2026/",
+    "https://developer.yoast.com/features/yoast-seo-abilities/overview/"
+   ]
+  },
+  {
+   "id": "rank-math-mcp",
+   "name": "Rank Math MCP",
+   "owner": "Rank Math",
+   "steward": "company: Rank Math",
+   "status": "shipped",
+   "what": "An official Rank Math MCP with 27 tools for SEO audits of your site or competitors, automatic fixes, and retrieving metadata, schema and link data. It connects over OAuth to Claude Desktop, ChatGPT and GitHub Copilot.",
+   "latest": "Announced on the Rank Math blog in July 2026.",
+   "gaps": "Some tools are PRO-only, and available tools depend on setup and plan. SEO only.",
+   "relevance": "Hosted OAuth connection means it works from web chat clients, giving agents an SEO quality layer on WordPress sites.",
+   "sources": [
+    "https://rankmath.com/blog/rank-math-mcp/"
+   ]
+  },
+  {
+   "id": "gravity-forms-mcp",
+   "name": "Gravity Forms MCP Server",
+   "owner": "Rocketgenius (Gravity Forms)",
+   "steward": "company: Rocketgenius",
+   "status": "shipped",
+   "what": "Exposes Gravity Forms forms, entries, feeds and notifications as MCP tools built on the Abilities API. Read and write tools can create, update and delete forms and entries, and every tool is opt-in individually. GravityKit also ships its own MCP (GravityMCP).",
+   "latest": "Docs are live under 'MCP for AI Agents'; no release date was found.",
+   "gaps": "Self-hosted only, WP 6.9 or newer, needs a dedicated user with an Application Password, and nothing is exposed by default.",
+   "relevance": "Agents can add working forms, a common requirement for business sites, on WordPress through the standard abilities path.",
+   "sources": [
+    "https://docs.gravityforms.com/gravity-forms-mcp-server-overview/",
+    "https://www.gravitykit.com/mcp/"
+   ]
+  },
+  {
+   "id": "bricks-ai-abilities-skills",
+   "name": "Bricks AI Abilities and Skills",
+   "owner": "Bricks Builder",
+   "steward": "company: Bricks",
+   "status": "beta",
+   "what": "Experimental abilities in Bricks 2.4, called through the WordPress MCP Adapter, cover the design system, templates, elements, dynamic data, media, WooCommerce templates and revisions. Optional Bricks skills teach agents safe workflows such as checking the design system first and previewing before saving.",
+   "latest": "Introduced as experimental in Bricks 2.4.",
+   "gaps": "Recommended only for local and staging sites. PHP abilities are off unless a constant is set. Needs the MCP Adapter plus an Application Password.",
+   "relevance": "A builder that ships both abilities and skills, the pattern agents need to succeed. It reinforces the core Abilities and MCP Adapter stack.",
+   "sources": [
+    "https://academy.bricksbuilder.io/builder/features/ai-abilities-and-skills/"
+   ]
+  },
+  {
+   "id": "human-made-block-runner",
+   "name": "Block Runner",
+   "owner": "Human Made",
+   "steward": "company: Human Made",
+   "status": "beta",
+   "what": "An open-source CLI and JS library that converts HTML from AI, agents and design tools into native, nested Gutenberg blocks and checks them with the editor's own Gutenberg packages. It can compile static registered blocks and ships an Agent Skills-format skill. It makes no model calls itself.",
+   "latest": "v0.9.10 released 4 Oct 2026; repo created 22 Jun 2026.",
+   "gaps": "Pre-1.0. Handles 'supported HTML' only, does not create sites, and leaves design interpretation to an outside agent.",
+   "relevance": "Fills the HTML-to-WordPress gap directly. Agents that are good at HTML can produce editor-valid block content, which lifts success rates on WordPress.",
+   "sources": [
+    "https://github.com/humanmade/block-runner",
+    "https://socket.dev/npm/package/block-runner",
+    "https://www.accelerateplugin.com/block-runner"
+   ]
+  },
+  {
+   "id": "human-made-accelerate-ai-toolkit",
+   "name": "Accelerate AI Toolkit",
+   "owner": "Human Made",
+   "steward": "company: Human Made",
+   "status": "shipped",
+   "what": "A Claude Code plugin marketplace with 16 skills (review, diagnose, optimize landing page, A/B test, personalize and more) that connects coding agents to WordPress sites running the Accelerate analytics plugin.",
+   "latest": "Repo created 14 Apr 2026, last pushed 8 Sep 2026.",
+   "gaps": "Needs the Accelerate plugin and existing traffic. It optimises live sites rather than starting new ones.",
+   "relevance": "Shows agencies packaging WordPress know-how as Claude Code skills and plugins, the after-launch half of the agent loop.",
+   "sources": [
+    "https://github.com/humanmade/accelerate-ai-toolkit",
+    "https://skillselion.com/marketplace/humanmade/accelerate-ai-toolkit"
+   ]
+  },
+  {
+   "id": "novamira",
+   "name": "Novamira",
+   "owner": "Ovation S.r.l. (Dynamic.ooo)",
+   "steward": "independent",
+   "status": "shipped",
+   "what": "An AGPL WordPress MCP plugin that gives agents full PHP execution with WordPress loaded, plus database, filesystem and WP-CLI access, Gutenberg page building and plugin and theme uploads. It has a Skills feature for stored playbooks, and a Pro tier adds memory and support for 37 builders and plugins.",
+   "latest": "710 GitHub stars; repo pushed 7 Oct 2026 (created 26 Feb 2026).",
+   "gaps": "Full access is the risk, so it is recommended only for dev and staging with backups. WP 6.9 or newer and PHP 8 or newer.",
+   "relevance": "The most capable independent 'give the agent a real WordPress shell' option. It shows that raw PHP access, not curated tools, may be what lets agents succeed.",
+   "sources": [
+    "https://github.com/use-novamira/novamira",
+    "https://wpmayor.com/novamira-ai-wordpress-mcp-plugin/",
+    "https://novamira.ai/?p=34"
+   ]
+  },
+  {
+   "id": "soflyy-agent-connector",
+   "name": "Agent Connector for WP",
+   "owner": "Soflyy",
+   "steward": "company: Soflyy",
+   "status": "beta",
+   "what": "A plugin that gives agents unrestricted execution on WordPress (shell, PHP eval, filesystem, processes) through the WordPress MCP stack, for trusted development environments.",
+   "latest": "Repo created 27 May 2026, last pushed 4 Oct 2026; 21 stars.",
+   "gaps": "Explicitly for trusted dev only. Unrestricted, with no guardrails for production.",
+   "relevance": "Another builder company (Soflyy, maker of Oxygen and Breakdance) betting that agents need full execution, not narrow tools, to build WordPress sites.",
+   "sources": [
+    "https://github.com/soflyy/agent-connector-for-wp"
+   ]
+  },
+  {
+   "id": "wppilot",
+   "name": "WPPilot WordPress MCP",
+   "owner": "wppilot-labs",
+   "steward": "independent",
+   "status": "shipped",
+   "what": "A WordPress MCP server for ChatGPT, Claude, Cursor and Codex with 168 typed abilities, free Elementor editing, OAuth 2.1, safety profiles, human approval and verified undo. WPPilot Cloud puts many sites behind one MCP link, and Pro adds WooCommerce, 10 builders and backups.",
+   "latest": "Repo created 10 Aug 2026, pushed 7 Oct 2026.",
+   "gaps": "Paid tiers for more features; small community (66 stars). Works on existing sites only, with no site provisioning.",
+   "relevance": "One of a crowded field of independent MCP servers (alongside cowboy-mcp, shim-mcp, Respira and Stonewright) competing on undo and safety. That fragmentation makes it harder for agents to pick a default way into WordPress.",
+   "sources": [
+    "https://github.com/wppilot-labs/wordpress-mcp-elementor-wppilot",
+    "https://wppilot.co"
+   ]
+  },
+  {
+   "id": "wp-cli-mcp",
+   "name": "wp-cli-mcp",
+   "owner": "mvtandas",
+   "steward": "independent",
+   "status": "shipped",
+   "what": "An MCP server that maps 30+ WP-CLI commands (themes, plugins, posts, menus, users, database, scaffolding) to agent tools.",
+   "latest": "Last pushed 14 Apr 2026; 5 stars.",
+   "gaps": "Needs a machine where WP-CLI already runs against an installed site. Little maintenance activity.",
+   "relevance": "Shows the WP-CLI-over-MCP pattern that hosts like Rocket.net now offer officially. Coding agents with a shell often use WP-CLI directly instead.",
+   "sources": [
+    "https://github.com/mvtandas/wp-cli-mcp",
+    "https://enterprisedna.co/directories/mcp/mvtandas-wp-cli-mcp"
+   ]
+  }
+ ],
+ "gaps_across_projects": [
+  "No single host-neutral 'WordPress agent toolkit' that bundles skills, a local runtime (Playground), MCP and abilities, and deploy into one install. The official pieces (agent-skills, MCP Adapter, AI plugin, Playground MCP) ship separately; the only bundled path is Automattic's Studio and Studio Code, which publishes to WordPress.com or Pressable only.",
+  "No decision-stage guidance for agents: nothing official (llms.txt, docs, skills) tells an agent when WordPress is the right choice compared with static site generators or other platforms, or how to start a new site from nothing.",
+  "No host-neutral deploy from agent to host: Playground and Studio sites reach only WordPress.com or Pressable natively. Host MCP servers are proprietary and inconsistent, and the Hosting team has no agent deploy or provisioning standard.",
+  "Abilities coverage is minimal (3 read-only core abilities; the core list in WordPress/ai #40 is 1 of 51 tasks done). Nothing covers themes, templates, global styles, patterns, plugin installation or site setup, so the MCP Adapter exposes almost nothing useful for building a site.",
+  "No official server-side (PHP or CLI) HTML/Markdown-to-blocks converter or block validator. Agents must hand-write block markup, use the browser-only rawHandler, or use Automattic's Blocks Engine.",
+  "No agent identity, approval workflow or audit trail in core (all proposals). Agents borrow human application passwords.",
+  "No shared evaluation of agent site-building end to end: WP-Bench measures code knowledge, and WordPress/agent-skills has no working eval runner.",
+  "No standard persistent site-context file for agents (Guidelines/Knowledge was declined for core; Studio uses its own DESIGN.md), and no AGENTS.md template for WordPress site or theme projects.",
+  "No first-party, host-neutral connector in Claude or ChatGPT directories for self-hosted WordPress; only WordPress.com is listed.",
+  "No maintained, host-neutral migration path for agents (Data Liberation stalled, Try WordPress archived; capability is now inside Automattic's Studio and Static Site Importer).",
+  "No agent-oriented plugin or theme discovery API with quality signals (the Plugin Directory MCP is submission-only)."
+ ]
+}

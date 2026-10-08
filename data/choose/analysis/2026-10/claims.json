@@ -1,0 +1,264 @@
+{
+ "claims": [
+  {
+   "claim_id": "ongoing-updates-maintenance",
+   "verdict": "partly true",
+   "correction": "Core minor and security releases have auto-installed since 3.7, and new installs also auto-update to major releases since 5.6. Plugin and theme auto-updates are a one-click opt-in, and WordPress.com handles updates on every plan including Free, so self-hosted owners mainly need to manage plugins, themes and backups.",
+   "fact_ids": [
+    "auto-updates-minor-37",
+    "auto-updates-major-56",
+    "plugin-theme-autoupdates-55",
+    "managed-hosting-updates"
+   ]
+  },
+  {
+   "claim_id": "needs-php-database-server",
+   "verdict": "partly true",
+   "correction": "Production self-hosting is recommended on PHP 8.3+ with MySQL 8.0+ or MariaDB 10.11+, and SQLite is not yet in core. Locally, Playground CLI (Node.js only) and Studio run WordPress on SQLite with no database server, and WordPress.com hosts it with no server setup.",
+   "fact_ids": [
+    "sqlite-not-in-core",
+    "playground-cli-start",
+    "studio-free-sqlite",
+    "sqlite-plugin-status",
+    "wpcom-free-plan"
+   ]
+  },
+  {
+   "claim_id": "paid-hosting-cost",
+   "verdict": "misleading",
+   "correction": "WordPress.com has a $0 plan with no expiry (subdomain, ads, no plugins), and its paid plans start at $4/month; shared hosts start around $3/month. A WordPress site can also be exported with Simply Static to free static hosts.",
+   "fact_ids": [
+    "wpcom-free-plan",
+    "wpcom-paid-plans",
+    "shared-hosting-price",
+    "simply-static",
+    "static-hosting-free"
+   ]
+  },
+  {
+   "claim_id": "browser-editing-no-code",
+   "verdict": "true",
+   "correction": "The block editor has been the default since 5.0. It offers visual editing, drafts and previews without code, and core roles let staff edit with appropriate permissions.",
+   "fact_ids": [
+    "block-editor-core",
+    "core-roles"
+   ]
+  },
+  {
+   "claim_id": "outdated-sites-get-hacked",
+   "verdict": "true",
+   "correction": "Plugins account for about 91% of ecosystem vulnerabilities, so keeping them updated matters most; core issues are rare and auto-patched. Some vulnerabilities (46% in 2025) had no fix at disclosure, so updating alone is not a complete defence.",
+   "fact_ids": [
+    "patchstack-2025-split",
+    "patchstack-premium-unpatched",
+    "auto-updates-minor-37",
+    "plugin-theme-autoupdates-55"
+   ]
+  },
+  {
+   "claim_id": "most-attacked-platform",
+   "verdict": "partly true",
+   "correction": "W3Techs puts WordPress at 40.1% of all websites, and its popularity makes it a frequent target. The weaknesses are overwhelmingly in plugins and themes; core had only 6 low-priority vulnerabilities in 2025 and has a 50+ person security team that pushes fixes automatically.",
+   "fact_ids": [
+    "w3techs-share",
+    "patchstack-2025-split",
+    "wordfence-2024-core",
+    "core-security-team"
+   ]
+  },
+  {
+   "claim_id": "slow-without-caching",
+   "verdict": "partly true",
+   "correction": "WordPress renders pages dynamically, and one secondary source shows WordPress origins passing Core Web Vitals on mobile slightly less often than the web overall (48.7% vs 53.0%), mainly due to TTFB. Theme choice matters, and sites can also be exported to static files with Simply Static.",
+   "fact_ids": [
+    "cwv-wordpress-2026",
+    "simply-static",
+    "browser-image-processing-71"
+   ]
+  },
+  {
+   "claim_id": "needs-many-paid-plugins",
+   "verdict": "misleading",
+   "correction": "Many features are in core or free plugins: roles and editorial workflow in core, stock management in WooCommerce core, weight-based shipping, and free LMS and membership plugins. Some specific features use paid extensions or tiers, such as Table Rate Shipping, Sensei Pro or LearnDash.",
+   "fact_ids": [
+    "core-roles",
+    "woo-stock-core",
+    "woo-free-weight-plugin",
+    "woo-table-rate-price",
+    "lifterlms-free",
+    "tutor-free",
+    "pmpro-free-core",
+    "sensei-free",
+    "learndash-price"
+   ]
+  },
+  {
+   "claim_id": "overkill-for-small-site",
+   "verdict": "can't tell",
+   "correction": "Whether it fits depends on the site's needs. WordPress serves small sites too, for example on WordPress.com's Free or $4/month plans, with browser editing built in.",
+   "fact_ids": [
+    "wpcom-free-plan",
+    "wpcom-paid-plans",
+    "block-editor-core"
+   ]
+  },
+  {
+   "claim_id": "popular-common-choice",
+   "verdict": "true",
+   "correction": "WordPress runs 40.1% of all websites and 58.6% of sites with a known CMS (W3Techs, October 2026).",
+   "fact_ids": [
+    "w3techs-share"
+   ]
+  },
+  {
+   "claim_id": "plugin-ecosystem",
+   "verdict": "partly true",
+   "correction": "A large plugin ecosystem covers most common features, many with free versions, but some functions need a paid tier. On WordPress.com, plugins require a paid plan.",
+   "fact_ids": [
+    "lifterlms-free",
+    "tutor-free",
+    "woo-free-weight-plugin",
+    "simply-static",
+    "wpcom-free-plan",
+    "wpcom-paid-plans"
+   ]
+  },
+  {
+   "claim_id": "migration-means-rebuild",
+   "verdict": "true",
+   "correction": "There is no official tool that converts a static HTML site into a block theme; it's rebuilt by hand. Create Block Theme helps build and export a theme from the Site Editor.",
+   "fact_ids": [
+    "no-official-html-converter",
+    "create-block-theme"
+   ]
+  },
+  {
+   "claim_id": "hosted-managed-options",
+   "verdict": "true",
+   "correction": "WordPress.com's Free plan includes hosting and automatic updates but has ads, 1 GB storage, a subdomain and no plugins. Paid plans run $4–$45/month billed yearly, and all of them allow plugins.",
+   "fact_ids": [
+    "wpcom-free-plan",
+    "wpcom-paid-plans",
+    "managed-hosting-updates"
+   ]
+  },
+  {
+   "claim_id": "woocommerce-capabilities",
+   "verdict": "true",
+   "correction": "WooCommerce core includes stock management and flat-rate, free and local-pickup shipping. Weight-based rates need an extension, either the free Weight Based Shipping plugin or the paid Table Rate Shipping.",
+   "fact_ids": [
+    "woo-stock-core",
+    "woo-core-shipping",
+    "woo-flat-rate-no-weight",
+    "woo-free-weight-plugin",
+    "woo-table-rate-price"
+   ]
+  },
+  {
+   "claim_id": "updates-break-site",
+   "verdict": "can't tell",
+   "correction": "Conflicts are possible, but the facts file has no data on how often they occur. Plugin and theme auto-updates are opt-in with email notices, so owners control when those updates happen.",
+   "fact_ids": [
+    "plugin-theme-autoupdates-55",
+    "auto-updates-major-56"
+   ]
+  },
+  {
+   "claim_id": "agent-cannot-run-it",
+   "verdict": "misleading",
+   "correction": "An agent can usually run WordPress locally with only Node.js 20.18+ via `npx @wp-playground/cli@latest start`, which uses SQLite and needs no MySQL or Docker. wp-env's Playground runtime and the Studio CLI are other options.",
+   "fact_ids": [
+    "playground-cli-start",
+    "playground-cli-start-persistence",
+    "wp-env-docker-and-playground",
+    "studio-cli-agents",
+    "agent-skills-repo"
+   ]
+  },
+  {
+   "claim_id": "custom-design-constraints",
+   "verdict": "partly true",
+   "correction": "Custom work does require learning WordPress's theme system. Block themes can be built and edited in the Site Editor and saved to theme files with Create Block Theme, without page builders or PHP hooks.",
+   "fact_ids": [
+    "create-block-theme",
+    "block-editor-core"
+   ]
+  },
+  {
+   "claim_id": "course-plugins-capable",
+   "verdict": "true",
+   "correction": "LifterLMS and Tutor LMS offer courses, progress tracking and course sales in their free versions, and Sensei LMS's free version covers lessons and progress. Paid options such as Sensei Pro and LearnDash add further features.",
+   "fact_ids": [
+    "lifterlms-free",
+    "tutor-free",
+    "sensei-free",
+    "pmpro-free-core",
+    "learndash-price"
+   ]
+  },
+  {
+   "claim_id": "multi-author-publishing",
+   "verdict": "true",
+   "correction": "Core includes Administrator, Editor, Author, Contributor and Subscriber roles plus drafts and previews. WordPress 7.1 added Notes with @mentions for editorial feedback.",
+   "fact_ids": [
+    "core-roles",
+    "block-editor-core",
+    "notes-collaboration-71"
+   ]
+  },
+  {
+   "claim_id": "content-locked-in-database",
+   "verdict": "partly true",
+   "correction": "Content does live in the database, and Markdown-in-Git workflows need plugins. Core does provide a full WXR export, the `wp export` CLI command and a JSON REST API for moving content out.",
+   "fact_ids": [
+    "wxr-export",
+    "wpcli-export",
+    "rest-api",
+    "markdown-git-plugins",
+    "wpcom-github-deployments"
+   ]
+  },
+  {
+   "claim_id": "familiar-easy-help",
+   "verdict": "true",
+   "correction": "With 40.1% of all websites, WordPress is widely familiar, and wordpress.org lists recommended hosts. The facts file does not separately verify one-click installs or freelancer availability.",
+   "fact_ids": [
+    "w3techs-share",
+    "wporg-recommended-hosts"
+   ]
+  },
+  {
+   "claim_id": "course-video-limitations",
+   "verdict": "can't tell",
+   "correction": "The facts file has no information on video hosting, URL exposure or lesson page loads in WordPress LMS plugins.",
+   "fact_ids": []
+  },
+  {
+   "claim_id": "admin-cluttered-breakable",
+   "verdict": "can't tell",
+   "correction": "Whether the admin is cluttered is subjective and not covered by the facts. Core roles let owners limit what each user can change.",
+   "fact_ids": [
+    "core-roles",
+    "block-editor-core"
+   ]
+  },
+  {
+   "claim_id": "single-person-lockin",
+   "verdict": "misleading",
+   "correction": "This is an account-management risk rather than something specific to WordPress. Core supports multiple administrators and other roles, content can be exported with WXR, and hosted plans handle updates.",
+   "fact_ids": [
+    "core-roles",
+    "wxr-export",
+    "managed-hosting-updates"
+   ]
+  },
+  {
+   "claim_id": "headless-option",
+   "verdict": "true",
+   "correction": "The core REST API (since 4.7) reads and writes content as JSON, so it can serve a custom frontend.",
+   "fact_ids": [
+    "rest-api"
+   ]
+  }
+ ]
+}

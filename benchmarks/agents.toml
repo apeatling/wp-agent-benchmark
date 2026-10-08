@@ -1,0 +1,140 @@
+# The agents tested: each maker's model in its own harness, as people use it. Shared by both benchmarks.
+#
+# id         model then harness, as a slug. Used everywhere: run records, the site and its URLs.
+# harness    Harbor's agent for the tool, wrapped in wpab.agents so a stalled run gets one "go ahead" reply.
+# model      provider/model as passed to the harness.
+# version    the harness version, pinned for every run. "TODO" means not pinned yet: local runs only.
+# head       one of the five most-used agents behind the headline.
+# auth       how it can sign in: "api" (a key), "plan" (a personal subscription), or both.
+# environment  the sandbox profile from environments.toml: the maker's own documented environment, or the
+#            developer machine profile when there isn't one.
+# resume     whether the harness can continue a session, needed for the nudge and the follow-up question.
+# effort     reasoning effort, set to each tool's own default (medium for Claude Code, Codex and Gemini CLI) and
+#            pinned so a harness update can't change it quietly. Left out, the harness's own
+#            default is used and the run records it as null.
+
+[[agent]]
+id = "opus-5-5-claude-code"
+name = "Opus 5.5"
+harness_name = "Claude Code"
+harness = "claude-code"
+import_path = "wpab.agents:ClaudeCode"
+model = "anthropic/claude-opus-5-5"
+version = "2.1.288"
+head = true
+auth = ["api", "plan"]
+environment = "claude-cloud"
+resume = true
+effort = "medium"
+
+[[agent]]
+id = "gpt-6-1-sol-codex"
+name = "GPT-6.1-Sol"
+harness_name = "Codex"
+harness = "codex"
+import_path = "wpab.agents:Codex"
+model = "openai/gpt-6.1-sol"
+version = "0.160.0"
+head = true
+auth = ["api", "plan"]
+environment = "codex-cloud"
+resume = true
+effort = "medium"
+
+[[agent]]
+id = "gemini-3-8-flash-antigravity"
+name = "Gemini 3.8 Flash"
+harness_name = "Antigravity"
+harness = "antigravity-cli"
+import_path = "wpab.agents:AntigravityCli"
+model = "google/gemini-3.8-flash"
+version = "TODO"
+head = true
+auth = ["api"]
+environment = "dev-machine"
+resume = true
+effort = "medium"
+
+[[agent]]
+id = "grok-4-7-grok-build"
+name = "Grok 4.7"
+harness_name = "Grok Build"
+harness = "grok-build"
+import_path = "wpab.agents:GrokBuild"
+# xAI's own harness, reaching Grok through OpenRouter.
+model = "openrouter/x-ai/grok-4.7"
+version = "1.0.46"
+head = true
+auth = ["api"]
+environment = "dev-machine"
+resume = true
+
+[[agent]]
+id = "sonnet-5-5-claude-code"
+name = "Sonnet 5.5"
+harness_name = "Claude Code"
+harness = "claude-code"
+import_path = "wpab.agents:ClaudeCode"
+model = "anthropic/claude-sonnet-5-5"
+version = "2.1.288"
+head = false
+auth = ["api", "plan"]
+environment = "claude-cloud"
+resume = true
+effort = "medium"
+
+[[agent]]
+id = "qwen3-8-qwen-code"
+name = "Qwen3.8"
+harness_name = "Qwen Code"
+harness = "qwen-coder"
+import_path = "wpab.agents:QwenCode"
+# The largest open-weight Qwen3.8 (Qwen/Qwen3.8-2.4T-A95B). Qwen3.8 Max is API-only, so it isn't used.
+model = "openrouter/qwen/qwen3.8-2.4t-a95b"
+version = "0.25.0"
+head = false
+auth = ["api"]
+environment = "dev-machine"
+resume = true
+
+[[agent]]
+id = "deepseek-v4-pro-opencode"
+name = "DeepSeek V4 Pro"
+harness_name = "OpenCode"
+harness = "opencode"
+import_path = "wpab.agents:OpenCode"
+# Open weights: deepseek-ai/DeepSeek-V4-Pro-0813. DeepSeek has no harness of its own, so OpenCode.
+model = "openrouter/deepseek/deepseek-v4-pro-0813"
+version = "1.18.35"
+head = false
+auth = ["api"]
+environment = "dev-machine"
+resume = true
+
+[[agent]]
+id = "glm-5-3-opencode"
+name = "GLM 5.3"
+harness_name = "OpenCode"
+harness = "opencode"
+import_path = "wpab.agents:OpenCode"
+# Open weights: zai-org/GLM-5.3. Z.ai has no harness of its own, so OpenCode.
+model = "openrouter/z-ai/glm-5.3"
+version = "1.18.35"
+head = false
+auth = ["api"]
+environment = "dev-machine"
+resume = true
+
+[[agent]]
+id = "kimi-k3-kimi-code"
+name = "Kimi K3"
+harness_name = "Kimi Code"
+harness = "kimi-code"
+import_path = "wpab.agents:KimiCode"
+# Open weights: moonshotai/Kimi-K3, through OpenRouter's OpenAI-compatible endpoint.
+model = "moonshotai/kimi-k3"
+version = "2.1.1"
+head = false
+auth = ["api"]
+environment = "dev-machine"
+resume = true

@@ -1,0 +1,4 @@
+# Docker inside the sandbox needs a privileged container.
+services:
+  main:
+    privileged: true

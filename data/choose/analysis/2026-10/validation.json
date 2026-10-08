@@ -1,0 +1,872 @@
+{
+ "recs": [
+  {
+   "rank": 1,
+   "validation": [
+    {
+     "statement": "In 73% of runs the agent chose a stack without asking who would update the site; owner editing was the top WordPress condition (26%); WordPress came up while deciding in 8% of runs vs 57% afterwards",
+     "status": "unconfirmed",
+     "note": "These are internal benchmark figures, so nothing outside can confirm them. An outside study points the same way: Claude Code mostly builds its own solutions instead of recommending tools (12 of 20 categories).",
+     "source": "https://amplifying.ai/research/claude-code-picks"
+    },
+    {
+     "statement": "Agents' default behaviour sends them straight to code instead of asking (implied by 'Empty folders and quick prototype framing sent agents straight to code')",
+     "status": "confirmed",
+     "note": "Codex: OpenAI's official prompting guide says 'Bias to action: default to implementing with reasonable assumptions; do not end on clarifications unless truly blocked.' Claude Code: a third-party post (Jul 2026) quotes a system prompt line telling it to proceed without asking for reversible actions. That quote is secondary and I could not check it against Anthropic. Claude Code also ships an AskUserQuestion tool and a plan mode, so asking is possible but not the default.",
+     "source": "https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide"
+    },
+    {
+     "statement": "Claude Code system prompt tells the agent to proceed without asking",
+     "status": "unconfirmed",
+     "note": "Only found in a secondary source that quotes the prompt text. A Feb 2026 comparison says Claude Code is more willing to ask than Codex because of AskUserQuestion. The real behaviour depends on the mode.",
+     "source": "https://elliotmilco.substack.com/p/proceed-without-asking"
+    },
+    {
+     "statement": "Antigravity has a built-in point where the user is consulted before building",
+     "status": "confirmed",
+     "note": "Antigravity writes an implementation plan and, unless the review policy is set to 'Always proceed', usually asks the user to review it before making changes. This is plan review, not clarifying questions, but a 'who edits the content?' line could go there.",
+     "source": "https://www.antigravity.google/docs/implementation-plan"
+    }
+   ],
+   "prior_art": [
+    {
+     "name": "Claude Code AskUserQuestion tool and plan mode",
+     "what": "Claude Code can stop to ask structured multiple-choice questions, and plan mode proposes a plan with no edits until the user approves it.",
+     "status": "shipped",
+     "url": "https://code.claude.com/docs/en/common-workflows",
+     "relevance": "The mechanism for asking already exists. The request becomes 'use it for greenfield website requests', not 'build a feature'."
+    },
+    {
+     "name": "Antigravity implementation plan and review policy",
+     "what": "Antigravity produces a plan artifact the user can comment on before it executes, controlled by a review policy setting.",
+     "status": "shipped",
+     "url": "https://www.antigravity.google/docs/implementation-plan",
+     "relevance": "Asking Google to have plans for website requests state who maintains the content is a narrow, plausible ask."
+    },
+    {
+     "name": "Codex prompting guide",
+     "what": "OpenAI's official guidance tells Codex to avoid ending a turn on clarifying questions unless truly blocked.",
+     "status": "shipped",
+     "url": "https://developers.openai.com/cookbook/examples/gpt-5/codex_prompting_guide",
+     "relevance": "Shows OpenAI deliberately favours acting over asking. A website-only exception is unlikely to be adopted. Framing it as 'state your assumptions about who maintains the result' fits their design better."
+    },
+    {
+     "name": "Agent Skills open standard (agentskills.io)",
+     "what": "Anthropic's SKILL.md format, now an open standard supported by Claude Code, Codex/ChatGPT, Gemini CLI, Cursor, Copilot, VS Code and many others.",
+     "status": "shipped",
+     "url": "https://agentskills.io/",
+     "relevance": "One skill can reach all three tested agents. This is the main official channel for a third party like WordPress."
+    },
+    {
+     "name": "Antigravity skills",
+     "what": "Antigravity loads SKILL.md skills from ~/.gemini/config/skills/ (global) or <project>/.agents/skills/ (workspace). No official marketplace is documented.",
+     "status": "shipped",
+     "url": "https://codelabs.developers.google.com/getting-started-with-antigravity-skills",
+     "relevance": "The skill works in Antigravity, but there is no Google directory where WordPress could get it discovered."
+    },
+    {
+     "name": "Anthropic plugin directory and plugin relevance suggestions",
+     "what": "Third parties can submit plugins to claude.ai/directory, which reaches claude.ai, Cowork and Claude Code. Marketplaces can also add 'relevance' signals (working directory, CLI commands run, files read, manifest dependencies) so Claude Code suggests the plugin.",
+     "status": "shipped",
+     "url": "https://code.claude.com/docs/en/plugins/publish",
+     "relevance": "Limited for this gap. The signals only fire on existing files or commands, so an empty folder never triggers them, and an admin must allowlist the marketplace. See https://code.claude.com/docs/en/plugins/relevance"
+    },
+    {
+     "name": "Codex plugin directory",
+     "what": "Codex added plugins in March 2026. Secondary sources say the official directory is curated and self-serve publishing is 'coming soon'.",
+     "status": "beta",
+     "url": "https://thenewstack.io/openais-codex-gets-plugins/",
+     "relevance": "Closed to third-party submissions is unverified against OpenAI docs. If true, WordPress needs a partner listing like the one Shopify has."
+    },
+    {
+     "name": "AGENTS.md",
+     "what": "An open project-instructions file read by Codex, Jules, Cursor, Copilot and 25+ tools, now stewarded by the Agentic AI Foundation (Linux Foundation).",
+     "status": "shipped",
+     "url": "https://agents.md/",
+     "relevance": "Only helps once a repo exists, so it does not help with an empty folder. Useful in WordPress starter templates."
+    },
+    {
+     "name": "Shopify AI Toolkit",
+     "what": "Shopify's plugin and skills for Claude Code, Codex, Cursor, Gemini CLI and VS Code, listed in the Codex plugin directory.",
+     "status": "shipped",
+     "url": "https://shopify.dev/docs/apps/build/ai-toolkit",
+     "relevance": "Precedent of a platform getting into agent-maker directories. It is how-to and operations tooling, not guidance on choosing a platform."
+    },
+    {
+     "name": "Neon: agents creating databases",
+     "what": "Neon and Databricks reported that over 80% of Neon databases were created by AI agents, up from about 30% at GA.",
+     "status": "shipped",
+     "url": "https://www.databricks.com/blog/databricks-neon",
+     "relevance": "Evidence that agent defaults drive platform adoption at scale. The 80% figure comes from search results summarising the acquisition coverage; I did not check it against this page."
+    }
+   ],
+   "suggested_change": "Keep it, but WordPress has no direct lever over agent makers' prompts, and Codex is deliberately tuned against asking. Make the ask narrower and neutral: for greenfield user-facing sites, the plan or first reply states who will maintain the content (ask via AskUserQuestion in Claude Code, put it in the Antigravity implementation plan, state it as an assumption in Codex). Support the ask with the benchmark itself, offered to Anthropic, OpenAI and Google as an eval, since agent makers respond to evals more than to requests. Also measure runs in plan or interactive modes, where asking is already supported.",
+   "draft_title": "Make agents ask who will update the site before choosing a stack"
+  },
+  {
+   "rank": 2,
+   "validation": [
+    {
+     "statement": "Playground CLI needs only Node.js (no PHP or MySQL server); command is `npx @wp-playground/cli@latest start`",
+     "status": "confirmed",
+     "note": "The docs say the CLI requires Node.js 20.18 or higher and runs on SQLite. `start` is described as the easiest way to begin: it auto-detects the project type, keeps the site between sessions and opens a browser.",
+     "source": "https://developer.wordpress.org/playground/developers/local-development/wp-playground-cli/"
+    },
+    {
+     "statement": "`start` gives a site an agent can hand over from an empty folder (implied by the proposed llms.txt title 'start a WordPress site from an empty folder')",
+     "status": "wrong",
+     "note": "This needs a caveat. When `start` manages the WordPress root, the site is stored in ~/.wordpress-playground/sites/<path-hash>/, not in the project folder. It is a SQLite/WebAssembly dev runtime. The official wp-playground agent skill calls Playground instances 'disposable, SQLite-backed' and says to use a full stack when you need production-like infrastructure. Moving a Playground site to MySQL hosting needs extra steps, because a Playground zip export has no .sql dump.",
+     "source": "https://github.com/WordPress/agent-skills"
+    },
+    {
+     "statement": "WordPress's own setup instructions say a PHP and MySQL server is needed (the basis of the 32% claim)",
+     "status": "confirmed",
+     "note": "The requirements page lists PHP 8.3+ and MySQL 8.0+ / MariaDB 10.11+ and does not mention SQLite. SQLite support is still a feature plugin, not merged into core. So agents are right about production hosting and wrong about local starts.",
+     "source": "https://wordpress.org/about/requirements/"
+    },
+    {
+     "statement": "Agents don't know about the one-line scaffold (wordpress.org/llms.txt doesn't tell them)",
+     "status": "confirmed",
+     "note": "wordpress.org/llms.txt as fetched on 7 Oct 2026 does not mention Playground, Playground CLI, Studio, npx or Node.js. It still says '43%+'. developer.wordpress.org/playground/llms.txt returns 404.",
+     "source": "https://wordpress.org/llms.txt"
+    },
+    {
+     "statement": "wp-now is the old one-command tool",
+     "status": "confirmed",
+     "note": "@wp-now/wp-now 0.1.75 is marked deprecated on npm: 'Use @wp-playground/cli instead'. The CLI docs map wp-now to `start`.",
+     "source": "https://registry.npmjs.org/@wp-now/wp-now/latest"
+    },
+    {
+     "statement": "32% / 11% shares and the near misses C2610-0027, -0093, -0100",
+     "status": "unconfirmed",
+     "note": "This is internal benchmark data and can't be checked against outside sources.",
+     "source": ""
+    }
+   ],
+   "prior_art": [
+    {
+     "name": "WordPress/agent-skills: wp-playground skill",
+     "what": "Official agent skill (announced Jan 2026) that runs WordPress through Playground CLI and auto-mounts a plugin or theme. Install with `npx skills add wordpress/agent-skills --skill wp-playground`.",
+     "status": "shipped",
+     "url": "https://wordpress.org/news/2026/01/new-ai-agent-skill/",
+     "relevance": "The one-command knowledge already exists, but only for agents that have the skill installed. The gap is discovery by default agents, so llms.txt and docs placement still matter."
+    },
+    {
+     "name": "WordPress Studio CLI (wp-studio)",
+     "what": "Standalone npm CLI (`npx wp-studio@latest`, Node 22+) with commands to create a site (optionally with --blueprint), start it, run WP-CLI, create 7-day WordPress.com preview sites, and push or pull to WordPress.com and Pressable.",
+     "status": "shipped",
+     "url": "https://github.com/Automattic/studio/blob/trunk/apps/cli/README.md",
+     "relevance": "This is the one-command path that leads to a deployable or shareable site. llms.txt should show it next to Playground CLI as the next step once a site has to go live."
+    },
+    {
+     "name": "@wp-playground/mcp",
+     "what": "MCP server (v3.1.57) that lets Claude Code and Gemini CLI drive a browser Playground instance: run PHP, read and write files, navigate.",
+     "status": "shipped",
+     "url": "https://jorijn.com/en/blog/wordpress-playground-mcp-ai-coding-agents/",
+     "relevance": "Another zero-install route for agents. It is not persistent by default, so it suits testing, not handover."
+    },
+    {
+     "name": "wp-env Playground runtime",
+     "what": "`npx @wordpress/env start --runtime=playground` runs wp-env without Docker.",
+     "status": "beta",
+     "url": "https://make.wordpress.org/playground/2026/02/06/wp-env-now-runs-wordpress-with-playground-runtime/",
+     "relevance": "The same Node-only message reaches developer-oriented agents. Marked experimental."
+    },
+    {
+     "name": "@wordpress/blocks rawHandler / Playground build-snapshot",
+     "what": "Playground CLI `build-snapshot --blueprint=<file> --outfile=site.zip` produces a site zip from a Blueprint.",
+     "status": "shipped",
+     "url": "https://themeisle.com/blog/wordpress-playground/",
+     "relevance": "Gives a file artifact from a Blueprint, but it is a Playground/SQLite snapshot, not something a host can deploy. Source is secondary; check against the CLI docs."
+    }
+   ],
+   "suggested_change": "Keep the recommendation, but make the llms.txt entry a two-step path rather than one command. (1) For a local start with only Node 20.18+, use `npx @wp-playground/cli@latest start`, and commit a blueprint.json so the site can be rebuilt; the site itself lives in ~/.wordpress-playground, not the repo. (2) For a site to share or deploy, use `npx wp-studio@latest create --blueprint ./blueprint.json`, then `studio preview create` or `studio push` (Node 22+). Link the existing wp-playground and blueprint skills in WordPress/agent-skills. Add the Studio team as co-owner, and publish an llms.txt for the Playground docs, which has none today.",
+   "draft_title": "Teach agents that WordPress starts with one command where Node is installed"
+  },
+  {
+   "rank": 3,
+   "validation": [
+    {
+     "statement": "None of the 20 agent skills helps decide",
+     "status": "confirmed",
+     "note": "True in substance, but the count is off: WordPress/agent-skills trunk has 19 skill folders, including new wp-patterns, wpds and wp-abilities-audit/verify. wordpress-router says it is for 'WordPress codebases' and needs existing files to classify, so it assumes WordPress is already chosen. Say 'none of the ~19' or give no number.",
+     "source": "https://github.com/WordPress/agent-skills/tree/trunk/skills"
+    },
+    {
+     "statement": "llms.txt doesn't help decide either",
+     "status": "confirmed",
+     "note": "wordpress.org/llms.txt describes WordPress as fitting 'everything from personal blogs to enterprise platforms'. It names no poor-fit cases, has no decision questions, and does not mention Playground.",
+     "source": "https://wordpress.org/llms.txt"
+    },
+    {
+     "statement": "llms.txt says '43%+'",
+     "status": "confirmed",
+     "note": "It says WordPress powers 'more than 43% of all websites on the internet'.",
+     "source": "https://wordpress.org/llms.txt"
+    },
+    {
+     "statement": "W3Techs figure is 40.1%",
+     "status": "confirmed",
+     "note": "W3Techs on 7 Oct 2026: 40.1% of all websites, 58.6% of sites with a known CMS. The figure moves, so publish it with a date.",
+     "source": "https://w3techs.com/technologies/details/cm-wordpress"
+    },
+    {
+     "statement": "Conditions named afterwards: owner edits 26%, editors avoid files 15%, frequent posting 13%, several editors 8%, selling 7%; WordPress named while deciding in 8%",
+     "status": "unconfirmed",
+     "note": "Internal benchmark data; no outside source exists.",
+     "source": ""
+    }
+   ],
+   "prior_art": [
+    {
+     "name": "WordPress/agent-skills",
+     "what": "The official WordPress skills repo, installed with `npx skills add WordPress/agent-skills` or into .claude/.cursor/.github skills folders. New skills are welcome by PR to @WordPress/agent-skills-maintainers after validate-skills.mjs passes.",
+     "status": "shipped",
+     "url": "https://github.com/WordPress/agent-skills",
+     "relevance": "The right home. CONTRIBUTING asks for usage conditions, inputs, procedure, verification, failure modes, at least one eval scenario, and 'small, focused skills'. It also targets WP 7.0+ development, so a platform-choice skill is a scope change to raise in an issue first. https://raw.githubusercontent.com/WordPress/agent-skills/trunk/CONTRIBUTING.md"
+    },
+    {
+     "name": "Automattic/wordpress-agent-skills (WP Site Creator)",
+     "what": "A beta Claude Code and Cowork plugin with Site Specification, Site Design and block-theme creation skills that turn a conversation into a WordPress site. Ports to Codex and others are planned.",
+     "status": "beta",
+     "url": "https://github.com/Automattic/wordpress-agent-skills",
+     "relevance": "Its Site Specification step already gathers requirements, but it does not ask who will update the site and does not judge fit. Add the decision questions here or link to them."
+    },
+    {
+     "name": "WordPress.com Claude connector and MCP server",
+     "what": "An official WordPress.com connector in Claude's connectors directory (read-only, Feb 2026), followed by write capabilities through the WordPress.com MCP server (Mar 2026).",
+     "status": "shipped",
+     "url": "https://wordpress.com/blog/2026/02/05/claude-connector/",
+     "relevance": "Shows WordPress.com can get into an agent maker's directory. A decision skill could hand off to it when the answer is 'hosted, owner edits'."
+    },
+    {
+     "name": "Studio Code / Studio CLI",
+     "what": "WordPress.com's agent-based coding tool and agent-friendly Studio CLI for creating local sites and preview sites.",
+     "status": "beta",
+     "url": "https://wordpress.com/blog/2026/02/12/build-wordpress-plugins-with-ai-claude-code/",
+     "relevance": "A concrete 'what to do next' for the skill to point to once WordPress fits. The Studio Code beta status comes from secondary coverage."
+    },
+    {
+     "name": "skills.sh and Vercel's find-skills",
+     "what": "Vercel's open skills directory, ranked by installs. Its top skill, find-skills (~3.7M installs), lets agents search for and install skills mid-task.",
+     "status": "shipped",
+     "url": "https://skills.sh/",
+     "relevance": "A route to discovery without the user choosing WordPress first. A skill described as 'choose a website platform' could surface on a generic website request."
+    },
+    {
+     "name": "Vercel eval: AGENTS.md vs skills",
+     "what": "In Vercel's evals the skill was never invoked in 56% of cases and gave no gain over baseline (53% vs 53%). An always-loaded AGENTS.md index reached 100%.",
+     "status": "shipped",
+     "url": "https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals",
+     "relevance": "Warning for the plan: a skill fires only if its description matches the request. The description must be about building a website, not about WordPress, and the measure should track how often it gets invoked."
+    },
+    {
+     "name": "Ahrefs llms.txt study",
+     "what": "97% of llms.txt files on 137K domains got zero requests in May 2026. Claude-Code was still the second-largest AI fetcher after GPTBot.",
+     "status": "shipped",
+     "url": "https://ahrefs.com/blog/llmstxt-study/",
+     "relevance": "Coding agents do read llms.txt sometimes, so the fix is cheap and worth doing, but it is a weak channel. Don't count on it to move the 8% figure."
+    },
+    {
+     "name": "Supabase agent-skills and Shopify AI Toolkit",
+     "what": "Official platform skills and plugins installable in Claude Code, Codex and others.",
+     "status": "shipped",
+     "url": "https://github.com/supabase/agent-skills",
+     "relevance": "No platform I found ships a 'when to choose us' decision skill; theirs are all how-to. WordPress would be first, which is both an opening and an untested bet."
+    },
+    {
+     "name": "Learn WordPress lesson 'Is WordPress right for you?'",
+     "what": "An existing Learn WordPress lesson on fit. Its content is behind a login.",
+     "status": "shipped",
+     "url": "https://learn.wordpress.org/lesson/1-getting-started-with-wordpress-is-wordpress-right-for-you/",
+     "relevance": "Possible source material. Agents cannot read it while it requires login."
+    },
+    {
+     "name": "WPShout 'when to use WordPress' flowchart",
+     "what": "A third-party decision flowchart for when WordPress fits and when it doesn't.",
+     "status": "shipped",
+     "url": "https://wpshout.com/when-to-use-wordpress-flowchart/",
+     "relevance": "Shows the decision-tree format already exists outside the project."
+    }
+   ],
+   "suggested_change": "Keep, but plan for distribution, not only content. The skill only reaches agents whose users install it, and those users have usually already picked WordPress. So: (1) give it a neutral description that triggers on building a website, landing page, blog or shop; (2) publish it on skills.sh, submit it to claude.ai/directory, and seek a Codex directory listing; (3) open an issue in WordPress/agent-skills first, since it is outside the repo's current dev-focused scope; (4) align it with Automattic's Site Specification skill so there are not two competing question sets. Change the llms.txt wording to a dated figure such as '40.1% of all websites (W3Techs, Oct 2026)'. Measure how often the skill is invoked on unprompted website requests as well as the 8% figure.",
+   "draft_title": "Publish an agent skill that says when WordPress fits and when it doesn't"
+  },
+  {
+   "rank": 4,
+   "validation": [
+    {
+     "statement": "A Blueprint is a file an agent can write",
+     "status": "confirmed",
+     "note": "WordPress/agent-skills ships a 'blueprint' skill for writing and validating Blueprint JSON. Playground CLI, Studio CLI (`studio create --blueprint`) and the web app all accept Blueprints.",
+     "source": "https://github.com/WordPress/agent-skills"
+    },
+    {
+     "statement": "There is no common way to turn a Blueprint into a live site on a host",
+     "status": "wrong",
+     "note": "Partly wrong. There is no cross-host standard, but there is one working path. Studio CLI can `studio create --blueprint ./bp.json`, then `studio preview create` (temporary WordPress.com site on wp.build, 7-day expiry, under 2 GB), or `studio push` to a connected WordPress.com or Pressable site. Studio Code also has a /publish command. All of this is Automattic-only and needs a WordPress.com login. 20i's and InstaWP's 'blueprints' are their own saved-site templates, not Playground Blueprint JSON.",
+     "source": "https://github.com/Automattic/studio/blob/trunk/skills/studio-cli/SKILL.md"
+    },
+    {
+     "statement": "Blueprints can only run inside Playground",
+     "status": "wrong",
+     "note": "Implicit premise. The Blueprints v2 PHP runner (wp-php-toolkit/blueprints) can create a new install or apply a Blueprint to an existing site (EXECUTION_MODE_APPLY_TO_EXISTING_SITE), so any host could run it. No host is known to expose it as a deploy target.",
+     "source": "https://github.com/WordPress/php-toolkit"
+    },
+    {
+     "statement": "C2610-0085/0086 dropped WordPress because it is server configuration; 10% kept content in repo files; 3% cited one-command deploys",
+     "status": "unconfirmed",
+     "note": "Internal benchmark data.",
+     "source": ""
+    }
+   ],
+   "prior_art": [
+    {
+     "name": "Studio CLI push / preview",
+     "what": "`studio push` and `studio pull` sync files and database with WordPress.com or Pressable, with selective sync. `studio preview create` publishes a temporary WordPress.com preview.",
+     "status": "shipped",
+     "url": "https://github.com/Automattic/studio/blob/trunk/apps/cli/README.md",
+     "relevance": "Already turns a Blueprint plus a local site into a live or preview URL from the command line. The spec should generalise this rather than start from scratch."
+    },
+    {
+     "name": "Blueprints v2 PHP runner (wp-php-toolkit/blueprints)",
+     "what": "PHP library that runs Blueprint JSON in any environment, including applying to an existing hosted site. v0.8.1, May 2026.",
+     "status": "beta",
+     "url": "https://github.com/WordPress/php-toolkit",
+     "relevance": "The obvious engine for a host-side 'create site from Blueprint' endpoint or WP-CLI command."
+    },
+    {
+     "name": "Playground export (zip / Export to GitHub)",
+     "what": "Playground can download a site as a zip (files plus SQLite) or push files to a GitHub repo or PR.",
+     "status": "shipped",
+     "url": "https://developer.wordpress.org/playground/handbook/web-instance/",
+     "relevance": "Produces files, but a host can't use them directly: there is no MySQL dump, so you need WXR plus Create Block Theme export, or a migration plugin."
+    },
+    {
+     "name": "Static Site Importer Playground demo 'Move to WordPress.com'",
+     "what": "The SSI Playground demo has a 'Move to WordPress.com' toolbar after import.",
+     "status": "beta",
+     "url": "https://github.com/Automattic/static-site-importer",
+     "relevance": "Shows that a Playground-to-host handover is being built at Automattic. Details are unverified beyond the README."
+    },
+    {
+     "name": "Data Liberation / WXR importer",
+     "what": "Project aiming to move content anywhere, with a next-gen streaming WXR importer. Studio now imports WXR (.xml) files.",
+     "status": "beta",
+     "url": "https://wordpress.org/data-liberation/",
+     "relevance": "WXR is the obvious 'content export' half of 'Blueprint + content'."
+    },
+    {
+     "name": "Try WordPress browser extension",
+     "what": "Alpha extension that imports a site into a local Playground and exports it to a host.",
+     "status": "idea",
+     "url": "https://github.com/WordPress/try-wordpress",
+     "relevance": "Archived 11 Aug 2026, so not a path forward."
+    }
+   ],
+   "suggested_change": "Reframe the work from 'no way exists' to 'only a vendor-specific way exists'. The draft spec should standardise what Studio already does: a blueprint.json plus a WXR or wp-content bundle in the repo, which a host turns into a live site. Name the Blueprints v2 PHP runner as the reference engine for hosts, and make the Studio team a co-owner. A cheap first step is documenting `npx wp-studio create --blueprint` followed by `studio preview create`/`push` in llms.txt today, alongside the spec.",
+   "draft_title": "Let agents hand over a WordPress site as a file that hosts can deploy"
+  },
+  {
+   "rank": 5,
+   "validation": [
+    {
+     "statement": "Core has updated itself by default since 3.7 for minor releases",
+     "status": "confirmed",
+     "note": "3.7 enabled background updates for minor/security releases and translations by default.",
+     "source": "https://make.wordpress.org/core/2013/08/28/core-updates-in-3-7/"
+    },
+    {
+     "statement": "...and since 5.6 for major ones",
+     "status": "confirmed",
+     "note": "This needs a qualifier. Since 5.6, major auto-updates are on by default only for NEW installs. Existing sites still have to opt in, and host constants or filters take precedence.",
+     "source": "https://make.wordpress.org/core/2020/11/10/wp5-6-auto-update-implementation-change/"
+    },
+    {
+     "statement": "Core had 6 low-priority vulnerabilities in 2025",
+     "status": "confirmed",
+     "note": "Patchstack State of WordPress Security in 2026: 6 core vulnerabilities in 2025, all low priority.",
+     "source": "https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/"
+    },
+    {
+     "statement": "plugins had 91% of the total",
+     "status": "confirmed",
+     "note": "11,334 new vulnerabilities in 2025 (+42% YoY): 91% plugins, 9% themes. 46% had no patch at disclosure. Weighted median time to first exploit was 5 hours.",
+     "source": "https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/"
+    },
+    {
+     "statement": "Extra risk from premium plugins (First step)",
+     "status": "confirmed",
+     "note": "Patchstack counts 1,983 premium-component reports (29%), 59% of them high priority. It says premium components had 3x more Known Exploited Vulnerabilities, with 33 critical zero-days in premium against 12 in free.",
+     "source": "https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/"
+    },
+    {
+     "statement": "Agents repeat an old picture of core (implies core is low-risk now)",
+     "status": "wrong",
+     "note": "This is outdated for 2026. 7.0.2 (17 Jul 2026) fixed one critical and one high issue, an unauthenticated SQLi-to-RCE chain known as 'wp2shell' (CVE-2026-60137, CVE-2026-63030), and WordPress.org forced auto-updates. 7.1.2 (22 Sep 2026) fixed another critical issue, unauthenticated local PHP file inclusion leading to possible RCE (CVE-2026-87902), backported to 4.7. Other 2026 security releases: 6.9.2 (Mar), 7.0.3 (Aug), 7.0.4 (Aug), 7.1.1 (Sep, 11 security fixes) and 7.1.3 (6 Oct, 7 security fixes). The 2025 figure is true, but a page that cites only 2025 would mislead today. The stronger true message is that core vulnerabilities get fixed fast and pushed automatically.",
+     "source": "https://wordpress.org/news/category/security/"
+    },
+    {
+     "statement": "wordpress.org/about/security is the right place for a dated account",
+     "status": "confirmed",
+     "note": "The page exists but is stale: published Jan 2023, modified Apr 2024. It says '43%' and mentions auto-updates only vaguely, with no defaults, no figures and no plugin guidance. llms.txt links security only generically.",
+     "source": "https://wordpress.org/about/security/"
+    }
+   ],
+   "prior_art": [
+    {
+     "name": "WordPress Security White Paper",
+     "what": "Long-form official description of core security architecture and the auto-update mechanism.",
+     "status": "shipped",
+     "url": "https://wordpress.org/about/security/",
+     "relevance": "Linked from the security page. A new dated facts section can point to it rather than replace it."
+    },
+    {
+     "name": "Security release archive (wordpress.org/news/category/security)",
+     "what": "Official, dated list of every core security release.",
+     "status": "shipped",
+     "url": "https://wordpress.org/news/category/security/",
+     "relevance": "The page should link to this release record and summarise it, rather than quoting a single year's vulnerability count."
+    },
+    {
+     "name": "Protect The Shire",
+     "what": "A WordPress.org initiative (Matt Mullenweg, 5 Jun 2026) that holds plugin and theme releases before they go out through auto-updates while AI ('Gandalf') and human review run. The hold was 24h and was cut to about 6-7h on 16 Jul.",
+     "status": "shipped",
+     "url": "https://wordpress.org/news/2026/06/pts/",
+     "relevance": "This is the newest official security story about plugins and should be part of the page. Patchstack criticised the hold for delaying vulnerability fixes as well: https://www.patchstack.com/articles/protect-shire-solves-one-problem-risks-making-another-worse/"
+    },
+    {
+     "name": "Plugin Check (PCP) and Plugins Team internal scanner",
+     "what": "Automated and AI-assisted checks on plugin submissions. The scanner runs 220+ checks, and the team reviewed 12,713 plugins in 2025.",
+     "status": "shipped",
+     "url": "https://make.wordpress.org/plugins/2026/01/07/a-year-in-the-plugins-team-2025/",
+     "relevance": "Evidence for the page that directory plugins are vetted, which supports the plugin-choice advice."
+    },
+    {
+     "name": "Plugins & themes auto-updates documentation",
+     "what": "Official how-to for turning on plugin and theme auto-updates.",
+     "status": "shipped",
+     "url": "https://wordpress.org/documentation/article/plugins-themes-auto-updates/",
+     "relevance": "Already covers the fourth item in the First step. Link to it rather than rewriting it."
+    },
+    {
+     "name": "Wordfence quarterly threat intelligence reports",
+     "what": "Independent counts of vulnerabilities and attacks, e.g. Q4 2025: 2,213 vulnerabilities added, 467K infected sites cleaned.",
+     "status": "shipped",
+     "url": "https://www.wordfence.com/blog/2026/02/quarterly-wordpress-threat-intelligence-report-q4-2025/",
+     "relevance": "A second independent source to cite next to Patchstack."
+    }
+   ],
+   "suggested_change": "Keep the recommendation, but reframe the core message. Core is not vulnerability-free: there were two critical core issues in 2026. What sets WordPress apart is that core security fixes are backported and pushed automatically, including forced updates for 7.0.2. Replace the single-year '6 low-priority' line with a dated, auto-refreshed summary from the security release archive and Patchstack/Wordfence. Add Protect The Shire and plugin directory scanning. Update the stale /about/security page, which also says 43%, instead of building a new one. Rewrite the Why so it does not say core risk is a myth.",
+   "draft_title": "Give agents a current, citable account of WordPress security and updates"
+  },
+  {
+   "rank": 6,
+   "validation": [
+    {
+     "statement": "91% of 2025 vulnerabilities were in plugins",
+     "status": "confirmed",
+     "note": "From the Patchstack 2026 report.",
+     "source": "https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/"
+    },
+    {
+     "statement": "plugin and theme auto-updates are still opt-in",
+     "status": "confirmed",
+     "note": "True in core since 5.5 (Aug 2020), where they shipped off by default. Exceptions: WordPress.com auto-updates WordPress.org-listed plugins and themes by default, and some hosts change the defaults.",
+     "source": "https://wordpress.org/documentation/article/plugins-themes-auto-updates/"
+    },
+    {
+     "statement": "Update breakage is a real concern; the change needs testing",
+     "status": "confirmed",
+     "note": "Partly addressed already. 6.3 added rollback for failed manual plugin and theme updates. 6.6 added automatic rollback of plugin auto-updates when a loopback detects a PHP fatal error, then emails the admin. Gaps: no fatal-error rollback for theme auto-updates, it needs working loopbacks, and it does not catch non-fatal breakage.",
+     "source": "https://make.wordpress.org/core/2024/04/19/merge-proposal-rollback-auto-update/"
+    },
+    {
+     "statement": "keeping the existing email notices",
+     "status": "confirmed",
+     "note": "Core already emails admins about auto-update results and rollbacks.",
+     "source": "https://make.wordpress.org/core/2024/04/19/merge-proposal-rollback-auto-update/"
+    },
+    {
+     "statement": "Implied: no existing proposal (Gap: missing)",
+     "status": "wrong",
+     "note": "Ticket #58389 'Enable auto-updates for plugins installed from the Plugins Add New Screen' was opened in May 2023 and is still Awaiting Review. In June 2025 swissspidy commented in support of a default auto-update setting and of 'changing the default to opt-in for new installations'. Ticket #50778 (2020) argued the opposite, that auto-updates should not be on by default for external plugins.",
+     "source": "https://lists.wordpress.org/pipermail/wp-trac/2025-June/544278.html"
+    }
+   ],
+   "prior_art": [
+    {
+     "name": "Trac #58389",
+     "what": "Proposes auto-updates on by default for plugins installed from Add New, with an opt-out.",
+     "status": "proposal",
+     "url": "https://core.trac.wordpress.org/ticket/58389",
+     "relevance": "Comment on and revive this ticket rather than opening a duplicate. It already has support from a core committer for new-install defaults."
+    },
+    {
+     "name": "Trac #50778",
+     "what": "2020 objection to default-on auto-updates for externally hosted plugins, raised on consent and security grounds.",
+     "status": "proposal",
+     "url": "https://lists.wordpress.org/pipermail/wp-trac/2020-July/425092.html",
+     "relevance": "Shows the main objection (user consent, third-party update servers). Scope the proposal to WordPress.org-hosted plugins on new installs."
+    },
+    {
+     "name": "5.6 major core auto-updates default for new installs",
+     "what": "Precedent: new installs are opted in to major core updates; existing sites are unchanged.",
+     "status": "shipped",
+     "url": "https://make.wordpress.org/core/2020/11/10/wp5-6-auto-update-implementation-change/",
+     "relevance": "The exact pattern the recommendation proposes to copy."
+    },
+    {
+     "name": "Rollback auto-update (6.6)",
+     "what": "Reverts a plugin auto-update automatically on a PHP fatal error and emails the admin.",
+     "status": "shipped",
+     "url": "https://make.wordpress.org/core/2024/04/19/merge-proposal-rollback-auto-update/",
+     "relevance": "Removes much of the breakage objection for plugins. Themes still have no equivalent."
+    },
+    {
+     "name": "Protect The Shire release hold",
+     "what": "Directory plugin releases are held (now about 6-7h) for AI and human review before they go out through auto-updates.",
+     "status": "shipped",
+     "url": "https://wordpress.org/news/2026/06/pts/",
+     "relevance": "Lowers the supply-chain risk of default-on updates, which was a key past objection. Patchstack warns that the hold also delays security fixes."
+    },
+    {
+     "name": "WordPress.com default plugin auto-updates",
+     "what": "Plugins and themes listed on WordPress.org update automatically on WordPress.com, and scheduled updates are offered on Business and Commerce plans.",
+     "status": "shipped",
+     "url": "https://wordpress.com/support/plugins/update-a-plugin-or-theme/",
+     "relevance": "Large-scale evidence that default-on works. Cite it in the ticket."
+    },
+    {
+     "name": "Hostinger smart auto-updates",
+     "what": "Hostinger's security tool applies 'smart auto-updates' to core, plugins and themes. Some third-party sources say it is on by default and set to security-only updates.",
+     "status": "shipped",
+     "url": "https://docs.hostinger.com/wordpress/overview",
+     "relevance": "Unconfirmed whether this is on by default. The official Hostinger support article says plugin auto-updates are off unless enabled."
+    }
+   ],
+   "suggested_change": "Don't open a new ticket. Revive Trac #58389, retitled or broadened, with the 5.6 new-install precedent, 6.6 rollback, Protect The Shire and WordPress.com's defaults as evidence. Scope it to plugins only, because themes lack fatal-error rollback. Limit it to WordPress.org-hosted plugins on new installs to answer the consent objection in #50778. Gap should be 'stalled', not 'missing'.",
+   "draft_title": "Turn on plugin and theme auto-updates by default for new sites"
+  },
+  {
+   "rank": 7,
+   "validation": [
+    {
+     "statement": "WordPress.com is free",
+     "status": "confirmed",
+     "note": "The Free plan is $0 with no expiry, but it cannot install plugins.",
+     "source": "https://wordpress.com/pricing/"
+    },
+    {
+     "statement": "or $4 a month with plugins",
+     "status": "confirmed",
+     "note": "This is the Personal plan at $4/mo billed annually: $9 month-to-month, $2.75/mo on a 3-year term. Plugin installation is available on every paid plan.",
+     "source": "https://wordpress.com/pricing/"
+    },
+    {
+     "statement": "updates are handled on every plan",
+     "status": "confirmed",
+     "note": "Pricing lists automated WordPress updates, and support docs say WordPress.org-listed plugins and themes auto-update. Plugins only exist on paid plans.",
+     "source": "https://wordpress.com/support/plugins/update-a-plugin-or-theme/"
+    },
+    {
+     "statement": "LifterLMS ... cover features agents called paid (courses)",
+     "status": "confirmed",
+     "note": "LifterLMS core is free with no limits on courses or memberships. Unconfirmed whether its Stripe/PayPal gateways are free or paid add-ons; check before publishing.",
+     "source": "https://wordpress.org/plugins/lifterlms/"
+    },
+    {
+     "statement": "Tutor LMS covers paid course features",
+     "status": "confirmed",
+     "note": "The free version (100,000+ installs) has native ecommerce: PayPal, Stripe and others, plus WooCommerce.",
+     "source": "https://wordpress.org/plugins/tutor/"
+    },
+    {
+     "statement": "a free weight-shipping plugin",
+     "status": "confirmed",
+     "note": "Weight Based Shipping for WooCommerce is free (Pro available) with 50,000+ installs.",
+     "source": "https://wordpress.org/plugins/weight-based-shipping-for-woocommerce/"
+    },
+    {
+     "statement": "33% of runs said WordPress needs $5-30 a month (implied wrong)",
+     "status": "unconfirmed",
+     "note": "For self-hosting this is roughly right after the intro period. Recommended-host renewal prices: Bluehost Starter $3.99 intro, $9.99 renewal, 36-month term. Hostinger Premium $2.99 intro, $10.99 renewal, 48-month term. Pressable entry is $20.83/mo billed annually. Only WordPress.com gets well under $5.",
+     "source": "https://www.bluehost.com/wordpress/wordpress-hosting"
+    },
+    {
+     "statement": "Agents quoted premium managed hosts at $35-$100+",
+     "status": "unconfirmed",
+     "note": "Benchmark data, not checkable. Pressable, a host recommended on wordpress.org, is $20.83-$50/mo for its first three tiers.",
+     "source": "https://pressable.com/pricing/"
+    },
+    {
+     "statement": "wordpress.org/hosting has no cost guidance today",
+     "status": "confirmed",
+     "note": "The page lists Pressable, Bluehost and Hostinger with no prices. It only mentions that some hosts donate a portion of fees back.",
+     "source": "https://wordpress.org/hosting/"
+    }
+   ],
+   "prior_art": [
+    {
+     "name": "Third-party 'WordPress cost' guides (DreamHost, IONOS, etc.)",
+     "what": "Host-written cost breakdowns, e.g. DreamHost puts a typical business site at about $415 in year one.",
+     "status": "shipped",
+     "url": "https://dreamhost.com/blog/wordpress-site-cost/",
+     "relevance": "These are what agents likely learn from, and they anchor high. There is no official wordpress.org equivalent, so the gap is real."
+    },
+    {
+     "name": "WordPress.com pricing page",
+     "what": "Official, current plan prices for hosted WordPress.",
+     "status": "shipped",
+     "url": "https://wordpress.com/pricing/",
+     "relevance": "Link to it for the live figures."
+    }
+   ],
+   "suggested_change": "Keep the recommendation. Show intro and renewal prices plus the minimum term, since $2.99-3.99 intro prices renew at about $10-11 and need 36-48 month terms. Otherwise agents will rightly call the figures misleading. Change the Measure from '$0-10' to 'quotes reflect WordPress.com $0-4 and shared-host about $10 renewal rather than $35+ managed hosting'. Note that WordPress.com Free has no plugins. Check whether the LifterLMS gateways are free before listing it for paid courses, or lead with Tutor LMS.",
+   "draft_title": "Publish what a small WordPress site really costs"
+  },
+  {
+   "rank": 8,
+   "validation": [
+    {
+     "statement": "No official tool converts static HTML into a block theme",
+     "status": "wrong",
+     "note": "Outdated. Studio 1.21.0 (released 7 Sep 2026) added `studio create --from` for folders, zips and compiled build output, and Studio 1.23.0 (5 Oct 2026) extended it to URLs. Per the Studio CLI skill, every source is rebuilt as an editable block theme by Automattic's Static Site Importer. SSI creates WordPress pages, a block theme with header/footer template parts, theme.json and wp_navigation menus, using Blocks Engine. The statement only holds if 'official' means WordPress.org or core: these are GPL Automattic tools, and SSI needs WordPress 7.1+ and PHP 8.2+.",
+     "source": "https://github.com/Automattic/studio/blob/trunk/RELEASE-NOTES.txt"
+    },
+    {
+     "statement": "Core has no HTML-to-blocks capability",
+     "status": "wrong",
+     "note": "Implicit premise. @wordpress/blocks rawHandler and pasteHandler convert HTML strings to known blocks; pasteHandler strips everything else. This covers content only, not templates or theme.json.",
+     "source": "https://developer.wordpress.org/block-editor/reference-guides/packages/packages-blocks/"
+    },
+    {
+     "statement": "14% said moving to WordPress means a rebuild; agents kept HTML and added a CMS or JSON; WordPress most-named alternative (17 mentions)",
+     "status": "unconfirmed",
+     "note": "Internal benchmark data. The rebuild claim is now less true for agents running Studio CLI.",
+     "source": ""
+    }
+   ],
+   "prior_art": [
+    {
+     "name": "Static Site Importer (Automattic)",
+     "what": "GPL WordPress plugin and WP-CLI command (`wp static-site-importer import`) that imports HTML, a folder, a ZIP or a URL into WordPress pages plus a generated block theme, rewriting links and creating navigation. Releases v1.27.x on 7 Oct 2026.",
+     "status": "shipped",
+     "url": "https://github.com/Automattic/static-site-importer",
+     "relevance": "This is essentially the tool the recommendation asks for. It is very active, but not on wordpress.org and not known to agents."
+    },
+    {
+     "name": "Studio CLI `studio create --from` and the /liberate skill",
+     "what": "One command builds a Studio site from a static folder, zip, build output or URL using Static Site Importer. The bundled liberate skill then compares the result with the original and fixes differences using editable blocks only.",
+     "status": "shipped",
+     "url": "https://github.com/Automattic/studio/blob/trunk/apps/cli/ai/skills/liberate/SKILL.md",
+     "relevance": "Closes the 'make this site editable' gap end to end for agents that can run npx. The real gap is now awareness and quality."
+    },
+    {
+     "name": "Blocks Engine (Automattic)",
+     "what": "Tools and a PHP transformer (ArtifactCompiler) that turn HTML or Figma into block markup and a WordPress site plan. php-transformer v0.37.x.",
+     "status": "beta",
+     "url": "https://github.com/Automattic/blocks-engine",
+     "relevance": "The conversion engine under SSI. Core or Create Block Theme could reuse it."
+    },
+    {
+     "name": "Block Runner (Human Made)",
+     "what": "GPL npm CLI and library (v0.9.10, Oct 2026) that converts HTML to native Gutenberg blocks validated with Gutenberg packages. It can also author registered blocks and ships an agent skill (`npx block-runner skill --install`).",
+     "status": "beta",
+     "url": "https://github.com/humanmade/block-runner",
+     "relevance": "Covers HTML-to-block content with no AI calls and agent integration. It does not produce templates or a full theme, so it is complementary."
+    },
+    {
+     "name": "Gutenberg rawHandler / pasteHandler",
+     "what": "Core JS APIs that convert HTML to known blocks, used when pasting into the editor.",
+     "status": "shipped",
+     "url": "https://developer.wordpress.org/block-editor/reference-guides/packages/packages-blocks/",
+     "relevance": "Content-level building block. Unsupported markup falls back to Custom HTML."
+    },
+    {
+     "name": "html-to-blocks-converter (chubes4)",
+     "what": "Server-side PHP port of rawHandler using WP_HTML_Processor.",
+     "status": "beta",
+     "url": "https://github.com/chubes4/html-to-blocks-converter",
+     "relevance": "A possible core-side primitive. Content only."
+    },
+    {
+     "name": "Automattic data-liberation-agent",
+     "what": "Captures any website as a portable static HTML artifact. Its WordPress/block-theme output was removed on 9 Sep 2026 and moved to destination consumers (Studio/SSI).",
+     "status": "shipped",
+     "url": "https://github.com/Automattic/data-liberation-agent/commit/96f4eca1b0e6071b5e74f67b78e1b2a442b3a5c1",
+     "relevance": "Shows the architecture: capture, then SSI converts. Its old liberate-local skill links (static HTML to block theme) are now dead."
+    },
+    {
+     "name": "Create Block Theme",
+     "what": "Plugin that exports and creates block themes from the Site Editor.",
+     "status": "shipped",
+     "url": "https://github.com/WordPress/create-block-theme",
+     "relevance": "Has no HTML import, and no open issue for one was found. A host for upstreaming SSI-style import, if WordPress.org ownership is wanted."
+    },
+    {
+     "name": "Try WordPress extension",
+     "what": "Browser extension for importing existing site content into Playground.",
+     "status": "idea",
+     "url": "https://github.com/WordPress/try-wordpress",
+     "relevance": "Alpha, archived Aug 2026, content-focused. Does not close the gap."
+    },
+    {
+     "name": "Telex / Big Sky",
+     "what": "Telex generates single custom blocks from prompts or images. Big Sky (WordPress.com AI builder) only builds new sites.",
+     "status": "beta",
+     "url": "https://www.implicator.ai/wordpress-telex-takes-aim-at-vibe-coding-with-a-blocks-only-ai-that-ships-zips/",
+     "relevance": "Neither converts an existing static site into a theme."
+    }
+   ],
+   "suggested_change": "Change the gap from 'missing' to 'unknown/awareness' and drop 'build a tool'. Studio CLI plus Static Site Importer already turns a static folder or URL into pages and an editable block theme (`npx wp-studio@latest create --from ./site`). Instead: (1) add a 'make an existing static site editable' entry to WordPress/agent-skills and wordpress.org/llms.txt pointing to `studio create --from`, with Block Runner for content-only conversion; (2) run the benchmark's 'make this site editable' tasks through it to measure fidelity; (3) as a longer-term step, consider listing SSI on wordpress.org or upstreaming an import step into Create Block Theme. Change the owner from Core to the Studio team plus the AI team, and rewrite the 'no official tool' sentence.",
+   "draft_title": "Build a tool that turns a static HTML site into an editable block theme"
+  },
+  {
+   "rank": 9,
+   "validation": [
+    {
+     "statement": "WordPress at 48.7% passing mobile Core Web Vitals against 53.0% for all sites",
+     "status": "unconfirmed",
+     "note": "A secondary source cites the HTTP Archive CWV Technology Report for August 2026. I could not load the official dashboard data (it renders client-side).",
+     "source": "https://jkdevstudio.com/wordpress-core-web-vitals-blame-the-theme/"
+    },
+    {
+     "statement": "mainly because of slow server response",
+     "status": "unconfirmed",
+     "note": "The same secondary source gives a WordPress TTFB pass rate of 23.5% against 45.8% for all sites. It also says LCP (55.8% good) is the failing metric and blames theme-side factors such as render-blocking CSS, fonts and images. 'Mainly' server response is not established.",
+     "source": "https://jkdevstudio.com/wordpress-core-web-vitals-blame-the-theme/"
+    },
+    {
+     "statement": "Hosts can close most of this gap",
+     "status": "unconfirmed",
+     "note": "Plausible for TTFB, but there is no source quantifying the share.",
+     "source": ""
+    },
+    {
+     "statement": "Pressable: full-page caching on by default",
+     "status": "confirmed",
+     "note": "Pressable docs say page caching (Batcache) and object caching are always on, and Edge Cache is available on all plans.",
+     "source": "https://pressable.com/knowledgebase/caching-types-available-pressable/"
+    },
+    {
+     "statement": "Bluehost: full-page caching on by default",
+     "status": "confirmed",
+     "note": "Bluehost help says page caching is 'automatically enabled for all WordPress installations'.",
+     "source": "https://www.bluehost.com/help/article/wordpress-how-to-use-our-page-caching-feature"
+    },
+    {
+     "statement": "Hostinger: full-page caching on by default",
+     "status": "unconfirmed",
+     "note": "LiteSpeed servers. Hostinger says the LiteSpeed Cache plugin is preinstalled via its auto-installer, but its docs describe a LiteSpeed toggle and do not say page cache is on by default.",
+     "source": "https://www.hostinger.com/tutorials/wordpress-litespeed-website-optimization-tool/"
+    },
+    {
+     "statement": "Listing requirements on wordpress.org/hosting do not include caching",
+     "status": "confirmed",
+     "note": "Criteria cover contributions, customer base, auto-install and auto-upgrades, GPL, design, tone and perception. There is no performance or caching criterion.",
+     "source": "https://wordpress.org/hosting/"
+    }
+   ],
+   "prior_art": [
+    {
+     "name": "Speculative loading in core (6.8)",
+     "what": "Prefetch with conservative eagerness is on by default for logged-out visitors. The dev note reports about a 1.9% median LCP pass-rate gain.",
+     "status": "shipped",
+     "url": "https://make.wordpress.org/core/2025/03/06/speculative-loading-in-6-8/",
+     "relevance": "Shows core-side work on perceived load. It does not touch TTFB, so host caching is still needed."
+    },
+    {
+     "name": "Performance Lab plugin and feature plugins",
+     "what": "The Performance team's testbed (Server-Timing API, WebP uploads, view transitions, etc.) for features headed to core.",
+     "status": "shipped",
+     "url": "https://wordpress.org/plugins/performance-lab/",
+     "relevance": "Its Server-Timing tooling could give hosts a standard way to show cache hits and TTFB in a listing check."
+    },
+    {
+     "name": "Performance team handbook: Server-Timing benchmarking",
+     "what": "Official guidance on measuring server-side PHP performance.",
+     "status": "shipped",
+     "url": "https://make.wordpress.org/performance/handbook/measuring-performance/benchmarking-php-performance-with-server-timing/",
+     "relevance": "Basis for a measurable listing requirement, e.g. a cached-TTFB threshold, rather than a yes/no question about caching."
+    },
+    {
+     "name": "HTTP Archive Core Web Vitals Technology Report",
+     "what": "Official dashboard of CWV pass rates by technology.",
+     "status": "shipped",
+     "url": "https://httparchive.org/reports/techreport/tech?tech=WordPress",
+     "relevance": "Cite this directly rather than a secondary blog. I could not extract the numbers here."
+    }
+   ],
+   "suggested_change": "Two of the three listed hosts already confirm page caching on by default (Pressable, Bluehost). Hostinger is the one to confirm. Shift the ask from 'turn it on' to 'make on-by-default page caching plus a TTFB or Server-Timing check a written wordpress.org/hosting listing criterion', with the Performance team defining the measurement. Cite the HTTP Archive figures from the official report, and soften 'mainly because of slow server response'. LCP and theme-side factors also matter, so pair host caching with theme and core work.",
+   "draft_title": "Make full-page caching the default at recommended hosts"
+  },
+  {
+   "rank": 10,
+   "validation": [
+    {
+     "statement": "For courses, WordPress was only the eighth alternative named (5 mentions), behind Next.js and hosted course platforms",
+     "status": "unconfirmed",
+     "note": "Internal benchmark data.",
+     "source": ""
+    },
+    {
+     "statement": "Video hosting is a real gap either way",
+     "status": "wrong",
+     "note": "Overstated. WordPress.com Business and Commerce plans include VideoPress video uploads. The gap is cost (plans below Business) and self-hosted sites needing a separate video host, not missing capability. Hosted course platforms bundle video, so the gap does not apply 'either way'.",
+     "source": "https://wordpress.com/support/videopress/"
+    },
+    {
+     "statement": "For a one-page site nobody edits, a static page is a reasonable choice",
+     "status": "confirmed",
+     "note": "This is an opinion, but common WordPress community guidance agrees: for very simple goals, use simpler infrastructure.",
+     "source": "https://wpshout.com/when-to-use-wordpress-flowchart/"
+    },
+    {
+     "statement": "Saying where WordPress doesn't fit makes the rest of its guidance more credible to agents",
+     "status": "unconfirmed",
+     "note": "I found no study testing this for LLM agents. It is a reasonable hypothesis that the benchmark could test.",
+     "source": ""
+    },
+    {
+     "statement": "Existing WordPress guidance does not state poor-fit cases",
+     "status": "confirmed",
+     "note": "wordpress.org/llms.txt lists only fit cases. The one official 'right for you?' lesson is behind a login.",
+     "source": "https://wordpress.org/llms.txt"
+    }
+   ],
+   "prior_art": [
+    {
+     "name": "SQLite 'Appropriate Uses For SQLite'",
+     "what": "A well-known official page with 'Situations Where SQLite Works Well', 'Situations Where A Client/Server RDBMS May Work Better', and a four-point checklist for choosing.",
+     "status": "shipped",
+     "url": "https://www.sqlite.org/whentouse.html",
+     "relevance": "The best template: fits, poor fits, then a short checklist. Easy for an agent to apply."
+    },
+    {
+     "name": "Astro 'Why Astro?'",
+     "what": "Astro's official docs say it is designed for content-driven sites and that other frameworks are better for app-like experiences such as dashboards and inboxes.",
+     "status": "shipped",
+     "url": "https://docs.astro.build/en/concepts/why-astro/",
+     "relevance": "A web-platform precedent for stating limits plainly in official docs."
+    },
+    {
+     "name": "Lullabot 'When is Drupal overkill?'",
+     "what": "An agency article from the Drupal ecosystem on when Drupal is too much.",
+     "status": "shipped",
+     "url": "https://www.lullabot.com/articles/when-drupal-overkill",
+     "relevance": "A CMS precedent, though it comes from an agency, not drupal.org."
+    },
+    {
+     "name": "WPShout flowchart / Speckyboy 'Scenarios Where WordPress May Not Be the Best Option'",
+     "what": "Third-party WordPress community pieces listing poor-fit cases: very simple sites, complex apps with unusual data models.",
+     "status": "shipped",
+     "url": "https://speckyboy.com/wordpress-may-not-be-the-best-option/",
+     "relevance": "Shows the community already says this. Official guidance can adopt the reasonable parts."
+    }
+   ],
+   "suggested_change": "Merge into #3 as a 'when another option fits better' section, modelled on SQLite's page: fits, poor fits, then a checklist. Drop or reword 'video hosting is a real gap either way'. Say instead: single-product video courses usually fit a hosted course platform that bundles video and checkout; on WordPress, video needs WordPress.com Business or higher (VideoPress) or a separate video host. Keep the one-page, nobody-edits case. Treat 'more credible to agents' as a hypothesis to test in the benchmark (with and without the poor-fit section), not as a stated reason.",
+   "draft_title": "Say plainly where WordPress isn't the best fit"
+  }
+ ]
+}

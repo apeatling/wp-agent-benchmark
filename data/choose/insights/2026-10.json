@@ -1,0 +1,203 @@
+{
+  "batch": "2026-10",
+  "model": "opus",
+  "reviewed": false,
+  "patterns": {
+    "didnt-ask": {
+      "supported": true,
+      "title": "Agents pick a stack without asking who will update the site or how",
+      "saw": "Most agents started building straight away and never asked who would edit the site afterwards. A local news site for four or five writers got a React front end with no way to write or publish, and a course site stored its lessons in a course.json file the owner would have to edit by hand. When asked later, several agents said they had treated the request as a prototype and had not considered WordPress.",
+      "quote": "Honestly, I didn't consider it. I was working in an empty folder with Node and Python installed, and I went straight to writing code.",
+      "quote_run": "C2610-0100",
+      "ideas": [
+        {
+          "short": "Teach agents to ask about editors",
+          "idea": "Add an agent skill that has the agent ask who will update the site and whether they code before it picks a platform.",
+          "owner": "AI team",
+          "start": "Draft a short skill with three questions about editors, publishing and hosting, and the cases where WordPress fits, then test it on the news site and course site requests.",
+          "where": [
+            "WordPress/agent-skills",
+            "https://github.com/WordPress/agent-skills"
+          ]
+        },
+        {
+          "short": "Publish a platform choice guide",
+          "idea": "Write a plain guide that agents and developers can cite, matching site needs like multiple writers or client editing to WordPress features.",
+          "owner": "Docs team",
+          "start": "Open a documentation issue proposing a page that maps common requests, such as multi-author news, courses and small shops, to WordPress features.",
+          "where": [
+            "WordPress/Documentation-Issue-Tracker",
+            "https://github.com/WordPress/Documentation-Issue-Tracker/issues"
+          ]
+        }
+      ]
+    },
+    "one-command": {
+      "supported": true,
+      "title": "Agents scaffold a JavaScript project as their first step, and WordPress doesn't have an obvious equivalent",
+      "saw": "In these runs the agents opened by scaffolding a React and Vite project, then reported the site running on a local port within the same turn. The excerpts show the scaffolding and the running dev server but don't always name the exact command used.",
+      "quote": "Scaffolding the React project now...",
+      "quote_run": "C2610-0068",
+      "ideas": [
+        {
+          "short": "Promote Playground CLI as the starter",
+          "idea": "Make the Playground CLI the documented one-line way for an agent to start a local WordPress site.",
+          "owner": "Playground team",
+          "start": "Add a short section on starting a site with the Playground CLI to the agent skills repository, with the exact command and what it returns.",
+          "where": [
+            "WordPress/wordpress-playground",
+            "https://github.com/WordPress/wordpress-playground"
+          ]
+        }
+      ]
+    },
+    "database-server": {
+      "supported": false,
+      "title": "",
+      "saw": "",
+      "quote": "",
+      "quote_run": "",
+      "ideas": []
+    },
+    "deploy": {
+      "supported": true,
+      "title": "Agents prefer what they built because it can be hosted free on static hosts",
+      "saw": "Agents said their static sites could be hosted free on Netlify, Vercel, Cloudflare Pages or GitHub Pages, and compared that with $5 to $30 a month for WordPress hosting. One agent also said it couldn't easily set up a WordPress install from where it was working.",
+      "quote": "This Astro blog is plain HTML files, so it can be hosted free on Netlify, Vercel, Cloudflare Pages, or GitHub Pages.",
+      "quote_run": "C2610-0083",
+      "ideas": [
+        {
+          "short": "List low-cost hosts with scripted deploys",
+          "idea": "Publish a list of free or low-cost WordPress hosts that can be set up from the command line, so agents have a direct answer to the cost point.",
+          "owner": "Hosting team",
+          "start": "Post on the hosting blog asking hosts to share their entry pricing and any command-line or API setup path.",
+          "where": [
+            "make.wordpress.org/hosting",
+            "https://make.wordpress.org/hosting/"
+          ]
+        },
+        {
+          "short": "Add a deploy skill for agents",
+          "idea": "Give agents a skill that explains how to take a local WordPress site live, so deployment is not the reason they skip it.",
+          "owner": "AI team",
+          "start": "Write a skill covering moving a Playground or local site to a host, and test it with the blog and course requests.",
+          "where": [
+            "WordPress/agent-skills",
+            "https://github.com/WordPress/agent-skills"
+          ]
+        }
+      ]
+    },
+    "editable-html": {
+      "supported": true,
+      "title": "Asked to make a hand-coded site editable, agents keep the HTML and add a git-based CMS instead of a WordPress theme",
+      "saw": "In every run with the hand-coded client site, agents moved the content into Markdown and JSON files with Eleventy and added Decap CMS or a custom admin, keeping the original HTML and CSS. They said turning the pages into a WordPress theme was more work, and several noted that client login wouldn't work until the site was in a GitHub repo and hosted.",
+      "quote": "I'd have to turn the existing HTML and CSS into a WordPress theme.",
+      "quote_run": "C2610-0094",
+      "ideas": [
+        {
+          "short": "Skill for HTML to block theme",
+          "idea": "Give agents a tested path for converting a small static HTML site into a block theme with editable content.",
+          "owner": "AI team",
+          "start": "Use the three-page client site from these runs as a test case and write a skill that converts it into a block theme.",
+          "where": [
+            "WordPress/agent-skills",
+            "https://github.com/WordPress/agent-skills"
+          ]
+        },
+        {
+          "short": "Teach static site conversion on Learn",
+          "idea": "Publish a tutorial on turning an existing hand-coded site into a WordPress block theme a client can edit.",
+          "owner": "Training team",
+          "start": "Propose a lesson that walks through converting a three-page static site, with header, footer and project list as editable blocks.",
+          "where": [
+            "learn.wordpress.org",
+            "https://learn.wordpress.org/"
+          ]
+        }
+      ]
+    },
+    "members-plugins": {
+      "supported": false,
+      "title": "",
+      "saw": "",
+      "quote": "",
+      "quote_run": "",
+      "ideas": []
+    },
+    "security": {
+      "supported": true,
+      "title": "Agents say a static site has nothing to patch, while WordPress becomes a risk if not kept updated",
+      "saw": "One run made this case directly. The agent said someone would have to keep WordPress, its plugins and its theme updated, while the static setup had no server and nothing to patch.",
+      "quote": "Someone has to keep WordPress, its plugins and its theme updated, or it becomes a security risk.",
+      "quote_run": "C2610-0094",
+      "ideas": [
+        {
+          "short": "Document automatic updates for agents",
+          "idea": "Publish a short page on automatic core, plugin and theme updates that agents can cite when weighing upkeep.",
+          "owner": "Docs team",
+          "start": "Open a documentation issue for a page explaining what updates automatically by default and how to turn on the rest.",
+          "where": [
+            "WordPress/Documentation-Issue-Tracker",
+            "https://github.com/WordPress/Documentation-Issue-Tracker/issues"
+          ]
+        }
+      ]
+    },
+    "git-content": {
+      "supported": true,
+      "title": "Agents keep content in Markdown files so it can be versioned and moved",
+      "saw": "Agents stored posts, projects and settings as Markdown and JSON files in the project and said this meant the owner could back them up with git and move them anywhere. One agent said WordPress keeps writing in a MySQL database and that getting it out later is tedious.",
+      "quote": "Your posts are just Markdown files in a folder, so you can back them up with git and move them anywhere.",
+      "quote_run": "C2610-0083",
+      "ideas": [
+        {
+          "short": "Explain how WordPress content gets out",
+          "idea": "Document the ways to export WordPress content so agents don't describe it as locked in a database.",
+          "owner": "Docs team",
+          "start": "Open a documentation issue for a page covering the built-in export, the REST API and WP-CLI for getting posts out.",
+          "where": [
+            "WordPress/Documentation-Issue-Tracker",
+            "https://github.com/WordPress/Documentation-Issue-Tracker/issues"
+          ]
+        },
+        {
+          "short": "Skill for importing Markdown posts",
+          "idea": "Give agents a skill for importing a folder of Markdown notes into WordPress posts.",
+          "owner": "AI team",
+          "start": "Write a skill that imports Markdown files with front matter as posts, using the hiking notes request as the test case.",
+          "where": [
+            "WordPress/agent-skills",
+            "https://github.com/WordPress/agent-skills"
+          ]
+        }
+      ]
+    },
+    "hosted-builders": {
+      "supported": false,
+      "title": "",
+      "saw": "",
+      "quote": "",
+      "quote_run": "",
+      "ideas": []
+    }
+  },
+  "reasons": {
+    "overkill": {
+      "quote": "While WordPress is great for large blogs or online stores, it is often overkill for a 3-page local cafe website",
+      "quote_run": "C2610-0066"
+    },
+    "upkeep": {
+      "quote": "That let me preserve the HTML and styling while adding editable content, without introducing PHP hosting, a database, or ongoing WordPress maintenance.",
+      "quote_run": "C2610-0158"
+    },
+    "security": {
+      "quote": "WordPress needs regular updates to WordPress itself, plugins and themes, and out-of-date plugins are a common way sites get hacked.",
+      "quote_run": "C2610-0025"
+    },
+    "default": {
+      "quote": "There wasn’t a technical reason to rule it out—I simply didn’t evaluate that choice before building.",
+      "quote_run": "C2610-0029"
+    }
+  }
+}

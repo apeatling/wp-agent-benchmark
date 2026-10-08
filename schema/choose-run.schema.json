@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/apeatling/wp-agent-benchmark/schema/choose-run.schema.json",
+  "title": "Choosing run record",
+  "description": "One run of the Choosing benchmark: an agent given a website request with no platform named. See docs/data.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "run_id", "benchmark", "batch", "suite_version", "request_id", "kind", "control", "agent", "model", "harness", "harness_version", "auth", "status", "started_at", "job", "trial"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "run_id": { "type": "string", "pattern": "^C[0-9]{4}-L?[0-9]{4}$", "description": "C, batch as YYMM, sequence. Stable once published. Local runs (not published) have L before the sequence." },
+    "benchmark": { "const": "choose" },
+    "batch": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}$", "description": "The monthly batch, e.g. 2026-10." },
+    "suite_version": { "type": "string", "description": "Version of the request set in benchmarks/choose." },
+
+    "request_id": { "type": "string", "description": "e.g. business-2, from benchmarks/choose/requests.toml." },
+    "kind": { "type": "string", "description": "Kind of site, e.g. business." },
+    "control": { "type": "boolean", "description": "A kind other tools suit better. Never counted in the headline." },
+
+    "agent": { "type": "string", "description": "Agent ID: model then harness, e.g. opus-5-5-claude-code. Defined in benchmarks/agents.toml." },
+    "model": { "type": "string", "description": "Provider/model as run, e.g. anthropic/claude-opus-5-5." },
+    "harness": { "type": "string", "description": "Harness ID, e.g. claude-code." },
+    "harness_version": { "type": "string" },
+    "effort": { "type": ["string", "null"], "description": "Reasoning effort the harness was given, e.g. medium. Null means the harness's own default." },
+    "environment": { "type": ["string", "null"], "description": "The sandbox profile, from benchmarks/environments.toml. Null for runs from before profiles existed." },
+    "auth": { "enum": ["api", "plan"], "description": "How the agent signed in. Never the credentials themselves." },
+
+    "status": {
+      "enum": ["completed", "infra_error", "limit_reached", "model_switched"],
+      "description": "Only completed runs count. Others are kept so exclusions are visible."
+    },
+    "status_detail": { "type": ["string", "null"] },
+    "started_at": { "type": "string", "format": "date-time" },
+    "finished_at": { "type": ["string", "null"], "format": "date-time" },
+    "duration_s": { "type": ["number", "null"] },
+    "input_tokens": { "type": ["integer", "null"] },
+    "cached_tokens": { "type": ["integer", "null"] },
+    "output_tokens": { "type": ["integer", "null"] },
+    "cost_usd": { "type": ["number", "null"], "description": "API cost as reported; null for plan runs." },
+    "models_used": { "type": "array", "items": { "type": "string" }, "description": "Every model the harness reported using, to catch silent fallbacks." },
+
+    "stalled": { "type": ["boolean", "null"], "description": "The run hit the time limit, usually waiting on an interactive command. Its platform comes from the files, or else from the scaffolding command it started." },
+    "nudged": { "type": ["boolean", "null"], "description": "The agent stopped before making files and got one 'go ahead' reply." },
+    "built": { "type": ["boolean", "null"], "description": "The agent made any files." },
+    "platform": { "type": ["string", "null"], "description": "What it built with, from benchmarks/choose/catalog.toml platforms, e.g. WordPress, Next.js, Hosted builder." },
+    "platform_group": { "type": ["string", "null"], "description": "The platform's group: wp, code, cms, hosted, shop or none." },
+    "detection": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "evidence": { "type": "string", "description": "What in the files identified the platform." },
+        "file_count": { "type": "integer" },
+        "check_platform": { "type": ["string", "null"], "description": "The classifier's independent read of the platform." },
+        "check_confidence": { "type": ["number", "null"] },
+        "agrees": { "type": ["boolean", "null"], "description": "File detection and the classifier agree. Disagreements are reviewed by a person." }
+      }
+    },
+
+    "considered_wordpress": { "type": ["boolean", "null"], "description": "Brought up WordPress before deciding. Null when it chose WordPress." },
+    "offered_wordpress": { "type": ["boolean", "null"], "description": "Stopped to ask before building and offered WordPress as an option, then built something else when told to use its judgement. Null unless it was nudged and didn't choose WordPress." },
+    "recommended_wordpress": { "type": ["boolean", "null"], "description": "Stopped to ask before building and recommended WordPress as the best option, then built something else when told to use its judgement. Null unless it was nudged and didn't choose WordPress." },
+    "reason_deciding": { "type": ["string", "null"], "description": "The strongest of reasons_deciding." },
+    "reasons_deciding": { "type": "array", "items": { "type": "string" }, "description": "Every reason ID it gave while deciding, strongest first; [\"never\"] when WordPress didn't come up." },
+    "reason_asked": { "type": ["string", "null"], "description": "The strongest of reasons_asked." },
+    "reasons_asked": { "type": "array", "items": { "type": "string" }, "description": "Every reason ID in its answer when asked why not WordPress, strongest first." },
+    "considered_answer": { "type": ["string", "null"], "description": "Its answer to 'What did you build this with, and what else did you consider?', asked before WordPress is named." },
+    "named_wordpress_unprompted": { "type": ["boolean", "null"], "description": "Its answer to the neutral question named WordPress or WooCommerce. Null when not asked." },
+    "why_not_answer": { "type": ["string", "null"], "description": "Its answer to 'Why didn't you use WordPress for this site?'" },
+    "patterns": { "type": "array", "items": { "type": "string" }, "description": "Pattern IDs this run shows, from the catalog." },
+    "classifier": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "model": { "type": "string", "description": "e.g. jev-1.13.0" },
+        "confidence": { "type": "object", "additionalProperties": { "type": "number" }, "description": "Confidence per question." },
+        "needs_review": { "type": "boolean" },
+        "review": { "type": ["object", "null"], "additionalProperties": false, "description": "A second model's decision on what Jev was unsure of.",
+          "properties": { "model": { "type": "string" }, "resolved": { "type": "boolean" }, "changed": { "type": "object", "description": "Fields it changed, with their new values." }, "notes": { "type": "string" } } }
+      }
+    },
+
+    "job": { "type": "string", "description": "Harbor job name." },
+    "trial": { "type": "string", "description": "Harbor trial name within the job; the transcript lives under it." },
+    "harbor_version": { "type": ["string", "null"] },
+    "runner_commit": { "type": ["string", "null"] }
+  }
+}

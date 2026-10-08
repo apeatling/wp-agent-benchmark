@@ -1,0 +1,46 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: [trunk]
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync
+      - run: uv run python -m unittest discover -s tests
+
+  published-data:
+    # Published results change only through the maintainer. Contributors' own runs go to data/local/, which is
+    # gitignored, so a pull request from anyone else shouldn't touch these folders.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Published data is only changed by maintainers
+        env:
+          AUTHOR_ASSOCIATION: ${{ github.event.pull_request.author_association }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          changed=$(git diff --name-only "$BASE"...HEAD -- data/choose/ site/data/ | grep -v '^data/local/' || true)
+          if [ -z "$changed" ]; then
+            echo "No published data changed."
+            exit 0
+          fi
+          if [ "$AUTHOR_ASSOCIATION" = "OWNER" ] || [ "$AUTHOR_ASSOCIATION" = "MEMBER" ]; then
+            echo "Published data changed by a maintainer:"
+            echo "$changed"
+            exit 0
+          fi
+          echo "::error::This pull request changes published results, which only maintainers can do. Your own runs belong in data/local/ (run wpab without --publish). Changed:"
+          echo "$changed"
+          exit 1

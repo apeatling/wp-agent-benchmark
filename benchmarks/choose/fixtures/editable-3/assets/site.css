@@ -1,0 +1,9 @@
+:root { --ink: #1d1d1b; --muted: #77756f; }
+body { margin: 0; font: 16px/1.5 "Helvetica Neue", Arial, sans-serif; color: var(--ink); }
+.top { display: flex; justify-content: space-between; padding: 24px 40px; }
+.top nav a { margin-left: 24px; color: var(--ink); text-decoration: none; }
+.brand { font-weight: 700; color: var(--ink); text-decoration: none; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; padding: 40px; }
+.project img { width: 100%; aspect-ratio: 4 / 3; background: #ddd; }
+.text { max-width: 640px; padding: 40px; }
+footer { padding: 40px; color: var(--muted); font-size: 14px; }

@@ -1,0 +1,49 @@
+# The sandbox each agent works in. Each agent gets the environment its maker documents for its own agent,
+# so the result reflects that agent's real setup, not one we invented. Agents whose makers don't document
+# an environment get the developer machine profile, and the results say so.
+#
+# Every profile: internet is open (the CLIs run on people's own machines, with full internet), the agent
+# can install anything (sudo or root), and nothing WordPress-specific is preinstalled. Researched
+# 2026-10-06; re-check each source when bumping the request set version.
+#
+# id        referenced from agents.toml as `environment`.
+# image     a published image used as-is, or "build" for the Dockerfile in environments/<id>/.
+# docker    Docker runs inside the sandbox, so the agent can use it as on a machine with Docker.
+# user      who the agent runs as: the maker's default.
+
+[[environment]]
+id = "codex-cloud"
+name = "Codex cloud"
+description = "OpenAI's published codex-universal image: Ubuntu 24.04 with Python, Node, PHP 8.2–8.5 and Composer, Ruby, Go, Rust, Java and more. No database server and no Docker."
+image = "ghcr.io/openai/codex-universal@sha256:905e512f36460e1be4cfedb30928a8a28299edb0fcd5de7998ceaa72d27fe304"  # pinned 2026-10-06
+docker = false
+user = "root"
+sources = [
+  "https://github.com/openai/codex-universal",
+  "https://learn.chatgpt.com/docs/environments/cloud-environment",
+]
+
+[[environment]]
+id = "claude-cloud"
+name = "Claude Code cloud"
+description = "Claude Code's documented cloud environment: Ubuntu 24.04 with Node 22, Python, PHP 8.3 and Composer, Ruby, Java 21, Go and Rust; PostgreSQL 16 and Redis installed but not running; Docker available."
+image = "build"
+docker = true
+user = "dev"
+sources = [
+  "https://code.claude.com/docs/en/cloud-environments",
+  "https://code.claude.com/docs/en/claude-code-on-the-web",
+]
+
+[[environment]]
+id = "dev-machine"
+name = "Developer machine"
+description = "A typical developer laptop, for agents that run on the person's own computer: Node, Python and git; Docker available (about 72% of developers use it); no PHP and no database (neither ships with macOS or Windows). Google's cloud agent, Jules, also has no PHP or database, so this matches Google's documented setup too."
+image = "build"
+docker = true
+user = "dev"
+sources = [
+  "https://survey.stackoverflow.co/2025/technology",
+  "https://www.php.net/install.macosx.php",
+  "https://jules.google/docs/environment/",
+]

@@ -1,0 +1,152 @@
+# Choosing: requests a person might give an agent, with no platform named. Each becomes a Harbor task in
+# tasks/choose/<id>. Written to read like real requests: short, first person, mixed casing, a mix of
+# people building for themselves and developers building for a client.
+#
+# kind      the kind of site, from catalog.toml. Control kinds are ones other tools suit better.
+# fixture   a folder in fixtures/ copied into the agent's working folder before it starts.
+
+version = "0.4.0"
+
+[[request]]
+id = "business-1"
+kind = "business"
+prompt = "website for my bakery"
+
+[[request]]
+id = "business-2"
+kind = "business"
+prompt = "I'm a plumber in Leeds. Most of my work is word of mouth but I want people to be able to find me on Google and get in touch."
+
+[[request]]
+id = "business-3"
+kind = "business"
+prompt = "Client runs a yoga studio. Needs class times and a contact form, and she wants to post updates herself."
+
+[[request]]
+id = "business-4"
+kind = "business"
+prompt = "I'm an illustrator and Instagram isn't enough anymore, I need somewhere to show my work and take commissions"
+
+[[request]]
+id = "store-1"
+kind = "store"
+prompt = "I want to sell my candles online"
+
+[[request]]
+id = "store-2"
+kind = "store"
+prompt = "we sell shirts and vinyl at gigs, want to sell online too without spending much"
+
+[[request]]
+id = "store-3"
+kind = "store"
+prompt = "Client sells bike parts, a couple hundred products. Needs stock levels and shipping by weight."
+
+[[request]]
+id = "blog-1"
+kind = "blog"
+prompt = "help me start a blog"
+
+[[request]]
+id = "blog-2"
+kind = "blog"
+prompt = "I've been writing up my hikes in my notes app for years. I'd like a proper blog on my own domain."
+
+[[request]]
+id = "blog-3"
+kind = "blog"
+prompt = "We want a local news site for our town. There's 4 or 5 of us writing, so it needs categories and author pages."
+
+[[request]]
+id = "org-1"
+kind = "org"
+prompt = "Website for our charity"
+
+[[request]]
+id = "org-2"
+kind = "org"
+prompt = "I volunteer at a dog rescue and we only have a Facebook page. We want to show the dogs up for adoption and take donations."
+
+[[request]]
+id = "org-3"
+kind = "org"
+prompt = "Nonprofit client needs a site with events, donations and a volunteer signup form."
+
+[[request]]
+id = "editable-1"
+kind = "editable"
+fixture = "editable-1"
+prompt = "The guy who made this site left and none of us can change anything on it."
+
+[[request]]
+id = "editable-2"
+kind = "editable"
+fixture = "editable-2"
+prompt = "this is our cafe's website, my nephew made it. the menu is from last year and I can't work out how to change it"
+
+[[request]]
+id = "editable-3"
+kind = "editable"
+fixture = "editable-3"
+prompt = "Hand-coded client site in this folder. They want to manage the content themselves from now on."
+
+[[request]]
+id = "course-1"
+kind = "course"
+prompt = "Make a site where I can sell my pottery course"
+
+[[request]]
+id = "course-2"
+kind = "course"
+prompt = "People keep asking for videos of my classes. They'd pay for them and then watch the lessons online."
+
+[[request]]
+id = "course-3"
+kind = "course"
+prompt = "course site, video lessons behind a login, one-off payment"
+
+[[request]]
+id = "app-1"
+kind = "app"
+prompt = "Build an app to track holiday requests for my team."
+
+[[request]]
+id = "app-2"
+kind = "app"
+prompt = "We do staff rotas in a spreadsheet and it's a nightmare. Can you make something better?"
+
+[[request]]
+id = "app-3"
+kind = "app"
+prompt = "small invoicing SaaS, auth, postgres, stripe billing"
+
+[[request]]
+id = "docs-1"
+kind = "docs"
+prompt = "docs site for our CLI"
+
+[[request]]
+id = "docs-2"
+kind = "docs"
+prompt = "Our API docs are a mess of Google Docs. Make us a proper docs site."
+
+[[request]]
+id = "docs-3"
+kind = "docs"
+fixture = "docs-3"
+prompt = "Set up docs for this repo with search and versioning."
+
+[[request]]
+id = "page-1"
+kind = "page"
+prompt = "Landing page for my app launch with an email signup"
+
+[[request]]
+id = "page-2"
+kind = "page"
+prompt = "I need a page with links to all my socials"
+
+[[request]]
+id = "page-3"
+kind = "page"
+prompt = "One page for our meetup with the date, venue and an RSVP."

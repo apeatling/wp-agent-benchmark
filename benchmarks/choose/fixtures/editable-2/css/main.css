@@ -1,0 +1,5 @@
+body { font-family: Georgia, serif; max-width: 720px; margin: 0 auto; padding: 0 16px; background: #fffaf3; color: #3b2a1a; }
+header { border-bottom: 2px solid #c98b4f; padding: 16px 0; }
+nav a { margin-right: 12px; color: #a0522d; }
+.price { float: right; }
+footer { margin-top: 40px; font-size: 14px; color: #8a6d52; }

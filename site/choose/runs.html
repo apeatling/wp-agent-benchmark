@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css?v=208">
+<link rel="stylesheet" href="choose.css?v=228">
+<link rel="stylesheet" href="../vt.css">
+<title>Runs · Choosing WordPress · Agent Benchmarks</title>
+</head>
+<body data-page="runs">
+<main class="container page-runs">
+  <header class="page-head">
+    <h1 class="title">Runs</h1>
+    <p class="lede">Every request, what the agent built, and its reason if it wasn’t WordPress.</p>
+  </header>
+  <div class="filters filters--sticky rf">
+    <div class="rf-main">
+      <label>Agent<select id="f-agent"></select></label>
+      <label>Type of site<select id="f-type"></select></label>
+      <label>Built with<select id="f-built"></select></label>
+      <label>Reason<select id="f-reason"></select></label>
+      <button type="button" class="rf-more" id="f-more" aria-expanded="false" aria-controls="rf-extra">More filters<span id="f-more-n"></span></button>
+    </div>
+    <div class="rf-extra" id="rf-extra" hidden>
+      <label>WordPress<select id="f-wp"></select></label>
+      <label>Sites<select id="f-fit"></select></label>
+    </div>
+  </div>
+  <section class="section section--tight section--last">
+    <div class="rf-head"><span class="count" id="count"></span><button type="button" class="btn-link" id="f-clear" hidden>Reset filters</button></div>
+    <div class="table-scroll runs-wide">
+      <table class="table runs">
+        <colgroup><col class="c-id"><col class="c-date"><col class="c-who"><col class="c-kind"><col class="c-res"><col class="c-why"><col class="c-go"></colgroup>
+        <thead><tr><th aria-sort="none" data-k="id"><button type="button" class="th-sort">Run<span class="th-arrow" aria-hidden="true"></span></button></th><th aria-sort="none" data-k="date"><button type="button" class="th-sort">Date<span class="th-arrow" aria-hidden="true"></span></button></th><th aria-sort="none" data-k="agent"><button type="button" class="th-sort">Agent<span class="th-arrow" aria-hidden="true"></span></button></th><th aria-sort="none" data-k="type"><button type="button" class="th-sort">Type of site<span class="th-arrow" aria-hidden="true"></span></button></th><th aria-sort="none" data-k="built"><button type="button" class="th-sort">Built with<span class="th-arrow" aria-hidden="true"></span></button></th><th aria-sort="none" data-k="reason"><button type="button" class="th-sort">Reason<span class="th-arrow" aria-hidden="true"></span></button></th><th><span class="sr-only">Open</span></th></tr></thead>
+        <tbody id="body"></tbody>
+      </table>
+    </div>
+    <button type="button" class="btn-quiet runs-more" id="more">Show 50 more</button>
+  </section>
+</main>
+<script src="chrome.js?v=54"></script>
+<script src="../data/choose.js?v=13"></script>
+<script src="data.js?v=65"></script>
+<script>
+(function () {
+  const C = window.CHOOSE, { fmt, esc } = C;
+  const $ = id => document.getElementById(id);
+  const opt = (v, l) => `<option value="${v}">${esc(l)}</option>`;
+  const group = (label, opts) => `<optgroup label="${label}">${opts}</optgroup>`;
+
+  // Every option comes from this month's runs, so the filters update with each new batch: an option shows only when
+  // some run matches it. WordPress always stays in "Built with", because zero is the result the page is about.
+  const R = C.RUNS, has = f => R.some(f);
+  const head = C.MODELS.filter(m => m.head && has(r => r.m.id === m.id)), also = C.MODELS.filter(m => !m.head && has(r => r.m.id === m.id));
+  $('f-agent').innerHTML = opt('head', head.length >= 5 ? 'The five most-used agents' : 'Most-used agents') + (also.length ? opt('all', 'Every agent tested') : '') +
+    group('Most used', head.map(m => opt(m.id, `${m.name} in ${m.where}`)).join('')) +
+    (also.length ? group('Also tested', also.map(m => opt(m.id, `${m.name} in ${m.where}`)).join('')) : '');
+  $('f-type').innerHTML = opt('', 'Any type') + C.TYPES.filter(t => has(r => r.type.id === t.id)).map(t => opt(t.id, t.name)).join('');
+  $('f-fit').innerHTML = opt('', 'Where WordPress fits') + (has(r => r.control) ? opt('control', 'Controls, where it doesn’t') + opt('all', 'Both') : '');
+  const built = p => has(r => r.out === p);
+  $('f-built').innerHTML = opt('', 'Anything') + opt('not', 'Not WordPress') + C.GROUPS.filter(g => g.id === 'wp' || g.platforms.some(built)).map(g => {
+    const ps = g.platforms.filter(built), subs = ps.filter(p => p !== g.name);
+    return opt(g.id, g.name) + (ps.length > 1 ? subs.map(p => opt(p, '\u00a0\u00a0\u00a0\u00a0' + p)).join('') : '');
+  }).join('');
+  const wpOpts = [['named', 'Named it afterwards', r => r.out === 'WordPress' || r.unprompted], ['weighed', 'Brought it up while deciding', r => r.out === 'WordPress' || r.considered],
+    ['offered', 'Offered it before building', r => r.offered], ['unnamed', 'Didn’t name it afterwards', r => r.out !== 'WordPress' && r.unprompted === false]];
+  $('f-wp').innerHTML = opt('', 'Any') + wpOpts.filter(([, , f]) => has(f)).map(([v, l]) => opt(v, l)).join('');
+  // Patterns are finer-grained than reasons, so they share the Reason filter, in their own group after the reasons.
+  const reasons = C.REASONS.filter(x => has(r => r.reasons.some(y => y.id === x.id))), pats = C.PATTERNS.filter(p => has(r => (r.patterns || []).includes(p.id)));
+  $('f-reason').innerHTML = opt('', 'Any reason') + group('Reasons', reasons.map(r => opt(r.id, r.name)).join('')) +
+    (pats.length ? group('Patterns across runs', pats.map(p => opt('p:' + p.id, p.short)).join('')) : '');
+
+  // Filters live in the URL, so every view can be linked to.
+  const KEYS = { agent: 'f-agent', type: 'f-type', fit: 'f-fit', built: 'f-built', wp: 'f-wp', reason: 'f-reason' };
+  const EXTRA = ['f-wp', 'f-fit'];
+  const params = new URLSearchParams(location.search);
+  if (params.get('pattern')) params.set('reason', 'p:' + params.get('pattern'));
+  Object.entries(KEYS).forEach(([k, id]) => { const v = params.get(k); if (v !== null && [...$(id).options].some(o => o.value === v)) $(id).value = v; });
+  const setMore = open => { $('rf-extra').hidden = !open; $('f-more').setAttribute('aria-expanded', open); };
+  setMore(EXTRA.some(id => $(id).value));
+  $('f-more').addEventListener('click', () => setMore($('rf-extra').hidden));
+
+  let shown = 50;
+  function matches(r) {
+    const a = $('f-agent').value, t = $('f-type').value, b = $('f-built').value, why = $('f-reason').value;
+    if (a === 'head' ? !r.m.head : a !== 'all' && r.m.id !== a) return false;
+    if (t && r.type.id !== t) return false;
+    const f = $('f-fit').value; if (f === '' ? r.control : f === 'control' && !r.control) return false;
+    if (b === 'not' ? r.out === 'WordPress' : b && !(r.out === b || C.GROUPS.find(g => g.id === b)?.platforms.includes(r.out))) return false;
+    if (why.startsWith('p:') ? !(r.patterns || []).includes(why.slice(2)) : why && !r.reasons.some(x => x.id === why)) return false;
+    const wp = $('f-wp').value, chose = r.out === 'WordPress';
+    if (wp === 'named' && !(chose || r.unprompted)) return false;
+    if (wp === 'unnamed' && (chose || r.unprompted !== false)) return false;
+    if (wp === 'weighed' && !(chose || r.considered)) return false;
+    if (wp === 'offered' && !r.offered) return false;
+    return true;
+  }
+  // Any column sorts; click again to reverse. The order lives in the address with the filters.
+  const SORT = { id: r => r.id, date: r => r.started || '', agent: r => r.m.name + ' ' + r.m.where, type: r => r.type.name, built: r => r.out, reason: r => r.reasons[0] ? r.reasons[0].name : '~' };
+  let sort = SORT[params.get('sort')] ? params.get('sort') : 'id', dir = params.get('dir') === 'desc' ? -1 : 1;
+  document.querySelectorAll('.runs th[data-k] .th-sort').forEach(b => b.addEventListener('click', () => {
+    const k = b.parentElement.dataset.k; dir = sort === k ? -dir : 1; sort = k; shown = Math.max(shown, 50); render();
+  }));
+  function render() {
+    const runs = C.RUNS.filter(matches).sort((a, b) => dir * (SORT[sort](a) < SORT[sort](b) ? -1 : SORT[sort](a) > SORT[sort](b) ? 1 : a.id < b.id ? -1 : 1));
+    document.querySelectorAll('.runs th[data-k]').forEach(th => th.setAttribute('aria-sort', th.dataset.k === sort ? (dir > 0 ? 'ascending' : 'descending') : 'none'));
+    $('body').innerHTML = runs.slice(0, shown).map(r => {
+      const href = `run?id=${r.id}`;
+      const res = r.out === 'WordPress' ? '<span class="res-wp">WordPress</span>' : `<span class="res-no">${r.out}</span>`;
+      // The reason, with how many more it gave, and when it said it on a quiet second line.
+      const why = r.out === 'WordPress' || !r.reasons.length ? '' : `<span class="why-n">${esc(r.reasons[0].name)}${r.reasons.length > 1 ? ` <span class="why-more">+${r.reasons.length - 1}</span>` : ''}</span><small>${r.considered ? 'while deciding' : 'asked afterwards'}</small>`;
+      return `<tr class="run" data-href="${href}" data-id="${r.id}"><td class="id"><a href="${href}">${r.id}</a></td><td class="date">${r.started ? `${new Date(r.started).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })}<small>${new Date(r.started).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' })} UTC</small>` : ''}</td><td class="who">${C.logo(r.m, 14)}${r.m.name}<small>${r.m.where}</small></td><td class="kind" data-why="${why ? ' · ' + esc(r.reasons[0].name) : ''}">${r.type.name}</td><td class="res">${res}</td><td class="why">${why}</td><td class="go-c" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></td></tr>`;
+    }).join('') || '<tr><td colspan="7" style="padding:32px 12px;color:var(--ink-2)">No runs match these filters. Reset them to see every run.</td></tr>';
+    $('count').textContent = `${fmt(Math.min(shown, runs.length))} of ${fmt(runs.length)} runs`;
+    $('more').hidden = shown >= runs.length;
+    const q = new URLSearchParams();
+    Object.entries(KEYS).forEach(([k, id]) => { const v = $(id).value; if (v && !(k === 'agent' && v === 'head')) v.startsWith('p:') ? q.set('pattern', v.slice(2)) : q.set(k, v); });
+    if (sort !== 'id' || dir < 0) { q.set('sort', sort); if (dir < 0) q.set('dir', 'desc'); }
+    const extra = EXTRA.filter(id => $(id).value).length;
+    $('f-more-n').textContent = extra ? ` (${extra})` : '';
+    history.replaceState(null, '', q.toString() ? '?' + q : location.pathname);
+    $('f-clear').hidden = !q.toString();
+  }
+  Object.values(KEYS).forEach(id => $(id).addEventListener('change', () => { shown = 50; render(); }));
+  $('more').addEventListener('click', () => { shown += 50; render(); });
+  $('f-clear').addEventListener('click', () => { Object.values(KEYS).forEach(id => $(id).selectedIndex = 0); sort = 'id'; dir = 1; shown = 50; render(); });
+  $('body').addEventListener('click', e => { const row = e.target.closest('tr[data-href]'); if (row && !e.target.closest('a')) location.href = row.dataset.href; });
+  // Coming back from a run, the list returns as it was: the same filters (in the address), as many runs shown, and
+  // the same scroll position. Saved per filtered view as the reader leaves for a run.
+  const KEY = 'wpab-runs:' + location.search;
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  const save = e => { const row = e.target.closest('tr[data-href]'); if (!row) return;
+    try { sessionStorage.setItem('wpab-runs:' + location.search, JSON.stringify({ shown, y: scrollY, id: row.dataset.id })); } catch (err) {} };
+  // Saved as the reader opens a run, not on leaving, so a page that hasn't finished restoring can't overwrite it.
+  $('body').addEventListener('click', save, true);
+  const back = performance.getEntriesByType('navigation')[0]?.type === 'back_forward' || /\/choose\/run(?:\.html)?(?:[?#]|$)/.test(document.referrer);
+  let was = null; try { was = back && JSON.parse(sessionStorage.getItem(KEY)); } catch (e) {}
+  if (was && was.shown > shown) shown = was.shown;
+  render();
+  // The run opened last is marked, so it's easy to find again.
+  if (was && was.id) { const row = document.querySelector(`tr[data-id="${CSS.escape(was.id)}"]`); if (row) row.classList.add('last'); }
+  // Scroll once the page has its full height: after styles, fonts and layout have settled.
+  if (was) { const go = () => document.fonts.ready.then(() => setTimeout(() => scrollTo(0, was.y), 0));
+    document.readyState === 'complete' ? go() : addEventListener('load', go, { once: true }); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css?v=208">
+<link rel="stylesheet" href="choose.css?v=228">
+<link rel="stylesheet" href="../vt.css">
+<title>Run · Choosing WordPress · Agent Benchmarks</title>
+</head>
+<body data-page="run">
+<main class="container run-page" id="run"></main>
+<script src="chrome.js?v=54"></script>
+<script src="../data/choose.js?v=13"></script>
+<script src="data.js?v=65"></script>
+<script>
+(function () {
+  const C = window.CHOOSE, { esc } = C;
+  const $ = id => document.getElementById(id);
+  // Long answers show their opening, with the rest a click away.
+  const answer = text => {
+    const html = C.md(text), words = text.split(/\s+/).length;
+    if (words < 120) return `<div class="answer">${html}</div>`;
+    const first = html.match(/^<p>.*?<\/p>/);
+    return `<div class="answer">${first ? first[0] : ''}<details><summary>Read the full answer (${words} words)</summary>${first ? html.slice(first[0].length) : html}</details></div>`;
+  };
+  // Only accept real run IDs, so a crafted link can't put another command in the copy button.
+  const asked = new URLSearchParams(location.search).get('id') || '';
+  const r = C.RUNS.find(x => x.id === asked) || C.RUNS[0];
+  const wp = r.out === 'WordPress';
+  // Back returns to the filtered list the reader came from, but only on this site.
+  const ref = document.referrer ? new URL(document.referrer) : null;
+  const back = ref && ref.origin === location.origin && /\/choose\/runs(?:\.html)?$/.test(ref.pathname) ? ref.pathname + ref.search : 'runs';
+  document.title = `Run ${r.id} · Choosing WordPress · Agent Benchmarks`;
+  // Each fact is a row: a quiet label, then the content, with a note in grey beneath.
+  const fact = (label, value, note) => `<div class="rf-row"><h2 class="rf-l">${label}</h2><div class="rf-v">${value}${note ? `<p class="rf-note">${note}</p>` : ''}</div></div>`;
+  const before = r.considered === null || r.considered === undefined ? 'Not classified yet' : r.considered ? `Brought up WordPress, then chose ${esc(r.out)}` : 'Didn’t bring up WordPress';
+  document.getElementById('run').innerHTML = `
+    <header class="page-head">
+      <a class="go back" href="${esc(back)}">Back to runs</a>
+      <h1 class="title">${C.logo(r.m, 34)}${r.m.name} ${wp ? 'built it with WordPress' : `built it with ${esc(r.out)}`}</h1>
+      <p class="adv-when run-sub">${wp ? '<span class="wp">Chose WordPress</span>' : '<span>Didn’t choose WordPress</span>'}<span>${r.type.name}</span>${r.control ? '<span>Control request</span>' : ''}</p>
+    </header>
+    <section class="section section--tight section--last grid run-body">
+      <div class="run-main" id="run-main">
+        ${fact('Asked', `<p class="rf-ask">“${esc(r.prompt)}”</p>`, 'No platform named.')}
+        ${r.control ? fact('Control request', '<p>Other tools suit this better.</p>', 'Run to check agents don’t push WordPress everywhere. Not counted in the results.') : ''}
+        ${wp ? '' : fact('While deciding', `<p>${before}</p>`)
+          + (r.consideredAnswer ? fact('What else it considered', answer(r.consideredAnswer), `Its answer when asked “What did you build this with, and what else did you consider?”, before WordPress was named. ${r.unprompted ? 'It named WordPress.' : 'It didn’t name WordPress.'}`) : '')
+          + (r.answer ? fact('Why not WordPress', answer(r.answer), `Its answer when asked “Why didn’t you use WordPress for this site?” after the run: an explanation after the fact.${r.reasons.length ? ` Grouped as: ${r.reasons.map(x => x.name).join(', ')}.` : ''}`) : '')}
+        ${r.nudged ? fact('Nudged', `<p>${r.recommended ? 'It stopped to ask first, and recommended WordPress.' : r.offered ? 'It stopped to ask first, and offered WordPress as an option.' : 'It stopped to ask questions first.'}</p>`, `It got one reply: “Use your best judgement and go ahead.”${r.offered || r.recommended ? ` It then built with ${esc(r.out)}.` : ''}`) : ''}
+        ${r.patterns && r.patterns.length ? fact('Patterns', `<ul class="rf-pats">${r.patterns.map(id => { const p = C.PATTERNS.find(x => x.id === id); return p ? `<li>${esc(p.title)} <a class="go" href="runs?pattern=${encodeURIComponent(id)}">Other runs</a></li>` : ''; }).join('')}</ul>`, 'Found in the transcript.') : ''}
+        ${fact('How we know', `<p>${esc(r.out)}</p>`, `${r.evidence ? esc(r.evidence) + '. ' : ''}${C.DETECT[r.out] || ''}.`)}
+      </div>
+      <aside class="run-side" aria-label="About this run">
+        <dl>
+          <dt>Run</dt><dd>${r.id}</dd>
+          <dt>Agent</dt><dd>${C.logo(r.m, 13)}${r.m.name} in ${r.m.where}, default settings</dd>
+          <dt>Requests</dt><dd>Version ${C.SUITE}, ${C.MONTH.name} batch</dd>
+          ${r.started ? `<dt>Run on</dt><dd>${new Date(r.started).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })}<small>${new Date(r.started).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' })} UTC</small></dd>` : ''}
+          <dt>Duration</dt><dd>${r.mins} minutes</dd>
+          ${r.reviewedBy ? `<dt>Checked by</dt><dd>${esc(r.reviewedBy)}${r.reviewNotes ? `<small>${esc(r.reviewNotes)}</small>` : ''}</dd>` : ''}
+          <dt>Signed in with</dt><dd>${(r.m.auth || []).includes('plan') ? 'A personal plan' : 'An API key'}</dd>
+        </dl>
+      </aside>
+    </section>`;
+
+})();
+</script>
+</body>
+</html>

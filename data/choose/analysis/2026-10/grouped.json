@@ -1,0 +1,4052 @@
+{
+ "n": 193,
+ "unassigned": {
+  "claims": [],
+  "conditions": []
+ },
+ "claims": [
+  {
+   "id": "ongoing-updates-maintenance",
+   "claim": "WordPress core, themes and plugins need regular updates, backups and ongoing maintenance by someone",
+   "runs": [
+    "C2610-0003",
+    "C2610-0004",
+    "C2610-0005",
+    "C2610-0009",
+    "C2610-0014",
+    "C2610-0015",
+    "C2610-0017",
+    "C2610-0019",
+    "C2610-0020",
+    "C2610-0022",
+    "C2610-0023",
+    "C2610-0024",
+    "C2610-0025",
+    "C2610-0026",
+    "C2610-0029",
+    "C2610-0035",
+    "C2610-0043",
+    "C2610-0047",
+    "C2610-0055",
+    "C2610-0056",
+    "C2610-0057",
+    "C2610-0060",
+    "C2610-0065",
+    "C2610-0066",
+    "C2610-0067",
+    "C2610-0069",
+    "C2610-0070",
+    "C2610-0074",
+    "C2610-0075",
+    "C2610-0076",
+    "C2610-0077",
+    "C2610-0079",
+    "C2610-0086",
+    "C2610-0087",
+    "C2610-0088",
+    "C2610-0089",
+    "C2610-0093",
+    "C2610-0094",
+    "C2610-0115",
+    "C2610-0117",
+    "C2610-0120",
+    "C2610-0121",
+    "C2610-0122",
+    "C2610-0124",
+    "C2610-0125",
+    "C2610-0126",
+    "C2610-0129",
+    "C2610-0131",
+    "C2610-0132",
+    "C2610-0143",
+    "C2610-0146",
+    "C2610-0152",
+    "C2610-0172",
+    "C2610-0173",
+    "C2610-0174",
+    "C2610-0176",
+    "C2610-0177",
+    "C2610-0180",
+    "C2610-0185",
+    "C2610-0187",
+    "C2610-0189",
+    "C2610-0190",
+    "C2610-0196",
+    "C2610-0200",
+    "C2610-0201",
+    "C2610-0202",
+    "C2610-0205",
+    "C2610-0206",
+    "C2610-0207",
+    "C2610-0213",
+    "C2610-0218",
+    "C2610-0232",
+    "C2610-0251",
+    "C2610-0257",
+    "C2610-0259",
+    "C2610-0389",
+    "C2610-0390",
+    "C2610-0394",
+    "C2610-0397",
+    "C2610-0398",
+    "C2610-0399",
+    "C2610-0400",
+    "C2610-0401",
+    "C2610-0425",
+    "C2610-0428",
+    "C2610-0429"
+   ],
+   "share": 45,
+   "by_agent": {
+    "gemini-3-8-flash-antigravity": 24,
+    "opus-5-5-claude-code": 21,
+    "gpt-6-1-sol-codex": 7,
+    "deepseek-v4-pro-opencode": 11,
+    "glm-5-3-opencode": 8,
+    "grok-4-7-grok-build": 4,
+    "kimi-k3-kimi-code": 11
+   },
+   "quotes": [
+    {
+     "run": "C2610-0003",
+     "quote": "WordPress sites require continuous maintenance: weekly core updates, PHP version upgrades, database optimizations, and plugin updates."
+    },
+    {
+     "run": "C2610-0004",
+     "quote": "It's popular and easy to grow, but it needs paid hosting, plugins and regular security updates."
+    },
+    {
+     "run": "C2610-0005",
+     "quote": "It's familiar and powerful, but needs paid hosting, regular updates and security patches."
+    },
+    {
+     "run": "C2610-0009",
+     "quote": "someone has to handle hosting, backups, security, and updates to WordPress, WooCommerce and every plugin"
+    },
+    {
+     "run": "C2610-0014",
+     "quote": "WordPress needs a server running PHP and a database, plus regular updates to WordPress itself, its themes and its plugins."
+    },
+    {
+     "run": "C2610-0015",
+     "quote": "WordPress needs a server and database, costs money every month, and needs regular updates."
+    }
+   ]
+  },
+  {
+   "id": "needs-php-database-server",
+   "claim": "WordPress needs a server running PHP and a MySQL database, plus installation, a theme and setup before any page exists",
+   "runs": [
+    "C2610-0001",
+    "C2610-0003",
+    "C2610-0007",
+    "C2610-0013",
+    "C2610-0015",
+    "C2610-0022",
+    "C2610-0025",
+    "C2610-0026",
+    "C2610-0043",
+    "C2610-0045",
+    "C2610-0052",
+    "C2610-0054",
+    "C2610-0055",
+    "C2610-0056",
+    "C2610-0057",
+    "C2610-0065",
+    "C2610-0076",
+    "C2610-0079",
+    "C2610-0083",
+    "C2610-0084",
+    "C2610-0085",
+    "C2610-0086",
+    "C2610-0087",
+    "C2610-0089",
+    "C2610-0093",
+    "C2610-0094",
+    "C2610-0114",
+    "C2610-0115",
+    "C2610-0116",
+    "C2610-0117",
+    "C2610-0120",
+    "C2610-0127",
+    "C2610-0130",
+    "C2610-0131",
+    "C2610-0132",
+    "C2610-0141",
+    "C2610-0147",
+    "C2610-0153",
+    "C2610-0158",
+    "C2610-0175",
+    "C2610-0177",
+    "C2610-0178",
+    "C2610-0179",
+    "C2610-0188",
+    "C2610-0190",
+    "C2610-0194",
+    "C2610-0200",
+    "C2610-0206",
+    "C2610-0208",
+    "C2610-0213",
+    "C2610-0214",
+    "C2610-0216",
+    "C2610-0222",
+    "C2610-0224",
+    "C2610-0228",
+    "C2610-0231",
+    "C2610-0233",
+    "C2610-0234",
+    "C2610-0244",
+    "C2610-0250",
+    "C2610-0252",
+    "C2610-0256",
+    "C2610-0262",
+    "C2610-0278",
+    "C2610-0280",
+    "C2610-0387",
+    "C2610-0388",
+    "C2610-0389",
+    "C2610-0390",
+    "C2610-0391",
+    "C2610-0392",
+    "C2610-0393",
+    "C2610-0395",
+    "C2610-0396",
+    "C2610-0397",
+    "C2610-0398",
+    "C2610-0399",
+    "C2610-0401",
+    "C2610-0405",
+    "C2610-0416",
+    "C2610-0418",
+    "C2610-0424",
+    "C2610-0426",
+    "C2610-0427"
+   ],
+   "share": 44,
+   "by_agent": {
+    "opus-5-5-claude-code": 16,
+    "gemini-3-8-flash-antigravity": 17,
+    "gpt-6-1-sol-codex": 6,
+    "deepseek-v4-pro-opencode": 7,
+    "glm-5-3-opencode": 8,
+    "grok-4-7-grok-build": 15,
+    "kimi-k3-kimi-code": 15
+   },
+   "quotes": [
+    {
+     "run": "C2610-0001",
+     "quote": "WordPress needs a server running PHP and a MySQL database."
+    },
+    {
+     "run": "C2610-0003",
+     "quote": "WordPress requires a full **LAMP/LEMP stack** (PHP 8+, MySQL/MariaDB database, Apache or Nginx server)."
+    },
+    {
+     "run": "C2610-0003",
+     "quote": "Running that stack locally or in modern container environments requires database initialization, migration scripts, and server configuration."
+    },
+    {
+     "run": "C2610-0007",
+     "quote": "You'd choose a host, install it, pick a theme and configure WooCommerce and payments."
+    },
+    {
+     "run": "C2610-0013",
+     "quote": "WordPress needs a PHP server and a database (usually MySQL) running somewhere, plus ongoing updates and maintenance."
+    },
+    {
+     "run": "C2610-0015",
+     "quote": "WordPress is mostly setup and admin choices (hosting, theme, plugins, user accounts) rather than code, so I could have delivered much less of it."
+    }
+   ]
+  },
+  {
+   "id": "paid-hosting-cost",
+   "claim": "WordPress needs paid hosting, typically about $5–30 a month and more for managed hosting, so it cannot be hosted free like static files",
+   "runs": [
+    "C2610-0001",
+    "C2610-0004",
+    "C2610-0005",
+    "C2610-0006",
+    "C2610-0007",
+    "C2610-0008",
+    "C2610-0013",
+    "C2610-0014",
+    "C2610-0015",
+    "C2610-0019",
+    "C2610-0020",
+    "C2610-0022",
+    "C2610-0023",
+    "C2610-0025",
+    "C2610-0026",
+    "C2610-0046",
+    "C2610-0047",
+    "C2610-0052",
+    "C2610-0054",
+    "C2610-0058",
+    "C2610-0059",
+    "C2610-0060",
+    "C2610-0065",
+    "C2610-0066",
+    "C2610-0067",
+    "C2610-0069",
+    "C2610-0070",
+    "C2610-0074",
+    "C2610-0075",
+    "C2610-0077",
+    "C2610-0078",
+    "C2610-0079",
+    "C2610-0083",
+    "C2610-0084",
+    "C2610-0086",
+    "C2610-0088",
+    "C2610-0090",
+    "C2610-0092",
+    "C2610-0094",
+    "C2610-0114",
+    "C2610-0115",
+    "C2610-0116",
+    "C2610-0117",
+    "C2610-0118",
+    "C2610-0119",
+    "C2610-0124",
+    "C2610-0125",
+    "C2610-0126",
+    "C2610-0127",
+    "C2610-0128",
+    "C2610-0131",
+    "C2610-0173",
+    "C2610-0176",
+    "C2610-0178",
+    "C2610-0187",
+    "C2610-0189",
+    "C2610-0194",
+    "C2610-0195",
+    "C2610-0204",
+    "C2610-0206",
+    "C2610-0207",
+    "C2610-0216",
+    "C2610-0217",
+    "C2610-0222",
+    "C2610-0223",
+    "C2610-0251",
+    "C2610-0256",
+    "C2610-0257",
+    "C2610-0259",
+    "C2610-0260",
+    "C2610-0262",
+    "C2610-0278",
+    "C2610-0394",
+    "C2610-0396",
+    "C2610-0398",
+    "C2610-0399",
+    "C2610-0400",
+    "C2610-0401",
+    "C2610-0416",
+    "C2610-0424",
+    "C2610-0428",
+    "C2610-0429"
+   ],
+   "share": 42,
+   "by_agent": {
+    "opus-5-5-claude-code": 27,
+    "gemini-3-8-flash-antigravity": 24,
+    "deepseek-v4-pro-opencode": 7,
+    "glm-5-3-opencode": 7,
+    "grok-4-7-grok-build": 1,
+    "kimi-k3-kimi-code": 16
+   },
+   "quotes": [
+    {
+     "run": "C2610-0001",
+     "quote": "Static hosting is free, while WordPress hosting usually costs about $5–30 a month."
+    },
+    {
+     "run": "C2610-0004",
+     "quote": "WordPress needs a hosting plan that runs it, usually about £3–£10 a month, plus often a paid theme or plugins."
+    },
+    {
+     "run": "C2610-0005",
+     "quote": "WordPress needs a server running PHP and a database, so she'd pay roughly $5–30 a month."
+    },
+    {
+     "run": "C2610-0006",
+     "quote": "WordPress needs a server running all the time with a database. That usually means paid hosting (about $5–25 a month)"
+    },
+    {
+     "run": "C2610-0007",
+     "quote": "It needs hosting that runs PHP and a database, roughly $5–30/month."
+    },
+    {
+     "run": "C2610-0008",
+     "quote": "A self-hosted WordPress site needs paid hosting, usually a few pounds a month or more."
+    }
+   ]
+  },
+  {
+   "id": "browser-editing-no-code",
+   "claim": "WordPress lets non-technical owners and staff edit text, prices, photos and pages in a browser dashboard without code",
+   "runs": [
+    "C2610-0001",
+    "C2610-0002",
+    "C2610-0005",
+    "C2610-0006",
+    "C2610-0010",
+    "C2610-0012",
+    "C2610-0014",
+    "C2610-0019",
+    "C2610-0020",
+    "C2610-0021",
+    "C2610-0022",
+    "C2610-0023",
+    "C2610-0024",
+    "C2610-0025",
+    "C2610-0027",
+    "C2610-0029",
+    "C2610-0034",
+    "C2610-0044",
+    "C2610-0046",
+    "C2610-0048",
+    "C2610-0052",
+    "C2610-0056",
+    "C2610-0065",
+    "C2610-0068",
+    "C2610-0078",
+    "C2610-0082",
+    "C2610-0083",
+    "C2610-0088",
+    "C2610-0090",
+    "C2610-0091",
+    "C2610-0092",
+    "C2610-0093",
+    "C2610-0115",
+    "C2610-0117",
+    "C2610-0143",
+    "C2610-0144",
+    "C2610-0147",
+    "C2610-0148",
+    "C2610-0172",
+    "C2610-0174",
+    "C2610-0177",
+    "C2610-0185",
+    "C2610-0203",
+    "C2610-0208",
+    "C2610-0214",
+    "C2610-0216",
+    "C2610-0217",
+    "C2610-0222",
+    "C2610-0229",
+    "C2610-0389",
+    "C2610-0394",
+    "C2610-0395",
+    "C2610-0398",
+    "C2610-0399",
+    "C2610-0401",
+    "C2610-0424",
+    "C2610-0425",
+    "C2610-0426",
+    "C2610-0428",
+    "C2610-0429"
+   ],
+   "share": 31,
+   "by_agent": {
+    "opus-5-5-claude-code": 21,
+    "gpt-6-1-sol-codex": 11,
+    "gemini-3-8-flash-antigravity": 6,
+    "deepseek-v4-pro-opencode": 4,
+    "glm-5-3-opencode": 6,
+    "grok-4-7-grok-build": 2,
+    "kimi-k3-kimi-code": 10
+   },
+   "quotes": [
+    {
+     "run": "C2610-0001",
+     "quote": "Changing the menu, hours or prices, or posting a seasonal special, happens in a browser dashboard with no code."
+    },
+    {
+     "run": "C2610-0002",
+     "quote": "update menus, prices, photos, and hours yourself through an admin dashboard"
+    },
+    {
+     "run": "C2610-0005",
+     "quote": "Its editor is more flexible than the forms I set up."
+    },
+    {
+     "run": "C2610-0005",
+     "quote": "Her login and content live in WordPress itself"
+    },
+    {
+     "run": "C2610-0006",
+     "quote": "You'd log in and change text or upload images with a visual editor, with no files to touch."
+    },
+    {
+     "run": "C2610-0010",
+     "quote": "useful if you want to edit pages yourself, with more ongoing maintenance"
+    }
+   ]
+  },
+  {
+   "id": "outdated-sites-get-hacked",
+   "claim": "WordPress sites that fall behind on updates, especially outdated plugins, are a common hacking target and degrade over time",
+   "runs": [
+    "C2610-0001",
+    "C2610-0004",
+    "C2610-0005",
+    "C2610-0006",
+    "C2610-0007",
+    "C2610-0008",
+    "C2610-0014",
+    "C2610-0015",
+    "C2610-0020",
+    "C2610-0021",
+    "C2610-0022",
+    "C2610-0023",
+    "C2610-0024",
+    "C2610-0025",
+    "C2610-0026",
+    "C2610-0027",
+    "C2610-0046",
+    "C2610-0047",
+    "C2610-0048",
+    "C2610-0056",
+    "C2610-0077",
+    "C2610-0078",
+    "C2610-0079",
+    "C2610-0083",
+    "C2610-0088",
+    "C2610-0089",
+    "C2610-0090",
+    "C2610-0091",
+    "C2610-0092",
+    "C2610-0093",
+    "C2610-0094",
+    "C2610-0100",
+    "C2610-0115",
+    "C2610-0118",
+    "C2610-0124",
+    "C2610-0125",
+    "C2610-0131",
+    "C2610-0176",
+    "C2610-0188",
+    "C2610-0189",
+    "C2610-0204",
+    "C2610-0213",
+    "C2610-0216",
+    "C2610-0218",
+    "C2610-0229",
+    "C2610-0256",
+    "C2610-0260",
+    "C2610-0278",
+    "C2610-0280",
+    "C2610-0394",
+    "C2610-0395",
+    "C2610-0397",
+    "C2610-0399",
+    "C2610-0400",
+    "C2610-0420",
+    "C2610-0426",
+    "C2610-0427",
+    "C2610-0428",
+    "C2610-0429"
+   ],
+   "share": 31,
+   "by_agent": {
+    "opus-5-5-claude-code": 31,
+    "gemini-3-8-flash-antigravity": 6,
+    "deepseek-v4-pro-opencode": 3,
+    "glm-5-3-opencode": 4,
+    "grok-4-7-grok-build": 1,
+    "kimi-k3-kimi-code": 14
+   },
+   "quotes": [
+    {
+     "run": "C2610-0001",
+     "quote": "A WordPress site needs regular core, theme and plugin updates, and sites that fall behind on updates are a common target for hackers."
+    },
+    {
+     "run": "C2610-0004",
+     "quote": "If you skip them, the site can break or be hacked."
+    },
+    {
+     "run": "C2610-0005",
+     "quote": "Small sites that go unpatched are a common target for hacks."
+    },
+    {
+     "run": "C2610-0006",
+     "quote": "WordPress and its plugins need regular updates, and out-of-date sites are a common target for hackers."
+    },
+    {
+     "run": "C2610-0007",
+     "quote": "Because it's so widely used, it's a common target for attacks, and an unpatched store is a real risk."
+    },
+    {
+     "run": "C2610-0008",
+     "quote": "WordPress, its themes and its plugins need regular updates. Out-of-date sites are a common target for hackers"
+    }
+   ]
+  },
+  {
+   "id": "most-attacked-platform",
+   "claim": "WordPress powers ~40% of the web and is the most targeted platform for bots, brute-force attacks and plugin exploits",
+   "runs": [
+    "C2610-0003",
+    "C2610-0004",
+    "C2610-0019",
+    "C2610-0047",
+    "C2610-0052",
+    "C2610-0054",
+    "C2610-0055",
+    "C2610-0056",
+    "C2610-0057",
+    "C2610-0058",
+    "C2610-0060",
+    "C2610-0065",
+    "C2610-0066",
+    "C2610-0068",
+    "C2610-0070",
+    "C2610-0074",
+    "C2610-0075",
+    "C2610-0084",
+    "C2610-0086",
+    "C2610-0114",
+    "C2610-0115",
+    "C2610-0116",
+    "C2610-0117",
+    "C2610-0118",
+    "C2610-0119",
+    "C2610-0120",
+    "C2610-0121",
+    "C2610-0126",
+    "C2610-0127",
+    "C2610-0128",
+    "C2610-0129",
+    "C2610-0130",
+    "C2610-0131",
+    "C2610-0132",
+    "C2610-0174",
+    "C2610-0175",
+    "C2610-0177",
+    "C2610-0181",
+    "C2610-0194",
+    "C2610-0202",
+    "C2610-0205",
+    "C2610-0208",
+    "C2610-0213",
+    "C2610-0215",
+    "C2610-0217",
+    "C2610-0218",
+    "C2610-0257",
+    "C2610-0262",
+    "C2610-0395",
+    "C2610-0396",
+    "C2610-0397",
+    "C2610-0398",
+    "C2610-0400",
+    "C2610-0401",
+    "C2610-0416",
+    "C2610-0418",
+    "C2610-0424",
+    "C2610-0427"
+   ],
+   "share": 30,
+   "by_agent": {
+    "gemini-3-8-flash-antigravity": 29,
+    "opus-5-5-claude-code": 5,
+    "deepseek-v4-pro-opencode": 5,
+    "glm-5-3-opencode": 7,
+    "kimi-k3-kimi-code": 12
+   },
+   "quotes": [
+    {
+     "run": "C2610-0003",
+     "quote": "Because WordPress powers over 40% of the web, it is the primary target for automated bots, brute-force login attempts, and vulnerable plugin exploits."
+    },
+    {
+     "run": "C2610-0004",
+     "quote": "WordPress runs a huge share of the web, so automated attacks target it constantly."
+    },
+    {
+     "run": "C2610-0019",
+     "quote": "It's the most attacked website platform, mostly through outdated plugins."
+    },
+    {
+     "run": "C2610-0047",
+     "quote": "WordPress runs a large share of the world's websites, so hackers target it constantly."
+    },
+    {
+     "run": "C2610-0052",
+     "quote": "Powers over 40% of the web and is the most common target for automated bots"
+    },
+    {
+     "run": "C2610-0054",
+     "quote": "WordPress accounts for over 40% of the web and is the most targeted platform for automated botnets"
+    }
+   ]
+  },
+  {
+   "id": "slow-without-caching",
+   "claim": "WordPress builds pages with PHP and database queries on each visit and loads heavy theme/plugin assets, so it is slow without caching",
+   "runs": [
+    "C2610-0003",
+    "C2610-0004",
+    "C2610-0008",
+    "C2610-0046",
+    "C2610-0047",
+    "C2610-0052",
+    "C2610-0054",
+    "C2610-0055",
+    "C2610-0056",
+    "C2610-0057",
+    "C2610-0058",
+    "C2610-0059",
+    "C2610-0060",
+    "C2610-0061",
+    "C2610-0065",
+    "C2610-0066",
+    "C2610-0067",
+    "C2610-0068",
+    "C2610-0069",
+    "C2610-0070",
+    "C2610-0074",
+    "C2610-0075",
+    "C2610-0077",
+    "C2610-0078",
+    "C2610-0094",
+    "C2610-0115",
+    "C2610-0117",
+    "C2610-0118",
+    "C2610-0119",
+    "C2610-0120",
+    "C2610-0122",
+    "C2610-0124",
+    "C2610-0125",
+    "C2610-0126",
+    "C2610-0127",
+    "C2610-0128",
+    "C2610-0129",
+    "C2610-0130",
+    "C2610-0131",
+    "C2610-0132",
+    "C2610-0172",
+    "C2610-0177",
+    "C2610-0179",
+    "C2610-0194",
+    "C2610-0204",
+    "C2610-0206",
+    "C2610-0217",
+    "C2610-0256",
+    "C2610-0257",
+    "C2610-0259",
+    "C2610-0260",
+    "C2610-0262",
+    "C2610-0278",
+    "C2610-0394",
+    "C2610-0396",
+    "C2610-0416",
+    "C2610-0418",
+    "C2610-0429"
+   ],
+   "share": 30,
+   "by_agent": {
+    "gemini-3-8-flash-antigravity": 33,
+    "opus-5-5-claude-code": 7,
+    "deepseek-v4-pro-opencode": 4,
+    "glm-5-3-opencode": 3,
+    "kimi-k3-kimi-code": 11
+   },
+   "quotes": [
+    {
+     "run": "C2610-0003",
+     "quote": "WordPress sites frequently suffer from heavy database queries, bloated CSS/JS files, and slow Time-to-First-Byte (TTFB) without heavy caching layers."
+    },
+    {
+     "run": "C2610-0004",
+     "quote": "WordPress builds each page when someone visits it, and themes often load a lot of extra code."
+    },
+    {
+     "run": "C2610-0008",
+     "quote": "WordPress is usually slower unless you set up caching."
+    },
+    {
+     "run": "C2610-0046",
+     "quote": "It's slower out of the box and usually needs a caching plugin to load as fast as a static page."
+    },
+    {
+     "run": "C2610-0047",
+     "quote": "WordPress builds each page as someone visits it, and themes and plugins slow it down further."
+    },
+    {
+     "run": "C2610-0052",
+     "quote": "Queries a database and executes PHP scripts dynamically on every page load unless multiple caching layers (e.g., Redis, caching plugins) are configured."
+    }
+   ]
+  },
+  {
+   "id": "needs-many-paid-plugins",
+   "claim": "Matching the needed features in WordPress requires a stack of several plugins, often with paid yearly licences",
+   "runs": [
+    "C2610-0003",
+    "C2610-0009",
+    "C2610-0014",
+    "C2610-0018",
+    "C2610-0021",
+    "C2610-0026",
+    "C2610-0027",
+    "C2610-0054",
+    "C2610-0055",
+    "C2610-0056",
+    "C2610-0057",
+    "C2610-0058",
+    "C2610-0059",
+    "C2610-0060",
+    "C2610-0061",
+    "C2610-0068",
+    "C2610-0069",
+    "C2610-0070",
+    "C2610-0074",
+    "C2610-0084",
+    "C2610-0088",
+    "C2610-0091",
+    "C2610-0092",
+    "C2610-0093",
+    "C2610-0100",
+    "C2610-0115",
+    "C2610-0118",
+    "C2610-0119",
+    "C2610-0120",
+    "C2610-0121",
+    "C2610-0122",
+    "C2610-0128",
+    "C2610-0129",
+    "C2610-0130",
+    "C2610-0131",
+    "C2610-0132",
+    "C2610-0149",
+    "C2610-0181",
+    "C2610-0190",
+    "C2610-0195",
+    "C2610-0205",
+    "C2610-0208",
+    "C2610-0252",
+    "C2610-0280",
+    "C2610-0393",
+    "C2610-0396",
+    "C2610-0401",
+    "C2610-0406",
+    "C2610-0420",
+    "C2610-0429"
+   ],
+   "share": 26,
+   "by_agent": {
+    "gemini-3-8-flash-antigravity": 24,
+    "opus-5-5-claude-code": 11,
+    "gpt-6-1-sol-codex": 2,
+    "deepseek-v4-pro-opencode": 3,
+    "glm-5-3-opencode": 2,
+    "grok-4-7-grok-build": 3,
+    "kimi-k3-kimi-code": 5
+   },
+   "quotes": [
+    {
+     "run": "C2610-0003",
+     "quote": "Doing this in WooCommerce typically requires purchasing and chaining multiple paid third-party plugins"
+    },
+    {
+     "run": "C2610-0003",
+     "quote": "require annual subscription fees ($100–$300/yr per plugin)"
+    },
+    {
+     "run": "C2610-0009",
+     "quote": "in WooCommerce, weight-based shipping usually needs a plugin (e.g. Table Rate Shipping), and so do some payment options."
+    },
+    {
+     "run": "C2610-0014",
+     "quote": "In WordPress they'd need custom fields and theme changes."
+    },
+    {
+     "run": "C2610-0018",
+     "quote": "WooCommerce with a weight-based shipping extension"
+    },
+    {
+     "run": "C2610-0021",
+     "quote": "Some GiveWP features, such as recurring donations, and premium form plugins are paid add-ons."
+    }
+   ]
+  },
+  {
+   "id": "overkill-for-small-site",
+   "claim": "WordPress is built for bigger, frequently updated sites and is overkill or doesn't solve the problem for a small site",
+   "runs": [
+    "C2610-0004",
+    "C2610-0006",
+    "C2610-0008",
+    "C2610-0019",
+    "C2610-0020",
+    "C2610-0022",
+    "C2610-0024",
+    "C2610-0047",
+    "C2610-0056",
+    "C2610-0058",
+    "C2610-0065",
+    "C2610-0066",
+    "C2610-0075",
+    "C2610-0077",
+    "C2610-0079",
+    "C2610-0089",
+    "C2610-0091",
+    "C2610-0117",
+    "C2610-0125",
+    "C2610-0126",
+    "C2610-0128",
+    "C2610-0172",
+    "C2610-0173",
+    "C2610-0174",
+    "C2610-0175",
+    "C2610-0177",
+    "C2610-0179",
+    "C2610-0186",
+    "C2610-0187",
+    "C2610-0189",
+    "C2610-0201",
+    "C2610-0202",
+    "C2610-0203",
+    "C2610-0204",
+    "C2610-0205",
+    "C2610-0207",
+    "C2610-0215",
+    "C2610-0217",
+    "C2610-0229",
+    "C2610-0260",
+    "C2610-0388",
+    "C2610-0391",
+    "C2610-0394",
+    "C2610-0397",
+    "C2610-0398",
+    "C2610-0400",
+    "C2610-0405",
+    "C2610-0425",
+    "C2610-0426"
+   ],
+   "share": 25,
+   "by_agent": {
+    "opus-5-5-claude-code": 12,
+    "gemini-3-8-flash-antigravity": 9,
+    "deepseek-v4-pro-opencode": 9,
+    "glm-5-3-opencode": 8,
+    "grok-4-7-grok-build": 4,
+    "kimi-k3-kimi-code": 7
+   },
+   "quotes": [
+    {
+     "run": "C2610-0004",
+     "quote": "That's too much upkeep for one page."
+    },
+    {
+     "run": "C2610-0004",
+     "quote": "WordPress is great when you're adding content often, like blog posts, lots of pages or several people editing."
+    },
+    {
+     "run": "C2610-0006",
+     "quote": "that would be overkill for one page and adds upkeep"
+    },
+    {
+     "run": "C2610-0006",
+     "quote": "WordPress is built for sites with lots of pages, blogs and several editors."
+    },
+    {
+     "run": "C2610-0008",
+     "quote": "WordPress is built for sites with many pages, blogs and several editors."
+    },
+    {
+     "run": "C2610-0019",
+     "quote": "It's slower than static files and carries far more than a one-page site needs."
+    }
+   ]
+  },
+  {
+   "id": "popular-common-choice",
+   "claim": "WordPress is one of the most widely used platforms and a common, reasonable default for this kind of site",
+   "runs": [
+    "C2610-0001",
+    "C2610-0003",
+    "C2610-0005",
+    "C2610-0009",
+    "C2610-0013",
+    "C2610-0016",
+    "C2610-0017",
+    "C2610-0018",
+    "C2610-0025",
+    "C2610-0026",
+    "C2610-0029",
+    "C2610-0046",
+    "C2610-0057",
+    "C2610-0070",
+    "C2610-0078",
+    "C2610-0087",
+    "C2610-0116",
+    "C2610-0118",
+    "C2610-0119",
+    "C2610-0178",
+    "C2610-0190",
+    "C2610-0202",
+    "C2610-0204",
+    "C2610-0205",
+    "C2610-0259",
+    "C2610-0260",
+    "C2610-0278",
+    "C2610-0394",
+    "C2610-0399",
+    "C2610-0416",
+    "C2610-0420",
+    "C2610-0427",
+    "C2610-0429"
+   ],
+   "share": 17,
+   "by_agent": {
+    "opus-5-5-claude-code": 9,
+    "gemini-3-8-flash-antigravity": 6,
+    "gpt-6-1-sol-codex": 4,
+    "deepseek-v4-pro-opencode": 2,
+    "glm-5-3-opencode": 3,
+    "kimi-k3-kimi-code": 9
+   },
+   "quotes": [
+    {
+     "run": "C2610-0001",
+     "quote": "WordPress is one of the most common choices for a small business site."
+    },
+    {
+     "run": "C2610-0001",
+     "quote": "WordPress is more flexible and costs less in the long run."
+    },
+    {
+     "run": "C2610-0003",
+     "quote": "WordPress is the most widely used CMS in the world"
+    },
+    {
+     "run": "C2610-0005",
+     "quote": "WordPress would be a perfectly reasonable choice."
+    },
+    {
+     "run": "C2610-0009",
+     "quote": "I didn't find anything wrong with WordPress for this."
+    },
+    {
+     "run": "C2610-0013",
+     "quote": "If you'd prefer WordPress, that's a reasonable choice for a blog"
+    }
+   ]
+  },
+  {
+   "id": "plugin-ecosystem",
+   "claim": "WordPress has thousands of themes and plugins, so features like donations, events, forms, newsletters and SEO are a plugin install away",
+   "runs": [
+    "C2610-0005",
+    "C2610-0006",
+    "C2610-0007",
+    "C2610-0014",
+    "C2610-0019",
+    "C2610-0020",
+    "C2610-0021",
+    "C2610-0025",
+    "C2610-0027",
+    "C2610-0029",
+    "C2610-0046",
+    "C2610-0048",
+    "C2610-0083",
+    "C2610-0087",
+    "C2610-0088",
+    "C2610-0091",
+    "C2610-0092",
+    "C2610-0093",
+    "C2610-0148",
+    "C2610-0188",
+    "C2610-0190",
+    "C2610-0257",
+    "C2610-0394",
+    "C2610-0395",
+    "C2610-0396",
+    "C2610-0400",
+    "C2610-0416",
+    "C2610-0418",
+    "C2610-0420"
+   ],
+   "share": 15,
+   "by_agent": {
+    "opus-5-5-claude-code": 17,
+    "gpt-6-1-sol-codex": 2,
+    "deepseek-v4-pro-opencode": 2,
+    "kimi-k3-kimi-code": 8
+   },
+   "quotes": [
+    {
+     "run": "C2610-0005",
+     "quote": "If she later wants booking, memberships, a shop or a newsletter, there are mature plugins for all of these."
+    },
+    {
+     "run": "C2610-0006",
+     "quote": "Commission forms, a shop, payments (WooCommerce) or a blog could be added without writing code."
+    },
+    {
+     "run": "C2610-0007",
+     "quote": "There are thousands of themes and plugins, and plenty of tutorials and freelancers if you need help."
+    },
+    {
+     "run": "C2610-0014",
+     "quote": "Comments, contact forms, newsletters and similar features are a plugin install away."
+    },
+    {
+     "run": "C2610-0014",
+     "quote": "There are thousands of themes and lots of non-technical help available."
+    },
+    {
+     "run": "C2610-0019",
+     "quote": "Donations (GiveWP, Donorbox), forms (WPForms), newsletters and events calendars are mostly plug-and-play."
+    }
+   ]
+  },
+  {
+   "id": "migration-means-rebuild",
+   "claim": "Moving to WordPress means rebuilding the site as a theme or importing content, replacing the existing site",
+   "runs": [
+    "C2610-0014",
+    "C2610-0024",
+    "C2610-0034",
+    "C2610-0044",
+    "C2610-0045",
+    "C2610-0047",
+    "C2610-0067",
+    "C2610-0084",
+    "C2610-0090",
+    "C2610-0094",
+    "C2610-0126",
+    "C2610-0142",
+    "C2610-0150",
+    "C2610-0153",
+    "C2610-0154",
+    "C2610-0158",
+    "C2610-0176",
+    "C2610-0214",
+    "C2610-0215",
+    "C2610-0244",
+    "C2610-0389",
+    "C2610-0390",
+    "C2610-0391",
+    "C2610-0397",
+    "C2610-0425",
+    "C2610-0426"
+   ],
+   "share": 13,
+   "by_agent": {
+    "opus-5-5-claude-code": 6,
+    "gpt-6-1-sol-codex": 8,
+    "gemini-3-8-flash-antigravity": 2,
+    "deepseek-v4-pro-opencode": 1,
+    "glm-5-3-opencode": 2,
+    "grok-4-7-grok-build": 4,
+    "kimi-k3-kimi-code": 3
+   },
+   "quotes": [
+    {
+     "run": "C2610-0014",
+     "quote": "Getting them into WordPress would have meant generating its import format or scripting its API."
+    },
+    {
+     "run": "C2610-0014",
+     "quote": "I can change the importer to output a WordPress import file (WXR) that brings your posts, dates, tags and photos in."
+    },
+    {
+     "run": "C2610-0024",
+     "quote": "WordPress uses PHP themes, so your hand-coded HTML and CSS would need to become a custom theme."
+    },
+    {
+     "run": "C2610-0034",
+     "quote": "Moving it to WordPress would mean turning the design into a theme and connecting donation and signup tools."
+    },
+    {
+     "run": "C2610-0044",
+     "quote": "Moving it to WordPress would have been a separate rebuild, with hosting setup and ongoing updates."
+    },
+    {
+     "run": "C2610-0045",
+     "quote": "a familiar editor, but migrating would add hosting and maintenance work for a three-page site."
+    }
+   ]
+  },
+  {
+   "id": "hosted-managed-options",
+   "claim": "WordPress.com or managed hosting removes most maintenance, but free plans have ads and limits and paid plans cost more",
+   "runs": [
+    "C2610-0005",
+    "C2610-0006",
+    "C2610-0007",
+    "C2610-0008",
+    "C2610-0014",
+    "C2610-0019",
+    "C2610-0020",
+    "C2610-0022",
+    "C2610-0026",
+    "C2610-0048",
+    "C2610-0075",
+    "C2610-0077",
+    "C2610-0079",
+    "C2610-0083",
+    "C2610-0084",
+    "C2610-0086",
+    "C2610-0087",
+    "C2610-0088",
+    "C2610-0089",
+    "C2610-0091",
+    "C2610-0172",
+    "C2610-0232",
+    "C2610-0251",
+    "C2610-0262"
+   ],
+   "share": 12,
+   "by_agent": {
+    "opus-5-5-claude-code": 19,
+    "gemini-3-8-flash-antigravity": 1,
+    "deepseek-v4-pro-opencode": 1,
+    "grok-4-7-grok-build": 2,
+    "kimi-k3-kimi-code": 1
+   },
+   "quotes": [
+    {
+     "run": "C2610-0005",
+     "quote": "(WordPress.com, or hosts like Flywheel and WP Engine) takes care of most updates"
+    },
+    {
+     "run": "C2610-0006",
+     "quote": "WordPress.com, whose free plan has ads and limits"
+    },
+    {
+     "run": "C2610-0007",
+     "quote": "Its plans that can run WooCommerce cost about as much as Shopify"
+    },
+    {
+     "run": "C2610-0008",
+     "quote": "WordPress.com has a free plan, but it shows ads, uses a `yourband.wordpress.com` address, and the useful features are on paid plans."
+    },
+    {
+     "run": "C2610-0014",
+     "quote": "WordPress.com charges for custom domains and plugins."
+    },
+    {
+     "run": "C2610-0019",
+     "quote": "Managed WordPress hosting, or WordPress.com's nonprofit plans, takes most of the maintenance off your hands."
+    }
+   ]
+  },
+  {
+   "id": "woocommerce-capabilities",
+   "claim": "WooCommerce adds selling to WordPress with cart, payments, stock tracking, shipping, discounts and order management",
+   "runs": [
+    "C2610-0001",
+    "C2610-0007",
+    "C2610-0008",
+    "C2610-0009",
+    "C2610-0016",
+    "C2610-0018",
+    "C2610-0076",
+    "C2610-0078",
+    "C2610-0085",
+    "C2610-0132",
+    "C2610-0145",
+    "C2610-0146",
+    "C2610-0149",
+    "C2610-0195",
+    "C2610-0196",
+    "C2610-0223",
+    "C2610-0224",
+    "C2610-0250",
+    "C2610-0252",
+    "C2610-0280",
+    "C2610-0388"
+   ],
+   "share": 11,
+   "by_agent": {
+    "opus-5-5-claude-code": 6,
+    "gpt-6-1-sol-codex": 5,
+    "gemini-3-8-flash-antigravity": 2,
+    "deepseek-v4-pro-opencode": 2,
+    "glm-5-3-opencode": 2,
+    "grok-4-7-grok-build": 3,
+    "kimi-k3-kimi-code": 1
+   },
+   "quotes": [
+    {
+     "run": "C2610-0001",
+     "quote": "WooCommerce handles online ordering and payment"
+    },
+    {
+     "run": "C2610-0007",
+     "quote": "It's one of the most common ways small shops sell online, and with the WooCommerce plugin it's a real option."
+    },
+    {
+     "run": "C2610-0007",
+     "quote": "A cart, stock tracking, discount codes, order management and customer accounts come built in."
+    },
+    {
+     "run": "C2610-0008",
+     "quote": "WooCommerce, the WordPress shop plugin, can do that"
+    },
+    {
+     "run": "C2610-0009",
+     "quote": "A couple hundred products with stock tracking and weight-based shipping is standard for Shopify, WooCommerce or BigCommerce."
+    },
+    {
+     "run": "C2610-0009",
+     "quote": "WordPress itself doesn't sell anything; you'd add **WooCommerce**, and that handles everything this client needs."
+    }
+   ]
+  },
+  {
+   "id": "updates-break-site",
+   "claim": "WordPress core or plugin updates can conflict and break checkout, forms or layouts",
+   "runs": [
+    "C2610-0003",
+    "C2610-0009",
+    "C2610-0047",
+    "C2610-0054",
+    "C2610-0056",
+    "C2610-0057",
+    "C2610-0059",
+    "C2610-0060",
+    "C2610-0061",
+    "C2610-0065",
+    "C2610-0068",
+    "C2610-0070",
+    "C2610-0100",
+    "C2610-0117",
+    "C2610-0118",
+    "C2610-0120",
+    "C2610-0121",
+    "C2610-0122",
+    "C2610-0127",
+    "C2610-0128",
+    "C2610-0130"
+   ],
+   "share": 11,
+   "by_agent": {
+    "gemini-3-8-flash-antigravity": 18,
+    "opus-5-5-claude-code": 3
+   },
+   "quotes": [
+    {
+     "run": "C2610-0003",
+     "quote": "A single plugin update can break the checkout flow while you are busy in the kitchen baking bread."
+    },
+    {
+     "run": "C2610-0009",
+     "quote": "Plugin updates breaking checkout is a common problem for small shops."
+    },
+    {
+     "run": "C2610-0047",
+     "quote": "Sometimes an update breaks something, and then you need someone to fix it."
+    },
+    {
+     "run": "C2610-0054",
+     "quote": "Every time WordPress or a plugin updates, there is a risk of plugin conflicts, broken layouts, or database corruption."
+    },
+    {
+     "run": "C2610-0056",
+     "quote": "If WordPress or a plugin updates automatically and clashes, forms stop sending or the layout breaks while you’re out on a job."
+    },
+    {
+     "run": "C2610-0057",
+     "quote": "An automatic plugin update can break the schedule layout without warning."
+    }
+   ]
+  },
+  {
+   "id": "agent-cannot-run-it",
+   "claim": "The agent could not install, run or verify WordPress in its environment",
+   "runs": [
+    "C2610-0004",
+    "C2610-0007",
+    "C2610-0021",
+    "C2610-0025",
+    "C2610-0067",
+    "C2610-0076",
+    "C2610-0077",
+    "C2610-0083",
+    "C2610-0172",
+    "C2610-0179",
+    "C2610-0181",
+    "C2610-0188",
+    "C2610-0218",
+    "C2610-0222",
+    "C2610-0401",
+    "C2610-0405",
+    "C2610-0406",
+    "C2610-0420",
+    "C2610-0427"
+   ],
+   "share": 10,
+   "by_agent": {
+    "opus-5-5-claude-code": 6,
+    "gemini-3-8-flash-antigravity": 2,
+    "deepseek-v4-pro-opencode": 4,
+    "glm-5-3-opencode": 2,
+    "kimi-k3-kimi-code": 3,
+    "grok-4-7-grok-build": 2
+   },
+   "quotes": [
+    {
+     "run": "C2610-0004",
+     "quote": "WordPress needs a hosting account running it, so I'd only be able to give you instructions, not a finished site."
+    },
+    {
+     "run": "C2610-0007",
+     "quote": "It's set up on a hosting account through its own dashboard, not built as files in a folder"
+    },
+    {
+     "run": "C2610-0021",
+     "quote": "PHP and Docker are installed here, so WordPress could have run in this environment."
+    },
+    {
+     "run": "C2610-0025",
+     "quote": "I can't easily set up a WordPress install from here."
+    },
+    {
+     "run": "C2610-0067",
+     "quote": "In this specific environment, only Node.js and Python were installed—PHP and MySQL were not present."
+    },
+    {
+     "run": "C2610-0076",
+     "quote": "This container environment came ready with Node.js and Python."
+    }
+   ]
+  },
+  {
+   "id": "custom-design-constraints",
+   "claim": "Custom design and interactive features in WordPress mean fighting themes, page builders, plugin templates or PHP hooks",
+   "runs": [
+    "C2610-0054",
+    "C2610-0055",
+    "C2610-0058",
+    "C2610-0059",
+    "C2610-0061",
+    "C2610-0068",
+    "C2610-0076",
+    "C2610-0081",
+    "C2610-0116",
+    "C2610-0119",
+    "C2610-0120",
+    "C2610-0122",
+    "C2610-0129",
+    "C2610-0130",
+    "C2610-0178",
+    "C2610-0180",
+    "C2610-0207",
+    "C2610-0215",
+    "C2610-0418"
+   ],
+   "share": 10,
+   "by_agent": {
+    "gemini-3-8-flash-antigravity": 13,
+    "gpt-6-1-sol-codex": 1,
+    "deepseek-v4-pro-opencode": 2,
+    "glm-5-3-opencode": 2,
+    "kimi-k3-kimi-code": 1
+   },
+   "quotes": [
+    {
+     "run": "C2610-0054",
+     "quote": "Plugins and database schemas become bloated; building custom bespoke features (like town notices, weather tickers, and specific broadsheet layouts) is slower than a clean Next.js + Tailwind codebase."
+    },
+    {
+     "run": "C2610-0055",
+     "quote": "In WordPress/WooCommerce, achieving this level of custom UI logic often requires fighting against rigid plugin templates or writing complex custom PHP hooks."
+    },
+    {
+     "run": "C2610-0058",
+     "quote": "A portfolio & masonry lightbox plugin (which often compresses images or fights with theme styles)."
+    },
+    {
+     "run": "C2610-0059",
+     "quote": "Standard WordPress themes often look generic or corporate."
+    },
+    {
+     "run": "C2610-0061",
+     "quote": "Standard WooCommerce checkouts involve multi-step checkout forms (billing address, shipping address, account creation screens)."
+    },
+    {
+     "run": "C2610-0068",
+     "quote": "In WordPress, achieving this requires stitching together multiple plugins, custom PHP hooks, and bulky jQuery scripts that often conflict."
+    }
+   ]
+  },
+  {
+   "id": "course-plugins-capable",
+   "claim": "WordPress LMS, membership and payment plugins can provide logins, lessons, progress tracking and course sales",
+   "runs": [
+    "C2610-0025",
+    "C2610-0027",
+    "C2610-0060",
+    "C2610-0061",
+    "C2610-0080",
+    "C2610-0081",
+    "C2610-0092",
+    "C2610-0093",
+    "C2610-0100",
+    "C2610-0161",
+    "C2610-0179",
+    "C2610-0180",
+    "C2610-0181",
+    "C2610-0207",
+    "C2610-0405",
+    "C2610-0418"
+   ],
+   "share": 8,
+   "by_agent": {
+    "opus-5-5-claude-code": 5,
+    "gemini-3-8-flash-antigravity": 2,
+    "gpt-6-1-sol-codex": 3,
+    "deepseek-v4-pro-opencode": 3,
+    "glm-5-3-opencode": 1,
+    "grok-4-7-grok-build": 1,
+    "kimi-k3-kimi-code": 1
+   },
+   "quotes": [
+    {
+     "run": "C2610-0025",
+     "quote": "WooCommerce handles checkout, and course plugins like LearnDash, Tutor LMS, LifterLMS or Sensei give you student logins, protected videos and progress tracking."
+    },
+    {
+     "run": "C2610-0027",
+     "quote": "plugins like LearnDash, Tutor LMS or LifterLMS, combined with WooCommerce or their own Stripe integration, give you lessons, paywalls, one-off payments, password reset, emails and progress tracking"
+    },
+    {
+     "run": "C2610-0060",
+     "quote": "Add **MemberPress** or **LearnDash** with WooCommerce and private video embeds"
+    },
+    {
+     "run": "C2610-0061",
+     "quote": "WordPress (typically paired with **WooCommerce + MemberPress** or an LMS plugin like **LearnDash** / **Tutor LMS**) is a very common choice for courses."
+    },
+    {
+     "run": "C2610-0080",
+     "quote": "manage payments, student accounts, and lessons through plugins"
+    },
+    {
+     "run": "C2610-0081",
+     "quote": "With course and payment plugins, it could provide the purchasing and student access features this prototype still lacks."
+    }
+   ]
+  },
+  {
+   "id": "multi-author-publishing",
+   "claim": "WordPress has built-in user accounts, roles, author pages, categories and drafts suited to multiple writers",
+   "runs": [
+    "C2610-0015",
+    "C2610-0020",
+    "C2610-0024",
+    "C2610-0030",
+    "C2610-0054",
+    "C2610-0083",
+    "C2610-0086",
+    "C2610-0088",
+    "C2610-0116",
+    "C2610-0150",
+    "C2610-0174",
+    "C2610-0205",
+    "C2610-0387",
+    "C2610-0394"
+   ],
+   "share": 7,
+   "by_agent": {
+    "opus-5-5-claude-code": 6,
+    "gpt-6-1-sol-codex": 2,
+    "gemini-3-8-flash-antigravity": 2,
+    "deepseek-v4-pro-opencode": 1,
+    "glm-5-3-opencode": 1,
+    "grok-4-7-grok-build": 1,
+    "kimi-k3-kimi-code": 1
+   },
+   "quotes": [
+    {
+     "run": "C2610-0015",
+     "quote": "Each writer gets a login, a visual editor, scheduled posts and author pages built in, with no files or GitHub."
+    },
+    {
+     "run": "C2610-0015",
+     "quote": "WordPress fits a group of writers very well."
+    },
+    {
+     "run": "C2610-0020",
+     "quote": "you can give each volunteer their own login without them touching any files."
+    },
+    {
+     "run": "C2610-0024",
+     "quote": "If they want a blog or news section, several editors, scheduled posts or plugins like forms and SEO tools, WordPress handles that easily."
+    },
+    {
+     "run": "C2610-0030",
+     "quote": "It provides editing, drafts, author accounts, categories, and publishing without building those tools ourselves."
+    },
+    {
+     "run": "C2610-0030",
+     "quote": "WordPress is likely the better fit because it already supports writer accounts, drafts, editorial roles, and publishing."
+    }
+   ]
+  },
+  {
+   "id": "content-locked-in-database",
+   "claim": "WordPress stores content in database tables, making version control, export and migration harder",
+   "runs": [
+    "C2610-0014",
+    "C2610-0052",
+    "C2610-0061",
+    "C2610-0070",
+    "C2610-0084",
+    "C2610-0087",
+    "C2610-0114",
+    "C2610-0115",
+    "C2610-0122",
+    "C2610-0174",
+    "C2610-0201",
+    "C2610-0256",
+    "C2610-0257"
+   ],
+   "share": 7,
+   "by_agent": {
+    "opus-5-5-claude-code": 3,
+    "gemini-3-8-flash-antigravity": 6,
+    "deepseek-v4-pro-opencode": 1,
+    "glm-5-3-opencode": 1,
+    "kimi-k3-kimi-code": 2
+   },
+   "quotes": [
+    {
+     "run": "C2610-0014",
+     "quote": "In WordPress they live in a database."
+    },
+    {
+     "run": "C2610-0052",
+     "quote": "Content resides in database tables, making branch previews, review workflows, and offline editing difficult."
+    },
+    {
+     "run": "C2610-0052",
+     "quote": "Lacks code ownership, requires ongoing hosting costs or third-party platform lock-in, and cannot be version-controlled in Git."
+    },
+    {
+     "run": "C2610-0061",
+     "quote": "curriculum changes, plugin configurations, and page builder layouts are scattered across MySQL database tables"
+    },
+    {
+     "run": "C2610-0070",
+     "quote": "In WordPress, each plugin stores its data in isolated, disjointed database tables"
+    },
+    {
+     "run": "C2610-0084",
+     "quote": "WordPress stores posts in a database as HTML, and getting them out cleanly later is a chore."
+    }
+   ]
+  },
+  {
+   "id": "familiar-easy-help",
+   "claim": "WordPress is familiar to many people, most hosts offer one-click installs, and many freelancers can maintain it",
+   "runs": [
+    "C2610-0001",
+    "C2610-0019",
+    "C2610-0021",
+    "C2610-0024",
+    "C2610-0027",
+    "C2610-0045",
+    "C2610-0046",
+    "C2610-0048",
+    "C2610-0067",
+    "C2610-0091",
+    "C2610-0093",
+    "C2610-0100"
+   ],
+   "share": 6,
+   "by_agent": {
+    "opus-5-5-claude-code": 10,
+    "gpt-6-1-sol-codex": 1,
+    "gemini-3-8-flash-antigravity": 1
+   },
+   "quotes": [
+    {
+     "run": "C2610-0001",
+     "quote": "If you hire help later, plenty of freelancers know WordPress."
+    },
+    {
+     "run": "C2610-0019",
+     "quote": "Many volunteers and freelancers already know it, so getting help is easy."
+    },
+    {
+     "run": "C2610-0021",
+     "quote": "a nonprofit can find a WordPress freelancer or volunteer much more easily than someone who'll maintain a custom Node app."
+    },
+    {
+     "run": "C2610-0024",
+     "quote": "Logging into WordPress is familiar to many people."
+    },
+    {
+     "run": "C2610-0027",
+     "quote": "almost every host runs it, often with one-click install"
+    },
+    {
+     "run": "C2610-0045",
+     "quote": "WordPress offers broader control and a more familiar workflow for many clients."
+    }
+   ]
+  },
+  {
+   "id": "course-video-limitations",
+   "claim": "WordPress doesn't host or stream course video well, often exposes video URLs and reloads pages between lessons",
+   "runs": [
+    "C2610-0027",
+    "C2610-0059",
+    "C2610-0060",
+    "C2610-0061",
+    "C2610-0100",
+    "C2610-0121",
+    "C2610-0122",
+    "C2610-0180",
+    "C2610-0396",
+    "C2610-0420"
+   ],
+   "share": 5,
+   "by_agent": {
+    "opus-5-5-claude-code": 2,
+    "gemini-3-8-flash-antigravity": 5,
+    "deepseek-v4-pro-opencode": 1,
+    "kimi-k3-kimi-code": 2
+   },
+   "quotes": [
+    {
+     "run": "C2610-0027",
+     "quote": "WordPress plugins usually gate the lesson page, but the video file can still be reachable by its URL unless you set up protected storage or a video host"
+    },
+    {
+     "run": "C2610-0059",
+     "quote": "Clunky and fragmented for digital video streaming and lesson curriculum trees, typically requiring multiple paid apps to bridge digital courses and physical kits."
+    },
+    {
+     "run": "C2610-0060",
+     "quote": "WordPress cannot sell or stream video courses out of the box."
+    },
+    {
+     "run": "C2610-0060",
+     "quote": "Every time a student clicks \"Next Lesson\" or switches modules in traditional WordPress, the entire webpage reloads from scratch."
+    },
+    {
+     "run": "C2610-0060",
+     "quote": "Uploading MP4 files directly to the WordPress Media Library quickly overwhelms web server bandwidth and storage limits."
+    },
+    {
+     "run": "C2610-0061",
+     "quote": "Many membership plugins merely hide page content via CSS or basic PHP template tags."
+    }
+   ]
+  },
+  {
+   "id": "admin-cluttered-breakable",
+   "claim": "The WordPress admin is cluttered, can overwhelm non-technical users and lets editors break layouts",
+   "runs": [
+    "C2610-0054",
+    "C2610-0057",
+    "C2610-0067",
+    "C2610-0069",
+    "C2610-0094",
+    "C2610-0116",
+    "C2610-0118",
+    "C2610-0189",
+    "C2610-0202",
+    "C2610-0395"
+   ],
+   "share": 5,
+   "by_agent": {
+    "gemini-3-8-flash-antigravity": 6,
+    "opus-5-5-claude-code": 1,
+    "deepseek-v4-pro-opencode": 1,
+    "glm-5-3-opencode": 1,
+    "kimi-k3-kimi-code": 1
+   },
+   "quotes": [
+    {
+     "run": "C2610-0054",
+     "quote": "It eliminates the overwhelming clutter of the WordPress `wp-admin` dashboard (no marketing banners, upgrade notices, or complex Gutenberg block settings)."
+    },
+    {
+     "run": "C2610-0057",
+     "quote": "The standard WordPress admin dashboard (`/wp-admin`) can be overwhelming for a non-technical studio owner."
+    },
+    {
+     "run": "C2610-0067",
+     "quote": "With WordPress (especially the Gutenberg block editor or page builders), clients can easily break layouts, misalign grids, or introduce inconsistent styling."
+    },
+    {
+     "run": "C2610-0069",
+     "quote": "It is easy for an untrained volunteer to accidentally delete a page or break the layout."
+    },
+    {
+     "run": "C2610-0094",
+     "quote": "WordPress gives editors a lot of freedom, so it's easy to change layouts by accident."
+    },
+    {
+     "run": "C2610-0116",
+     "quote": "and the Gutenberg block editor, which can be overwhelming for non-technical community contributors."
+    }
+   ]
+  },
+  {
+   "id": "single-person-lockin",
+   "claim": "WordPress sites often depend on one person and fail or lock the team out when that person leaves",
+   "runs": [
+    "C2610-0054",
+    "C2610-0065",
+    "C2610-0069",
+    "C2610-0124",
+    "C2610-0128",
+    "C2610-0213",
+    "C2610-0218",
+    "C2610-0392",
+    "C2610-0424",
+    "C2610-0428"
+   ],
+   "share": 5,
+   "by_agent": {
+    "gemini-3-8-flash-antigravity": 5,
+    "glm-5-3-opencode": 2,
+    "grok-4-7-grok-build": 1,
+    "kimi-k3-kimi-code": 2
+   },
+   "quotes": [
+    {
+     "run": "C2610-0054",
+     "quote": "For a group of 4 or 5 local writers, someone inevitably gets stuck being an unpaid systems administrator."
+    },
+    {
+     "run": "C2610-0065",
+     "quote": "If the person holding the WordPress administrator login leaves or changes their email, the team gets locked out of the dashboard."
+    },
+    {
+     "run": "C2610-0069",
+     "quote": "If a volunteer moves on and the site goes unmaintained for a few months, plugins conflict or the site becomes vulnerable to automated malware and spam bots."
+    },
+    {
+     "run": "C2610-0124",
+     "quote": "administrative permissions often get tied to an individual's personal email or 2-factor authentication."
+    },
+    {
+     "run": "C2610-0124",
+     "quote": "charities routinely find themselves locked out of their own `wp-admin` dashboard and unable to recover access."
+    },
+    {
+     "run": "C2610-0128",
+     "quote": "the rescue is left with an administrative dashboard full of complex settings that no one knows how to update"
+    }
+   ]
+  },
+  {
+   "id": "headless-option",
+   "claim": "WordPress or WooCommerce can be used headless via the REST API behind a custom frontend",
+   "runs": [
+    "C2610-0003",
+    "C2610-0059",
+    "C2610-0068",
+    "C2610-0069",
+    "C2610-0070",
+    "C2610-0074",
+    "C2610-0120",
+    "C2610-0127"
+   ],
+   "share": 4,
+   "by_agent": {
+    "gemini-3-8-flash-antigravity": 8
+   },
+   "quotes": [
+    {
+     "run": "C2610-0003",
+     "quote": "WordPress acts purely as a content database via its REST API"
+    },
+    {
+     "run": "C2610-0059",
+     "quote": "you can use WordPress strictly as a \"Headless CMS\" for blog posts while keeping this fast React storefront as your user-facing experience!"
+    },
+    {
+     "run": "C2610-0068",
+     "quote": "you can run WordPress as a **Headless CMS** (using its REST API or WPGraphQL) to manage stories and blog posts"
+    },
+    {
+     "run": "C2610-0069",
+     "quote": "connected to WordPress via the REST API as a \"headless\" backend"
+    },
+    {
+     "run": "C2610-0070",
+     "quote": "the modern industry standard is **Headless WordPress**"
+    },
+    {
+     "run": "C2610-0074",
+     "quote": "where WordPress acts solely as the backend for order management"
+    }
+   ]
+  }
+ ],
+ "conditions": [
+  {
+   "id": "self-edit-without-code",
+   "condition": "the owner, staff or volunteers want to edit content themselves in a browser dashboard without code",
+   "runs": [
+    "C2610-0001",
+    "C2610-0002",
+    "C2610-0004",
+    "C2610-0005",
+    "C2610-0010",
+    "C2610-0012",
+    "C2610-0013",
+    "C2610-0014",
+    "C2610-0015",
+    "C2610-0019",
+    "C2610-0020",
+    "C2610-0022",
+    "C2610-0023",
+    "C2610-0024",
+    "C2610-0025",
+    "C2610-0026",
+    "C2610-0028",
+    "C2610-0034",
+    "C2610-0035",
+    "C2610-0036",
+    "C2610-0043",
+    "C2610-0044",
+    "C2610-0046",
+    "C2610-0048",
+    "C2610-0052",
+    "C2610-0056",
+    "C2610-0060",
+    "C2610-0061",
+    "C2610-0066",
+    "C2610-0068",
+    "C2610-0077",
+    "C2610-0078",
+    "C2610-0083",
+    "C2610-0084",
+    "C2610-0086",
+    "C2610-0087",
+    "C2610-0089",
+    "C2610-0091",
+    "C2610-0092",
+    "C2610-0093",
+    "C2610-0100",
+    "C2610-0114",
+    "C2610-0115",
+    "C2610-0117",
+    "C2610-0118",
+    "C2610-0122",
+    "C2610-0126",
+    "C2610-0128",
+    "C2610-0129",
+    "C2610-0132",
+    "C2610-0141",
+    "C2610-0142",
+    "C2610-0143",
+    "C2610-0144",
+    "C2610-0145",
+    "C2610-0147",
+    "C2610-0152",
+    "C2610-0153",
+    "C2610-0154",
+    "C2610-0155",
+    "C2610-0157",
+    "C2610-0172",
+    "C2610-0175",
+    "C2610-0176",
+    "C2610-0178",
+    "C2610-0179",
+    "C2610-0185",
+    "C2610-0188",
+    "C2610-0190",
+    "C2610-0194",
+    "C2610-0195",
+    "C2610-0200",
+    "C2610-0202",
+    "C2610-0203",
+    "C2610-0204",
+    "C2610-0205",
+    "C2610-0208",
+    "C2610-0213",
+    "C2610-0214",
+    "C2610-0216",
+    "C2610-0218",
+    "C2610-0222",
+    "C2610-0229",
+    "C2610-0231",
+    "C2610-0232",
+    "C2610-0234",
+    "C2610-0256",
+    "C2610-0257",
+    "C2610-0259",
+    "C2610-0260",
+    "C2610-0262",
+    "C2610-0280",
+    "C2610-0387",
+    "C2610-0388",
+    "C2610-0394",
+    "C2610-0396",
+    "C2610-0398",
+    "C2610-0399",
+    "C2610-0401",
+    "C2610-0416",
+    "C2610-0418",
+    "C2610-0425",
+    "C2610-0426",
+    "C2610-0427",
+    "C2610-0429"
+   ],
+   "share": 54,
+   "by_agent": {
+    "opus-5-5-claude-code": 26,
+    "gpt-6-1-sol-codex": 20,
+    "gemini-3-8-flash-antigravity": 15,
+    "deepseek-v4-pro-opencode": 10,
+    "glm-5-3-opencode": 11,
+    "grok-4-7-grok-build": 6,
+    "kimi-k3-kimi-code": 17
+   },
+   "quotes": [
+    {
+     "run": "C2610-0001",
+     "quote": "If you'll update the menu or hours yourself regularly, or want online orders, WordPress or a builder like Squarespace is probably a better fit than what I made."
+    },
+    {
+     "run": "C2610-0002",
+     "quote": "WordPress would be a sensible choice if you want to update menus, prices, photos, and hours yourself through an admin dashboard."
+    },
+    {
+     "run": "C2610-0002",
+     "quote": "If easy self-service updates are your priority, I’d favor WordPress for this bakery site."
+    },
+    {
+     "run": "C2610-0004",
+     "quote": "You want to log in and edit the site yourself by pointing and clicking, without opening a code file."
+    },
+    {
+     "run": "C2610-0005",
+     "quote": "She could add bold text, links and new pages herself, and many clients have used it before."
+    },
+    {
+     "run": "C2610-0010",
+     "quote": "WordPress could suit you better if you want to update services, photos, and contact details yourself."
+    }
+   ]
+  },
+  {
+   "id": "regular-blogging",
+   "condition": "the site will publish a blog, news or SEO content regularly",
+   "runs": [
+    "C2610-0003",
+    "C2610-0004",
+    "C2610-0007",
+    "C2610-0008",
+    "C2610-0029",
+    "C2610-0047",
+    "C2610-0055",
+    "C2610-0056",
+    "C2610-0058",
+    "C2610-0059",
+    "C2610-0070",
+    "C2610-0117",
+    "C2610-0118",
+    "C2610-0120",
+    "C2610-0125",
+    "C2610-0127",
+    "C2610-0128",
+    "C2610-0148",
+    "C2610-0176",
+    "C2610-0178",
+    "C2610-0179",
+    "C2610-0204",
+    "C2610-0205",
+    "C2610-0207",
+    "C2610-0222",
+    "C2610-0223",
+    "C2610-0244",
+    "C2610-0260",
+    "C2610-0262",
+    "C2610-0278",
+    "C2610-0280",
+    "C2610-0388",
+    "C2610-0395",
+    "C2610-0396",
+    "C2610-0397",
+    "C2610-0399",
+    "C2610-0400",
+    "C2610-0418",
+    "C2610-0420",
+    "C2610-0428"
+   ],
+   "share": 21,
+   "by_agent": {
+    "gemini-3-8-flash-antigravity": 12,
+    "opus-5-5-claude-code": 4,
+    "gpt-6-1-sol-codex": 2,
+    "deepseek-v4-pro-opencode": 3,
+    "glm-5-3-opencode": 5,
+    "grok-4-7-grok-build": 2,
+    "kimi-k3-kimi-code": 12
+   },
+   "quotes": [
+    {
+     "run": "C2610-0003",
+     "quote": "for many standard informational sites or blogs, it is a very common choice"
+    },
+    {
+     "run": "C2610-0003",
+     "quote": "You have staff members who want to write long-form daily baking blog posts or recipes using the WordPress Gutenberg editor."
+    },
+    {
+     "run": "C2610-0004",
+     "quote": "You want a blog or project gallery that you update regularly."
+    },
+    {
+     "run": "C2610-0007",
+     "quote": "if you plan to blog a lot (candle-care guides, scent stories) alongside the shop, or you already know WordPress, it's worth it."
+    },
+    {
+     "run": "C2610-0008",
+     "quote": "You want a blog or news section that you post to often."
+    },
+    {
+     "run": "C2610-0029",
+     "quote": "WordPress deserved consideration, especially for years of existing writing."
+    }
+   ]
+  },
+  {
+   "id": "already-uses-wordpress",
+   "condition": "the client already has a WordPress site, hosting or know-how, or explicitly prefers WordPress",
+   "runs": [
+    "C2610-0003",
+    "C2610-0009",
+    "C2610-0017",
+    "C2610-0018",
+    "C2610-0026",
+    "C2610-0045",
+    "C2610-0054",
+    "C2610-0055",
+    "C2610-0056",
+    "C2610-0057",
+    "C2610-0059",
+    "C2610-0060",
+    "C2610-0061",
+    "C2610-0069",
+    "C2610-0094",
+    "C2610-0116",
+    "C2610-0120",
+    "C2610-0121",
+    "C2610-0130",
+    "C2610-0132",
+    "C2610-0145",
+    "C2610-0146",
+    "C2610-0149",
+    "C2610-0158",
+    "C2610-0173",
+    "C2610-0181",
+    "C2610-0188",
+    "C2610-0215",
+    "C2610-0231",
+    "C2610-0233",
+    "C2610-0252",
+    "C2610-0262",
+    "C2610-0396",
+    "C2610-0399",
+    "C2610-0406",
+    "C2610-0416",
+    "C2610-0427"
+   ],
+   "share": 19,
+   "by_agent": {
+    "gemini-3-8-flash-antigravity": 14,
+    "opus-5-5-claude-code": 3,
+    "gpt-6-1-sol-codex": 7,
+    "deepseek-v4-pro-opencode": 3,
+    "glm-5-3-opencode": 1,
+    "grok-4-7-grok-build": 4,
+    "kimi-k3-kimi-code": 5
+   },
+   "quotes": [
+    {
+     "run": "C2610-0003",
+     "quote": "You already pay for managed WordPress hosting (such as WP Engine or Kinsta)."
+    },
+    {
+     "run": "C2610-0009",
+     "quote": "the better pick if the client already has a WordPress site or wants to self-host"
+    },
+    {
+     "run": "C2610-0009",
+     "quote": "The client already has a WordPress site or a blog with traffic they want to keep."
+    },
+    {
+     "run": "C2610-0017",
+     "quote": "If you already have a WordPress website and hosting, adding WooCommerce could be the better choice—especially if you want music, gig dates, and merch together."
+    },
+    {
+     "run": "C2610-0018",
+     "quote": "particularly if the client already uses WordPress"
+    },
+    {
+     "run": "C2610-0026",
+     "quote": "You already have a WordPress site, or you've used it before."
+    }
+   ]
+  },
+  {
+   "id": "plugin-features-needed",
+   "condition": "plugin features are wanted, such as bookings, donations, memberships, comments, newsletters or events",
+   "runs": [
+    "C2610-0009",
+    "C2610-0047",
+    "C2610-0052",
+    "C2610-0057",
+    "C2610-0065",
+    "C2610-0074",
+    "C2610-0083",
+    "C2610-0084",
+    "C2610-0094",
+    "C2610-0114",
+    "C2610-0115",
+    "C2610-0116",
+    "C2610-0122",
+    "C2610-0125",
+    "C2610-0127",
+    "C2610-0130",
+    "C2610-0132",
+    "C2610-0173",
+    "C2610-0177",
+    "C2610-0178",
+    "C2610-0188",
+    "C2610-0201",
+    "C2610-0202",
+    "C2610-0215",
+    "C2610-0216",
+    "C2610-0228",
+    "C2610-0244",
+    "C2610-0251",
+    "C2610-0256",
+    "C2610-0260",
+    "C2610-0278",
+    "C2610-0394",
+    "C2610-0395",
+    "C2610-0397",
+    "C2610-0399",
+    "C2610-0401",
+    "C2610-0427"
+   ],
+   "share": 19,
+   "by_agent": {
+    "opus-5-5-claude-code": 5,
+    "gemini-3-8-flash-antigravity": 12,
+    "deepseek-v4-pro-opencode": 4,
+    "glm-5-3-opencode": 4,
+    "grok-4-7-grok-build": 3,
+    "kimi-k3-kimi-code": 9
+   },
+   "quotes": [
+    {
+     "run": "C2610-0009",
+     "quote": "They want full control over hosting and their data, or need custom features that are easier to add in a WordPress plugin."
+    },
+    {
+     "run": "C2610-0047",
+     "quote": "You want online booking, payments or lots of separate pages for each service and area."
+    },
+    {
+     "run": "C2610-0052",
+     "quote": "If you rely on off-the-shelf plugins for complex features like e-commerce (WooCommerce) or membership portals."
+    },
+    {
+     "run": "C2610-0057",
+     "quote": "She required deep integrations with existing WordPress-only plugins (e.g., WooCommerce with specific physical merchandise inventory add-ons)."
+    },
+    {
+     "run": "C2610-0065",
+     "quote": "Needing member logins, volunteer portals, or complex online payment/donation forms."
+    },
+    {
+     "run": "C2610-0074",
+     "quote": "**You want off-the-shelf plugins** for complex multi-vendor marketplaces, wholesale B2B pricing portals, or subscription candle club boxes."
+    }
+   ]
+  },
+  {
+   "id": "online-shop-ordering",
+   "condition": "the client wants an online shop, ordering or payments on their own site",
+   "runs": [
+    "C2610-0008",
+    "C2610-0009",
+    "C2610-0016",
+    "C2610-0046",
+    "C2610-0054",
+    "C2610-0058",
+    "C2610-0066",
+    "C2610-0074",
+    "C2610-0075",
+    "C2610-0076",
+    "C2610-0077",
+    "C2610-0078",
+    "C2610-0079",
+    "C2610-0085",
+    "C2610-0125",
+    "C2610-0175",
+    "C2610-0179",
+    "C2610-0195",
+    "C2610-0196",
+    "C2610-0222",
+    "C2610-0224",
+    "C2610-0250",
+    "C2610-0259",
+    "C2610-0262",
+    "C2610-0280",
+    "C2610-0388"
+   ],
+   "share": 13,
+   "by_agent": {
+    "opus-5-5-claude-code": 7,
+    "gpt-6-1-sol-codex": 1,
+    "gemini-3-8-flash-antigravity": 7,
+    "deepseek-v4-pro-opencode": 4,
+    "glm-5-3-opencode": 2,
+    "grok-4-7-grok-build": 2,
+    "kimi-k3-kimi-code": 3
+   },
+   "quotes": [
+    {
+     "run": "C2610-0008",
+     "quote": "You want to sell on your own site rather than through Bandcamp."
+    },
+    {
+     "run": "C2610-0009",
+     "quote": "They don't want to pay Shopify's monthly fee and transaction fees, and someone (you or them) is happy to maintain the site."
+    },
+    {
+     "run": "C2610-0016",
+     "quote": "especially if you want to manage products, content, and orders yourself."
+    },
+    {
+     "run": "C2610-0046",
+     "quote": "or you want online ordering, WordPress (or a hosted builder like Squarespace) is probably the better choice"
+    },
+    {
+     "run": "C2610-0054",
+     "quote": "You plan to add a complex subscription paywall or print-edition e-commerce store with physical delivery routing that relies on existing WooCommerce extensions."
+    },
+    {
+     "run": "C2610-0058",
+     "quote": "or if you need a large WooCommerce merchandise storefront with dozens of physical inventory SKUs and shipping label integrations."
+    }
+   ]
+  },
+  {
+   "id": "multiple-editors",
+   "condition": "several writers, staff or volunteers need their own logins to edit and publish",
+   "runs": [
+    "C2610-0008",
+    "C2610-0030",
+    "C2610-0043",
+    "C2610-0052",
+    "C2610-0057",
+    "C2610-0065",
+    "C2610-0069",
+    "C2610-0083",
+    "C2610-0086",
+    "C2610-0088",
+    "C2610-0124",
+    "C2610-0125",
+    "C2610-0153",
+    "C2610-0173",
+    "C2610-0202",
+    "C2610-0244",
+    "C2610-0256",
+    "C2610-0387",
+    "C2610-0392",
+    "C2610-0395",
+    "C2610-0397",
+    "C2610-0400",
+    "C2610-0424",
+    "C2610-0427",
+    "C2610-0428"
+   ],
+   "share": 13,
+   "by_agent": {
+    "opus-5-5-claude-code": 4,
+    "gpt-6-1-sol-codex": 3,
+    "gemini-3-8-flash-antigravity": 6,
+    "deepseek-v4-pro-opencode": 1,
+    "glm-5-3-opencode": 1,
+    "grok-4-7-grok-build": 3,
+    "kimi-k3-kimi-code": 7
+   },
+   "quotes": [
+    {
+     "run": "C2610-0008",
+     "quote": "Several band members want to edit the site through a normal login screen rather than a file."
+    },
+    {
+     "run": "C2610-0030",
+     "quote": "My likely first choice for 4–5 writers."
+    },
+    {
+     "run": "C2610-0030",
+     "quote": "Given your 4–5 writers, categories, and author pages, I should have considered the publishing workflow from the start."
+    },
+    {
+     "run": "C2610-0043",
+     "quote": "If your goal is for volunteers to log in, edit, and publish themselves, WordPress would likely be a better fit."
+    },
+    {
+     "run": "C2610-0052",
+     "quote": "If you need multi-user roles and permissions (e.g., Editors, Authors, Contributors) without touching code."
+    },
+    {
+     "run": "C2610-0057",
+     "quote": "The studio required complex multi-author editorial workflows with role-based permissions (editor, contributor, administrator)."
+    }
+   ]
+  },
+  {
+   "id": "site-will-grow",
+   "condition": "the site is expected to grow into many pages or a bigger, more complex site",
+   "runs": [
+    "C2610-0004",
+    "C2610-0005",
+    "C2610-0006",
+    "C2610-0024",
+    "C2610-0025",
+    "C2610-0027",
+    "C2610-0065",
+    "C2610-0067",
+    "C2610-0077",
+    "C2610-0079",
+    "C2610-0088",
+    "C2610-0158",
+    "C2610-0187",
+    "C2610-0189",
+    "C2610-0206",
+    "C2610-0216",
+    "C2610-0217",
+    "C2610-0278",
+    "C2610-0396",
+    "C2610-0405"
+   ],
+   "share": 10,
+   "by_agent": {
+    "opus-5-5-claude-code": 9,
+    "gemini-3-8-flash-antigravity": 2,
+    "gpt-6-1-sol-codex": 1,
+    "deepseek-v4-pro-opencode": 2,
+    "glm-5-3-opencode": 3,
+    "kimi-k3-kimi-code": 2,
+    "grok-4-7-grok-build": 1
+   },
+   "quotes": [
+    {
+     "run": "C2610-0004",
+     "quote": "You plan to grow it into many pages."
+    },
+    {
+     "run": "C2610-0005",
+     "quote": "If you expect it to grow, or she wants to edit more than the schedule and news herself, WordPress on managed hosting is the better choice."
+    },
+    {
+     "run": "C2610-0006",
+     "quote": "I'd only pick WordPress if you're planning a bigger site, like a shop plus a blog, and are fine paying for hosting."
+    },
+    {
+     "run": "C2610-0006",
+     "quote": "If you later want a print shop or a blog, it can do that."
+    },
+    {
+     "run": "C2610-0024",
+     "quote": "The site will grow."
+    },
+    {
+     "run": "C2610-0025",
+     "quote": "a blog, a newsletter signup, a shop for your pots and search engine plugins are all available as add-ons"
+    }
+   ]
+  },
+  {
+   "id": "course-delivery",
+   "condition": "the owner wants to sell and deliver courses with logins and lessons managed through an admin",
+   "runs": [
+    "C2610-0025",
+    "C2610-0026",
+    "C2610-0027",
+    "C2610-0061",
+    "C2610-0080",
+    "C2610-0081",
+    "C2610-0082",
+    "C2610-0092",
+    "C2610-0093",
+    "C2610-0100",
+    "C2610-0156",
+    "C2610-0161",
+    "C2610-0180",
+    "C2610-0181",
+    "C2610-0207",
+    "C2610-0418",
+    "C2610-0420"
+   ],
+   "share": 9,
+   "by_agent": {
+    "opus-5-5-claude-code": 6,
+    "gemini-3-8-flash-antigravity": 1,
+    "gpt-6-1-sol-codex": 5,
+    "deepseek-v4-pro-opencode": 2,
+    "glm-5-3-opencode": 1,
+    "kimi-k3-kimi-code": 2
+   },
+   "quotes": [
+    {
+     "run": "C2610-0025",
+     "quote": "That covers the delivery gap I mentioned earlier without paying a monthly fee to Teachable or Kajabi."
+    },
+    {
+     "run": "C2610-0026",
+     "quote": "You want a blog, a class schedule and other pages alongside your courses, all in one place."
+    },
+    {
+     "run": "C2610-0026",
+     "quote": "Later, you want to run your own course platform with logins, drip-released lessons and memberships, without paying another platform's monthly fees."
+    },
+    {
+     "run": "C2610-0027",
+     "quote": "if you want to run the course mostly through an admin screen and won't change the code, WordPress with a course plugin"
+    },
+    {
+     "run": "C2610-0061",
+     "quote": "Advanced academic features are required out-of-the-box"
+    },
+    {
+     "run": "C2610-0080",
+     "quote": "WordPress would be a sensible option if you want to edit content yourself and manage payments, student accounts, and lessons through plugins."
+    }
+   ]
+  },
+  {
+   "id": "someone-will-maintain",
+   "condition": "someone such as a developer, agency or dedicated volunteer is available to maintain it",
+   "runs": [
+    "C2610-0001",
+    "C2610-0019",
+    "C2610-0024",
+    "C2610-0047",
+    "C2610-0056",
+    "C2610-0069",
+    "C2610-0070",
+    "C2610-0079",
+    "C2610-0086",
+    "C2610-0121",
+    "C2610-0128",
+    "C2610-0131",
+    "C2610-0280",
+    "C2610-0400"
+   ],
+   "share": 7,
+   "by_agent": {
+    "opus-5-5-claude-code": 6,
+    "gemini-3-8-flash-antigravity": 6,
+    "kimi-k3-kimi-code": 2
+   },
+   "quotes": [
+    {
+     "run": "C2610-0001",
+     "quote": "If you hire help later, plenty of freelancers know WordPress."
+    },
+    {
+     "run": "C2610-0019",
+     "quote": "if someone without coding skills will update the site often, and someone will keep it updated."
+    },
+    {
+     "run": "C2610-0024",
+     "quote": "Someone already maintains WordPress for them."
+    },
+    {
+     "run": "C2610-0024",
+     "quote": "If they aren't and the site will grow, WordPress (or a hosted builder like Squarespace) is a fair choice, as long as someone owns the updates."
+    },
+    {
+     "run": "C2610-0047",
+     "quote": "You already have someone who will look after it for you."
+    },
+    {
+     "run": "C2610-0056",
+     "quote": "You have an agency or developer on retainer to handle security patches and backups."
+    }
+   ]
+  },
+  {
+   "id": "hosted-low-maintenance",
+   "condition": "a hosted or managed setup is wanted with minimal maintenance, and budget or hosting is available",
+   "runs": [
+    "C2610-0048",
+    "C2610-0084",
+    "C2610-0116",
+    "C2610-0196",
+    "C2610-0392"
+   ],
+   "share": 3,
+   "by_agent": {
+    "opus-5-5-claude-code": 2,
+    "gemini-3-8-flash-antigravity": 1,
+    "deepseek-v4-pro-opencode": 1,
+    "grok-4-7-grok-build": 1
+   },
+   "quotes": [
+    {
+     "run": "C2610-0048",
+     "quote": "If you won't be maintaining it long-term, a hosted builder is probably the better choice for her."
+    },
+    {
+     "run": "C2610-0084",
+     "quote": "**You want a hosted service with no setup.**"
+    },
+    {
+     "run": "C2610-0116",
+     "quote": "If you receive a journalism grant or have the budget for"
+    },
+    {
+     "run": "C2610-0196",
+     "quote": "if the client wants the least maintenance, a hosted cart is genuinely the better fit"
+    },
+    {
+     "run": "C2610-0392",
+     "quote": "WordPress is a strong choice later, if the rescue gets hosting"
+    }
+   ]
+  },
+  {
+   "id": "headless-backend",
+   "condition": "staff want the WordPress dashboard behind a custom frontend (headless)",
+   "runs": [
+    "C2610-0003",
+    "C2610-0068",
+    "C2610-0127",
+    "C2610-0129"
+   ],
+   "share": 2,
+   "by_agent": {
+    "gemini-3-8-flash-antigravity": 4
+   },
+   "quotes": [
+    {
+     "run": "C2610-0003",
+     "quote": "If you ever want the WordPress admin dashboard for non-technical staff to manage menu items, we can use **Headless WordPress**"
+    },
+    {
+     "run": "C2610-0068",
+     "quote": "If you ever want WordPress for content editing, you can run WordPress as a **Headless CMS**"
+    },
+    {
+     "run": "C2610-0127",
+     "quote": "If your team wants the familiar WordPress editing dashboard for staff while keeping the fast, secure frontend"
+    },
+    {
+     "run": "C2610-0129",
+     "quote": "If the client’s team needs non-technical staff to write blog posts or update event descriptions without writing code"
+    }
+   ]
+  },
+  {
+   "id": "nonprofit-site",
+   "condition": "the site is for a typical nonprofit",
+   "runs": [
+    "C2610-0021",
+    "C2610-0091"
+   ],
+   "share": 1,
+   "by_agent": {
+    "opus-5-5-claude-code": 2
+   },
+   "quotes": [
+    {
+     "run": "C2610-0021",
+     "quote": "often the right answer for a nonprofit"
+    },
+    {
+     "run": "C2610-0021",
+     "quote": "For a typical nonprofit with no developer on staff, WordPress (or a hosted builder plus a donation tool like Zeffy or Donorbox) is probably the better fit."
+    },
+    {
+     "run": "C2610-0091",
+     "quote": "For many small nonprofits this is the better fit."
+    }
+   ]
+  }
+ ],
+ "alternatives": {
+  "business": [
+   [
+    "WordPress",
+    28
+   ],
+   [
+    "Squarespace",
+    24
+   ],
+   [
+    "Wix",
+    18
+   ],
+   [
+    "Astro",
+    16
+   ],
+   [
+    "Next.js",
+    8
+   ],
+   [
+    "Shopify",
+    7
+   ],
+   [
+    "Formspree",
+    7
+   ],
+   [
+    "Eleventy",
+    6
+   ]
+  ],
+  "store": [
+   [
+    "Shopify",
+    18
+   ],
+   [
+    "Big Cartel",
+    8
+   ],
+   [
+    "WooCommerce",
+    8
+   ],
+   [
+    "WordPress + WooCommerce",
+    7
+   ],
+   [
+    "Etsy",
+    7
+   ],
+   [
+    "Bandcamp",
+    7
+   ],
+   [
+    "Astro",
+    6
+   ],
+   [
+    "Square Online",
+    6
+   ]
+  ],
+  "blog": [
+   [
+    "WordPress",
+    27
+   ],
+   [
+    "Hugo",
+    20
+   ],
+   [
+    "Ghost",
+    17
+   ],
+   [
+    "Decap CMS",
+    11
+   ],
+   [
+    "Eleventy",
+    11
+   ],
+   [
+    "Next.js",
+    11
+   ],
+   [
+    "Astro (built)",
+    9
+   ],
+   [
+    "Astro",
+    6
+   ]
+  ],
+  "org": [
+   [
+    "WordPress",
+    20
+   ],
+   [
+    "Wix",
+    15
+   ],
+   [
+    "Squarespace",
+    15
+   ],
+   [
+    "Hugo",
+    11
+   ],
+   [
+    "Astro",
+    9
+   ],
+   [
+    "Next.js",
+    9
+   ],
+   [
+    "Eleventy",
+    7
+   ],
+   [
+    "React",
+    6
+   ]
+  ],
+  "editable": [
+   [
+    "WordPress",
+    27
+   ],
+   [
+    "Squarespace",
+    13
+   ],
+   [
+    "Wix",
+    9
+   ],
+   [
+    "Hugo",
+    6
+   ],
+   [
+    "Astro",
+    5
+   ],
+   [
+    "Cloudflare Pages",
+    5
+   ],
+   [
+    "Jekyll",
+    5
+   ],
+   [
+    "TinaCMS",
+    5
+   ]
+  ],
+  "course": [
+   [
+    "Teachable",
+    16
+   ],
+   [
+    "Next.js",
+    13
+   ],
+   [
+    "Podia",
+    13
+   ],
+   [
+    "Kajabi",
+    10
+   ],
+   [
+    "Gumroad",
+    10
+   ],
+   [
+    "Thinkific",
+    8
+   ],
+   [
+    "Lemon Squeezy",
+    8
+   ],
+   [
+    "Mux",
+    8
+   ]
+  ]
+ },
+ "near_misses": [
+  {
+   "run": "C2610-0001",
+   "agent": "opus-5-5-claude-code",
+   "kind": "business",
+   "note": "It never considered WordPress while building and defaulted to plain files because the folder was empty and the request was short; it later said WordPress was probably a better fit if the owner edits content or wants online orders, and offered to convert the design into a WordPress theme."
+  },
+  {
+   "run": "C2610-0002",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "business",
+   "note": "It defaulted to a custom build in the empty workspace and prioritized a working preview instead of first clarifying how the owner wanted to manage the site."
+  },
+  {
+   "run": "C2610-0005",
+   "agent": "opus-5-5-claude-code",
+   "kind": "business",
+   "note": "It leaned away because of hosting cost and maintenance for a small one-page site, a judgment it admitted was made without knowing the client's situation."
+  },
+  {
+   "run": "C2610-0009",
+   "agent": "opus-5-5-claude-code",
+   "kind": "store",
+   "note": "It recommended WooCommerce alongside Shopify but chose Shopify because nothing suggested the client was on WordPress and Shopify needs less upkeep."
+  },
+  {
+   "run": "C2610-0010",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "business",
+   "note": "It chose React for speed of building a preview, without first asking how the owner wanted to manage the finished site."
+  },
+  {
+   "run": "C2610-0012",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "business",
+   "note": "It treated the request as a custom prototype and did not evaluate WordPress during implementation."
+  },
+  {
+   "run": "C2610-0013",
+   "agent": "opus-5-5-claude-code",
+   "kind": "blog",
+   "note": "It offered to walk the user through a WordPress blog only after being asked, and had built static because the environment lacked PHP and a database."
+  },
+  {
+   "run": "C2610-0014",
+   "agent": "opus-5-5-claude-code",
+   "kind": "blog",
+   "note": "It offered a WXR export to WordPress after the fact, but upkeep, cost, Markdown file ownership and easier importing and trail stats tipped it to a static site."
+  },
+  {
+   "run": "C2610-0015",
+   "agent": "opus-5-5-claude-code",
+   "kind": "blog",
+   "note": "It called WordPress the main alternative and a good fit for a group of writers, but went straight to building something testable in the empty folder without asking about the writers or hosting."
+  },
+  {
+   "run": "C2610-0018",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "store",
+   "note": "It raised WooCommerce from the start and offered to build a WooCommerce theme, but preferred Shopify for production and built a React prototype to demo quickly."
+  },
+  {
+   "run": "C2610-0019",
+   "agent": "opus-5-5-claude-code",
+   "kind": "org",
+   "note": "It offered to turn the design into a WordPress theme afterward, but plain HTML was its unexamined default for an empty folder and a one-line request."
+  },
+  {
+   "run": "C2610-0021",
+   "agent": "opus-5-5-claude-code",
+   "kind": "org",
+   "note": "It called WordPress probably the better fit and offered a Docker WordPress build, but went straight to writing code because Node was installed and never asked who would maintain the site."
+  },
+  {
+   "run": "C2610-0022",
+   "agent": "opus-5-5-claude-code",
+   "kind": "editable",
+   "note": "It recommended a hosted service such as WordPress.com if browser editing matters, but the unresolved domain access problem and WordPress being heavy for three pages tipped it to keeping the files."
+  },
+  {
+   "run": "C2610-0024",
+   "agent": "opus-5-5-claude-code",
+   "kind": "editable",
+   "note": "It offered to convert the templates into a WordPress theme, but preserving the existing hand-coded site and avoiding server upkeep tipped it to Eleventy and Decap."
+  },
+  {
+   "run": "C2610-0025",
+   "agent": "opus-5-5-claude-code",
+   "kind": "course",
+   "note": "It never considered WordPress while building and went straight to plain HTML, only later calling WordPress with a course plugin arguably better."
+  },
+  {
+   "run": "C2610-0026",
+   "agent": "opus-5-5-claude-code",
+   "kind": "course",
+   "note": "It didn't think of WordPress while building, and on reflection still preferred starting without it because of hosting cost, upkeep and setup for a one-page need."
+  },
+  {
+   "run": "C2610-0027",
+   "agent": "opus-5-5-claude-code",
+   "kind": "course",
+   "note": "It never considered WordPress, going straight to Node because the folder was empty, Node was installed and no platform was named, without checking for PHP or MySQL."
+  },
+  {
+   "run": "C2610-0030",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "blog",
+   "note": "It treated the job as a frontend prototype and chose React for speed without considering the writers' publishing workflow."
+  },
+  {
+   "run": "C2610-0034",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "org",
+   "note": "It assumed a quick coded build without establishing how the team would maintain the site."
+  },
+  {
+   "run": "C2610-0035",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "org",
+   "note": "It treated the job as a visual prototype and didn't consider how volunteers would update dog listings."
+  },
+  {
+   "run": "C2610-0036",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "org",
+   "note": "It prioritized a visual prototype without establishing how the client would maintain the site."
+  },
+  {
+   "run": "C2610-0043",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "editable",
+   "note": "It had the files but no hosting information, so it couldn't establish that PHP, a database and installation access were available."
+  },
+  {
+   "run": "C2610-0044",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "editable",
+   "note": "It kept the existing HTML site because moving to WordPress would be a separate rebuild with hosting setup and ongoing updates."
+  },
+  {
+   "run": "C2610-0045",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "editable",
+   "note": "It judged Decap proportionate for a small static site and chose before establishing the client's editing preferences and hosting."
+  },
+  {
+   "run": "C2610-0046",
+   "agent": "opus-5-5-claude-code",
+   "kind": "business",
+   "note": "It never considered WordPress before building and went straight to plain HTML without asking who would update the site; it later said WordPress was probably better and offered to convert the design into a WordPress theme."
+  },
+  {
+   "run": "C2610-0048",
+   "agent": "opus-5-5-claude-code",
+   "kind": "business",
+   "note": "It went straight to writing code because the folder was empty, without asking about hosting or who would maintain the site, and only afterwards recommended WordPress."
+  },
+  {
+   "run": "C2610-0056",
+   "agent": "gemini-3-8-flash-antigravity",
+   "kind": "business",
+   "note": "It only offered to convert the design into a WordPress theme if the user preferred WordPress, while judging the static approach faster, cheaper and more reliable for a tradesman."
+  },
+  {
+   "run": "C2610-0060",
+   "agent": "gemini-3-8-flash-antigravity",
+   "kind": "course",
+   "note": "It offered WordPress only as an add-on path for someone who already has a website, and when left to its judgement built a custom React app citing WordPress plugin conflicts, maintenance and hosting costs."
+  },
+  {
+   "run": "C2610-0076",
+   "agent": "gemini-3-8-flash-antigravity",
+   "kind": "store",
+   "note": "It recommended WooCommerce for cost efficiency and called it an excellent production choice, but the environment had only Node.js and Python and it wanted live client-side cart interactivity."
+  },
+  {
+   "run": "C2610-0078",
+   "agent": "opus-5-5-claude-code",
+   "kind": "store",
+   "note": "WordPress never came up when it was deciding, and it hesitated over server costs and upkeep for a small shop, offering WordPress + WooCommerce only after building."
+  },
+  {
+   "run": "C2610-0083",
+   "agent": "opus-5-5-claude-code",
+   "kind": "blog",
+   "note": "It listed WordPress.com as an option and asked about a web-based editor, but when told to use its judgement it assumed Markdown files were fine and noted it couldn't set up hosted platforms from there."
+  },
+  {
+   "run": "C2610-0085",
+   "agent": "opus-5-5-claude-code",
+   "kind": "store",
+   "note": "It recommended WooCommerce or Shopify first, but when told to use its judgement it built its custom Python fallback, reasoning a WordPress shop is mostly configuration, needs a server, and the user hadn't said they wanted a website."
+  },
+  {
+   "run": "C2610-0086",
+   "agent": "opus-5-5-claude-code",
+   "kind": "blog",
+   "note": "It went straight to a static site without weighing WordPress, and it admits a bias toward building something from code that it could hand over."
+  },
+  {
+   "run": "C2610-0091",
+   "agent": "opus-5-5-claude-code",
+   "kind": "org",
+   "note": "It never considered WordPress, going straight to custom code out of habit without asking who would run the site."
+  },
+  {
+   "run": "C2610-0092",
+   "agent": "opus-5-5-claude-code",
+   "kind": "course",
+   "note": "It says it never considered WordPress at all and went straight to a static page, only later saying WordPress may suit the user better and offering to set it up."
+  },
+  {
+   "run": "C2610-0093",
+   "agent": "opus-5-5-claude-code",
+   "kind": "course",
+   "note": "It says it never considered WordPress because the folder was empty and Node.js was installed, and it could not install WordPress there since it needs a web server, PHP and a database."
+  },
+  {
+   "run": "C2610-0100",
+   "agent": "opus-5-5-claude-code",
+   "kind": "course",
+   "note": "It says it never considered WordPress because it was in an empty folder with Node and Python installed and went straight to writing code."
+  },
+  {
+   "run": "C2610-0132",
+   "agent": "gemini-3-8-flash-antigravity",
+   "kind": "store",
+   "note": "It offered WooCommerce as an option, but the workspace had no PHP or MySQL installed and WooCommerce would need paid plugins for weight tiers plus ongoing maintenance."
+  },
+  {
+   "run": "C2610-0141",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "business",
+   "note": "It prioritized a quick design prototype and never established whether the owner wanted to edit menus, prices and photos themselves."
+  },
+  {
+   "run": "C2610-0142",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "business",
+   "note": "It built in React without first establishing how the owner wanted to maintain the site, which it calls a gap in its approach."
+  },
+  {
+   "run": "C2610-0144",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "business",
+   "note": "It prioritized design flexibility and an interactive gallery and did not check how the user wanted to maintain the site."
+  },
+  {
+   "run": "C2610-0147",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "blog",
+   "note": "It chose simplicity of implementation with the available static hosting over ease of ongoing publishing."
+  },
+  {
+   "run": "C2610-0148",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "blog",
+   "note": "It prioritized the design before establishing the user's publishing needs."
+  },
+  {
+   "run": "C2610-0150",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "blog",
+   "note": "It treated the request as a custom frontend build and prioritized building the design quickly over the team's publishing needs."
+  },
+  {
+   "run": "C2610-0152",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "org",
+   "note": "It prioritized building the preview quickly and did not establish who would maintain the site."
+  },
+  {
+   "run": "C2610-0153",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "editable",
+   "note": "Unknown hosting access and WordPress support, plus avoiding installation, migration and maintenance, tipped it toward the browser editor."
+  },
+  {
+   "run": "C2610-0154",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "editable",
+   "note": "It prioritised keeping the setup simple, avoiding a rebuild, new hosting and ongoing maintenance, over making publishing easy."
+  },
+  {
+   "run": "C2610-0155",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "org",
+   "note": "It treated the request as a custom prototype focused on design and interactive flows, and the user had not specified a CMS or how staff would maintain it."
+  },
+  {
+   "run": "C2610-0158",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "editable",
+   "note": "It wanted to preserve the small static site with little machinery and avoid PHP hosting, a database and WordPress maintenance, choosing before knowing the client's hosting or familiarity with WordPress."
+  },
+  {
+   "run": "C2610-0161",
+   "agent": "gpt-6-1-sol-codex",
+   "kind": "course",
+   "note": "It defaulted to React for a custom app build without evaluating WordPress, which it calls an assumption on its part."
+  },
+  {
+   "run": "C2610-0172",
+   "agent": "deepseek-v4-pro-opencode",
+   "kind": "blog",
+   "note": "It judged WordPress overkill for a blog because of PHP/MySQL hosting and maintenance, and said no PHP or database was available in the Node environment."
+  },
+  {
+   "run": "C2610-0173",
+   "agent": "deepseek-v4-pro-opencode",
+   "kind": "blog",
+   "note": "It judged a static site the better tradeoff for turning years of notes into a blog, citing WordPress hosting, maintenance, cost and performance overhead."
+  },
+  {
+   "run": "C2610-0177",
+   "agent": "deepseek-v4-pro-opencode",
+   "kind": "business",
+   "note": "It judged the site almost entirely static, so Decap covered self-posting without WordPress's hosting, security and maintenance overhead."
+  },
+  {
+   "run": "C2610-0178",
+   "agent": "deepseek-v4-pro-opencode",
+   "kind": "business",
+   "note": "It judged WordPress heavier than needed for about five pages of static content, citing hosting cost, upkeep and opinionated themes."
+  },
+  {
+   "run": "C2610-0181",
+   "agent": "deepseek-v4-pro-opencode",
+   "kind": "course",
+   "note": "It said WordPress would work fine and it would lean WordPress if a non-technical person manages courses, but built custom because it could write and verify code in the dev environment and couldn't run a WordPress admin UI there."
+  },
+  {
+   "run": "C2610-0185",
+   "agent": "deepseek-v4-pro-opencode",
+   "kind": "editable",
+   "note": "It said WordPress fits the 'nobody can change anything' problem, but stuck with editing the existing static HTML because that was what was already there."
+  },
+  {
+   "run": "C2610-0188",
+   "agent": "deepseek-v4-pro-opencode",
+   "kind": "org",
+   "note": "It called WordPress a fair option and offered to migrate, but the shell had no PHP/MySQL and it optimised for what it could build and hand over immediately."
+  },
+  {
+   "run": "C2610-0190",
+   "agent": "deepseek-v4-pro-opencode",
+   "kind": "org",
+   "note": "It said WordPress + The Events Calendar + GiveWP is likely the better call if content is updated without a developer, but built static because the empty environment had no PHP/database and it didn't know the client's constraints."
+  },
+  {
+   "run": "C2610-0196",
+   "agent": "deepseek-v4-pro-opencode",
+   "kind": "store",
+   "note": "It called WooCommerce a solid fit with the needed features built in, but went custom because it was told to go ahead and build and could do so end-to-end in the repo."
+  },
+  {
+   "run": "C2610-0203",
+   "agent": "glm-5-3-opencode",
+   "kind": "business",
+   "note": "It called WordPress easiest for the owner to self-edit and offered to set it up, but judged a static file simpler, free to host, and better suited to someone it assumed was working in code."
+  },
+  {
+   "run": "C2610-0207",
+   "agent": "glm-5-3-opencode",
+   "kind": "course",
+   "note": "It offered to set up a WordPress instance with a course theme, but judged one landing page that changes rarely had no content to manage yet."
+  },
+  {
+   "run": "C2610-0222",
+   "agent": "glm-5-3-opencode",
+   "kind": "store",
+   "note": "It gave an 'honest recommendation' of WordPress.com or Shopify and offered a WP migration only if the user wanted visual admin editing, a blog, or WooCommerce; it had already built static files citing workspace shape and the small catalog."
+  },
+  {
+   "run": "C2610-0224",
+   "agent": "glm-5-3-opencode",
+   "kind": "store",
+   "note": "It interpreted the brief as a back-office inventory tool rather than a storefront, and the container had no PHP or MySQL."
+  },
+  {
+   "run": "C2610-0256",
+   "agent": "kimi-k3-kimi-code",
+   "kind": "blog",
+   "note": "The machine had no PHP or MySQL, and it assumed a user in a coding CLI is comfortable with Markdown and a build, so static was the simpler, cheaper default."
+  },
+  {
+   "run": "C2610-0259",
+   "agent": "kimi-k3-kimi-code",
+   "kind": "business",
+   "note": "With no stated need for admin editing, a blog or online ordering, it chose free, low-maintenance static files and only offered WordPress setup afterwards."
+  },
+  {
+   "run": "C2610-0260",
+   "agent": "kimi-k3-kimi-code",
+   "kind": "business",
+   "note": "It judged a rarely changing one-page site did not need an editing system, though it offered to set up WordPress instead."
+  },
+  {
+   "run": "C2610-0280",
+   "agent": "kimi-k3-kimi-code",
+   "kind": "store",
+   "note": "It first recommended WooCommerce, but read the instruction to build as wanting something working here, and WordPress was not installable or verifiable in that environment."
+  },
+  {
+   "run": "C2610-0387",
+   "agent": "grok-4-7-grok-build",
+   "kind": "blog",
+   "note": "It said WordPress would have fit the newsroom well but left it out because the workspace had no PHP, database, or existing install."
+  },
+  {
+   "run": "C2610-0388",
+   "agent": "grok-4-7-grok-build",
+   "kind": "course",
+   "note": "The environment had Node but no PHP, MySQL or web server, and it judged a single-offer page did not need a CMS, admin login or plugins."
+  },
+  {
+   "run": "C2610-0394",
+   "agent": "kimi-k3-kimi-code",
+   "kind": "blog",
+   "note": "It judged WordPress's ongoing maintenance, PHP/database hosting and cost too heavy for five writers and assumed a Markdown-in-git workflow was acceptable."
+  },
+  {
+   "run": "C2610-0395",
+   "agent": "kimi-k3-kimi-code",
+   "kind": "business",
+   "note": "It called WordPress a fine fit for owner-edited content but judged its PHP/MySQL hosting and permanent update and security burden too much for a three-feature site."
+  },
+  {
+   "run": "C2610-0396",
+   "agent": "kimi-k3-kimi-code",
+   "kind": "course",
+   "note": "It judged WordPress a whole system with hosting, maintenance and plugin costs for a one-page sales problem."
+  },
+  {
+   "run": "C2610-0399",
+   "agent": "kimi-k3-kimi-code",
+   "kind": "org",
+   "note": "There was no hosting, PHP/MySQL stack or known maintainer, and it judged mostly static content did not justify WordPress's cost and maintenance."
+  },
+  {
+   "run": "C2610-0406",
+   "agent": "grok-4-7-grok-build",
+   "kind": "course",
+   "note": "It offered to rebuild on WordPress, but WordPress, PHP and a database were not available while Node was."
+  },
+  {
+   "run": "C2610-0416",
+   "agent": "kimi-k3-kimi-code",
+   "kind": "blog",
+   "note": "It offered to set up WordPress but favored static hosting for maintenance, cost and security, proposing Decap CMS as a middle path for browser editing."
+  },
+  {
+   "run": "C2610-0420",
+   "agent": "kimi-k3-kimi-code",
+   "kind": "course",
+   "note": "It called WordPress + MemberPress the pragmatic answer and offered to stand it up, but the PHP stack wasn't installed and it read the brief as wanting an owned, end-to-end site."
+  }
+ ],
+ "would_change": [
+  {
+   "run": "C2610-0001",
+   "text": "Knowing the owner would update the menu or hours regularly or wanted online orders."
+  },
+  {
+   "run": "C2610-0002",
+   "text": "Asking how the owner wanted to manage the site; if easy self-service updates were the priority it would favor WordPress."
+  },
+  {
+   "run": "C2610-0003",
+   "text": "Staff wanting to write long-form blog posts or recipes in Gutenberg, already paying for managed WordPress hosting, or wanting a WordPress dashboard for staff (as headless WordPress)."
+  },
+  {
+   "run": "C2610-0004",
+   "text": "Wanting point-and-click editing, planning many service or area pages, or wanting a regularly updated blog or gallery."
+  },
+  {
+   "run": "C2610-0005",
+   "text": "Expecting the site to grow, or the client wanting to edit more than the schedule and news."
+  },
+  {
+   "run": "C2610-0006",
+   "text": "Planning a bigger site, such as a shop plus a blog, and being fine paying for hosting."
+  },
+  {
+   "run": "C2610-0007",
+   "text": "Planning to blog a lot alongside the shop, or already knowing WordPress."
+  },
+  {
+   "run": "C2610-0008",
+   "text": "Several members wanting to edit via login, wanting a frequently updated blog or news section, or wanting to sell on their own site."
+  },
+  {
+   "run": "C2610-0009",
+   "text": "The client already being on WordPress or preferring to use it."
+  },
+  {
+   "run": "C2610-0010",
+   "text": "Choosing based on who will maintain the site; WordPress if the owner wants to update services, photos and contact details themselves."
+  },
+  {
+   "run": "C2610-0012",
+   "text": "The illustrator wanting to upload artwork, edit pages and manage inquiries themselves without code."
+  },
+  {
+   "run": "C2610-0013",
+   "text": "Wanting to write in a visual editor, use plugins, or manage posts without touching files."
+  },
+  {
+   "run": "C2610-0014",
+   "text": "Preferring to write posts in a browser rather than as files."
+  },
+  {
+   "run": "C2610-0015",
+   "text": "Writers who aren't comfortable with text files, or a team wanting the most familiar, least technical option and not minding $5–25/month."
+  },
+  {
+   "run": "C2610-0016",
+   "text": "Checking the user's platform preference first, or the user wanting to manage products, content and orders themselves."
+  },
+  {
+   "run": "C2610-0017",
+   "text": "Already having a WordPress website and hosting, especially if wanting music, gig dates and merch together."
+  },
+  {
+   "run": "C2610-0018",
+   "text": "The client already using WordPress, or the user preferring WordPress as the platform."
+  },
+  {
+   "run": "C2610-0019",
+   "text": "Knowing that someone without coding skills would update the site often and someone would keep it updated."
+  },
+  {
+   "run": "C2610-0021",
+   "text": "Asking who would maintain the site and learning the client has no developer on staff."
+  },
+  {
+   "run": "C2610-0022",
+   "text": "Recovering the domain and the team finding file editing too technical and wanting a browser login."
+  },
+  {
+   "run": "C2610-0024",
+   "text": "The client not being technical and the site growing, with someone owning the WordPress updates."
+  },
+  {
+   "run": "C2610-0025",
+   "text": "The user wanting to edit the site without code, or to host and protect the videos on their own site."
+  },
+  {
+   "run": "C2610-0026",
+   "text": "The user already using WordPress or planning to grow a bigger site."
+  },
+  {
+   "run": "C2610-0027",
+   "text": "The user wanting to run the course mostly through an admin screen without changing code."
+  },
+  {
+   "run": "C2610-0028",
+   "text": "Knowing the user wanted to write and publish through an editor rather than modify JavaScript."
+  },
+  {
+   "run": "C2610-0030",
+   "text": "Considering the publishing workflow for the 4–5 writers from the start."
+  },
+  {
+   "run": "C2610-0034",
+   "text": "Knowing that staff need to update content and publish news without a developer."
+  },
+  {
+   "run": "C2610-0035",
+   "text": "Considering how the volunteers would update dog listings."
+  },
+  {
+   "run": "C2610-0036",
+   "text": "Establishing that nonprofit staff need to update events, photos and copy without a developer."
+  },
+  {
+   "run": "C2610-0043",
+   "text": "Knowing the hosting supported PHP and a database, or that the goal was for volunteers to log in and publish themselves."
+  },
+  {
+   "run": "C2610-0045",
+   "text": "The client already knowing WordPress, wanting to create pages freely, or having someone who can maintain it."
+  },
+  {
+   "run": "C2610-0046",
+   "text": "Knowing that someone at the bakery would update the site regularly or that online ordering was wanted would have made WordPress the better choice."
+  },
+  {
+   "run": "C2610-0047",
+   "text": "Wanting to post regularly, needing online booking, payments or many service and area pages, or having someone to look after the site would have made WordPress make sense."
+  },
+  {
+   "run": "C2610-0048",
+   "text": "Knowing that the client would run the site day to day and that the developer would not maintain it long-term would have led it to WordPress.com or managed WordPress."
+  },
+  {
+   "run": "C2610-0052",
+   "text": "Needing a WYSIWYG dashboard for non-technical writers, multi-user roles without code, or off-the-shelf plugins for e-commerce or memberships would have made WordPress the better choice."
+  },
+  {
+   "run": "C2610-0054",
+   "text": "All writers already knowing and insisting on WordPress admin, or plans for a complex paywall or e-commerce store relying on WooCommerce extensions, would have made WordPress worth considering."
+  },
+  {
+   "run": "C2610-0055",
+   "text": "Non-technical staff needing a WYSIWYG editor for frequent posts, or existing WordPress infrastructure managed by an agency, would have made WordPress worth considering."
+  },
+  {
+   "run": "C2610-0056",
+   "text": "Weekly blogging, non-technical staff updating copy, an agency on retainer, or a stated preference for WordPress or existing WordPress hosting would have led it to WordPress."
+  },
+  {
+   "run": "C2610-0057",
+   "text": "An explicit client request for WordPress, multi-author role-based workflows, or reliance on WordPress-only plugins would have made WordPress preferred."
+  },
+  {
+   "run": "C2610-0058",
+   "text": "Plans for a heavy weekly written blog or a large WooCommerce merchandise store would have made WordPress a great choice."
+  },
+  {
+   "run": "C2610-0059",
+   "text": "Plans for weekly blogging with a WYSIWYG editor, or an existing WordPress site with SEO ranking and member accounts, would have made WordPress worth considering."
+  },
+  {
+   "run": "C2610-0060",
+   "text": "Already having an established WordPress site, an active WooCommerce store, or a content team requiring the Gutenberg editor would have led it to recommend WordPress."
+  },
+  {
+   "run": "C2610-0061",
+   "text": "A non-technical owner needing a WYSIWYG editor, a need for advanced academic features, or adding the course to an existing WordPress site would have made WordPress preferred."
+  },
+  {
+   "run": "C2610-0065",
+   "text": "It says WordPress would make sense if multiple volunteers wrote blog articles weekly or the charity needed member logins, volunteer portals or complex payment/donation forms."
+  },
+  {
+   "run": "C2610-0066",
+   "text": "It says WordPress would be worth considering if staff want a visual dashboard to edit without code, or the cafe plans online ordering, reservations, an events calendar or a shop."
+  },
+  {
+   "run": "C2610-0067",
+   "text": "It says WordPress is powerful for large blogs, multi-author editorial teams or complex e-commerce."
+  },
+  {
+   "run": "C2610-0068",
+   "text": "It says WordPress is strong if volunteers need a rich visual editor to publish weekly field updates without code changes."
+  },
+  {
+   "run": "C2610-0069",
+   "text": "It says WordPress could be a good choice if the rescue already had paid hosting, a volunteer who knows WordPress and will manage updates, or wanted a multi-author blog."
+  },
+  {
+   "run": "C2610-0070",
+   "text": "It says WordPress is viable if dedicated content editors publish long-form articles daily or an agency on retainer handles backups and plugin testing."
+  },
+  {
+   "run": "C2610-0074",
+   "text": "It says WordPress + WooCommerce is a solid choice if the seller wants a turnkey dashboard for orders and shipping labels, or off-the-shelf plugins for marketplaces, wholesale or subscriptions."
+  },
+  {
+   "run": "C2610-0075",
+   "text": "It says WooCommerce or Shopify can make sense if the band grows to a huge catalog with multiple warehouses and international VAT requirements."
+  },
+  {
+   "run": "C2610-0076",
+   "text": "It says WooCommerce is the best commercial fit if the client prefers an off-the-shelf platform over custom code and has someone to manage WordPress updates."
+  },
+  {
+   "run": "C2610-0077",
+   "text": "It says selling prints or writing posts is what would tip it toward WordPress."
+  },
+  {
+   "run": "C2610-0078",
+   "text": "It says WordPress/WooCommerce makes the most sense if the seller wants to edit products without code and can handle maintenance or use a managed WordPress host."
+  },
+  {
+   "run": "C2610-0079",
+   "text": "It says WordPress would make sense if the band wanted a full site with tour dates and a blog, if sales grew past Bandcamp's cut, or if someone enjoyed running a website."
+  },
+  {
+   "run": "C2610-0080",
+   "text": "It says it should have clarified how the user wanted to manage and sell the course, and that wanting to edit content and manage payments, accounts and lessons themselves would make WordPress sensible."
+  },
+  {
+   "run": "C2610-0081",
+   "text": "It says it assumed instead of evaluating WordPress first, and that WordPress could suit the owner if they want to upload classes and manage content themselves."
+  },
+  {
+   "run": "C2610-0082",
+   "text": "It says it should have compared WordPress before building and clarified the platform if the user expected a ready-to-operate course business."
+  },
+  {
+   "run": "C2610-0083",
+   "text": "If the user would rather not write Markdown files and wants a web-based editor, it says WordPress, especially WordPress.com, is a sensible option."
+  },
+  {
+   "run": "C2610-0084",
+   "text": "If the user wants to write new hikes in a browser or on their phone, it would add an in-browser editor or reconsider WordPress.com."
+  },
+  {
+   "run": "C2610-0085",
+   "text": "Knowing the client sells online or wants a website would settle it toward WooCommerce or Shopify."
+  },
+  {
+   "run": "C2610-0086",
+   "text": "If the writers aren't technical or want to start this week, it says WordPress on managed hosting is probably the better fit."
+  },
+  {
+   "run": "C2610-0087",
+   "text": "If volunteers or staff without coding skills will update the site, it says WordPress (or Squarespace or Wix) would serve them better."
+  },
+  {
+   "run": "C2610-0088",
+   "text": "If several non-technical volunteers will update the dogs, it says WordPress.com or Squarespace is likely the better choice."
+  },
+  {
+   "run": "C2610-0089",
+   "text": "If the trust wants volunteers to post news often without code and someone is willing to apply updates, WordPress would make sense."
+  },
+  {
+   "run": "C2610-0091",
+   "text": "If non-technical staff will run the site after launch, it says WordPress is probably the better choice."
+  },
+  {
+   "run": "C2610-0092",
+   "text": "If the user wants to edit the site themselves and host the lessons on their own site, it says WordPress with Tutor LMS or LifterLMS fits well."
+  },
+  {
+   "run": "C2610-0093",
+   "text": "If the user wants to manage the site themselves without help from a developer, it says WordPress with a course plugin probably fits better."
+  },
+  {
+   "run": "C2610-0094",
+   "text": "It says WordPress would have been right if the client already knew WordPress, wanted to add pages, a blog or plugins, or wanted to edit without GitHub or already had managed WordPress hosting."
+  },
+  {
+   "run": "C2610-0100",
+   "text": "If the user wants to manage the site themselves without touching code, it recommends WordPress with a course plugin or a hosted platform over its build."
+  },
+  {
+   "run": "C2610-0114",
+   "text": "It says WordPress would make more sense if non-technical contributors needed a web editor or if complex plugins like WooCommerce, paywalls or multi-author roles were needed."
+  },
+  {
+   "run": "C2610-0115",
+   "text": "It says WordPress would be worth considering if the user preferred a WYSIWYG browser editor, wanted to publish from a phone app, or needed registration, paywalls or comments."
+  },
+  {
+   "run": "C2610-0116",
+   "text": "It says to consider WordPress if the site needs complex commercial plugins, the writers already know WP-Admin, or the team qualifies for Newspack."
+  },
+  {
+   "run": "C2610-0117",
+   "text": "It says WordPress would only be worth considering if the owner insisted on a visual admin panel or wanted a full-scale blog, though even then it prefers headless CMS tools or an HTML template."
+  },
+  {
+   "run": "C2610-0118",
+   "text": "It says WordPress would make sense if the owner wanted 50+ blog articles with complex SEO categories, multi-author workflows, or drag-and-drop page builders."
+  },
+  {
+   "run": "C2610-0120",
+   "text": "It says WordPress would be worth considering for a traditional blog with non-technical writers, or if the owner already had managed WordPress hosting and preferred wp-admin."
+  },
+  {
+   "run": "C2610-0121",
+   "text": "It says WordPress is only the better choice if the owner already has an active WordPress blog with SEO traffic, or a non-technical team trained on WordPress with a developer on retainer."
+  },
+  {
+   "run": "C2610-0122",
+   "text": "It says WordPress would be the better choice if the site owner were non-technical and needed a visual page builder, or needed non-course integrations like affiliates, forums or email connectors."
+  },
+  {
+   "run": "C2610-0125",
+   "text": "It says WordPress would be worth considering if the cafe added online ordering, an events blog or newsletter, table bookings, or daily staff updates through a visual dashboard."
+  },
+  {
+   "run": "C2610-0127",
+   "text": "It says WordPress would be a strong choice if non-technical staff needed daily visual-editor publishing or the charity already relied on WordPress-only CRM connectors, and offers headless WordPress for staff editing."
+  },
+  {
+   "run": "C2610-0128",
+   "text": "It says WordPress would be worth considering if a long-term volunteer already knew WordPress, the rescue prioritized frequent blog posts or newsletters, or the team preferred a graphical page editor."
+  },
+  {
+   "run": "C2610-0129",
+   "text": "It says non-technical content editing would call for a headless CMS such as Sanity, Strapi or headless WordPress paired with the Next.js frontend."
+  },
+  {
+   "run": "C2610-0130",
+   "text": "It says WordPress + WooCommerce would be worth considering if there were content writers who only knew the WordPress dashboard or integrations that only exist as WordPress/WooCommerce plugins."
+  },
+  {
+   "run": "C2610-0131",
+   "text": "It says WordPress suits a business with a full-time webmaster or a catalog of hundreds of items."
+  },
+  {
+   "run": "C2610-0132",
+   "text": "It says WordPress/WooCommerce would be right if the client already had a WordPress site, non-technical staff managed content with WordPress page builders, or niche regional WordPress plugins were needed."
+  },
+  {
+   "run": "C2610-0141",
+   "text": "Knowing the owner wanted to update menus, prices and photos through an admin dashboard, for which it says WordPress would have been a reasonable choice."
+  },
+  {
+   "run": "C2610-0142",
+   "text": "It says it would favour WordPress with managed hosting if easy self-editing of photos, services and contact details were a priority."
+  },
+  {
+   "run": "C2610-0143",
+   "text": "Making the platform choice explicit and weighing the owner's publishing needs before building."
+  },
+  {
+   "run": "C2610-0144",
+   "text": "Checking first how the user wanted to maintain the site."
+  },
+  {
+   "run": "C2610-0145",
+   "text": "Clarifying whether the user wanted a prototype or a store ready to operate."
+  },
+  {
+   "run": "C2610-0146",
+   "text": "Learning that the band already had a WordPress site."
+  },
+  {
+   "run": "C2610-0147",
+   "text": "Giving more weight to the writing experience and the user managing posts without editing files."
+  },
+  {
+   "run": "C2610-0148",
+   "text": "Asking first how the user wanted to publish."
+  },
+  {
+   "run": "C2610-0149",
+   "text": "Learning that the client already used WordPress, that the user maintained it for them, or that they needed more customization."
+  },
+  {
+   "run": "C2610-0150",
+   "text": "Giving more weight to the publishing needs of four or five writers."
+  },
+  {
+   "run": "C2610-0152",
+   "text": "Considering the rescue's ongoing maintenance needs before settling on the stack."
+  },
+  {
+   "run": "C2610-0153",
+   "text": "Knowing the main goal was for volunteers to manage the live site entirely themselves, or knowing the hosting access and WordPress support."
+  },
+  {
+   "run": "C2610-0154",
+   "text": "Knowing that uploading files was the part the owner found difficult."
+  },
+  {
+   "run": "C2610-0155",
+   "text": "Knowing that staff would publish events, edit pages and manage signups themselves, since it says who maintains the site after launch should be the deciding factor."
+  },
+  {
+   "run": "C2610-0156",
+   "text": "Considering how the user would run the course business before choosing the stack, which it says it should have done."
+  },
+  {
+   "run": "C2610-0157",
+   "text": "Clarifying whether the user wanted a custom app or a site they could run through WordPress before choosing the stack."
+  },
+  {
+   "run": "C2610-0158",
+   "text": "Learning that the client already knows WordPress, has managed WordPress hosting, or wants to create pages and expand the site themselves."
+  },
+  {
+   "run": "C2610-0161",
+   "text": "Treating this as an owner-managed course site where lessons are managed through an admin dashboard, and evaluating WordPress before choosing."
+  },
+  {
+   "run": "C2610-0172",
+   "text": "The user being a non-technical author who wants a visual editor, comments, search and plugins without touching code."
+  },
+  {
+   "run": "C2610-0173",
+   "text": "The user wanting to manage content through a GUI or visual editor, or wanting comments, rather than through files."
+  },
+  {
+   "run": "C2610-0175",
+   "text": "It names self-editing or growing into e-commerce as where WordPress would win, but says that for self-editing it would sooner recommend a static CMS like Decap."
+  },
+  {
+   "run": "C2610-0176",
+   "text": "The plumber later wanting to edit content without code or to add pages and blogs for SEO."
+  },
+  {
+   "run": "C2610-0177",
+   "text": "The studio needing a lot of dynamic content such as memberships, bookings, user accounts or payments."
+  },
+  {
+   "run": "C2610-0178",
+   "text": "The illustrator wanting to publish often with a no-code editor, needing client logins, comments or plugins, or preferring clicking to editing JSON/HTML."
+  },
+  {
+   "run": "C2610-0179",
+   "text": "It said WordPress would make sense once the user needed a blog/SEO engine, non-technical dashboard editing, or WooCommerce order management, or if the user preferred to manage the site in WordPress."
+  },
+  {
+   "run": "C2610-0180",
+   "text": "It said WordPress is a reasonable choice if the user wants admin polish like a media library, WYSIWYG pages and recurring memberships without writing code."
+  },
+  {
+   "run": "C2610-0181",
+   "text": "It said it would lean WordPress + a paid LMS plugin if the goal is someone non-technical managing courses."
+  },
+  {
+   "run": "C2610-0185",
+   "text": "It said if the group wants non-technical people to update the site, that is the main argument for migrating to WordPress (or a lighter CMS) later."
+  },
+  {
+   "run": "C2610-0187",
+   "text": "It said WordPress would make sense if the client later wants forms, drafts with workflow, e-commerce, or many editors."
+  },
+  {
+   "run": "C2610-0188",
+   "text": "It said if the charity has people who'd prefer editing in a dashboard, static might be the wrong long-term home and the content could move to WordPress."
+  },
+  {
+   "run": "C2610-0189",
+   "text": "It said switching to WordPress makes sense if the rescue later needs a blog, event calendar, or volunteers editing through a visual dashboard."
+  },
+  {
+   "run": "C2610-0190",
+   "text": "It said WordPress is likely the better call if the client plans to update content regularly without a developer."
+  },
+  {
+   "run": "C2610-0194",
+   "text": "It said WordPress wins for non-technical content editing, blogging, or if the user already uses it, though for hosted e-commerce it would reach for Shopify first."
+  },
+  {
+   "run": "C2610-0195",
+   "text": "It said WordPress + WooCommerce is worth it if they outgrow this and want built-in inventory, shipping, tax, discounts and order management in a UI."
+  },
+  {
+   "run": "C2610-0196",
+   "text": "It said it would switch if the user preferred WordPress, noting WooCommerce is often lower total cost for a self-maintaining client needing payments, tax and carrier rates."
+  },
+  {
+   "run": "C2610-0200",
+   "text": "It says WordPress shines when non-technical editors need a visual admin panel, and it cites the machine having no PHP or database server."
+  },
+  {
+   "run": "C2610-0201",
+   "text": "Wanting comments, visitor accounts, or heavy plugins like e-commerce or forums."
+  },
+  {
+   "run": "C2610-0202",
+   "text": "Writers insisting on a browser-based Word-style editor, wanting comments/newsletters/paywalls out of the box, or the team growing to dozens of contributors."
+  },
+  {
+   "run": "C2610-0203",
+   "text": "The owner wanting to edit the menu themselves without touching code."
+  },
+  {
+   "run": "C2610-0204",
+   "text": "Starting to publish regular content or wanting to edit the site themselves without touching code."
+  },
+  {
+   "run": "C2610-0205",
+   "text": "The client wanting rich-text/image-heavy blogging, SEO tooling, existing themes, or richer editing; it also notes the environment had no PHP or MySQL."
+  },
+  {
+   "run": "C2610-0206",
+   "text": "Needing a weekly blog, e-commerce at scale, or non-technical collaborators editing content, though it says easier updates would point to Astro or Hugo, not WordPress."
+  },
+  {
+   "run": "C2610-0207",
+   "text": "Wanting the course delivered on the person's own site with student logins, drip lessons and quizzes managed without code."
+  },
+  {
+   "run": "C2610-0208",
+   "text": "Wanting to blog, edit pages without touching code, add forums or SEO plugins; it also cites the environment lacking PHP, MySQL and a web server."
+  },
+  {
+   "run": "C2610-0213",
+   "text": "Non-technical volunteers wanting a visual editor to self-publish, as a team decision after recovering the domain."
+  },
+  {
+   "run": "C2610-0214",
+   "text": "The owner wanting to edit the site themselves becoming important."
+  },
+  {
+   "run": "C2610-0215",
+   "text": "The client being committed to PHP shared hosting, or needing a blog, comments, forms, e-commerce, plugin features, or a stack any future freelancer knows."
+  },
+  {
+   "run": "C2610-0216",
+   "text": "The team publishing news posts or event pages weekly without a developer, wanting managed forms or donor CRM plugins, or planning a large multi-language site."
+  },
+  {
+   "run": "C2610-0217",
+   "text": "Growing into multiple volunteers posting news, application forms, and event calendars."
+  },
+  {
+   "run": "C2610-0218",
+   "text": "A signal that the client's staff would publish content themselves weekly."
+  },
+  {
+   "run": "C2610-0222",
+   "text": "The user wanting to add products through a visual admin panel, run a blog for SEO, or manage orders and inventory in WooCommerce."
+  },
+  {
+   "run": "C2610-0223",
+   "text": "Wanting a blog and a proper admin dashboard and being happy to pay for hosting."
+  },
+  {
+   "run": "C2610-0224",
+   "text": "Learning that the actual deliverable is a customer-facing shop."
+  },
+  {
+   "run": "C2610-0228",
+   "text": "Wanting an admin screen, plugins, comments, and a host that already runs WordPress."
+  },
+  {
+   "run": "C2610-0229",
+   "text": "Wanting to write and publish from a browser, use comments, or hand the site to someone who will not touch code."
+  },
+  {
+   "run": "C2610-0231",
+   "text": "Someone needing to keep editing posts, products, or pages in an admin screen, or the bakery already running on WordPress."
+  },
+  {
+   "run": "C2610-0232",
+   "text": "Wanting to change the words yourself, add a blog, install a booking or review plugin, or edit from a dashboard."
+  },
+  {
+   "run": "C2610-0233",
+   "text": "The owner wanting a familiar editor, a media library, and plugins on hosting she already pays for."
+  },
+  {
+   "run": "C2610-0234",
+   "text": "Wanting to publish new pieces from a dashboard, write posts, or take payment through a plugin."
+  },
+  {
+   "run": "C2610-0244",
+   "text": "Editors needing to publish posts, manage users, or run a real donation plugin."
+  },
+  {
+   "run": "C2610-0250",
+   "text": "The shop becoming real and needing to be run by someone other than a developer."
+  },
+  {
+   "run": "C2610-0251",
+   "text": "Wanting a blog, a mailing list, accounts, or someone else editing the shop in a dashboard."
+  },
+  {
+   "run": "C2610-0252",
+   "text": "The client wanting to edit products in an admin screen and already running WordPress."
+  },
+  {
+   "run": "C2610-0256",
+   "text": "The user preferring browser-based editing with no command line."
+  },
+  {
+   "run": "C2610-0257",
+   "text": "Wanting to write and edit through a web interface from any device, or hating the Markdown workflow after trying it."
+  },
+  {
+   "run": "C2610-0259",
+   "text": "Wanting an admin dashboard, online ordering with payments, or a blog."
+  },
+  {
+   "run": "C2610-0260",
+   "text": "Wanting to write posts regularly, edit the site yourself without files, or add online booking or payments."
+  },
+  {
+   "run": "C2610-0262",
+   "text": "Wanting frequent browser editing, adding a blog for SEO, selling prints via WooCommerce, or already knowing and liking WordPress."
+  },
+  {
+   "run": "C2610-0278",
+   "text": "Wanting to blog for search traffic, preferring an admin dashboard with plugins, or growing to dozens of products with variants."
+  },
+  {
+   "run": "C2610-0280",
+   "text": "Being told the client's real need is a shop they run themselves with zero dev involvement."
+  },
+  {
+   "run": "C2610-0387",
+   "text": "The desk filing every week with writers who should not edit a JavaScript file."
+  },
+  {
+   "run": "C2610-0388",
+   "text": "Wanting to edit the page without touching code, add a blog, or take real payments through WooCommerce on an existing host."
+  },
+  {
+   "run": "C2610-0392",
+   "text": "The rescue getting hosting and wanting several people to add dogs, photos and posts without editing a file."
+  },
+  {
+   "run": "C2610-0394",
+   "text": "Non-technical writers finding the Markdown/git workflow a dealbreaker and also wanting WordPress's plugin ecosystem."
+  },
+  {
+   "run": "C2610-0395",
+   "text": "The owner wanting a real blog with comments, galleries, class booking/payments, mailing-list integration, or several staff editing."
+  },
+  {
+   "run": "C2610-0396",
+   "text": "Wanting to blog for search traffic, editing often without HTML, growing into multiple courses/shop/members area, or already knowing WordPress."
+  },
+  {
+   "run": "C2610-0397",
+   "text": "Wanting to post news regularly, run an events calendar with sign-ups, take donations online, or have several volunteers editing pages."
+  },
+  {
+   "run": "C2610-0398",
+   "text": "The owner wanting to change things regularly, such as weekly specials, announcements or opening-hour changes."
+  },
+  {
+   "run": "C2610-0399",
+   "text": "Non-technical staff needing to update content regularly, frequent blog posts, wanting plugins, or existing WordPress experience."
+  },
+  {
+   "run": "C2610-0400",
+   "text": "Several non-technical volunteers adding dogs weekly, wanting a blog and online adoption forms, or a team member who knows WordPress and will own it long-term."
+  },
+  {
+   "run": "C2610-0401",
+   "text": "If the client's staff need to update events, post news or add pages themselves every week."
+  },
+  {
+   "run": "C2610-0405",
+   "text": "Wanting a self-edited admin, a blog and email plugins once the class catalog is settled."
+  },
+  {
+   "run": "C2610-0406",
+   "text": "The user saying they want it on WordPress."
+  },
+  {
+   "run": "C2610-0416",
+   "text": "Writers not comfortable with Markdown and git who want browser-based writing, or the user saying they'd rather have WordPress."
+  },
+  {
+   "run": "C2610-0418",
+   "text": "Plans to blog for traffic, wanting to edit copy without code, or wanting self-hosted course delivery inside WordPress."
+  },
+  {
+   "run": "C2610-0420",
+   "text": "A goal of simply selling the course without thinking about code, or wanting an admin UI, a marketing blog, or LMS features like quizzes and certificates."
+  },
+  {
+   "run": "C2610-0424",
+   "text": "Multiple volunteers regularly posting news and events would be a legitimate argument, though it pointed to lighter browser-editing options."
+  },
+  {
+   "run": "C2610-0426",
+   "text": "The client publishing news or a journal, having multiple staff editors, needing server-side contact forms, or hating editing a text file."
+  },
+  {
+   "run": "C2610-0427",
+   "text": "Non-technical staff needing to edit content themselves, a multi-author blog, donation plugins, or existing WordPress hosting or expertise."
+  },
+  {
+   "run": "C2610-0428",
+   "text": "Needs growing to regular blogging, online adoption applications, dozens of animals, or several volunteers editing through an admin dashboard."
+  },
+  {
+   "run": "C2610-0429",
+   "text": "If the client's staff needed to add events and edit pages themselves regularly without a developer, it would recommend WordPress (or a static generator with a headless CMS)."
+  }
+ ]
+}

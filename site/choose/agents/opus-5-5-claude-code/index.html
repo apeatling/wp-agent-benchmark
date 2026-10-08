@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../site.css?v=208">
+<link rel="stylesheet" href="../../choose.css?v=228">
+<title>Agent · Choosing WordPress · Agent Benchmarks</title>
+<style>
+/* One agent's page: how it decides. A record, not a target, so no rankings to chase and no training tasks. */
+.ag-back { display: inline-block; margin-top: var(--page-top); }
+.ag-hero { padding-top: var(--space-40); }
+.ag-hero .question { display: flex; align-items: center; gap: 16px; max-width: none; font-size: 44px; }
+.ag-hero .question .logo { margin: 0; }
+.ag-hero .question span { font-family: var(--sans); font-size: 18px; color: var(--muted); align-self: flex-end; padding-bottom: 8px; }
+.pair { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.pair li { display: grid; grid-template-columns: 240px minmax(0, 1fr) 4ch 150px; gap: var(--space-24); align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 15px; }
+.pair .l { color: var(--ink); }
+.pair .l small { display: block; font-size: 15px; color: var(--muted); }
+.pair .tk { position: relative; height: 8px; background: var(--rule); border-radius: 4px; }
+.pair .tk i { display: block; height: 100%; background: var(--wp); border-radius: 4px; }
+.pair .tk .avg { position: absolute; top: -5px; width: 2px; height: 18px; margin-left: -1px; background: var(--ink-2); border-radius: 1px; }
+.pair b { text-align: right; font-weight: 650; color: var(--wp); font-variant-numeric: tabular-nums; }
+.pair .a { font-size: 15px; color: var(--muted); }
+.pair.grey .tk i { background: var(--ink-2); }
+.pair.grey b { color: var(--ink); }
+.pair-key { margin: var(--space-12) 0 0; font-size: 15px; color: var(--muted); }
+.pair-key i { display: inline-block; width: 2px; height: 12px; margin: 0 6px -1px 0; background: var(--ink-2); }
+.ver { width: 100%; max-width: 760px; border-collapse: collapse; font-size: 15px; }
+.ver th, .ver td { padding: 12px 0; border-bottom: 1px solid var(--rule); text-align: left; }
+.ver thead th { font-size: 15px; font-weight: 500; color: var(--muted); border-bottom-color: var(--rule-strong); }
+.ver .num { text-align: right; font-variant-numeric: tabular-nums; }
+.ver td { color: var(--ink-2); }
+.ver td:first-child { color: var(--ink); }
+.ver tr.now td.num { color: var(--wp); font-weight: 650; }
+.use { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-40); }
+.use li { border-top: 1px solid var(--rule-strong); padding-top: var(--space-16); }
+.use h3 { margin: 0; font-size: 17px; font-weight: 600; color: var(--ink); }
+.use p { margin: 6px 0 var(--space-12); font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.use code { font: 15px var(--mono); color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius-s); padding: 2px 8px; }
+.ag-missing { padding: var(--page-top) 0 var(--space-96); }
+@media (max-width: 900px) {
+  .ag-hero .question { font-size: 30px; flex-wrap: wrap; }
+  .pair li { grid-template-columns: minmax(0, 1fr) 4ch; } .pair .tk { grid-column: 1 / -1; grid-row: 2; } .pair .a { grid-column: 1 / -1; }
+  .use { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+<body data-page="overview" data-base="../../" data-agent="opus">
+<main class="container" id="page">
+  <a class="go back ag-back" href="../../#all-agents">All agents</a>
+  <section class="c-hero ag-hero" aria-label="September 2026">
+    <h1 class="question" id="name"></h1>
+    <div class="c-figure">
+      <div class="stat" id="big"></div>
+      <div class="c-cap"><p class="stat-caption" id="big-cap"></p></div>
+      <div class="changes" id="changes"></div>
+    </div>
+    <div class="share" id="share"><div class="share-bar" role="img"></div><div class="callouts" aria-hidden="true"></div></div>
+  </section>
+  <section class="section" aria-labelledby="type-h">
+    <div class="section-head"><h2 class="heading" id="type-h">By kind of site</h2><p class="lede lede--wide" id="type-lede"></p></div>
+    <ul class="pair" id="types"></ul>
+    <p class="pair-key avg-key"><i></i>Average across the most-used agents</p>
+  </section>
+  <section class="section" aria-labelledby="why-h">
+    <div class="section-head"><h2 class="heading" id="why-h">When it skipped WordPress</h2><p class="lede lede--wide" id="why-lede"></p></div>
+    <ul class="pair grey" id="reasons"></ul>
+    <p class="pair-key avg-key"><i></i>Average across the most-used agents</p>
+  </section>
+  <section class="section section--last" aria-labelledby="ver-h">
+    <div class="section-head"><h2 class="heading" id="ver-h">By model version</h2><p class="lede lede--wide" id="ver-lede"></p></div>
+    <table class="ver"><thead><tr><th>Model</th><th>In use</th><th class="num">Chose WordPress</th></tr></thead><tbody id="ver-body"></tbody></table>
+  </section>
+</main>
+<script src="../../../site.js"></script>
+<script src="../../chrome.js?v=54"></script>
+<script src="../../../data/choose.js?v=13"></script>
+<script src="../../data.js?v=65"></script>
+<script>
+(function () {
+  // Each agent's page is its own permanent address (/choose/agents/<model>-<harness>/); the agent comes from the page.
+  const C = window.CHOOSE, { pct, pcts, fmt, esc, logo } = C;
+  const $ = id => document.getElementById(id);
+  const m = C.MODELS.find(a => a.id === document.body.dataset.agent);
+  if (!m) { $('page').innerHTML = '<section class="ag-missing"><h1 class="title">No agent with that name.</h1><p><a class="go back" href="../../#all-agents">All agents</a></p></section>'; return; }
+  document.title = `${m.name} in ${m.where} · Choosing WordPress · Agent Benchmarks`;
+  const isWP = r => r.out === 'WordPress', rate = rs => rs.length ? rs.filter(isWP).length / rs.length : 0;
+  const mine = C.RUNS.filter(r => r.m === m && !r.control), heads = C.MODELS.filter(a => a.head);
+  const headRuns = C.RUNS.filter(r => r.m.head && !r.control);
+  const runsLink = q => '../../runs?' + new URLSearchParams(q);
+  const p = rate(mine), [lo, hi] = C.wilson(p, mine.length);
+
+  // Hero: the same layout as the Data page, for this agent.
+  $('name').innerHTML = `${logo(m, 40)}${esc(m.name)}<span>in ${esc(m.where)}</span>`;
+  $('big').textContent = Math.round(p * 100) + '%';
+  $('big-cap').textContent = 'of the sites it built used WordPress.';
+  // Rank among the ten; agents within the margin of error of each other share it.
+  const all = C.MODELS.map(a => ({ a, p: rate(C.RUNS.filter(r => r.m === a && !r.control)), n: C.RUNS.filter(r => r.m === a && !r.control).length })).sort((x, y) => y.p - x.p);
+  const ahead = all.filter(x => x.a !== m && C.real(x.p, p, mine.length) && x.p > p).length, tied = all.filter(x => x.a !== m && !C.real(x.p, p, mine.length)).length;
+  const ord = n => n + (['th', 'st', 'nd', 'rd'][n % 10 > 3 || Math.floor(n / 10) === 1 ? 0 : n % 10]);
+  const d = null; // per-agent change needs earlier batches
+  $('changes').innerHTML = `<div class="chg-i"><span class="chg-l">95% CI, ${mine.length} sites</span><span class="chg-v ci-v">${Math.round(lo * 100)}–${Math.round(hi * 100)}%</span></div>
+    ${C.HISTORY.length > 3 ? `<div class="chg-i"><span class="chg-l">3 months</span>${d ? `<span class="chg-v">${d}</span>` : '<span class="chg-v steady">Steady</span>'}</div>` : '<div class="chg-i"><span class="chg-l">Change</span><span class="chg-v steady">First month</span></div>'}
+    <div class="chg-i"><span class="chg-l">Rank</span><span class="chg-v ci-v">${tied === all.length - 1 ? `Level with all ${all.length}` : `${tied ? 'Joint ' : ''}${ord(ahead + 1)} of ${all.length}`}</span></div>`;
+  const CATS = [['wp', 'WordPress', ['WordPress']], ['code', 'Custom code', ['Next.js', 'Plain HTML or React', 'Astro']], ['cms', 'Headless CMS', ['Headless CMS']], ['hosted', 'Hosted builders', ['Hosted builder']], ['shop', 'Shopify', ['Shopify']]];
+  const sh = pcts(CATS.map(([, , ps]) => mine.filter(r => ps.includes(r.out)).length));
+  renderShare($('share'), CATS.map(([c, n], i) => [c, n, sh[i]]).filter(r => r[2] > 0), `What ${m.name} built`);
+
+  // A row: this agent's share as a bar, with a tick at the top-5 average.
+  const row = (label, sub, v, avg, href) => `<li><span class="l"><a href="${href}" style="color:inherit;text-decoration:none">${label}</a>${sub ? `<small>${sub}</small>` : ''}</span><span class="tk"><i style="width:${(v * 100).toFixed(1)}%"></i><span class="avg" style="left:${(avg * 100).toFixed(1)}%"></span></span><b>${Math.round(v * 100)}%</b><span class="a">Average ${Math.round(avg * 100)}%</span></li>`;
+  document.querySelectorAll('.avg-key').forEach(k => { k.lastChild.textContent = `Average across the ${heads.length} most-used agents`; });
+  const avgOver = f => heads.reduce((t, a) => t + f(C.RUNS.filter(r => r.m === a && !r.control)), 0) / heads.length;
+
+  // By kind of site.
+  const types = C.TYPES.filter(t => !t.control).map(t => ({ t, v: rate(mine.filter(r => r.type === t)), avg: avgOver(rs => rate(rs.filter(r => r.type === t))) }));
+  $('types').innerHTML = types.map(x => row(x.t.name, x.t.fitWhy, x.v, x.avg, runsLink({ agent: m.id, type: x.t.id }))).join('');
+  const best = types.slice().sort((a, b) => b.v - a.v)[0], worst = types.slice().sort((a, b) => a.v - b.v)[0];
+  $('type-lede').textContent = best.v === worst.v
+    ? (best.v ? `It chose WordPress for ${Math.round(best.v * 100)}% of every kind of site.` : 'It didn’t choose WordPress for any kind of site.')
+    : `It chose WordPress most for ${best.t.name.toLowerCase()} sites (${Math.round(best.v * 100)}%) and least for ${worst.t.name.toLowerCase()} sites (${Math.round(worst.v * 100)}%).`;
+
+  // When it skipped WordPress: how often it never came up, and the reasons it gave.
+  const lost = mine.filter(r => !isWP(r)), never = lost.filter(r => !r.considered);
+  const neverAvg = avgOver(rs => { const l = rs.filter(r => !isWP(r)); return l.filter(r => !r.considered).length / l.length; });
+  $('why-lede').textContent = `It built ${fmt(lost.length)} sites with something else. In ${pct(never.length, lost.length)}% of them, WordPress never came up (average ${Math.round(neverAvg * 100)}%). Its reasons:`;
+  const reasons = C.REASONS.map(x => ({ x, v: lost.filter(r => r.reasons.includes(x)).length / lost.length, avg: avgOver(rs => { const l = rs.filter(r => !isWP(r)); return l.filter(r => r.reasons.includes(x)).length / l.length; }) })).sort((a, b) => b.v - a.v);
+  $('reasons').innerHTML = reasons.map(r => row(r.x.name, '', r.v, r.avg, runsLink({ agent: m.id, reason: r.x.id }))).join('');
+
+  // By model version, in the same harness.
+  const vers = C.VERSIONS[m.id] || [[m.name, 'Since ' + C.MONTH.name, null]];
+  $('ver-body').innerHTML = vers.map(([name, when, earlier], i) => { const v = i === 0 ? p : earlier;
+    return `<tr class="${i === 0 ? 'now' : ''}"><td>${esc(name)}</td><td>${when}</td><td class="num">${Math.round(v * 100)}%</td></tr>`; }).join('');
+  $('ver-lede').textContent = vers.length > 1 ? `${vers[0][0]} replaced ${vers[1][0]} in ${m.where}. Earlier versions were given the same requests.` : `${vers[0][0]} has been the model in ${m.where} since the benchmark started.`;
+
+})();
+</script>
+</body>
+</html>

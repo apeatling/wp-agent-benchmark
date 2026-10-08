@@ -1,0 +1,1019 @@
+/* Choosing WordPress pages. Builds on ../site.css; only what those pages don't already have. */
+
+/* Every section on the overview: a heading column on the left, the evidence on the right. */
+.c-sec { align-items: start; }
+.c-sec .lede { max-width: 46ch; }
+.see { display: inline-block; margin-top: var(--space-24); font-size: var(--fs-ui); color: var(--ink-2); }
+
+/* Hero spacing; the layout is at the end of this file */
+.trend-cap { margin: 14px 0 0; font-size: var(--fs-small); color: var(--muted); }
+.trend-cap b { color: var(--ink-2); font-weight: 500; }
+.c-foot { margin: var(--space-48) 0 0; font-size: var(--fs-ui); color: var(--muted); }
+
+/* Bar rows: label, bar, value. A row is a link to the runs behind it. */
+.bars { list-style: none; margin: 0; padding: 0; }
+.bars a { display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr) 64px; align-items: center; gap: var(--space-16); padding: 10px var(--space-8); margin: 0 calc(var(--space-8) * -1); color: var(--ink); text-decoration: none; border-radius: var(--radius-s); }
+.bars a:hover { background: var(--hover-row); }
+.bars .t { height: 8px; background: var(--rule); border-radius: 4px; overflow: hidden; }
+.bars .t i { display: block; height: 100%; background: var(--ink-2); border-radius: 4px; }
+.bars .v { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.bars .wp { color: var(--wp); }
+.bars .wp .t i { background: var(--wp); }
+.bars .sub a { color: var(--ink-2); font-size: var(--fs-small); padding-top: 6px; padding-bottom: 6px; }
+.bars .sub .l { padding-left: var(--space-16); }
+.bars .sub .t { height: 5px; }
+.bars .sub .t i { background: var(--muted); }
+.bars .sub .v { font-weight: 500; }
+.bars-h { display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr) 64px; gap: var(--space-16); padding: 0 0 var(--space-8); font-size: var(--fs-caption); color: var(--muted); border-bottom: 1px solid var(--rule); margin-bottom: var(--space-8); }
+.bars-h span:last-child { text-align: right; }
+
+/* Considered or not: one split bar */
+.split { display: flex; height: 40px; border-radius: var(--radius-m); overflow: hidden; font-size: var(--fs-small); }
+.split span { display: flex; align-items: center; padding: 0 var(--space-12); white-space: nowrap; }
+.split .yes { background: var(--rule-strong); color: var(--ink); }
+.split .no { background: var(--panel); color: var(--ink-2); border: 1px solid var(--rule); border-left: 0; border-radius: 0 var(--radius-m) var(--radius-m) 0; }
+.split b { font-weight: 650; margin-left: 6px; }
+
+/* Reasons, each with a typical answer */
+.reasons { list-style: none; margin: var(--space-40) 0 0; padding: 0; }
+.reasons li { border-top: 1px solid var(--rule); }
+.reasons a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px var(--space-24); padding: 18px var(--space-8); margin: 0 calc(var(--space-8) * -1); color: inherit; text-decoration: none; border-radius: var(--radius-s); }
+.reasons a:hover { background: var(--hover-row); }
+.reasons .name { font-size: 16px; font-weight: 600; color: var(--ink); }
+.reasons .v { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+.reasons q { grid-column: 1 / -1; color: var(--ink-2); font-size: var(--fs-body); max-width: 60ch; quotes: "“" "”"; }
+.sub-h { margin: 0 0 var(--space-12); font-size: var(--fs-small); color: var(--muted); }
+
+/* Type of site table */
+.types td, .types th { padding: 12px var(--space-16) 12px 0; }
+.types th { padding-top: 0; }
+.types td:last-child, .types th:last-child { padding-right: 0; color: var(--ink-2); }
+.types th:last-child { color: var(--muted); }
+.types tr { cursor: pointer; }
+.types tbody tr:hover td { background: var(--hover-row); }
+.types .bar { display: grid; grid-template-columns: 1fr 3em; gap: var(--space-12); align-items: center; min-width: 160px; }
+.types .bar .t { height: 8px; background: var(--rule); border-radius: 4px; overflow: hidden; }
+.types .bar .t i { display: block; height: 100%; background: var(--wp); border-radius: 4px; }
+.types .bar b { text-align: right; font-weight: 600; color: var(--wp); }
+.types a { color: var(--ink); text-decoration: none; }
+
+/* Agents table: one question, so one value column */
+.agents--c tr { cursor: pointer; }
+.agents--c th.num, .agents--c td.num { text-align: right; padding-left: var(--space-32); }
+.agents--c th.col-model, .agents--c td.who { width: auto; }
+.agents--c td.chg, .agents--c th.chg { width: 140px; }
+.agents--c td.runs, .agents--c th.runs { width: 90px; }
+.agents--c td.now b { color: var(--ink); }
+
+/* Runs page */
+.page-runs .page-head { padding-top: var(--page-top); }
+.page-runs .runs tr.run a { color: inherit; text-decoration: none; }
+.page-runs .runs td.id a { color: var(--ink-2); font-size: var(--fs-small); }
+.page-runs .runs td.why { color: var(--ink-2); }
+.runs col.c-why { width: 230px; }
+.filters .count { margin-left: auto; font-size: var(--fs-ui); color: var(--ink-2); align-self: center; }
+
+/* Single run */
+.run-page { padding-top: var(--page-top); max-width: 820px; }
+.back { font-size: var(--fs-ui); color: var(--ink-2); }
+.run-kicker { margin: var(--space-40) 0 var(--space-12); font-size: var(--fs-small); color: var(--muted); }
+.run-kicker .wp { color: var(--wp); font-weight: 600; }
+.run-kicker .kind { margin-left: var(--space-16); }
+.run-facts { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: var(--space-24) var(--space-32); margin: var(--space-48) 0 0; }
+.run-facts dt { font-size: var(--fs-small); color: var(--muted); padding-top: 3px; }
+.run-facts dd { margin: 0; font-size: 16px; line-height: 1.5; }
+.run-facts dd small { display: block; margin-top: 4px; font-size: var(--fs-small); color: var(--muted); }
+.run-facts blockquote { margin: 0; font-family: var(--serif); font-size: 24px; line-height: 1.3; color: var(--ink); }
+.run-facts .answer { color: var(--ink); max-width: 64ch; }
+.answer p, .answer ul, .answer ol { margin: 0 0 var(--space-12); }
+.answer ul, .answer ol { padding-left: 1.25em; }
+.answer li + li { margin-top: 4px; }
+.answer .md-h { margin-top: var(--space-16); font-weight: 600; }
+.answer code { font-size: max(15px, .9em); }
+.answer details { margin-top: var(--space-4, 4px); }
+.answer summary { cursor: pointer; font-size: var(--fs-ui); color: var(--ink-2); margin-bottom: var(--space-12); }
+.answer details[open] summary { margin-bottom: var(--space-16); }
+.run-meta { margin-top: var(--space-64); padding-top: var(--space-24); border-top: 1px solid var(--rule); }
+.run-meta dl { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 10px var(--space-32); margin: 0; font-size: var(--fs-small); }
+.run-meta dt { color: var(--muted); }
+.run-meta dd { margin: 0; color: var(--ink-2); }
+.run-meta .run-actions { margin-top: var(--space-24); display: flex; flex-wrap: wrap; gap: var(--space-12); }
+
+@media (max-width: 900px) {
+  .c-sec > div + div { margin-top: var(--space-32); }
+  .bars a, .bars-h { grid-template-columns: minmax(0, 130px) minmax(0, 1fr) 52px; }
+  .run-facts, .run-meta dl { grid-template-columns: 1fr; gap: 6px; }
+  .run-facts dd { margin-bottom: var(--space-16); }
+}
+.page-runs .page-head { padding-bottom: var(--space-32); }
+.page-runs .filters--sticky { flex-wrap: wrap; }
+.page-runs .filters .btn-link { white-space: nowrap; }
+
+/* Masthead: the parent (Agent Benchmarks) over the current benchmark, which switches to the other one */
+.masthead-id .home-logo { display: inline-flex; color: var(--ink); }
+.masthead-id > span { display: grid; gap: 2px; }
+.masthead-id .crumb { font-size: var(--fs-small); color: var(--muted); text-decoration: none; width: fit-content; }
+.masthead-id .crumb:hover { color: var(--ink); }
+.masthead-id .week { font-size: var(--fs-caption); color: var(--muted); margin: 0; }
+.dash-switch { position: relative; }
+.dash-switch summary { list-style: none; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; border-radius: var(--radius-s); }
+.dash-switch summary::-webkit-details-marker { display: none; }
+.dash-switch summary svg { color: var(--muted); transition: transform .15s; }
+.dash-switch summary:hover svg { color: var(--ink); }
+.dash-switch[open] summary svg { transform: rotate(180deg); }
+.dash-switch .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.dash-menu { position: absolute; z-index: 10; top: calc(100% + 10px); left: -12px; width: 320px; padding: 6px; background: var(--panel); border: 1px solid var(--rule-strong); border-radius: var(--radius-m); box-shadow: 0 12px 32px rgba(0, 0, 0, .45); }
+.dash-menu a { display: block; padding: 10px 12px; border-radius: var(--radius-s); color: var(--ink); text-decoration: none; font-size: var(--fs-ui); font-weight: 600; }
+.dash-menu a small { display: block; margin-top: 2px; font-weight: 400; font-size: var(--fs-caption); color: var(--muted); }
+.dash-menu a:hover { background: var(--hover-row); }
+.dash-menu a { position: relative; padding-right: 36px; }
+.dash-menu .tick { position: absolute; right: 12px; top: 12px; color: var(--wp); }
+.dash-menu a.all { margin-top: 6px; padding-top: 12px; border-top: 1px solid var(--rule); border-radius: 0 0 var(--radius-s) var(--radius-s); font-weight: 500; color: var(--ink-2); }
+@media (max-width: 560px) { .dash-menu { width: min(320px, calc(100vw - 36px)); left: -60px; } }
+.container:has(> .masthead) { z-index: 20; }
+.masthead-id > span > .week { margin-top: 2px; }
+.dash-switch summary svg { width: 14px; height: 14px; }
+
+/* Keyboard focus on the switcher: underline the name, no box */
+.dash-switch summary:focus-visible { outline: none; }
+.dash-switch summary:focus-visible b { text-decoration: underline; text-decoration-color: var(--wp); text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.dash-menu a:focus-visible { outline: none; background: var(--rule); }
+
+/* Page transition from the benchmark picker: the shared pieces move into place, the rest fades.
+   Names match ../selector.html. */
+@view-transition { navigation: auto; }
+.home-logo svg { view-transition-name: vt-logo; }
+.masthead-id .crumb { view-transition-name: vt-brand; }
+.c-hero .question { view-transition-name: vt-choose-q; }
+.c-hero .stat { view-transition-name: vt-choose-stat; }
+.c-hero .stat-caption { view-transition-name: vt-choose-cap; }
+.c-hero .changes { view-transition-name: vt-choose-chg; }
+/* Shrink-wrapped, so each piece's box matches its counterpart on the picker */
+.c-hero .question, .c-hero .stat, .c-hero .stat-caption, .c-hero .changes { width: fit-content; }
+
+
+
+/* Edges: lists have no fills or side rules; table rows fill edge to edge with the text inset,
+   so a filled row never has text touching its edge. */
+.reasons { border-left: 0; }
+.reasons a, .bars a { margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; border-radius: 0; }
+.reasons a:hover, .bars a:hover { background: none; }
+.reasons a:hover .name, .bars a:hover .l { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+
+/* Method note, attached to the headline number */
+.method { margin: var(--space-24) 0 0; max-width: 46ch; font-size: var(--fs-small); line-height: 1.5; color: var(--muted); }
+.c-hero .legend { margin-top: var(--space-12); }
+
+/* Site types by agent. Rows grouped by how well WordPress fits; "another tool fits" is muted. */
+.fitgrid { font-size: var(--fs-ui); }
+.fitgrid th, .fitgrid td { padding: 10px 0 10px var(--space-16); text-align: left; vertical-align: middle; white-space: nowrap; }
+.fitgrid th:first-child { padding-left: 0; white-space: normal; }
+.fitgrid thead th { font-size: var(--fs-caption); color: var(--muted); font-weight: 500; padding-top: 0; }
+.fitgrid thead th span { display: block; font-weight: 400; }
+.fitgrid .n { text-align: right; font-variant-numeric: tabular-nums; }
+.fitgrid tbody th { font-weight: 500; }
+.fitgrid tbody th small { display: block; font-size: var(--fs-caption); color: var(--muted); font-weight: 400; }
+.fitgrid a { color: inherit; text-decoration: none; }
+.fitgrid a:hover { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.fitgrid td.all { color: var(--wp); font-weight: 650; }
+.fitgrid td { color: var(--ink-2); }
+.fitgrid tr.grp td { padding-top: var(--space-24); font-size: var(--fs-caption); color: var(--muted); border-bottom-color: var(--rule); }
+.fitgrid tr.fit-other th, .fitgrid tr.fit-other td { color: var(--muted); }
+.fitgrid tr.fit-other td.all { color: var(--muted); font-weight: 500; }
+
+/* Why: "never came up" first, then reasons with what could help */
+.never { margin-top: var(--space-32); padding-bottom: var(--space-16); border-bottom: 1px solid var(--rule); }
+.never-l { margin: 0; display: flex; justify-content: space-between; font-size: 16px; }
+.never-l b { font-weight: 600; }
+.lever { margin: 6px 0 0; font-size: var(--fs-small); color: var(--ink-2); max-width: 60ch; }
+.lever span { display: block; margin-top: 2px; color: var(--muted); font-size: var(--fs-caption); }
+.reasons-t { margin-top: var(--space-24); }
+.reasons-t th { font-size: var(--fs-caption); color: var(--muted); font-weight: 500; padding: 0 0 var(--space-8); }
+.reasons-t td { padding: var(--space-16) 0; vertical-align: top; }
+.reasons-t th.n, .reasons-t td.n { text-align: right; padding-left: var(--space-16); width: 110px; font-variant-numeric: tabular-nums; }
+.reasons-t td.n { font-weight: 600; font-size: 16px; }
+.reasons-t td.n + td.n { color: var(--ink-2); font-weight: 500; }
+.reasons-t td a { font-size: 16px; font-weight: 600; color: var(--ink); text-decoration: none; }
+.reasons-t td a:hover { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.reasons-t q { display: block; margin-top: 4px; color: var(--ink-2); quotes: "“" "”"; max-width: 60ch; }
+
+/* Agents reference table */
+.matrix th.rank, .matrix td.rank { width: 48px; color: var(--muted); }
+.matrix td.who { white-space: nowrap; }
+.matrix td.num { white-space: nowrap; }
+.matrix td.chg .dlt.steady { color: var(--muted); font-weight: 400; font-size: var(--fs-caption); }
+.matrix tr { cursor: pointer; }
+.page-runs .runs td.why small { color: var(--muted); }
+.fitgrid th:first-child { width: 26%; }
+.fitgrid .n { width: 11%; }
+.fitgrid tr.grp td { padding-left: 0; }
+.reasons-t { table-layout: fixed; }
+.reasons-t th.n, .reasons-t td.n { width: 96px; white-space: normal; }
+.split span { overflow: hidden; }
+.matrix td.rank, .matrix th.rank { padding-right: var(--space-16); }
+.matrix th.num, .matrix td.num { padding-left: var(--space-32); }
+
+/* Why section, full width: the biggest gap first, then one row per reason */
+.gap-callout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-32); align-items: start; padding: 0 0 var(--space-32); margin-bottom: var(--space-24); border-bottom: 1px solid var(--rule); }
+.gap-n { margin: 0; display: flex; align-items: baseline; gap: 14px; font-size: 18px; color: var(--ink-2); }
+.gap-n b { font-family: var(--serif); font-size: 56px; font-weight: 600; line-height: 1; color: var(--ink); }
+.gap-callout .lever { margin: 0; font-size: var(--fs-body); }
+.reasons-t { table-layout: fixed; margin-top: 0; }
+.reasons-t th:nth-child(1) { width: 40%; }
+.reasons-t th:nth-child(2) { width: 34%; }
+.reasons-t th.n, .reasons-t td.n { width: 13%; }
+.reasons-t th { vertical-align: bottom; }
+.reasons-t th.n span { display: block; margin-top: 2px; font-size: 15px; color: var(--muted); font-weight: 400; }
+.reasons-t td { padding: var(--space-16) var(--space-24) var(--space-16) 0; }
+.reasons-t td.n { padding-right: 0; }
+.reasons-t td .lever { margin: 0; }
+@media (max-width: 900px) { .gap-callout { grid-template-columns: 1fr; gap: var(--space-12); } .reasons-t { table-layout: auto; min-width: 640px; } }
+
+/* Maker logos beside agent names. Logos identify agents, so their numbers stay in the text colour. */
+.logo { display: inline-block; flex: none; vertical-align: -0.15em; margin-right: 8px; }
+.fitgrid thead .logo { margin-right: 6px; vertical-align: -2px; }
+.matrix td.who .logo { vertical-align: -3px; margin-right: 10px; }
+.runs td.who .logo { vertical-align: -2px; }
+.run-page .title .logo { vertical-align: -2px; margin-right: 14px; }
+.run-meta dd .logo { vertical-align: -2px; margin-right: 6px; }
+.matrix tr.head-row td.now b { color: var(--ink); }
+
+/* "How this is measured": closed by default */
+.how { margin-top: var(--space-12); max-width: 46ch; font-size: var(--fs-small); color: var(--muted); }
+.how summary { cursor: pointer; color: var(--ink-2); width: fit-content; }
+.how summary:hover { color: var(--ink); }
+.how p { margin: var(--space-8) 0 0; line-height: 1.5; }
+.method { font-size: var(--fs-ui); color: var(--ink-2); }
+
+/* Links from a finding to what WordPress can do about it */
+.rec-link { display: inline-block; margin-top: 8px; font-size: var(--fs-small); color: var(--ink-2); }
+.rec-link:hover { color: var(--ink); }
+.gap-callout { grid-template-columns: auto 1fr; align-items: baseline; }
+.reasons-t th:nth-child(1) { width: auto; }
+.reasons-t th:nth-child(2) { width: 16%; }
+.reasons-t th.n, .reasons-t td.n { width: 16%; }
+
+
+
+/* Recommendations: title and evidence on the left, then labelled rows on the right.
+   The title is the only heading; every row on the right is body text. */
+.recs { list-style: none; margin: 0; padding: 0; }
+.recs > li { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-48); align-items: start; padding: var(--space-48) 0; border-top: 1px solid var(--rule); scroll-margin-top: var(--space-24); }
+.rec-side { position: sticky; top: var(--space-24); }
+.rec-rank { margin: 0 0 var(--space-8); font-size: var(--fs-small); color: var(--muted); font-variant-numeric: tabular-nums; }
+.rec-h { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1.15; color: var(--ink); text-wrap: balance; }
+.recs > li:target .rec-h { text-decoration: underline; text-decoration-color: var(--wp); text-decoration-thickness: 2px; text-underline-offset: 8px; }
+.rec-ev { margin: var(--space-12) 0 0; font-size: var(--fs-ui); color: var(--ink-2); }
+.rec-ev b { color: var(--ink); font-weight: 600; }
+.rec-links { margin: var(--space-12) 0 0; font-size: var(--fs-small); color: var(--muted); }
+.rec-links a { color: var(--ink-2); margin-right: 14px; }
+.rec-links a:hover { color: var(--ink); }
+.rec-dl { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: var(--space-24); margin: 0; }
+.rec-dl dt { font-size: var(--fs-small); color: var(--muted); padding-top: 3px; }
+.rec-dl dd { margin: 0; font-size: 16px; line-height: 1.55; color: var(--ink-2); max-width: 56ch; }
+.rec-dl dd.fix { color: var(--ink); font-weight: 500; }
+.rec-dl .rec-where { display: block; margin-top: 6px; font-size: var(--fs-small); color: var(--muted); }
+.rec-dl .rec-where a { color: var(--ink-2); }
+.rec-dl blockquote { margin: var(--space-12) 0 0; font-family: var(--serif); font-size: 19px; line-height: 1.35; color: var(--ink-2); }
+.rec-dl code { font: 15px var(--mono); color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius-s); padding: 1px 6px; }
+.page-head .note { max-width: 62ch; }
+@media (max-width: 900px) { .recs > li { grid-template-columns: 1fr; gap: var(--space-24); } .rec-side { position: static; } }
+@media (max-width: 560px) { .rec-dl { grid-template-columns: 1fr; gap: 4px; } .rec-dl dd { margin-bottom: var(--space-16); } }
+
+/* Ideas to try: alternatives, each with a first step and whether it has been tested */
+.ideas { list-style: none; margin: 0; padding: 0; }
+.ideas > li { padding: 0 0 var(--space-16); margin-bottom: var(--space-16); border-bottom: 1px solid var(--rule); }
+.ideas p { margin: 0; }
+.ideas .idea { color: var(--ink); font-weight: 500; }
+.ideas .idea-start { margin-top: 4px; color: var(--ink-2); }
+.ideas .idea-meta { margin-top: 6px; font-size: var(--fs-small); color: var(--muted); }
+.ideas .idea-meta a { color: var(--ink-2); }
+.idea-add { font-size: var(--fs-small); color: var(--ink-2); }
+.idea-add:hover { color: var(--ink); }
+
+/* Agent table: ten agents, tied ranks marked =, a slightly stronger rule where a new rank begins */
+.matrix .tag { display: inline-block; margin-left: 10px; font-style: normal; font-size: var(--fs-caption); color: var(--muted); }
+.matrix tr.group-start td { border-top: 1px solid var(--rule-strong); }
+.matrix tr.group-start:first-child td { border-top: 0; }
+.c-hero .method { margin-top: var(--space-32); }
+
+/* Hero: the number sits on the original share bar, so its blue segment underlines it.
+   The caption and the change row share the number's baseline. Three sizes only:
+   the number, the question, then one size (20px) for the caption and the change values. */
+.c-hero { display: block; padding-top: 96px; padding-bottom: var(--section); }
+.c-hero + .section { border-top: 1px solid; border-image: var(--fade-x) 1; }
+.c-hero .question { max-width: 15em; font-size: 48px; line-height: 1.06; letter-spacing: -.012em; text-wrap: balance; }
+.c-figure { display: flex; align-items: flex-end; gap: var(--space-40); margin-top: var(--space-40); }
+.c-hero .stat { margin: 0 0 -.06em -.04em; font-size: clamp(120px, 19vw, 248px); }
+.c-cap { padding-bottom: 12px; }
+.c-hero .stat-caption { margin: 0; max-width: 21ch; font-size: 20px; line-height: 1.35; color: var(--ink-2); }
+.c-hero .changes { margin: 0 0 0 auto; padding-bottom: 12px; gap: var(--space-40); justify-content: flex-end; }
+.c-hero .chg-i { align-items: flex-start; gap: 6px; }
+.c-hero .chg-l { font-size: 15px; }
+.c-hero .chg-v, .c-hero .chg-v.steady, .c-hero .chg-v.ci-v { font-size: 20px; line-height: 1.35; padding-top: 0; }
+.c-hero .chg-v.steady, .c-hero .chg-v.ci-v { font-weight: 500; color: var(--ink-2); }
+.c-hero .share { margin-top: var(--space-16); }
+.c-hero .share-bar { height: 60px; }
+.c-hero .seg { font-size: 15px; }
+.c-hero .seg.labelled { padding: 0 16px; }
+.c-hero .callout { font-size: 15px; }
+/* How this is measured sits under the blue segment, level with the first callout; open, it pushes the page down */
+.c-hero .share { display: grid; }
+.c-hero .share > * { grid-column: 1; }
+.c-hero .callouts { grid-row: 2; pointer-events: none; }
+.c-hero .how { grid-row: 2; align-self: start; position: relative; margin-top: 10px; max-width: 54ch; font-size: 15px; line-height: 16px; }
+.c-hero .how p { line-height: 1.5; }
+/* Too narrow for one line: the change row moves under the caption */
+@media (max-width: 1100px) {
+  .c-figure { flex-wrap: wrap; row-gap: var(--space-24); }
+  .c-hero .changes { margin-left: 0; order: 3; width: 100%; justify-content: flex-start; padding-bottom: 0; }
+}
+@media (max-width: 900px) {
+  .c-hero { padding-top: var(--space-48); }
+  .c-hero .question { font-size: 32px; }
+  .c-figure { margin-top: var(--space-32); }
+  .c-hero .stat-caption { max-width: none; font-size: 17px; }
+  .c-hero .changes { gap: var(--space-24); }
+  .c-hero .chg-v, .c-hero .chg-v.steady, .c-hero .chg-v.ci-v { font-size: 17px; }
+  .c-hero .share-bar { height: 44px; }
+  .c-hero .how { grid-row: 3; margin-top: var(--space-16); }
+  .c-hero .seg { font-size: var(--fs-small); }
+  .c-hero .seg.labelled { padding: 0 12px; }
+}
+
+/* Site types: "All five" as a bar on the same 0–100% scale as the hero bar, so the
+   headline's blue reads straight down the rows. Agent columns stay plain numbers. */
+.fitgrid { font-size: 15px; }
+.fitgrid th, .fitgrid td { padding: 18px 0 18px var(--space-16); }
+.fitgrid thead th { padding-bottom: var(--space-16); font-size: 15px; }
+.fitgrid tbody th { font-size: 15px; color: var(--ink); }
+.fitgrid tbody th small { margin-top: 3px; font-size: 15px; }
+.fitgrid th:first-child { width: 24%; }
+.fitgrid tbody th:first-child { white-space: nowrap; }
+.fitgrid tbody th:first-child small { white-space: normal; }
+.fitgrid thead th.all { white-space: normal; }
+.fitgrid th.all, .fitgrid td.all { width: 26%; padding-left: var(--space-24); padding-right: var(--space-16); text-align: left; }
+.fitgrid td.all a { display: flex; align-items: center; gap: 14px; }
+.fitgrid .ab { flex: 1; max-width: 200px; min-width: 80px; height: 8px; background: var(--rule); border-radius: 4px; overflow: hidden; }
+.fitgrid .ab i { display: block; height: 100%; background: var(--wp); border-radius: 4px; }
+.fitgrid td.all b { min-width: 3ch; font-size: 17px; font-weight: 650; color: var(--wp); font-variant-numeric: tabular-nums; }
+.fitgrid td.all a:hover { text-decoration: none; }
+.fitgrid td.all a:hover b { text-decoration: underline; text-underline-offset: 4px; }
+.fitgrid .n { width: auto; }
+@media (max-width: 900px) { .fitgrid th.all, .fitgrid td.all { width: auto; min-width: 180px; } }
+
+/* Built instead: no header row (the heading says what it is); wider bars; the leader the heading names is brightest */
+.c-sec .bars { margin-top: 6px; }
+.c-sec .bars a { grid-template-columns: minmax(0, 170px) minmax(0, 1fr) 48px; gap: var(--space-24); padding-top: 12px; padding-bottom: 12px; font-size: 15px; }
+.c-sec .bars .t i { background: var(--cat-cms); }
+.c-sec .bars .top .t i { background: #d3d8e1; }
+.c-sec .bars .v { font-size: 15px; color: var(--ink-2); font-weight: 500; }
+.c-sec .bars .top .v { color: var(--ink); font-weight: 650; }
+@media (max-width: 900px) { .c-sec .bars a { grid-template-columns: minmax(0, 130px) minmax(0, 1fr) 44px; gap: var(--space-16); } }
+
+/* Agent table: "Chose WordPress" as a bar on the 0–100% scale used throughout the page */
+.matrix th.now, .matrix td.now { width: 30%; padding-left: var(--space-32); text-align: left; }
+.matrix td.now { display: table-cell; }
+.matrix td.now .ab { display: inline-block; width: calc(100% - 64px); max-width: 220px; height: 8px; margin-right: 14px; vertical-align: middle; background: var(--rule); border-radius: 4px; overflow: hidden; }
+.matrix td.now .ab i { display: block; height: 100%; background: var(--wp); border-radius: 4px; }
+.matrix td.now b { display: inline-block; min-width: 3ch; vertical-align: middle; text-align: right; font-size: 17px; font-weight: 650; color: var(--wp); font-variant-numeric: tabular-nums; }
+.matrix td.num { color: var(--ink-2); }
+.matrix tr.head-row td.now b { color: var(--wp); }
+
+/* Why. First, did WordPress come up: one bar, each part labelled where it sits. */
+.came-up { display: flex; flex-wrap: wrap; gap: 0 3px; }
+.cu { min-width: 0; }
+.cu-bar { display: flex; align-items: center; gap: 8px; height: 52px; padding: 0 16px; overflow: hidden; white-space: nowrap; font-size: 15px; font-weight: 500; }
+.cu-bar b { font-size: 17px; font-weight: 700; }
+.cu-bar.nv { background: var(--cat-code); color: var(--ink); border-radius: var(--radius-s) 0 0 var(--radius-s); }
+.cu-bar.w { background: #c4cad5; color: var(--page); border-radius: 0 var(--radius-s) var(--radius-s) 0; }
+.cu p { margin: 10px 0 0; padding-right: var(--space-16); font-size: 15px; line-height: 1.4; color: var(--muted); }
+.cu-same { flex-basis: 100%; margin: var(--space-24) 0 0; font-size: 15px; color: var(--ink-2); }
+
+/* Then the reasons: the share sits on a bar under each name; what could help sits beside it */
+.why-head { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: var(--space-64); margin-top: var(--space-48); padding-bottom: var(--space-12); border-bottom: 1px solid var(--rule); font-size: 15px; color: var(--muted); }
+.why-head .wh-l { display: flex; justify-content: space-between; gap: var(--space-24); }
+.why-head b { font-weight: 400; }
+.why-list { list-style: none; margin: 0; padding: 0; }
+.why-list li { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: var(--space-64); align-items: start; padding: var(--space-32) 0; border-bottom: 1px solid var(--rule); }
+.why-top { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-24); }
+.why-top b { font-family: var(--serif); font-size: 32px; font-weight: 400; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.why-name { font-family: var(--serif); font-size: 26px; font-weight: 500; line-height: 1.2; letter-spacing: -.005em; color: var(--ink); text-decoration: none; }
+.why-name:hover { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.why-t .tk { display: block; height: 8px; margin: var(--space-12) 0 var(--space-16); background: var(--track); border-radius: 4px; overflow: hidden; }
+.why-t .tk i { display: block; height: 100%; background: var(--ink-2); border-radius: 4px; }
+.why-t q { display: block; max-width: 62ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); quotes: "“" "”"; }
+.why-links { display: flex; flex-wrap: wrap; gap: 6px var(--space-24); margin: var(--space-12) 0 0; font-size: var(--fs-small); }
+.why-links a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.why-links a:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
+.why-links .rec-link { display: inline; margin: 0; font-size: inherit; }
+.why-help { padding-top: 6px; }
+.why-help a { display: block; font-size: 16px; font-weight: 600; line-height: 1.35; color: var(--wp); text-decoration: none; }
+.why-help a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.why-help a::after { content: "→"; display: inline-block; margin-left: .35em; transition: transform .18s cubic-bezier(.2, .7, .2, 1); }
+.why-help a:hover::after { transform: translateX(3px); }
+.why-help span { display: block; margin-top: 6px; font-size: var(--fs-small); color: var(--muted); }
+@media (max-width: 900px) {
+  .came-up { flex-direction: column; gap: var(--space-16); }
+  .cu { flex: none !important; }
+  .cu-bar { border-radius: var(--radius-s) !important; }
+  .why-head, .why-list li { grid-template-columns: minmax(0, 1fr); gap: var(--space-16); }
+  .why-head > span:last-child { display: none; }
+  .why-help:not(:empty)::before { content: "What could help"; display: block; margin-bottom: 4px; font-size: 15px; color: var(--muted); }
+}
+
+/* Links that take you somewhere get an arrow */
+/* inline-block keeps the underline off the arrow */
+.why-links a::after, .see::after, .rec-link::after { content: "→"; display: inline-block; margin-left: .35em; text-decoration: none; transition: transform .18s cubic-bezier(.2, .7, .2, 1); }
+.why-links a:hover::after, .see:hover::after, .rec-link:hover::after, .why-links a:focus-visible::after, .see:focus-visible::after, .rec-link:focus-visible::after { transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) { .why-links a::after, .see::after, .rec-link::after { transition: none; } }
+
+/* Recommendations: eight short blocks in a grid */
+/* The title is the thing to scan; the share is a small note above it,
+   and the block's top rule is its bar. Any block opens in place to show its detail. */
+.grid8 { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-64); align-items: start; }
+.b8 { position: relative; padding-top: var(--space-16); cursor: pointer; }
+.b8::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; background: linear-gradient(to right, var(--ink-2) var(--s), var(--rule) var(--s)); }
+.b8-p { margin: 0; font-size: 15px; color: var(--muted); }
+.b8-p b { color: var(--ink-2); font-weight: 600; font-variant-numeric: tabular-nums; }
+.b8 h2 { margin: var(--space-12) 0 0; font-family: var(--serif); font-size: 30px; font-weight: 500; line-height: 1.15; letter-spacing: -.005em; color: var(--ink); }
+.b8 h2 button { all: unset; cursor: pointer; display: inline; }
+.b8 h2 .nw { white-space: nowrap; }
+.b8 h2 { text-wrap: balance; }
+.b8 h2 button:focus-visible { outline: 2px solid var(--wp); outline-offset: 4px; border-radius: 3px; }
+.b8 h2 .chev { display: inline-block; width: 14px; height: 14px; margin-left: 10px; vertical-align: 4px; color: var(--muted); transition: transform .2s; }
+.b8.open h2 .chev { transform: rotate(180deg); }
+.b8:hover h2 button { text-decoration: underline; text-decoration-color: var(--rule-strong); text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.b8 .tag { display: inline-block; margin-left: 12px; font-family: var(--sans); font-size: 15px; font-weight: 500; color: var(--muted); vertical-align: 6px; }
+.b8 ul { list-style: none; margin: var(--space-16) 0 0; padding: 0; }
+.b8 ul li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-16); align-items: baseline; padding: 9px 0; border-top: 1px solid var(--rule); font-size: 15px; color: var(--ink-2); }
+.b8 ul li:last-child { border-bottom: 1px solid var(--rule); }
+.b8 ul li code { font: 15px var(--mono); color: var(--ink); }
+.b8 ul small { font-size: 15px; color: var(--muted); white-space: nowrap; }
+.b8-more { margin-top: var(--space-24); cursor: auto; }
+.b8 blockquote { margin: 0; font-family: var(--serif); font-size: 20px; line-height: 1.4; color: var(--ink); }
+.b8-more p { margin: var(--space-8) 0 0; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+.b8-more p code { font: 15px var(--mono); color: var(--ink); }
+.b8-more .steps { margin-top: var(--space-12); }
+.b8-more .steps b { color: var(--ink); font-weight: 600; }
+.d8-add { margin-top: var(--space-64); }
+.b8 { scroll-margin-top: var(--space-24); }
+@media (max-width: 900px) { .grid8 { grid-template-columns: minmax(0, 1fr); gap: var(--space-48); } .b8 h2 { font-size: 26px; } }
+/* Links with an arrow (Recommendations) */
+.go { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; font-size: var(--fs-small); }
+.go:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
+.go::after { content: "→"; display: inline-block; margin-left: .35em; text-decoration: none; transition: transform .18s cubic-bezier(.2, .7, .2, 1); }
+.go:hover::after, .go:focus-visible::after { transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) { .go::after, .b8 h2 .chev { transition: none; } }
+
+/* Back links: the arrow leads, points back, and moves left on hover. The underline stays off the arrow. */
+.go.back::after { content: none; }
+.go.back::before { content: "←"; display: inline-block; margin-right: .35em; text-decoration: none; transition: transform .18s cubic-bezier(.2, .7, .2, 1); }
+.go.back:hover::before, .go.back:focus-visible::before { transform: translateX(-3px); }
+@media (prefers-reduced-motion: reduce) { .go.back::before { transition: none; } }
+.matrix td.who a { color: inherit; text-decoration: none; }
+.matrix td.who a:hover b { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+
+/* Where WordPress drops out: one bar, nested like the hero's. */
+.nest { position: relative; height: 60px; margin-top: var(--space-32); background: var(--track); border-radius: var(--radius-s); overflow: hidden; }
+.nest .k { position: absolute; inset: 0 auto 0 0; background: rgba(61, 155, 255, .32); }
+.nest .w { position: absolute; inset: 0 auto 0 0; background: var(--wp); }
+.nest-calls { position: relative; height: 84px; margin-top: var(--space-8); }
+.nest-calls a { position: absolute; top: 0; max-width: 22%; padding-left: 10px; border-left: 1px solid var(--rule-strong); font-size: var(--fs-small); line-height: 1.4; color: var(--ink-2); }
+.nest-calls a:hover { color: var(--ink); }
+.nest-calls b { display: block; font-family: var(--serif); font-weight: 400; font-size: 28px; color: var(--ink); }
+@media (max-width: 720px) {
+  .nest { height: 44px; }
+  .nest-calls { height: 104px; }
+  .nest-calls a { max-width: 40%; }
+}
+#drop-h { max-width: 15em; }
+#why-h { max-width: 17em; }
+
+/* What could help: the first idea from a recommendation, under a finding. */
+.help { margin: var(--space-8) 0 0; font-size: var(--fs-small); color: var(--muted); }
+.help a { color: var(--wp); text-decoration: underline; text-decoration-color: rgba(61, 155, 255, .35); text-underline-offset: 4px; }
+.help a:hover { text-decoration-color: var(--wp); }
+.help span { margin-left: var(--space-8); color: var(--muted); }
+.drop-more { margin-top: var(--space-16); }
+.drop-more .near { margin: 0 0 var(--space-4); font-size: var(--fs-ui); color: var(--ink-2); max-width: 70ch; }
+.drop-more .near a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+
+/* Recommendations: the month's advice, as written. A short list of opportunities; each opens to its full section. */
+.adv .page-head { max-width: none; }
+.adv .page-head .title { max-width: 20em; text-wrap: balance; }
+.adv-intro { max-width: 68ch; }
+.adv-draft { margin: 0 0 var(--space-12); font-size: var(--fs-small); color: var(--wp); }
+.adv-intro { margin-top: var(--space-16); }
+.adv-intro p { margin: 0; }
+.adv-intro strong { font-weight: 600; }
+.adv-g, .adv-more { margin-top: var(--space-64); }
+.adv-gh { margin: 0 0 var(--space-8); font-family: var(--serif); font-weight: 400; font-size: var(--fs-subheading); line-height: 1.1; }
+.adv-gh small { display: block; margin-top: 6px; font-family: var(--sans); font-size: var(--fs-small); color: var(--muted); }
+.adv-op { border-bottom: 1px solid var(--rule); }
+.adv-op:first-of-type { border-top: 1px solid var(--rule-strong); }
+.adv-op > summary { list-style: none; cursor: pointer; padding: var(--space-24) 0; }
+.adv-op > summary::-webkit-details-marker { display: none; }
+.adv-t { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-24); font-family: var(--serif); font-size: 28px; line-height: 1.2; color: var(--ink); text-wrap: balance; }
+.adv-t .chev { flex: none; width: 14px; height: 14px; color: var(--muted); transition: transform .2s; }
+.adv-op[open] .adv-t .chev { transform: rotate(180deg); }
+.adv-op > summary:hover .adv-t { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 5px; }
+.adv-s { display: block; margin-top: var(--space-8); max-width: 70ch; font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+.adv-more .adv-t { font-size: 22px; }
+.adv-body { max-width: 760px; padding: 0 0 var(--space-32); font-size: 15.5px; line-height: 1.6; color: var(--ink-2); }
+.adv-body p, .adv-body ul, .adv-body ol, .adv-body blockquote, .adv-body table { margin: 0 0 var(--space-16); }
+.adv-body strong { color: var(--ink); font-weight: 600; }
+.adv-body a { color: var(--wp); text-decoration: underline; text-decoration-color: rgba(61, 155, 255, .35); text-underline-offset: 3px; }
+.adv-body a:hover { text-decoration-color: var(--wp); }
+.adv-body ul, .adv-body ol { padding-left: 1.2em; } .adv-body li + li { margin-top: 4px; }
+.adv-body blockquote { margin-left: 0; padding-left: var(--space-16); border-left: 2px solid var(--rule-strong); font-family: var(--serif); font-size: 20px; line-height: 1.35; color: var(--ink); }
+.adv-body blockquote p { margin: 0; }
+.adv-body code { font-size: max(15px, .9em); color: var(--ink); }
+.adv-body table { width: 100%; border-collapse: collapse; font-size: var(--fs-ui); }
+.adv-body th { text-align: left; font-weight: 500; font-size: var(--fs-caption); color: var(--muted); padding: 0 12px 8px 0; border-bottom: 1px solid var(--rule); }
+.adv-body td { vertical-align: top; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--rule); }
+.adv-body hr { display: none; }
+@media (max-width: 720px) {
+  .adv-t { font-size: 23px; }
+  .adv-body table, .adv-body thead, .adv-body tbody, .adv-body tr, .adv-body td, .adv-body th { display: block; }
+  .adv-body thead { display: none; } .adv-body td { padding: 2px 0; border: 0; } .adv-body tr { padding: 10px 0; border-bottom: 1px solid var(--rule); }
+}
+/* Recommendations from the advice: the full section opens under a block */
+.b8 .adv-detail { display: block; margin-top: var(--space-24); padding-top: var(--space-16); border-top: 1px solid var(--rule); }
+.b8 .adv-detail[hidden] { display: none; }
+.b8 .why a, .b8 ul li a { color: var(--wp); }
+.adv .b8 ul li small { max-width: 16em; text-align: right; }
+@media (max-width: 720px) {
+  .adv .b8 ul li { grid-template-columns: 1fr; gap: 2px; }
+  .adv .b8 ul li small { max-width: none; text-align: left; }
+}
+.adv-when { margin: var(--space-12) 0 0; font-size: var(--fs-ui); color: var(--muted); }
+.adv-when a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.adv-earlier { margin-left: var(--space-16); }
+
+/* A first step opens in place to show its detail */
+.adv .b8 ul.adv-steps li.adv-step { display: block; padding: 0; }
+.adv-step details > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-16); align-items: baseline; padding: 9px 0; }
+.adv-step details > summary::-webkit-details-marker { display: none; }
+.adv-step summary .chev { display: inline-block; width: 11px; height: 11px; margin-left: 8px; vertical-align: 1px; color: var(--muted); transition: transform .2s; }
+.adv-step details[open] summary .chev { transform: rotate(180deg); }
+.adv-step summary:hover > span { color: var(--ink); }
+.adv-step-d { padding: 0 0 12px; font-size: var(--fs-ui); }
+.adv-step-d p:last-child { margin-bottom: 0; }
+@media (max-width: 720px) { .adv-step details > summary { grid-template-columns: 1fr; gap: 2px; } }
+/* Who is well placed sits under each step, at every width, so long team lists never crowd or overflow */
+.adv .b8 ul.adv-steps li, .adv-step details > summary { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+.adv .b8 ul.adv-steps small { max-width: none; text-align: left; white-space: normal; font-size: var(--fs-caption); line-height: 1.4; }
+
+/* Recommendations, tuned for scanning: a quiet label, one-line actions, chevrons where an action opens */
+.adv .b8 .ul-h { margin: var(--space-24) 0 0; font-size: var(--fs-caption); color: var(--muted); }
+.adv .b8 ul.adv-steps { margin-top: var(--space-8); }
+.adv .b8:hover h2 button { text-decoration: none; }
+.adv .b8 h2 button:hover { color: var(--ink); }
+.adv-step details > summary { grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-16); align-items: baseline; }
+.adv-step summary .chev { margin: 0; }
+.adv-steps > li > span a, .adv-step summary a { color: inherit; text-decoration: none; pointer-events: none; }
+/* Ways to help that open: the row highlights on hover, and the chevron shows they expand */
+.adv-step details > summary { margin: 0 -10px; padding: 10px; transition: background-color .15s; }
+.adv-step details > summary:hover, .adv-step details[open] > summary { background: var(--hover-row); }
+.adv-step details > summary:hover > span { color: var(--ink); }
+.adv-step summary .chev { width: 12px; height: 12px; color: var(--ink-2); }
+.adv-step details > summary:hover .chev { color: var(--ink); }
+.adv-step details > summary:focus-visible { outline: 2px solid var(--wp); outline-offset: -2px; }
+.adv-step-d { padding: 4px 0 14px; }
+@media (prefers-reduced-motion: reduce) { .adv-step details > summary { transition: none; } }
+
+/* The recommendations at a glance, under the strategy */
+.adv-toc { margin: var(--space-48) 0 var(--space-64); max-width: 900px; }
+.adv-toc-h { margin: 0 0 var(--space-12); font-size: var(--fs-small); font-weight: 400; color: var(--muted); }
+.adv-toc-l { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.adv-toc-l a { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); gap: var(--space-24); align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--rule); color: var(--ink); text-decoration: none; }
+.adv-toc-l a:hover { background: var(--hover-row); }
+.adv-toc-n { font-size: var(--fs-small); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.adv-toc-t { font-family: var(--serif); font-size: 21px; line-height: 1.25; }
+@media (max-width: 720px) { .adv-toc-l a { grid-template-columns: 1fr; gap: 2px; } }
+
+/* The evidence behind a recommendation: one quiet toggle at the end */
+.adv-ev { margin-top: var(--space-16); }
+.adv-ev > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-small); color: var(--ink-2); }
+.adv-ev > summary::-webkit-details-marker { display: none; }
+.adv-ev > summary:hover { color: var(--ink); }
+.adv-ev > summary .chev { width: 11px; height: 11px; transition: transform .2s; }
+.adv-ev[open] > summary .chev { transform: rotate(180deg); }
+.adv-ev > .adv-body { margin-top: var(--space-16); padding-top: var(--space-16); border-top: 1px solid var(--rule); }
+.adv .b8 h2 { cursor: default; }
+.adv .b8 { scroll-margin-top: var(--space-24); }
+
+/* An opened way to help: the same five labelled parts every time */
+dl.adv-step-d { display: grid; grid-template-columns: 8.5em minmax(0, 1fr); gap: 8px var(--space-16); margin: 0; padding: 4px 0 16px; }
+dl.adv-step-d dt { font-size: var(--fs-caption); color: var(--muted); padding-top: 2px; }
+dl.adv-step-d dd { margin: 0; font-size: var(--fs-ui); line-height: 1.5; color: var(--ink-2); }
+@media (max-width: 720px) { dl.adv-step-d { grid-template-columns: 1fr; gap: 2px; } dl.adv-step-d dd { margin-bottom: 8px; } }
+
+/* Scale: practical first; new ideas tagged quietly, and new projects under "Bigger ideas" */
+.adv-new { margin-left: 8px; font-style: normal; font-size: var(--fs-caption); color: var(--muted); white-space: nowrap; }
+.adv .b8-p { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-16); }
+.b8-p .adv-new { margin-left: 0; padding: 2px 10px; border: 1px solid var(--rule-strong); border-radius: 999px; font-size: var(--fs-caption); color: var(--ink-2); line-height: 1.4; }
+
+/* Recommendations use the Data page's type: serif for headings, a 16px lede, 15px list rows, 13.5px quiet labels */
+.adv .page-head .lede { font-size: var(--fs-lede); }
+.adv-when { font-size: var(--fs-small); }
+.adv .b8-p { font-size: var(--fs-small); }
+.adv .b8-p b { color: var(--ink); font-weight: 600; }
+.adv .b8 h2 { font-size: 26px; line-height: 1.2; }
+.adv .b8 .why { margin: var(--space-12) 0 0; font-size: var(--fs-lede); line-height: 1.5; color: var(--ink-2); }
+.adv .b8 .ul-h { font-size: var(--fs-small); }
+.adv .b8 ul.adv-steps li { font-size: var(--fs-body); }
+.adv-step summary > span { color: var(--ink); font-weight: 500; }
+.adv-step summary .adv-new { margin-left: 6px; font-weight: 400; }
+.adv-ev > summary { font-size: var(--fs-small); font-weight: 400; color: var(--ink-2); }
+dl.adv-step-d dt { font-size: var(--fs-small); }
+dl.adv-step-d dd { color: var(--ink-2); }
+.b8-p .adv-new { font-size: var(--fs-small); line-height: 1.3; }
+@media (max-width: 900px) { .adv .b8 h2 { font-size: 24px; } }
+.adv .adv-body { font-size: var(--fs-body); }
+.adv-t { font-weight: 500; }
+.adv-step summary .adv-new { font-size: var(--fs-small); }
+/* A new way to help carries its tag beside the chevron, on the same line as the action */
+.adv-step details > summary { display: flex; align-items: baseline; gap: var(--space-12); }
+.adv-step summary > span { flex: 1; min-width: 0; }
+.adv-step summary .adv-new { margin: 0; flex: none; }
+.adv-step summary .chev { flex: none; align-self: center; }
+
+/* The evidence: plain prose bullets, clear of the ways-to-help row styles */
+.adv .adv-ev .adv-body { padding-bottom: var(--space-8); }
+.adv .b8 .adv-ev ul { margin: 0 0 var(--space-12); padding-left: 1.1em; list-style: disc; }
+.adv .b8 .adv-ev ul ul { margin: 6px 0 0; list-style: circle; }
+.adv .b8 .adv-ev ul li { display: list-item; padding: 0; border: 0; font-size: var(--fs-body); line-height: 1.55; color: var(--ink-2); }
+.adv .b8 .adv-ev ul li:last-child { border: 0; }
+.adv .b8 .adv-ev ul li + li { margin-top: 8px; }
+.adv .b8 .adv-ev ul li::marker { color: var(--muted); }
+
+/* Permalinks: an anchor beside each recommendation title on hover, and a copy link in each opened idea */
+.b8 .adv-anchor { display: inline-flex; vertical-align: 2px; margin-left: 10px; padding: 4px; color: var(--muted); opacity: 0; transition: opacity .15s, color .15s; }
+.b8 .adv-anchor svg, .adv-copy svg { width: 15px; height: 15px; }
+.b8:hover .adv-anchor, .b8 .adv-anchor:focus-visible { opacity: 1; }
+.b8 .adv-anchor:hover, .b8 .adv-anchor.copied { color: var(--ink); }
+.adv-copy { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-small); color: var(--ink-2); text-decoration: none; }
+.adv .adv-body .adv-copy { color: var(--ink-2); text-decoration: none; }
+.adv .adv-body .adv-copy:hover, .adv-copy.copied { color: var(--ink); }
+@media (hover: none) { .b8 .adv-anchor { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .b8 .adv-anchor { transition: none; } }
+.adv-step details, .adv-op { scroll-margin-top: var(--space-24); }
+
+/* Recommendations spacing, on the 4/8px grid: room between parts of a block, and inside each opened idea */
+.adv .grid8 { row-gap: var(--space-80); }
+.adv .b8 { padding-top: var(--space-24); }
+.adv .b8 h2 { margin-top: var(--space-16); }
+.adv .b8 .why { margin-top: var(--space-16); }
+.adv .b8 .ul-h { margin-top: var(--space-32); }
+.adv .b8 ul.adv-steps { margin-top: var(--space-12); }
+.adv-step details > summary { margin: 0 calc(-1 * var(--space-12)); padding: var(--space-16) var(--space-12); gap: var(--space-16); }
+dl.adv-step-d { gap: var(--space-16) var(--space-24); padding: var(--space-8) 0 var(--space-32); }
+dl.adv-step-d dt, dl.adv-step-d dd { line-height: 1.55; }
+dl.adv-step-d dt { padding-top: 1px; }
+dl.adv-step-d .adv-copy { margin-top: var(--space-8); }
+.adv-ev { margin-top: var(--space-24); }
+.adv .adv-ev > .adv-body { margin-top: var(--space-16); padding-top: var(--space-24); }
+.adv .b8 .adv-ev ul li + li { margin-top: var(--space-12); }
+.adv .b8 .adv-ev ul ul { margin-top: var(--space-8); }
+.adv .b8 .adv-ev ul ul li + li { margin-top: var(--space-8); }
+@media (max-width: 720px) { dl.adv-step-d { gap: var(--space-4); } dl.adv-step-d dd { margin-bottom: var(--space-16); } }
+/* The hover highlight stays inside the row's rules; the opened detail lines up with the row's text */
+.adv-step details > summary { margin: 0; padding: var(--space-16) var(--space-12); }
+dl.adv-step-d { padding-left: var(--space-12); padding-right: var(--space-12); }
+/* The recommendation's link icon hangs in the margin, left of the title's first line */
+.adv .b8 h2 { position: relative; }
+.b8 .adv-anchor { position: absolute; left: calc(-1 * var(--space-32)); top: .2em; margin: 0; }
+@media (max-width: 720px) { .b8 .adv-anchor { position: static; margin-left: var(--space-8); } }
+/* New idea: one pill, on the way to help itself, centred with the chevron */
+.adv-step details > summary { align-items: center; }
+.adv-step summary .adv-new { padding: 2px 10px; border: 1px solid var(--rule-strong); border-radius: 999px; font-size: var(--fs-caption); line-height: 1.4; color: var(--ink-2); }
+.adv-step summary .chev { align-self: center; }
+
+/* About these recommendations: a heading and lede like the Data page, then rows styled as the ways to help, one column wide */
+.adv .adv-more { margin-top: var(--space-96); max-width: calc((100% - var(--space-64)) / 2); }
+.adv .adv-more .adv-gh { margin: 0; font-size: 32px; font-weight: 400; }
+.adv .adv-more .lede { margin: var(--space-16) 0 0; max-width: none; font-size: var(--fs-lede); line-height: 1.5; }
+.adv-about { list-style: none; margin: var(--space-32) 0 0; padding: 0; }
+.adv-about > li { border-top: 1px solid var(--rule); font-size: var(--fs-body); }
+.adv-about > li:last-child { border-bottom: 1px solid var(--rule); }
+.adv-about .adv-body { padding: var(--space-8) var(--space-12) var(--space-32); }
+.adv-about .adv-body ul { padding-left: 1.1em; }
+.adv-about .adv-body li + li { margin-top: var(--space-12); }
+@media (max-width: 900px) { .adv .adv-more { max-width: none; margin-top: var(--space-80); } }
+/* About these recommendations sits in the grid as the last block */
+.adv .grid8 .adv-more { margin-top: 0; max-width: none; }
+.adv .adv-more h2 { margin-top: var(--space-16); }
+.adv .adv-more .adv-about { margin-top: var(--space-24); }
+
+/* Recommendations page sections follow the Data page: faded dividers, a 40px heading and lede, then the content */
+.adv .adv-recs { padding-top: var(--space-64); }
+.adv .adv-more { max-width: none; margin-top: 0; }
+.adv .adv-more .adv-about { margin-top: 0; max-width: calc((100% - var(--space-64)) / 2); }
+@media (max-width: 900px) { .adv .adv-more .adv-about { max-width: none; } }
+
+/* Links that go somewhere carry an arrow, on both pages: "See …" links in grey, links to a recommendation in blue */
+.see, .why-links a, .drop-more .near a, .see-inline { font-size: var(--fs-small); }
+.drop-more .near a, .see-inline { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.drop-more .near a:hover, .see-inline:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
+.help a { font-weight: 600; text-decoration: none; }
+.help a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.drop-more .near a::after, .see-inline::after, .help a::after { content: "→"; display: inline-block; margin-left: .35em; text-decoration: none; transition: transform .18s cubic-bezier(.2, .7, .2, 1); }
+.drop-more .near a:hover::after, .see-inline:hover::after, .help a:hover::after { transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) { .drop-more .near a::after, .see-inline::after, .help a::after { transition: none; } }
+.adv .adv-more .heading { margin-top: 0; }
+.adv .adv-more .section-head .lede { max-width: 62ch; margin-top: 14px; font-size: var(--fs-lede); }
+/* About these recommendations: heading and lede on the left, the rows on the right, like the Data page's "built" section */
+.adv .adv-more .adv-about { max-width: none; margin-top: 6px; }
+.adv .adv-more .lede { max-width: 46ch; margin-top: 14px; font-size: var(--fs-lede); }
+/* Only the lines between the rows; no rule above the first or below the last */
+.adv-about > li:first-child { border-top: 0; }
+.adv-about > li:last-child { border-bottom: 0; }
+/* The recommendations follow the intro directly; no divider between them */
+.adv .page-head + .adv-recs { border-top: 0; border-image: none; padding-top: var(--space-64); }
+
+/* Top lines over recommendation blocks, like the Building gap brackets: the filled share fades from light to mid grey,
+   then a 3px gap, then the dark rest */
+.b8::before {
+  background:
+    linear-gradient(to right, #c4cad5, #838c9d) 0 0 / var(--s) 100% no-repeat,
+    linear-gradient(#3a4250, #3a4250) 100% 0 / max(0px, calc(100% - var(--s) - 3px)) 100% no-repeat;
+}
+/* The evidence extends the why: a quiet toggle just under it, opening before the ways to help */
+.adv .b8 .adv-ev { margin-top: var(--space-8); }
+.adv .adv-ev > summary { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.adv .adv-ev > summary:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
+.adv .adv-ev > .adv-body { margin-top: var(--space-12); padding: 0; border-top: 0; }
+.adv .adv-ev[open] + .ul-h { margin-top: var(--space-24); }
+/* The evidence, formatted like the rest of the site: grey text, bold white figures and labels, quiet group labels */
+.adv .b8 .adv-ev ul li { color: var(--ink-2); }
+.adv .adv-ev b, .adv .adv-ev .ev-k { color: var(--ink); font-weight: 600; }
+.adv .b8 .adv-ev li.ev-group { list-style: none; margin-left: -1.1em; margin-top: var(--space-16); color: var(--muted); }
+.adv .b8 .adv-ev li.ev-group > ul { margin-top: var(--space-8); color: var(--ink-2); }
+.adv .b8 .adv-ev > .adv-body > ul > li.ev-group:first-child { margin-top: 0; }
+.adv .adv-ev span.ev-k { color: var(--ink-2); font-weight: 400; }
+/* Evidence bullets: one style, indented from the column edge, the same under every group label */
+.adv .b8 .adv-ev ul, .adv .b8 .adv-ev ul ul { padding-left: 1.6em; list-style: disc; }
+.adv .b8 .adv-ev li.ev-group { margin-left: -1.6em; }
+.adv .b8 .adv-ev li::marker { color: var(--muted); font-size: .9em; }
+
+/* Runs: four filters in a row, the rest behind "More filters"; the count sits on the table */
+.page-runs .rf { display: block; padding: var(--space-16) 0 var(--space-24); }
+.rf-main, .rf-extra { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-12) var(--space-16); }
+.rf-main > label { flex: 1 1 180px; min-width: 0; }
+.rf-main select, .rf-extra select { width: 100%; text-overflow: ellipsis; }
+.rf-extra { margin-top: var(--space-16); }
+.rf-extra > label { flex: 0 1 260px; }
+.rf-extra[hidden] { display: none; }
+.rf-more { all: unset; box-sizing: border-box; cursor: pointer; height: 34px; display: inline-flex; align-items: center; font-size: var(--fs-ui); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; white-space: nowrap; }
+.rf-more:hover, .rf-more[aria-expanded="true"] { color: var(--ink); text-decoration-color: var(--ink-2); }
+.rf-more:focus-visible { outline: 2px solid var(--wp); outline-offset: 4px; border-radius: 3px; }
+.rf-head { display: flex; align-items: baseline; gap: var(--space-16); margin-bottom: var(--space-16); color: var(--ink-2); }
+.rf-head .count { margin: 0; font-size: var(--fs-ui); }
+.rf-head .btn-link[hidden] { display: none; }
+
+/* Runs table: quiet IDs, the reason on one line with when it was said beneath, and a chevron showing rows open */
+.page-runs .runs col.c-id { width: 132px; }
+.page-runs .runs col.c-who { width: 26%; }
+.page-runs .runs col.c-kind { width: 19%; }
+.page-runs .runs col.c-res { width: 18%; }
+.page-runs .runs col.c-why { width: auto; }
+.page-runs .runs col.c-go { width: 36px; }
+.page-runs .runs td.id a { color: var(--muted); font-variant-numeric: tabular-nums; }
+.page-runs .runs td.kind { color: var(--ink); }
+.page-runs .runs td.why { line-height: 1.35; }
+.page-runs .runs td.why .why-n { display: block; color: var(--ink); overflow: hidden; text-overflow: ellipsis; }
+.page-runs .runs td.why .why-more { color: var(--muted); }
+.page-runs .runs td.why small { display: block; margin-top: 2px; color: var(--muted); }
+.page-runs .runs td.go-c { color: var(--muted); text-align: right; }
+.page-runs .runs td.go-c svg { width: 12px; height: 12px; vertical-align: -1px; transition: transform .18s; }
+.page-runs .runs tr.run:hover td.go-c { color: var(--ink); }
+.page-runs .runs tr.run:hover td.go-c svg { transform: translateX(2px); }
+@media (prefers-reduced-motion: reduce) { .page-runs .runs td.go-c svg { transition: none; } }
+
+/* On phones, each run is two lines: agent and what it built, then type and reason */
+@media (max-width: 720px) {
+  .page-runs .runs, .page-runs .runs tbody { display: block; }
+  .page-runs .runs thead, .page-runs .runs colgroup { display: none; }
+  .page-runs .runs tr.run { display: grid; grid-template-columns: minmax(0, 1fr) auto 20px; grid-template-areas: "who res go" "meta meta go"; align-items: center; padding: var(--space-12) var(--space-4); border-bottom: 1px solid var(--rule); }
+  .page-runs .runs tr.run td { padding: 0; border: 0; white-space: normal; background: none; }
+  .page-runs .runs tr.run td.id { display: none; }
+  .page-runs .runs tr.run td.who { grid-area: who; }
+  .page-runs .runs tr.run td.res { grid-area: res; padding-left: var(--space-12); text-align: right; }
+  .page-runs .runs tr.run td.kind, .page-runs .runs tr.run td.why { grid-row: 2; color: var(--muted); margin-top: 4px; }
+  .page-runs .runs tr.run td.kind { grid-column: 1 / 3; }
+  .page-runs .runs tr.run td.why { display: none; }
+  .page-runs .runs tr.run td.kind::after { content: attr(data-why); }
+  .page-runs .runs tr.run td.go-c { grid-area: go; }
+  .page-runs .runs tr.run:hover { background: var(--panel); }
+  .rf-main > label, .rf-extra > label { flex: 1 1 100%; }
+}
+@media (max-width: 720px) {
+  .page-runs .runs tr.run td.who { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .page-runs .runs tr.run td.res { white-space: nowrap; }
+}
+
+/* Run page: the site's page head, then the 12-column grid: the run on the left (8 columns), its details on the right */
+.run-page { max-width: var(--container); padding-top: 0; }
+.run-page .page-head { padding-top: var(--page-top); }
+body main .go.back.go.back::after { content: none; }
+.run-page .back { display: inline-block; margin-bottom: var(--space-32); }
+.run-page .title { max-width: 40ch; text-wrap: pretty; }
+.run-sub { display: flex; flex-wrap: wrap; gap: var(--space-8) var(--space-24); }
+.run-sub .wp { color: var(--wp); }
+.run-body { row-gap: var(--space-48); }
+.run-main { grid-column: 1 / 9; }
+.run-side { grid-column: 10 / 13; position: sticky; top: var(--space-24); }
+.rf-row { padding: var(--space-24) 0; border-top: 1px solid var(--rule); }
+.rf-row:first-child { border-top: 0; padding-top: 0; }
+.rf-l { margin: 0 0 var(--space-8); font: 400 var(--fs-small)/1.4 var(--sans); color: var(--muted); }
+.rf-v { font-size: var(--fs-lede); line-height: 1.6; color: var(--ink-2); max-width: 68ch; }
+.rf-v > p { margin: 0; }
+.rf-v .rf-ask { font-family: var(--serif); font-size: 26px; line-height: 1.3; color: var(--ink); }
+.rf-v .answer { color: var(--ink-2); }
+.rf-v .answer p { margin: 0 0 var(--space-12); }
+.rf-v .answer details > summary { cursor: pointer; margin: var(--space-4) 0 var(--space-12); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.rf-v .answer details > summary:hover { color: var(--ink); }
+.rf-note { margin: var(--space-12) 0 0; font-size: var(--fs-small); line-height: 1.5; color: var(--muted); }
+.rf-pats { margin: 0; padding-left: 1.2em; }
+.rf-pats li + li { margin-top: var(--space-8); }
+.rf-pats .go { margin-left: var(--space-8); }
+.run-side dl { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; margin: 0; }
+.run-side dt { margin-top: var(--space-16); font-size: var(--fs-small); color: var(--muted); }
+.run-side dt:first-child { margin-top: 0; }
+.run-side dd { margin: 0; color: var(--ink-2); }
+.run-side dd small { display: block; color: var(--muted); }
+.run-side dd .logo { vertical-align: -2px; margin-right: 6px; }
+@media (max-width: 900px) {
+  .run-main, .run-side { grid-column: 1 / -1; }
+  .run-side { position: static; padding-top: var(--space-24); border-top: 1px solid var(--rule); }
+  .rf-v .rf-ask { font-size: 22px; }
+}
+
+/* The conversation: each turn folds open; messages in order, tool calls as quiet rows that open to their input and result */
+.convo { max-width: none; }
+.cv-turn { border-top: 1px solid var(--rule); }
+.cv-turn:first-of-type { margin-top: var(--space-16); }
+.cv-turn > summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: var(--space-16); padding: var(--space-16) 0; color: var(--ink); }
+.cv-turn > summary::-webkit-details-marker { display: none; }
+.cv-turn > summary span { color: var(--muted); font-size: var(--fs-small); }
+.cv-turn > summary:hover { color: var(--ink); background: var(--hover-row); }
+.cv-list { list-style: none; margin: 0; padding: 0 0 var(--space-24); }
+.cv-m { padding: var(--space-12) 0 var(--space-12) var(--space-16); border-left: 2px solid var(--rule); }
+.cv-m + .cv-m { margin-top: var(--space-8); }
+.cv-user { border-left-color: var(--ink-2); }
+.cv-who { margin: 0 0 var(--space-4); font-size: var(--fs-small); color: var(--muted); }
+.cv-text { color: var(--ink-2); max-width: 68ch; }
+.cv-user .cv-text { color: var(--ink); }
+.cv-text p, .cv-text ul, .cv-text ol { margin: 0 0 var(--space-8); }
+.cv-tool { margin-top: var(--space-4); }
+.cv-tool > summary { list-style: none; cursor: pointer; display: flex; gap: var(--space-12); align-items: baseline; padding: var(--space-4) 0; font-size: var(--fs-small); color: var(--ink-2); min-width: 0; }
+.cv-tool > summary::-webkit-details-marker { display: none; }
+.cv-tool > summary:hover { color: var(--ink); }
+.cv-tn { flex: none; color: var(--ink); font-weight: 500; }
+.cv-ta { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--mono); color: var(--muted); }
+.cv-tool pre { margin: var(--space-8) 0; padding: var(--space-12); max-height: 360px; overflow: auto; background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius-s); font: 15px/1.5 var(--mono); color: var(--ink-2); white-space: pre-wrap; word-break: break-word; }
+.cv-rl { margin: var(--space-8) 0 0; font-size: var(--fs-small); color: var(--muted); }
+.cv-cut { display: block; font-size: var(--fs-small); color: var(--muted); }
+
+/* Run page tabs: Overview and Transcript, underlined like the site menu */
+.run-tabs { display: flex; gap: var(--space-32); margin-top: var(--space-32); border-bottom: 1px solid var(--rule); }
+.run-tabs [role="tab"] { all: unset; cursor: pointer; padding: 0 0 var(--space-12); margin-bottom: -1px; font-size: var(--fs-lede); color: var(--ink-2); border-bottom: 2px solid transparent; }
+.run-tabs [role="tab"]:hover { color: var(--ink); }
+.run-tabs [role="tab"][aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.run-tabs [role="tab"]:focus-visible { outline: 2px solid var(--wp); outline-offset: 4px; border-radius: 3px; }
+.run-page .page-head + .run-body { border-top: 0; border-image: none; }
+.run-main[hidden] { display: none; }
+
+/* The transcript as a conversation: the person on the right in a panel, the agent on the left beside its logo */
+.chat { max-width: none; }
+.cv-intro { margin: 0 0 var(--space-32); }
+.cv-turns, .cv-list { list-style: none; margin: 0; padding: 0; }
+.cv-turn + .cv-turn { margin-top: var(--space-48); }
+.cv-sep { display: flex; align-items: center; gap: var(--space-16); margin: 0 0 var(--space-24); font-size: var(--fs-small); color: var(--muted); }
+.cv-sep::before, .cv-sep::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+.cv-m + .cv-m { margin-top: var(--space-16); }
+.cv-user { display: flex; justify-content: flex-end; }
+.cv-user .cv-b { max-width: 80%; padding: var(--space-12) var(--space-16); background: var(--raise); border-radius: 14px 14px 4px 14px; color: var(--ink); line-height: 1.55; }
+.cv-b p, .cv-text p, .cv-text ul, .cv-text ol { margin: 0 0 var(--space-8); }
+.cv-b > :last-child, .cv-text > :last-child { margin-bottom: 0; }
+.cv-agent { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: var(--space-12); align-items: start; }
+.cv-av { display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid var(--rule-strong); border-radius: 50%; color: var(--ink); }
+.cv-av .logo { margin: 0; }
+.cv-agent + .cv-agent .cv-av { visibility: hidden; }
+.cv-agent + .cv-agent .cv-who { display: none; }
+.cv-who { margin: 4px 0 var(--space-4); font-size: var(--fs-small); color: var(--muted); }
+.cv-text { color: var(--ink-2); line-height: 1.6; max-width: 70ch; }
+.cv-tools { margin-top: var(--space-4); border-left: 1px solid var(--rule); }
+.cv-tool > summary { list-style: none; cursor: pointer; display: flex; gap: var(--space-12); align-items: baseline; padding: 6px var(--space-12); font-size: var(--fs-small); color: var(--ink-2); min-width: 0; }
+.cv-tool > summary::-webkit-details-marker { display: none; }
+.cv-tool > summary:hover, .cv-tool[open] > summary { background: var(--hover-row); color: var(--ink); }
+.cv-tool .chev { flex: none; width: 11px; height: 11px; margin-left: auto; color: var(--muted); align-self: center; transition: transform .2s; }
+.cv-tool[open] .chev { transform: rotate(180deg); }
+.cv-tn { flex: none; color: var(--ink); font-weight: 500; }
+.cv-ta { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--mono); color: var(--muted); }
+.cv-io { padding: 0 var(--space-12) var(--space-12); }
+.cv-io pre, .cv-added pre { margin: var(--space-4) 0 var(--space-8); padding: var(--space-12); max-height: 360px; overflow: auto; background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius-s); font: 15px/1.5 var(--mono); color: var(--ink-2); white-space: pre-wrap; word-break: break-word; }
+.cv-rl { margin: var(--space-8) 0 0; font-size: var(--fs-small); color: var(--muted); }
+.cv-cut { display: block; margin-top: var(--space-4); font-size: var(--fs-small); color: var(--muted); }
+.cv-added { margin-top: var(--space-8); }
+.cv-added > summary { cursor: pointer; font-size: var(--fs-small); color: var(--ink-2); }
+@media (max-width: 720px) { .cv-user .cv-b { max-width: 92%; } }
+@media (prefers-reduced-motion: reduce) { .cv-tool .chev { transition: none; } }
+/* The run opened last, marked when coming back to the list */
+.page-runs .runs tr.run.last td { background: var(--panel); }
+.page-runs .runs tr.run.last td:first-child { box-shadow: inset 2px 0 0 var(--ink-2); }
+.page-runs .runs tr.run.last td.id a { color: var(--ink); }
+@media (max-width: 720px) { .page-runs .runs tr.run.last { background: var(--panel); box-shadow: inset 2px 0 0 var(--ink-2); } }
+.page-runs .runs td.id small { display: block; margin-top: 2px; color: var(--muted); }
+.page-runs .runs tr.run.last td:first-child, .page-runs .runs tr.run.last { box-shadow: none; }
+
+/* The Runs table runs the full browser width, with the page's side padding; a Date column after the run ID */
+.page-runs .runs-wide { max-width: none; width: 100vw; margin-left: calc(50% - 50vw); padding: 0 var(--page-pad); box-sizing: border-box; }
+.page-runs .runs col.c-id { width: 132px; }
+.page-runs .runs col.c-date { width: 120px; }
+.page-runs .runs col.c-who { width: 22%; }
+.page-runs .runs col.c-kind { width: 17%; }
+.page-runs .runs col.c-res { width: 16%; }
+.page-runs .runs td.date { color: var(--ink-2); line-height: 1.35; }
+.page-runs .runs td.date small { display: block; margin-top: 2px; color: var(--muted); }
+@media (max-width: 720px) { .page-runs .runs-wide { width: auto; margin-left: 0; padding: 0; } .page-runs .runs tr.run td.date { display: none; } }
+.page-runs .rf-head, .page-runs .runs-more { width: 100vw; max-width: none; margin-left: calc(50% - 50vw); padding-left: calc(var(--page-pad) + var(--space-12)); padding-right: var(--page-pad); box-sizing: border-box; }
+.page-runs .runs-more { display: block; width: auto; margin-left: calc(50% - 50vw + var(--page-pad)); padding: revert; }
+@media (max-width: 720px) { .page-runs .rf-head { width: auto; margin-left: 0; padding: 0; } .page-runs .runs-more { margin-left: 0; } }
+body:has(.page-runs) { overflow-x: clip; } /* 100vw includes a classic scrollbar; never scroll sideways */
+/* The sticky filters cover the full width too, so the wide table never shows beside them as it scrolls under */
+.page-runs .rf.filters--sticky { box-shadow: 0 0 0 100vmax var(--page); clip-path: inset(0 -100vmax); }
+
+/* Runs table: text starts on the table's edge, no inset gutter; every column header sorts */
+.page-runs .runs th:first-child, .page-runs .runs td:first-child { padding-left: 0; }
+.page-runs .runs th:last-child, .page-runs .runs td:last-child { padding-right: 0; }
+.page-runs .rf-head { padding-left: var(--page-pad); }
+.th-sort { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; color: inherit; font: inherit; }
+.th-sort:hover { color: var(--ink); }
+.th-sort:focus-visible { outline: 2px solid var(--wp); outline-offset: 3px; border-radius: 3px; }
+.th-arrow { width: 0.7em; color: var(--muted); }
+th[aria-sort="ascending"] .th-sort, th[aria-sort="descending"] .th-sort { color: var(--ink); }
+th[aria-sort="ascending"] .th-arrow::after { content: "↑"; }
+th[aria-sort="descending"] .th-arrow::after { content: "↓"; }
+.th-sort:hover .th-arrow::after { content: "↕"; }
+th[aria-sort="ascending"] .th-sort:hover .th-arrow::after { content: "↓"; }
+th[aria-sort="descending"] .th-sort:hover .th-arrow::after { content: "↑"; }
+/* Row rules run to the viewport edges; the text keeps the page's side padding */
+.page-runs .runs-wide { padding: 0; }
+.page-runs .runs th:first-child, .page-runs .runs td:first-child { padding-left: var(--page-pad); }
+.page-runs .runs th:last-child, .page-runs .runs td:last-child { padding-right: var(--page-pad); }
+.page-runs .runs col.c-id { width: calc(132px + var(--page-pad)); }
+.page-runs .runs col.c-go { width: calc(36px + var(--page-pad)); }
+@media (max-width: 720px) { .page-runs .runs tr.run { padding-left: 0; padding-right: 0; } }
+
+/* Dashboard switcher: wide enough that names and questions sit on one line; both items share one layout,
+   with the tick or "Coming soon" on the right of the name */
+.dash-menu { width: 420px; padding: var(--space-8); }
+.dash-menu a, .dash-menu .soon { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-16); align-items: baseline; padding: var(--space-12); font-size: var(--fs-ui); font-weight: 600; white-space: nowrap; }
+.dash-menu a small, .dash-menu .soon small { grid-column: 1 / -1; margin-top: var(--space-4); font-weight: 400; font-size: var(--fs-small); white-space: normal; }
+.dash-menu .tick { position: static; grid-column: 2; grid-row: 1; align-self: center; }
+.dash-menu .soon .soon-tag { padding: 0; border: 0; border-radius: 0; font-weight: 400; color: var(--muted); }
+.dash-menu .soon { color: var(--ink-2); }
+.dash-menu a + .soon { margin-top: var(--space-4); border-top: 1px solid var(--rule); border-radius: 0; }
+@media (max-width: 560px) { .dash-menu { width: min(420px, calc(100vw - 36px)); } }
+/* Coming soon: a clear filled pill */
+.dash-menu .soon .soon-tag { align-self: center; padding: 2px 10px; border: 1px solid var(--rule-strong); border-radius: 999px; background: var(--raise); font-size: var(--fs-small); font-weight: 500; line-height: 1.4; color: var(--ink); }
+/* Both entries keep the same rhythm: the pill sits on the name's line without making it taller */
+.dash-menu a, .dash-menu .soon { line-height: 1.35; row-gap: 0; }
+.dash-menu a small, .dash-menu .soon small { margin-top: var(--space-4); line-height: 1.45; }
+.dash-menu .soon .soon-tag { align-self: center; margin: -4px 0; padding: 1px 10px; line-height: 1.35; }
+
+/* Dig into the data: the page's closing call to action, a short list of where to go next */
+.dig-col { max-width: 40rem; margin-inline: auto; }
+.dig .heading, .dig .lede { text-align: center; }
+.dig .lede { max-width: 34rem; margin-inline: auto; }
+.dig-links { display: grid; gap: 0; margin-top: var(--space-40); border-top: 1px solid var(--rule); }
+.dig-link { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-16); padding: var(--space-16) 0; border-bottom: 1px solid var(--rule); color: var(--ink); text-decoration: none; }
+.dig-link b { font-size: var(--fs-lede); font-weight: 600; }
+.dig-link span { grid-column: 1; margin-top: var(--space-4); font-size: var(--fs-small); color: var(--muted); }
+.dig-link::after { content: "→"; grid-column: 2; grid-row: 1 / span 2; align-self: center; color: var(--ink-2); transition: transform .18s cubic-bezier(.2, .7, .2, 1); }
+.dig-link:hover b { text-decoration: underline; text-decoration-color: var(--ink-2); text-underline-offset: 4px; }
+.dig-link:hover::after { transform: translateX(3px); color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .dig-link::after { transition: none; } }
+.agents--c td.runs a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; font-variant-numeric: tabular-nums; }
+.agents--c td.runs a:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
+/* The status pill is the one deliberate exception to the 15px minimum */
+.dash-menu .soon .soon-tag { font-size: 12px; padding: 2px 8px; margin: -2px 0; line-height: 1.4; }
+
+/* What could help: each recommendation as a quiet label, its ways to help as the links beneath */
+body .why-help .help-rec + .help-rec { margin-top: var(--space-24); }
+body .why-help a.help-rec-t { display: block; font-size: var(--fs-small); line-height: 1.45; color: var(--muted); text-decoration: none; }
+body .why-help a.help-rec-t::after { content: none; }
+body .why-help a.help-rec-t:hover { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); }
+body .why-help .help-ways { list-style: none; margin: var(--space-8) 0 0; padding: 0; }
+body .why-help .help-ways li + li { margin-top: var(--space-8); }
+body .why-help .help-ways a { display: inline; font-size: var(--fs-body); line-height: 1.45; color: var(--ink-2); }
+body .why-help a.help-more { display: inline-block; margin-top: var(--space-8); font-size: var(--fs-small); color: var(--muted); }
+body .why-help a.help-more::after { content: none; }
+.why-help .help-none { font-size: var(--fs-small); color: var(--muted); }
+.why-list .help-ways li { display: block; padding: 0; border: 0; gap: 0; }
+/* One idea and a count of the rest */
+body .why-help a.help-idea { display: inline; font-size: var(--fs-body); line-height: 1.45; color: var(--ink-2); }
+body .why-help a.help-more { display: block; width: fit-content; margin-top: var(--space-8); }

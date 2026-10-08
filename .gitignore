@@ -1,0 +1,20 @@
+.env
+jobs/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.spacefast/
+archive/
+.lock
+screenshots/
+site/choose/_review.html
+site/choose/_layouts.html
+
+# Run transcripts never go in the repo; they stay in jobs/ on the machine that ran them.
+site/data/*/runs/
+
+# Your own runs, analysis and site data: wpab writes here unless it's given --publish.
+data/local/
+site/data-local/
+**/trajectory.json
