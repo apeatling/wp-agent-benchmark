@@ -161,8 +161,9 @@ def choose_record(job_dir, trial_dir, manifest, agent):
     """One Choosing run record from a Harbor trial folder, without run_id and batch."""
     result = _json(trial_dir / 'result.json') or {}
     request_id = Path((result.get('task_id') or {}).get('path', trial_dir.name.split('__')[0])).name
-    req = next(r for r in defs.requests('choose')['request'] if r['id'] == request_id)
-    kind = next(k for k in defs.catalog('choose')['kind'] if k['id'] == req['kind'])
+    req = next((r for r in defs.requests('choose')['request'] if r['id'] == request_id), None) or manifest.get('own_prompt')
+    # A prompt of your own (wpab try --prompt) has no kind of site from the catalog.
+    kind = next((k for k in defs.catalog('choose')['kind'] if k['id'] == req['kind']), None) or {'id': req['kind']}
     platforms = {p['name']: p for p in defs.catalog('choose')['platform']}
     steps = {s['step_name']: s for s in result.get('step_results') or []}
     first, step_dir = steps.get('request'), trial_dir / 'steps' / 'request'

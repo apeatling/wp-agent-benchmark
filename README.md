@@ -31,6 +31,19 @@ uv run wpab try deepseek-v4-pro-opencode
 
 Your runs are kept apart from the published results, in `data/local/` (gitignored), so nothing you do here changes them.
 
+## Trying your own prompts
+
+The benchmark's prompts are short, everyday requests in people's own words, mostly from site owners. To see what agents do with a different kind of request, such as a detailed brief from an organisation, run it yourself:
+
+```bash
+uv run wpab try opus-5-5-claude-code --prompt "We're building an official website for our municipality..."
+uv run wpab try opus-5-5-claude-code --prompt-file brief.txt --times 3
+```
+
+Each run works exactly like the benchmark's: a fresh sandbox, the same follow-up questions if it doesn't build with WordPress, and the same check of what it built. `--times` runs it more than once, since agents don't always choose the same way. Your prompt's task is kept in `data/local/custom-tasks/`, and its runs are never added to any results.
+
+To compare several agents, run the command once per agent. If you find something interesting, open an issue with your prompt and what happened.
+
 ## Signing in
 
 You don't choose how an agent signs in; it's worked out for you. Each agent uses its maker's API key if it's in `.env`, and otherwise your own plan if you're signed in on this machine:

@@ -84,3 +84,27 @@ class ClaudeFallback(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class OwnPrompt(unittest.TestCase):
+    """`wpab try --prompt`: a one-off task built like the published ones, kept out of tasks/."""
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.patch = mock.patch.object(cli, 'CUSTOM_TASKS', Path(self.tmp.name))
+        self.patch.start()
+
+    def tearDown(self):
+        self.patch.stop()
+        self.tmp.cleanup()
+
+    def test_builds_a_task_in_the_agents_sandbox(self):
+        brief = 'We are building an official website for our municipality, managed by 20 to 30 staff.'
+        req, folder = cli.own_prompt(brief, GROK)
+        self.assertTrue(req['id'].startswith('own-'))
+        self.assertEqual(folder, Path(self.tmp.name) / GROK['environment'])
+        task = folder / req['id']
+        self.assertEqual((task / 'steps' / 'request' / 'instruction.md').read_text(), brief + '\n')
+        self.assertIn('kind = "own"', (task / 'task.toml').read_text())
+        self.assertTrue((task / 'environment' / 'Dockerfile').exists())
+        # The same prompt reuses its task.
+        self.assertEqual(cli.own_prompt(brief, GROK), (req, folder))

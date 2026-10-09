@@ -45,6 +45,14 @@ class Export(unittest.TestCase):
         self.patch.stop()
         self.tmp.cleanup()
 
+    def test_own_prompt_comes_from_the_manifest(self):
+        jobs = Path(self.tmp.name) / 'jobs'
+        job = trial(jobs, 'job-own', 'own-1a2b3c4d__a', request='own-1a2b3c4d')
+        manifest = json.loads((job / 'wpab-manifest.json').read_text())
+        manifest['own_prompt'] = {'id': 'own-1a2b3c4d', 'kind': 'own', 'prompt': 'A site for our municipality.'}
+        r = records.choose_record(job, job / 'own-1a2b3c4d__a', manifest, defs.agents()[AGENT])
+        self.assertEqual((r['request_id'], r['kind'], r['control']), ('own-1a2b3c4d', 'own', False))
+
     def test_records_and_statuses(self):
         jobs = Path(self.tmp.name) / 'jobs'
         trial(jobs, 'job-a', 'blog-1__a')

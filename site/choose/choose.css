@@ -1097,3 +1097,9 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
   .table.req td.num:not(.runs)::after { content: " named it later"; color: var(--muted); }
   .table.req td.runs::after { content: " runs"; color: var(--muted); }
 }
+
+/* Prompts: a note on why the prompts are short, under the intro and the same width. */
+/* The intro is 62ch at 17px; the note is 15px, so it scales its width to match, padding included. */
+.req-note { box-sizing: border-box; max-width: calc(62ch * 17 / 15); margin: var(--space-24) 0 var(--space-16); padding: var(--space-12) var(--space-16); background: var(--panel); font-size: var(--fs-body); line-height: 1.55; color: var(--ink-2); }
+.req-note b { margin-right: 6px; font-weight: 650; color: var(--ink); }
+.req-note .go { display: table; margin-top: var(--space-8); }

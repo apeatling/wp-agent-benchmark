@@ -19,6 +19,8 @@ Settings are read from the environment and from a .env file in the repo root.
 import argparse
 import collections
 import datetime
+import hashlib
+import importlib.util
 import json
 import os
 import shutil
@@ -141,6 +143,8 @@ def remaining(benchmark, batch, agent_id, repeats):
     return sorted((r for r in reqs if done[r] < repeats), key=lambda r: (done[r], reqs.index(r)))
 
 
+# Your own prompts have no kind of site; they're never counted in any results.
+OWN_KIND = {'id': 'own', 'name': 'Your own prompt'}
 BENCH_NAME = {'choose': 'Choosing WordPress', 'build': 'Building with WordPress'}
 STATUS = {'completed': 'completed', 'infra_error': 'errors (not counted)', 'limit_reached': 'hit a usage limit (not counted)',
           'model_switched': 'switched model (not counted)'}
@@ -183,8 +187,11 @@ def run_agent(benchmark, batch, agent, auth, todo, concurrent=3, env_type='docke
     return collections.Counter(r['status'] for r in records.export(benchmark, batch, [job_dir]))
 
 
-def harbor_job(benchmark, batch, agent, auth, todo, kind, concurrent=3, env_type='docker', printer=None, plan_concurrent=1, extra=None):
-    """Run these requests for one agent in a Harbor job. Returns the job folder, or None if Harbor made nothing."""
+def harbor_job(benchmark, batch, agent, auth, todo, kind, concurrent=3, env_type='docker', printer=None, plan_concurrent=1, extra=None,
+               tasks_dir=None, attempts=1):
+    """Run these requests for one agent in a Harbor job. Returns the job folder, or None if Harbor made nothing.
+    tasks_dir: where the tasks are, if not tasks/<benchmark>/<environment> (your own prompts are built elsewhere)."""
+    tasks_dir = tasks_dir or defs.ROOT / 'tasks' / benchmark / agent['environment']
     env = auth_env(auth, agent)
     when = datetime.datetime.now(datetime.timezone.utc)
     job = f"{kind}-{benchmark}-{agent['id']}-{when:%Y%m%d-%H%M%S}"
@@ -196,10 +203,10 @@ def harbor_job(benchmark, batch, agent, auth, todo, kind, concurrent=3, env_type
     if agent.get('effort'):
         kwargs['reasoning_effort'] = agent['effort']
     config = {
-        'job_name': job, 'jobs_dir': str(defs.JOBS), 'n_attempts': 1, 'n_concurrent_trials': concurrent,
+        'job_name': job, 'jobs_dir': str(defs.JOBS), 'n_attempts': attempts, 'n_concurrent_trials': concurrent,
         'environment': {'type': env_type, 'delete': True},
         'agents': [{'import_path': agent['import_path'], 'model_name': agent['model'], 'resume_trajectory': True, 'kwargs': kwargs}],
-        'tasks': [{'path': str(defs.ROOT / 'tasks' / benchmark / agent['environment'] / t)} for t in todo],
+        'tasks': [{'path': str(tasks_dir / t)} for t in todo],
     }
     manifest = {
         'job': job, 'kind': kind, 'auth': auth, 'benchmark': benchmark, 'batch': batch, 'tasks': todo,
@@ -686,6 +693,24 @@ def doctor(args):
     return 0
 
 
+CUSTOM_TASKS = defs.ROOT / 'data' / 'local' / 'custom-tasks'
+
+
+def own_prompt(prompt, agent):
+    """A one-off Choosing task for a prompt of your own, built like the published ones and kept in
+    data/local/custom-tasks/ (gitignored). Returns the request and the folder its task is in."""
+    spec = importlib.util.spec_from_file_location('build_tasks', defs.ROOT / 'scripts' / 'build_tasks.py')
+    builder = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(builder)
+    req = {'id': 'own-' + hashlib.sha256(prompt.encode()).hexdigest()[:8], 'kind': 'own', 'prompt': prompt}
+    env = defs.environments()[agent['environment']]
+    folder = CUSTOM_TASKS / env['id']
+    if not (folder / req['id']).exists():
+        folder.mkdir(parents=True, exist_ok=True)
+        builder.build_request(folder / req['id'], env, req, OWN_KIND, defs.requests('choose')['version'])
+    return req, folder
+
+
 def try_one(args):
     """One run of one request, to see how the benchmark works. Kept in its own job folder; never part of a batch."""
     if args.agent:
@@ -695,29 +720,44 @@ def try_one(args):
         if not ready:
             sys.exit('No agent can sign in yet. Run `uv run wpab doctor` to see what to set up.')
         agent, auth = ready[0], args.auth or sign_in(ready[0])
-    reqs = defs.requests(args.benchmark)['request']
-    controls = {k['id'] for k in defs.catalog(args.benchmark)['kind'] if k.get('control')}
-    req = next((r for r in reqs if r['id'] == args.request), None) if args.request else next(r for r in reqs if r['kind'] not in controls)
-    if not req:
-        sys.exit(f"No request {args.request}. They're in benchmarks/{args.benchmark}/requests.toml.")
+    prompt = Path(args.prompt_file).read_text().strip() if args.prompt_file else (args.prompt or '').strip()
+    if args.prompt_file and args.prompt:
+        sys.exit('Use --prompt or --prompt-file, not both.')
+    if prompt and args.request:
+        sys.exit('Use --request for one of the benchmark\'s prompts, or --prompt for your own, not both.')
+    tasks_dir = None
+    if prompt:
+        req, tasks_dir = own_prompt(prompt, agent)
+    else:
+        reqs = defs.requests(args.benchmark)['request']
+        controls = {k['id'] for k in defs.catalog(args.benchmark)['kind'] if k.get('control')}
+        req = next((r for r in reqs if r['id'] == args.request), None) if args.request else next(r for r in reqs if r['kind'] not in controls)
+        if not req:
+            sys.exit(f"No request {args.request}. They're in benchmarks/{args.benchmark}/requests.toml.")
     auth_env(auth, agent)
     preflight(args.env)
     defs.JOBS.mkdir(exist_ok=True)
     printer = progress.Printer(defs.JOBS / f"try-{datetime.datetime.now():%Y%m%d-%H%M}.log")
-    printer.line(f"{agent['name']} in {agent['harness_name']} ({'API key' if auth == 'api' else PLAN_NAME.get(agent['harness'], 'your plan')}), request {req['id']}:")
+    times = f", {args.times} times" if args.times > 1 else ''
+    printer.line(f"{agent['name']} in {agent['harness_name']} ({'API key' if auth == 'api' else PLAN_NAME.get(agent['harness'], 'your plan')}), "
+                 f"{'your own prompt' if prompt else 'request ' + req['id']}{times}:")
     printer.line(f"  “{req['prompt'].strip()}”", progress.DIM)
     printer.line('The first run builds the sandbox image, which can take a few minutes. A run takes up to about 15 minutes.', progress.DIM)
-    printer.total[agent['id']] = 1
-    job_dir = harbor_job(args.benchmark, None, agent, auth, [req['id']], 'try', env_type=args.env, printer=printer, extra={'publish': False})
+    printer.total[agent['id']] = args.times
+    extra = {'publish': False, **({'own_prompt': req} if prompt else {})}
+    job_dir = harbor_job(args.benchmark, None, agent, auth, [req['id']], 'try', concurrent=min(args.times, 3), env_type=args.env, printer=printer,
+                         extra=extra, tasks_dir=tasks_dir, attempts=args.times)
     trials = sorted(p for p in job_dir.iterdir() if p.is_dir() and (p / 'result.json').exists()) if job_dir else []
     if not trials:
         printer.line('The run produced no result. See harbor.log in the newest folder in jobs/.', progress.YELLOW)
         return 1
-    r = records.choose_record(job_dir, trials[0], json.loads((job_dir / 'wpab-manifest.json').read_text()), agent)
-    print()
-    if r['status'] != 'completed':
-        print(f"The run didn’t complete ({r['status']}): {r['status_detail'] or 'see the job’s harbor.log'}.")
-    else:
+    manifest = json.loads((job_dir / 'wpab-manifest.json').read_text())
+    for n, trial in enumerate(trials, 1):
+        r = records.choose_record(job_dir, trial, manifest, agent)
+        print(f"\nRun {n} of {len(trials)}" if len(trials) > 1 else '')
+        if r['status'] != 'completed':
+            print(f"The run didn’t complete ({r['status']}): {r['status_detail'] or 'see the job’s harbor.log'}.")
+            continue
         print(f"Built with: {r['platform']}" + (f" ({r['detection']['evidence']})" if r['detection'].get('evidence') else ''))
         if r.get('why_not_answer'):
             text = r['why_not_answer'].strip()
@@ -770,6 +810,9 @@ def main():
         if name == 'try':
             s.add_argument('agent', nargs='?', help='agent ID (default: the first one you can run)')
             s.add_argument('--request', help='request ID from benchmarks/choose/requests.toml (default: the first)')
+            s.add_argument('--prompt', help='your own prompt instead of one of the benchmark\'s, e.g. a detailed brief')
+            s.add_argument('--prompt-file', help='your own prompt, read from a file (for long briefs)')
+            s.add_argument('--times', type=int, default=1, help='how many times to run it (default 1)')
         if name == 'rerun':
             s.add_argument('run_id', help='the run to repeat, e.g. C2610-0005')
         if name == 'status':
