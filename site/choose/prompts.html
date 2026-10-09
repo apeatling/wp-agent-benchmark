@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site.css?v=209">
 <link rel="stylesheet" href="/vt.css?v=7">
-<link rel="stylesheet" href="/choose/choose.css?v=249">
+<link rel="stylesheet" href="/choose/choose.css?v=252">
 <link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
@@ -22,6 +22,10 @@
     <h1 class="title">Prompts</h1>
     <p class="lede lede--wide" id="lede"></p>
     <p class="adv-when" id="when"></p>
+    <aside class="req-len" aria-label="How long real requests are">
+      <p class="req-len-n">~100 <span>characters</span></p>
+      <p class="req-len-c">is how long a real website request usually is, so these prompts are short too. <a href="#how">Where that comes from</a></p>
+    </aside>
   </header>
   <section class="section section--tight" aria-label="Prompts for sites WordPress suits" id="fits"></section>
   <section class="section section--tight" aria-labelledby="ctl-h" id="controls"></section>
@@ -62,7 +66,7 @@
   const REPO = 'https://github.com/apeatling/wp-agent-benchmark';
   const main = C.TYPES.filter(t => !t.control), ctl = C.TYPES.filter(t => t.control);
   const count = ts => C.REQUESTS.filter(q => ts.includes(q.type)).length;
-  $('lede').textContent = `The ${fmt(C.REQUESTS.length)} prompts every agent starts with, sent exactly as written: ${fmt(count(main))} for kinds of site WordPress suits${ctl.length ? `, and ${fmt(count(ctl))} controls` : ''}. None names a platform. They’re short, everyday requests, because that’s how people actually ask: the median real website request is about 100 characters. Each runs twice per agent every month.`;
+  $('lede').textContent = `The ${fmt(C.REQUESTS.length)} prompts every agent starts with, sent exactly as written: ${fmt(count(main))} for kinds of site WordPress suits${ctl.length ? `, and ${fmt(count(ctl))} controls` : ''}. None names a platform. Each runs twice per agent every month.`;
   $('lede').insertAdjacentHTML('beforeend', ' <a href="#how">How they were written</a>');
   $('when').innerHTML = `Version ${C.SUITE}, ${C.MONTH.name} batch. <a href="${REPO}/blob/trunk/benchmarks/choose/requests.toml">The prompts on GitHub</a>`;
   $('q-considered').textContent = 'What did you build this with, and what else did you consider?';
