@@ -73,7 +73,7 @@
     return opt(g.id, g.name) + (ps.length > 1 ? subs.map(p => opt(p, '\u00a0\u00a0\u00a0\u00a0' + p)).join('') : '');
   }).join('');
   const wpOpts = [['named', 'Named it afterwards', r => r.out === 'WordPress' || r.unprompted], ['weighed', 'Brought it up while deciding', r => r.out === 'WordPress' || r.considered],
-    ['offered', 'Offered it before building', r => r.offered], ['unnamed', 'Didn’t name it afterwards', r => r.out !== 'WordPress' && r.unprompted === false]];
+    ['asked', 'Asked the person before building', r => r.nudged], ['offered', 'Offered it before building', r => r.offered], ['unnamed', 'Didn’t name it afterwards', r => r.out !== 'WordPress' && r.unprompted === false]];
   $('f-wp').innerHTML = opt('', 'Any') + wpOpts.filter(([, , f]) => has(f)).map(([v, l]) => opt(v, l)).join('');
   // Patterns are finer-grained than reasons, so they share the Reason filter, in their own group after the reasons.
   const reasons = C.REASONS.filter(x => has(r => r.reasons.some(y => y.id === x.id))), pats = C.PATTERNS.filter(p => has(r => (r.patterns || []).includes(p.id)));
@@ -108,6 +108,7 @@
     if (wp === 'named' && !(chose || r.unprompted)) return false;
     if (wp === 'unnamed' && (chose || r.unprompted !== false)) return false;
     if (wp === 'weighed' && !(chose || r.considered)) return false;
+    if (wp === 'asked' && !r.nudged) return false;
     if (wp === 'offered' && !r.offered) return false;
     return true;
   }
