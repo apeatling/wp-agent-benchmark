@@ -57,20 +57,24 @@ def build_choose(out):
     defs = tomllib.loads((source / 'requests.toml').read_text())
     kinds = {k['id']: k for k in tomllib.loads((source / 'catalog.toml').read_text())['kind']}
     envs = tomllib.loads((ROOT / 'benchmarks' / 'environments.toml').read_text())['environment']
-    template = source / 'template'
     for env in envs:
         for req in defs['request']:
-            kind = kinds[req['kind']]
-            task = out / 'choose' / env['id'] / req['id']
-            shutil.copytree(template, task)
-            toml = (template / 'task.toml').read_text()
-            (task / 'task.toml').write_text(toml.format(id=req['id'], kind=kind['id'], kind_name=kind['name'], env=env['id'], user=env['user'],
-                                                        control=str(kind.get('control', False)).lower(), suite_version=defs['version']))
-            (task / 'steps' / 'request' / 'instruction.md').write_text(req['prompt'] + '\n')
-            fixture = source / 'fixtures' / req['fixture'] if req.get('fixture') else None
-            (task / 'environment').mkdir()
-            environment_dir(env, task / 'environment', fixture)
-            (task / 'tests' / 'fixture.json').write_text(json.dumps(fixture_manifest(fixture) if fixture else {}, indent=2) + '\n')
+            build_request(out / 'choose' / env['id'] / req['id'], env, req, kinds[req['kind']], defs['version'])
+
+
+def build_request(task, env, req, kind, suite_version):
+    """One Choosing task at `task`: the template, this request's prompt, and the sandbox for `env`."""
+    source = ROOT / 'benchmarks' / 'choose'
+    template = source / 'template'
+    shutil.copytree(template, task)
+    toml = (template / 'task.toml').read_text()
+    (task / 'task.toml').write_text(toml.format(id=req['id'], kind=kind['id'], kind_name=kind['name'], env=env['id'], user=env['user'],
+                                                control=str(kind.get('control', False)).lower(), suite_version=suite_version))
+    (task / 'steps' / 'request' / 'instruction.md').write_text(req['prompt'] + '\n')
+    fixture = source / 'fixtures' / req['fixture'] if req.get('fixture') else None
+    (task / 'environment').mkdir()
+    environment_dir(env, task / 'environment', fixture)
+    (task / 'tests' / 'fixture.json').write_text(json.dumps(fixture_manifest(fixture) if fixture else {}, indent=2) + '\n')
 
 
 def same_tree(a, b):

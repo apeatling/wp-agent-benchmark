@@ -20,6 +20,7 @@ Before starting anything that runs agents, say how many runs and roughly what th
 |---|---|
 | `uv run wpab doctor` | What's set up, and which agents can run |
 | `uv run wpab try [agent]` | One run, not added to any results |
+| `uv run wpab try <agent> --prompt "..."` | One run of the person's own prompt (or `--prompt-file`, `--times N`), not added to any results |
 | `uv run wpab run --agents a,b` | One pass of this month's remaining requests for those agents |
 | `uv run wpab status` | What's done this month |
 | `uv run wpab rerun <run id>` | One earlier run again, the same way, kept separate |
