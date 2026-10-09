@@ -1102,5 +1102,4 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
 /* The intro is 62ch at 17px; the note is 15px, so it scales its width to match, padding included. */
 .req-note { box-sizing: border-box; max-width: calc(62ch * 17 / 15); margin: var(--space-24) 0 var(--space-16); padding: var(--space-12) var(--space-16); background: var(--panel); font-size: var(--fs-body); line-height: 1.55; color: var(--ink-2); }
 .req-note b { margin-right: 6px; font-weight: 650; color: var(--ink); }
-.req-note a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 3px; }
-.req-note a:hover { color: var(--ink); }
+.req-note .go { display: table; margin-top: var(--space-8); }
