@@ -49,22 +49,63 @@ open project; what matters is who stewards the thing.
 
 The Choosing benchmark's advice is only about helping WordPress be chosen more often: the moment an agent decides how
 to build, what it knows, what it asks, what it believes. Succeeding once WordPress is chosen (starting, building,
-converting, operating, going live) is the Building benchmark's job, with its own recommendations. Raise something about
-succeeding only where it changes the choice, for example when agents avoid WordPress because they can't go live with it.
+converting, operating, going live) is the Building benchmark's job, with its own recommendations. But whether something
+is possible at all changes the choice: when agents avoid WordPress because they believe it can't start where they are,
+can't take their existing HTML, or can't go live, the tool that makes it possible is a Choosing idea.
+
+## Before the choice
+
+Every idea has to reach an agent that hasn't chosen WordPress yet. Ask of each one: how does an agent that has never
+been told about WordPress meet this, before it decides? Only a few routes exist:
+
+- What models learn: docs, examples, templates, tutorials and facts published widely enough to shape training data.
+- What agents find while they work: web search, docs they fetch, package registries (`npx`, `npm`), error messages.
+- What ships inside the agent: connector and tool directories its maker includes by default.
+- What labs measure: public evals and benchmarks that models are trained and judged against.
+
+Anything installed into the agent or the site first (a WordPress skill, plugin, MCP server or theme) only reaches an
+agent after someone has already chosen WordPress. However useful, it doesn't change the choice, so it isn't a Choosing
+idea: list it for the Building benchmark instead. Agent makers bundling something by default isn't the project's
+decision. Tooling that removes a reason not to choose WordPress (a one-command start, a converter, a deploy path) is
+different: it counts, paired with the practical content that tells agents it exists. Pointing agents to company tools
+isn't the answer when only companies offer something; the open project closing the gap is.
+
+## Content and tooling
+
+Separate three kinds of idea, because they reach agents differently and change different things:
+
+- Persuasion: content arguing that WordPress fits ("WordPress is great for a newsroom"). Agents mostly know this
+  already and say so after building, so persuasion rarely changes what they do. Rank it low unless the evidence shows
+  agents didn't know.
+- Practical content: what an agent needs to act, stated plainly where it learns or looks. One command to start, real
+  prices, a working example, a dated fact. It corrects what agents believe they can't do or can't afford.
+- Tooling and product changes: commands, importers, connectors, deploy paths, defaults in core. They change what's
+  true and what an agent can deliver. An agent told to build picks what it can run and show straight away, so what it
+  can deliver often decides the choice. Tooling only moves the choice if agents can learn it exists before choosing:
+  pair it with the practical content that announces it.
+
+Weigh evidence the same way: what got in the way while the agent was deciding, and at sites where it nearly chose
+WordPress, shows what changes choices. Reasons given when asked afterwards are weaker; they're often an explanation
+of a choice already made.
 
 ## Only what the project and its ecosystem can do
 
-Every recommendation is something WordPress contributors, teams or ecosystem companies can actually do: ship, publish,
-change or start. Agent makers' behaviour isn't ours to change, so don't recommend it ("agents should ask who will
-update the site"). Recommend what the project can do to influence it instead ("publish decision guidance agents load
-when asked to build a site"). Each recommendation's title is that action, starting with a verb.
+Every idea is something WordPress contributors, teams or ecosystem companies can actually do: ship, publish, change
+or start. Agent makers' behaviour isn't ours to change, so don't recommend it ("agents should ask who will update the
+site"). Recommend what the project can do to influence it instead. Each idea's title is that action, starting with a
+verb.
 
-## Bold as well as practical
+## Rank by impact, honestly
 
-Building on what exists is the start, not the limit. Alongside near-term fixes, propose bigger, new ideas the project
-could take on: things that don't exist yet and would change how agents see WordPress, for example an agent-focused
-documentation site on wordpress.org. Each still has to be something the project or its ecosystem can actually do, and
-still leave room for companies to build on.
+Give every idea an impact rating, High, Medium or Low, with one plain sentence saying why. Impact is how much the idea
+would raise the share of sites agents build with WordPress: how often the problem it answers got in the way, times how
+surely and how soon it reaches agents before they choose. Be strict. High is rare and needs a clear route to agents
+and a problem that came up often. A large effort with an uncertain route to agents is Low, however good the idea.
+Ratings are judgements; say what each rests on.
+
+Look widely for ideas. The evidence holds more than the obvious fixes: read the near misses, what would have changed
+agents' minds, and the alternatives they chose, and ask what the project could do about each. Bold ideas are welcome,
+rated as honestly as the rest.
 
 ## Brief, and pointing to references
 

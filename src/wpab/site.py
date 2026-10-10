@@ -46,7 +46,7 @@ def advice(batch):
 
 def assign_ids(adv):
     """Give every recommendation, way to help and closing section the id its permalink uses, in the order the
-    Recommendations page shows them (by sites reached; new ways to help first), so other pages can link to them."""
+    Recommendations page shows them (problems by sites reached; ideas by impact), so other pages can link to them."""
     slug = lambda t: re.sub(r'^-|-$', '', re.sub(r'[^a-z0-9]+', '-', re.sub(r'^\d+\.\s*', '', re.sub(r'<[^>]+>', '', t)).lower())) or 'idea'
     used = set()
 
@@ -59,7 +59,6 @@ def assign_ids(adv):
     recs = sorted((x for x in adv['sections'] if x.get('recommendation')), key=lambda x: -x['reach']['sites'])
     for r in recs:
         r['id'] = uid(r['title'])
-        r['ways'] = sorted(r['ways'], key=lambda w: w.get('scale') != 'new')
         for w in r['ways']:
             w['id'] = uid(w['html'])
     for x in adv['sections']:
