@@ -24,6 +24,7 @@ from . import classify, defs, records, review
 
 MODEL = 'opus'    # Opus 5.5
 EFFORT = 'high'
+ADVICE_EFFORT = 'medium'   # the advice draft; enough for writing from the analysis, and much faster
 
 
 def ask(prompt, tries=3):
@@ -232,52 +233,32 @@ WordPress suits. This batch: {n} such sites, all built with something other than
 this month (each a model in its maker's harness, or in OpenCode where the maker has none). Personal agents with their makers' own hosting
 (OpenAI's dots, Meta's Muse, xAI's Grok Bot) are launching and haven't been tested yet.
 
-Write it in whatever shape serves the reader best. Keep it short: say what matters, then stop. Link to projects,
-tickets and sources instead of explaining them. Use Markdown, with two light conventions so a page can lay it out
-without changing a word:
-- Open with a title (#), a plain headline with no date or month prefix, and one short paragraph that states the
-  finding and the direction: at most two sentences and about 40 words. The detail belongs in the recommendations.
-- Give each recommendation its own ## section, in this order, so a page can show each part in one place without
-  repeating anything:
-  1. Title: an action the WordPress project or its ecosystem can take, starting with a verb.
-  2. One short sentence (under 20 words) saying why it matters, in plain words, without numbers.
-  3. "Evidence:" then the numbers, quotes and fact checks behind it. Every number says what was counted, out of the
-     {n} sites, in plain words. Don't list the actions here.
-  4. "Ways to help:" then two to four bullets, each one action in 12 words or fewer, starting with a verb, with no
-     links and no team names. Under every bullet, indented two spaces, give these five labelled lines, in this order,
-     each one or two sentences, so someone new to the idea can act on it (list ways in order: Update, then Extend,
-     then New idea):
-       Scale: Update (fix or refresh something that exists), Extend (build on something that exists), or New idea (a
-         project that doesn't exist yet).
-       Why: what problem it solves, with the evidence (a number of the {n} sites, or a short quote with its site id).
-       Already exists: what's out there to build on, with links and who stewards it; "Nothing yet" if nothing.
-       How: two or three concrete steps, in one line separated by semicolons.
-       Where: where to start, with a link (a repository, ticket, page or forum).
-       How we'll know: what the benchmark would show if it worked.
-       Reasons: the dashboard reason ids (from dashboard_reasons) this way to help addresses, comma-separated, or
-         "none". The Data page lists it beside those reasons, so name only the ones it really answers.
-     Don't repeat the recommendation's evidence word for word.
-- End each recommendation's section with one hidden line listing the evidence it answers, by id, for example
-  <!-- answers: scale=update reasons=upkeep,overkill claims=needs-php-mysql-server,heavy-setup conditions=owner-edits patterns=one-command -->
-  "scale" is the recommendation's own scale: update, extend, or new (a new project as a whole). Pages tag new ones
-  and list them after the practical ones, so bold ideas never lead.
-  "reasons" are the dashboard's reason ids (dashboard_reasons in the evidence) this recommendation answers; the Data
-  page links each reason to it. When you name one of those reasons, quote its dashboard share so the pages agree.
-  The page uses it to work out what share of sites the recommendation addresses, so list only what it really answers.
-- Every number must make sense to someone seeing it for the first time: say what the agents did or said, out of how
-  many sites, in plain words ("43% of the {n} sites: the agent said WordPress needs paid hosting"), never jargon like
-  "runs counted upkeep against". And make the link to the recommendation obvious: why does this number call for this
-  action?
-Every recommendation is about helping WordPress be chosen more often, and must be something contributors, teams or
-ecosystem companies can actually do, not a change in how agent makers build their agents (see the principles).
-Mix near-term fixes with bigger, new ideas: at least two recommendations, or ways to help, should be new projects
-that don't exist yet and would change how agents see WordPress (for example, an agent-focused documentation site on
-wordpress.org). Be bold, but keep each one concrete enough to start.
-Other sections (about the numbers, where WordPress isn't the best fit, what isn't covered) can use ## headings too.
-- If last month's recommendations are given below, add a "## Since last month" section. For each one, say whether it
-  continues (then it appears again above), was addressed (link what shipped or say which number moved), or is no longer
-  relevant (say why). No recommendation is dropped without being listed here. Each in-flight project below has a steward (the open
-project, a company, or independent); respect the principles on that.
+Use Markdown, exactly in this shape, so a page can lay it out without changing a word:
+- A title (#): a plain headline, no date. Then one paragraph of at most two sentences and about 40 words: the finding
+  and the direction.
+- One ## section per idea, from highest impact to lowest, every one in the same shape. The title is the action, a verb
+  first, 12 words or fewer. Then each of these on its own line, in this order, one short sentence each:
+  1. What it is and how an agent would meet it (under 25 words, no label).
+  2. "Impact: " High, Medium or Low, a full stop, then why in plain words (under 20 words, no run ids or jargon).
+  3. "Kind: " exactly one of Persuasion, Practical content, Tooling, Product change, Evals.
+  4. "Reaches agents: " the route by which an agent that hasn't chosen WordPress meets it.
+  5. "Already exists: " what's out there to build on, with links and who stewards it; "Nothing yet" if nothing.
+  6. "How: " two or three concrete steps separated by semicolons.
+  7. "Where: " where to start, with a link.
+  8. "How we'll know: " what the benchmark would show if it worked.
+  9. "Evidence:" then two or three short bullets, one line each: what agents did or said, out of the {n} sites, in
+     plain words, and fact checks. Say "sites where the agent nearly chose WordPress", never "near misses". Lead with
+     what happened while agents were deciding; label reasons given afterwards as such.
+  10. One hidden line: <!-- answers: reasons=<dashboard reason ids> claims=<claim ids> patterns=<pattern ids> -->
+      "reasons" are dashboard_reasons ids the idea answers (the Data page links them); claims and patterns are what
+      it answers, used to count the sites it reached. List only what it really answers.
+- Then "## For the Building benchmark": a few plain bullets for the strongest ideas that only help once WordPress is
+  chosen (anything installed first, or about building, deploying or running the site), each with a short reason.
+- Then "## Where WordPress isn't the best fit" and "## About the numbers", short.
+Aim for ten to sixteen ideas, drawn from every part of the evidence, across all kinds; every one needs its evidence.
+Rate impact strictly, as the principles say: at most three are High, and persuasion is Low unless the evidence shows
+agents didn't know. Every idea must be something contributors, teams or ecosystem companies can actually do, not a
+change in how agent makers build their agents.
 
 EVIDENCE (counts are computed from run IDs; quotes are verbatim)
 {evidence}
@@ -293,9 +274,9 @@ EARLIER REVIEW NOTES (fact checks and existing projects found when an earlier dr
 """
 
 
-def ask_text(prompt):
+def ask_text(prompt, effort=EFFORT):
     with tempfile.TemporaryDirectory() as tmp:
-        out = subprocess.run(['claude', '-p', '--model', MODEL, '--effort', EFFORT, '--output-format', 'json', *review.CLAUDE_NO_TOOLS],
+        out = subprocess.run(['claude', '-p', '--model', MODEL, '--effort', effort, '--output-format', 'json', *review.CLAUDE_NO_TOOLS],
                              input=prompt, capture_output=True, text=True, cwd=tmp, env=review.plan_env())
     if out.returncode:
         raise RuntimeError(f'claude failed: {out.stderr[:300]}')
@@ -325,7 +306,7 @@ def previous_advice(batch):
     return (defs.OUT / 'choose' / 'analysis' / earlier[-1] / 'advice.md').read_text() if earlier else '(none)'
 
 
-def write(batch, retry=True):
+def write(batch):
     """The advice as a free-form document, written straight from the evidence: advice.md. No schema."""
     base = folder(batch)
     grouped = json.loads((base / 'grouped.json').read_text())
@@ -352,7 +333,7 @@ def write(batch, retry=True):
                     .replace('{claims}', (base / 'claims.json').read_text())
                     .replace('{landscape}', land_file.read_text() if land_file.exists() else '(none)')
                     .replace('{validation}', val_file.read_text() if val_file.exists() else '(none)')
-                    .replace('{previous}', previous_advice(batch)))
+                    .replace('{previous}', previous_advice(batch)), effort=ADVICE_EFFORT)
     out = base / 'advice.md'
     # The model sometimes ends with notes to whoever asked for the draft, after a closing rule. They're meant for
     # the maintainer, not readers, so they're printed here and never saved into the advice.
@@ -360,13 +341,12 @@ def write(batch, retry=True):
     if rule and not notes.lstrip().startswith('#'):
         print('  Notes from the draft, not published:\n' + '\n'.join('    ' + line for line in notes.strip().splitlines()))
         text = body
-    header = f"<!-- Drafted by Opus 5.5 ({EFFORT} effort) from the batch data and data/choose/principles.md ({principles_version()[:7]}). Unreviewed. -->\n\n"
+    header = f"<!-- Drafted by Opus 5.5 ({ADVICE_EFFORT} effort) from the batch data and data/choose/principles.md ({principles_version()[:7]}). Unreviewed. -->\n\n"
     out.write_text(header + text.strip() + '\n')
     checks = check_advice(batch)
     bare = checks['ways_without_detail'] + (['opening too long'] if checks['opening_words'] > 50 else [])
-    if bare and retry:
-        print(f'  {len(bare)} ways to help have no detail; drafting again')
-        return write(batch, retry=False)
+    if bare:
+        print(f'  For review: {len(bare)} gaps in the draft (see advice.checks.json)')
     return out
 
 
@@ -385,8 +365,9 @@ def check_advice(batch):
     bad_quotes = [{'run': rid, 'quote': q} for q, rid in quotes if q not in full.get(rid, '')]
     urls = sorted(set(re.findall(r'\((https?://[^)\s]+)\)', md)))
     unknown = [u for u in urls if u not in known]
-    bare = [f"{re.sub('<[^>]+>', '', w['html'])}: missing {', '.join(w['missing'])}" for sec in sections(batch)['sections']
-            if sec.get('recommendation') for w in sec['ways'] if w['missing']]
+    bare = [f"{sec['title']}: missing {', '.join(sec['missing'])}" for sec in sections(batch)['sections'] if sec.get('missing')]
+    bare += [f"{sec['title']}: no claims or patterns tagged, so its reach can't be counted" for sec in sections(batch)['sections']
+             if sec.get('recommendation') and not sec['reach']['sites']]
     out = {'quotes_checked': len(quotes), 'quotes_not_found': bad_quotes, 'links_checked': len(urls), 'links_not_in_sources': unknown,
            'ways_without_detail': bare, 'opening_words': len(re.sub('<[^>]+>', ' ', sections(batch)['intro_html']).split())}
     (base / 'advice.checks.json').write_text(json.dumps(out, ensure_ascii=False, indent=1))
@@ -396,11 +377,10 @@ def check_advice(batch):
 def sections(batch):
     """advice.md split for a page, without changing a word.
 
-    A recommendation is a ## section with a "Ways to help:" list. It has five parts, each with one home on the page:
-    the action (its title), reach (computed from its hidden answers line), the why (its first paragraph), its ways to
-    help (each one line, with the indented lines under it as that way's detail), and its evidence (the text labelled
-    "Evidence:", plus anything else in the section). Other ## sections are shown as written. Every line of the
-    document lands in a part; the build fails if a line has no place."""
+    An idea is a ## section with an "Impact:" line: its action (the title), a lead sentence, labelled lines (Impact,
+    Kind, Reaches agents, Already exists, How, Where, How we'll know), its evidence (after "Evidence:"), and its reach
+    (computed from its hidden answers line). Other ## sections are shown as written. Every line of the document lands
+    in a part; the build fails if a line has no place."""
     import markdown_it
     md = markdown_it.MarkdownIt('commonmark', {'html': False}).enable('table')
     raw = (folder(batch) / 'advice.md').read_text()
@@ -421,32 +401,6 @@ def sections(batch):
         unknown = [i for k, ids in links.items() if k in by for i in ids if i not in by[k]]
         return {'sites': len(hit), 'n': n, 'value': round(100 * len(hit) / n), 'unknown_ids': unknown, 'runs': sorted(hit)}
 
-    LABEL = r'(?m)^\**(Evidence|Ways to help):?\**[ \t]*$'
-    PARTS = ('Why', 'Already exists', 'How', 'Where', "How we'll know")
-
-    def way(w):
-        """A way to help: its line, and its labelled parts (Why, Already exists, How, Where, How we'll know).
-        Lines without a label join the part above, so nothing is dropped."""
-        parts, current = [], None
-        for line in w['detail']:
-            m = re.match(r"\**(Scale|Reasons|Why|Already exists|How we.ll know|How|Where)\**\s*:\**\s*(.*)", line)
-            if m:
-                label = "How we'll know" if m.group(1).startswith('How we') else m.group(1)
-                current = {'label': label, 'text': m.group(2)}
-                parts.append(current)
-            elif current:
-                current['text'] += ' ' + line
-            else:
-                current = {'label': '', 'text': line}
-                parts.append(current)
-        scale = next((x['text'] for x in parts if x['label'] == 'Scale'), '')
-        scale = 'new' if 'new' in scale.lower() else 'extend' if 'extend' in scale.lower() else 'update' if scale else ''
-        reasons = [r.strip() for r in next((x['text'] for x in parts if x['label'] == 'Reasons'), '').split(',') if r.strip() and r.strip() != 'none']
-        parts = [x for x in parts if x['label'] not in ('Scale', 'Reasons')]
-        return {'html': md.renderInline(w['line']), 'scale': scale, 'reasons': reasons,
-                'parts': [{'label': x['label'], 'html': md.renderInline(x['text'])} for x in parts],
-                'missing': [lab for lab in PARTS if lab not in {x['label'] for x in parts}] + ([] if scale else ['Scale']),
-                'detail_html': md.render('\n'.join(w['detail'])) if w['detail'] else ''}
     title = re.match(r'#\s+(.*)', text)
     body = text[title.end():].strip() if title else text
     parts = re.split(r'(?m)^##\s+', body)
@@ -458,40 +412,43 @@ def sections(batch):
         if answers:
             for key, ids in re.findall(r'(reasons|claims|conditions|patterns)\s*=\s*([\w,\-:]+)', answers.group(1)):
                 links[key] = [i.strip() for i in ids.split(',') if i.strip()]
-        rec_scale = re.search(r'scale\s*=\s*(\w+)', answers.group(1)).group(1).lower() if answers and re.search(r'scale\s*=\s*(\w+)', answers.group(1)) else ''
         rest = re.sub(r'<!--.*?-->', '', rest, flags=re.S).strip()
         pieces.append(head)
-        if not re.search(r'(?m)^\**Ways to help:?\**[ \t]*$', rest):
+        if not re.search(r'(?m)^\**Impact\**\s*:', rest):
             out.append({'title': head.strip(), 'recommendation': False, 'html': md.render(rest)})
             pieces.append(rest)
             continue
-        # Cut at the labels: [lead and anything before "Evidence:"], evidence, ways to help.
-        chunks = re.split(LABEL, rest)
-        named = {chunks[i]: chunks[i + 1] for i in range(1, len(chunks) - 1, 2)}
-        paras = [x for x in re.split(r'\n\s*\n', chunks[0].strip()) if x.strip()]
-        lead = paras[0] if paras and not re.match(r'\s*(\||[-*+]\s|>|#|\d+\.\s)', paras[0]) else ''
-        evidence_parts = (paras[1:] if lead else paras) + [named.get('Evidence', '').strip()]
-        # Ways to help: top-level bullets; indented lines under one are its detail. Anything else after the list
-        # goes to the evidence, so nothing is lost.
-        ways, tail, current = [], [], None
-        for line in named.get('Ways to help', '').strip('\n').splitlines():
-            if re.match(r'[-*][ \t]+', line):
-                current = {'line': re.sub(r'^[-*][ \t]+', '', line).strip(), 'detail': []}
-                ways.append(current)
-            elif line[:1] in (' ', '\t') and current and line.strip():
-                current['detail'].append(line.strip())
+        # An idea: a lead, labelled lines, then "Evidence:". Be forgiving about layout: a label can start mid-line
+        # after a full stop, wrap onto the next lines, or hold a short list.
+        LABELS = r"Impact|Kind|Reaches agents|Already exists|How we.ll know|How|Where"
+        split = re.split(r'(?m)^\**Evidence\**:?[ \t]*$', rest, maxsplit=1)
+        body_part, ev = split[0], split[1] if len(split) > 1 else ''
+        body_part = re.sub(r'(?<=\.)[ \t]+(?=\**(?:' + LABELS + r')\**\s*:)', '\n', body_part)
+        lines, fields, lead_lines, current = body_part.strip().splitlines(), {}, [], None
+        for line in lines:
+            m = re.match(r'\**(' + LABELS + r')\**\s*:\**\s*(.*)', line.strip())
+            if m:
+                current = "How we'll know" if m.group(1).startswith('How we') else m.group(1)
+                fields[current] = m.group(2).strip()
+            elif current and line.strip():
+                fields[current] = (fields[current] + ' ' + re.sub(r'^[-*+]\s+', '', line.strip())).strip()
             elif line.strip():
+                lead_lines.append(line.strip())
+            else:
                 current = None
-                tail.append(line)
-        evidence_parts.append('\n'.join(tail))
-        evidence = '\n\n'.join(x for x in evidence_parts if x.strip())
-        pieces += [lead, evidence] + [w['line'] for w in ways] + ['\n'.join(w['detail']) for w in ways]
-        order = {'new': 0, 'update': 1, 'extend': 2}  # new ideas first
-        built = sorted((way(w) for w in ways), key=lambda x: order.get(x['scale'], 1))
+        pieces += [line.strip() for line in lines]
+        lead = ' '.join(lead_lines)
+        level = re.match(r'\W*(high|medium|low)\W*\s*(.*)', fields.get('Impact', ''), re.I | re.S)
+        evidence = ev.strip()
+        pieces.append(evidence)
+        PARTS = ('Already exists', 'How', 'Where', "How we'll know")
         out.append({'title': head.strip(), 'recommendation': True, 'answers': links, 'reach': reach(links),
-                    'scale': rec_scale if rec_scale in order else ('new' if built and all(x['scale'] == 'new' for x in built) else 'update'),
-                    'lead_html': md.renderInline(lead) if lead else '', 'evidence_html': md.render(evidence) if evidence else '',
-                    'ways': built})
+                    'impact': level.group(1).lower() if level else '', 'impact_html': md.renderInline(level.group(2).strip()) if level else '',
+                    'kind': fields.get('Kind', '').rstrip('.'), 'reaches_html': md.renderInline(fields.get('Reaches agents', '')),
+                    'parts': [{'label': k, 'html': md.renderInline(fields[k])} for k in PARTS if fields.get(k)],
+                    'missing': [k for k in ('Impact', 'Kind') + PARTS if not fields.get(k)],
+                    'reasons': links.get('reasons', []), 'ways': [],
+                    'lead_html': md.renderInline(lead) if lead else '', 'evidence_html': md.render(evidence) if evidence else ''})
     # Every line has a place on the page.
     # Compare without list markers or heading marks, which the parts don't keep.
     lines = [re.sub(r'^(##\s+|[-*][ \t]+)', '', l.strip()).strip() for l in re.sub(r'<!--.*?-->', '', body, flags=re.S).splitlines()]
