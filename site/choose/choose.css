@@ -1139,4 +1139,10 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
 .ir-d dl { margin: 0; }
 .ir-d dt { margin-top: var(--space-12); font-size: 15px; font-weight: 500; color: var(--muted); }
 .ir-d dd { margin: 2px 0 0; }
-@media (max-width: 900px) { .ir-head { display: none; } .ir > details > summary { grid-template-columns: auto minmax(0, 1fr) auto; } .ir-k { display: none; } .ir-d { padding-left: var(--space-16); } }
+@media (max-width: 900px) {
+  /* Narrow: impact and sites on a top line, the idea full width under them, so every row lines up. */
+  .ir-head { display: none; }
+  .ir > details > summary { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "lv n" "t t"; row-gap: 8px; }
+  .ir-lv { grid-area: lv; } .ir-n { grid-area: n; } .ir-t { grid-area: t; } .ir-k { display: none; }
+  .ir-d { padding-left: var(--space-16); }
+}
