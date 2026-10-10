@@ -2,7 +2,7 @@
 window.WPAB_DATA = window.WPAB_DATA || {};
 window.WPAB_DATA.choose = {
  "schema_version": "1.0",
- "generated": "2026-10-08T23:09:17+00:00",
+ "generated": "2026-10-10T01:27:53+00:00",
  "batch": {
   "id": "2026-10",
   "name": "October 2026",
@@ -670,11 +670,119 @@ window.WPAB_DATA.choose = {
   }
  ],
  "advice": {
-  "title": "Agents see where WordPress fits, but decide before they ask",
-  "intro_html": "<p>Agents built 193 sites without WordPress. Many named it the better fit only after building, and they cited costs and upkeep that are often overstated. Guidance agents read before they build, and WordPress sites that start and travel like files, would win more of those choices.</p>\n",
+  "title": "Many reasons agents pass over WordPress are beliefs the project can correct",
+  "intro_html": "<p>On 193 sites built without WordPress, agents mostly went straight to code, often believing WordPress needed a server they lacked. The opportunity is practical: show agents that WordPress starts with one command, and say plainly what it costs and how it stays updated.</p>\n",
   "sections": [
    {
-    "title": "Publish guidance agents read before choosing how to build a site",
+    "title": "Publish the one-command WordPress start where agents already look",
+    "recommendation": true,
+    "answers": {
+     "reasons": [
+      "default"
+     ],
+     "claims": [
+      "needs-php-database-server",
+      "agent-cannot-run-it"
+     ],
+     "patterns": [
+      "one-command"
+     ]
+    },
+    "reach": {
+     "sites": 97,
+     "n": 193,
+     "value": 50,
+     "unknown_ids": []
+    },
+    "impact": "high",
+    "impact_html": "The belief that WordPress needs a server came up on 84 of 193 sites, and the tool already exists.",
+    "kind": "Practical content",
+    "reaches_html": "Through docs and search results agents fetch, the npm registry, and training data.",
+    "parts": [
+     {
+      "label": "Already exists",
+      "html": "<a href=\"https://developer.wordpress.org/playground/developers/local-development/wp-playground-cli/\">Playground CLI</a> and the <a href=\"https://github.com/WordPress/agent-skills\">wp-playground skill</a> (WordPress Playground team); <a href=\"https://make.wordpress.org/playground/2026/02/06/wp-env-now-runs-wordpress-with-playground-runtime/\">wp-env's Playground runtime</a> (WordPress); Studio CLI (Automattic product). <a href=\"https://wordpress.org/llms.txt\">wordpress.org/llms.txt</a> mentions none of them."
+     },
+     {
+      "label": "How",
+      "html": "Add a &quot;Start a new site&quot; section to wordpress.org/llms.txt naming Node 20.18+ and the command; publish an llms.txt for the Playground docs, which returns 404 today; say plainly that the local site is a SQLite development copy, and link the route to a live host."
+     },
+     {
+      "label": "Where",
+      "html": "<a href=\"https://make.wordpress.org/meta/\">Meta team</a> with the <a href=\"https://make.wordpress.org/playground/\">Playground team</a>."
+     },
+     {
+      "label": "How we'll know",
+      "html": "Fewer sites cite a missing PHP or database, and agents run WordPress in Node-only workspaces."
+     }
+    ],
+    "missing": [],
+    "reasons": [
+     "default"
+    ],
+    "ways": [],
+    "lead_html": "A plain line in wordpress.org/llms.txt, the docs and npm saying <code>npx @wp-playground/cli@latest start</code> runs WordPress with only Node.",
+    "evidence_html": "<ul>\n<li>While deciding, 18 of the 76 sites where the agent nearly chose WordPress dropped it because the workspace had Node but no PHP or MySQL.</li>\n<li>Asked afterwards, 84 of 193 said WordPress needs a PHP and MySQL server: &quot;In this specific environment, only Node.js and Python were installed—PHP and MySQL were not present.&quot; (C2610-0067)</li>\n<li>Fact check: this is misleading for a local start, because Playground CLI needs only Node 20.18+ and SQLite. It is true for production hosting, which needs PHP 8.3+ and MySQL 8.0+ (<a href=\"https://wordpress.org/about/requirements/\">requirements</a>, Oct 2026).</li>\n</ul>\n",
+    "id": "publish-the-one-command-wordpress-start-where-agents-already-look"
+   },
+   {
+    "title": "Update wordpress.org's security page with a dated account of what updates itself",
+    "recommendation": true,
+    "answers": {
+     "reasons": [
+      "upkeep",
+      "security"
+     ],
+     "claims": [
+      "ongoing-updates-maintenance",
+      "outdated-sites-get-hacked",
+      "most-attacked-platform",
+      "updates-break-site"
+     ],
+     "patterns": [
+      "security"
+     ]
+    },
+    "reach": {
+     "sites": 137,
+     "n": 193,
+     "value": 71,
+     "unknown_ids": []
+    },
+    "impact": "medium",
+    "impact_html": "Upkeep and security were the most cited reasons, but agents' worries are partly true.",
+    "kind": "Practical content",
+    "reaches_html": "Through training data, web search and docs agents fetch.",
+    "parts": [
+     {
+      "label": "Already exists",
+      "html": "The <a href=\"https://wordpress.org/about/security/\">security page</a>, last changed April 2024 and still saying 43%; the <a href=\"https://wordpress.org/news/category/security/\">security release archive</a>, the <a href=\"https://wordpress.org/documentation/article/plugins-themes-auto-updates/\">auto-updates docs</a> and <a href=\"https://wordpress.org/news/2026/06/pts/\">Protect The Shire</a> (all WordPress.org); <a href=\"https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/\">Patchstack</a> and <a href=\"https://www.wordfence.com/blog/2026/02/quarterly-wordpress-threat-intelligence-report-q4-2025/\">Wordfence</a> reports (security companies)."
+     },
+     {
+      "label": "How",
+      "html": "Add a dated facts section covering minor core auto-updates since 3.7, major ones on new installs since 5.6, and plugin rollback on fatal errors since 6.6; summarise 2026's core security releases honestly, including the critical fixes pushed automatically; give owners three steps: plugin auto-updates, few well-kept plugins, and backups."
+     },
+     {
+      "label": "Where",
+      "html": "<a href=\"https://make.wordpress.org/meta/\">Meta team</a>, linked from <a href=\"https://wordpress.org/llms.txt\">wordpress.org/llms.txt</a>."
+     },
+     {
+      "label": "How we'll know",
+      "html": "Fewer agents say WordPress needs weekly manual updates, and security falls below 128 of 193 sites."
+     }
+    ],
+    "missing": [],
+    "reasons": [
+     "upkeep",
+     "security"
+    ],
+    "ways": [],
+    "lead_html": "A refreshed wordpress.org/about/security that states auto-update defaults, recent core fixes and plugin risk plainly, where models and searches find it.",
+    "evidence_html": "<ul>\n<li>Hosting and upkeep came up on 158 of 193 sites and security on 128, the two most common reasons.</li>\n<li>While deciding, upkeep tipped sites where the agent nearly chose WordPress (C2610-0005, C2610-0395). Asked afterwards: &quot;WordPress sites require continuous maintenance: weekly core updates, PHP version upgrades, database optimizations, and plugin updates.&quot; (C2610-0003)</li>\n<li>Fact check: partly true. Core patches itself, but plugins held 91% of 2025 vulnerabilities, and 46% of vulnerabilities had no fix at disclosure (Patchstack, 2026).</li>\n</ul>\n",
+    "id": "update-wordpress-org-s-security-page-with-a-dated-account-of-what-updates-itself"
+   },
+   {
+    "title": "Publish neutral guidance on when WordPress fits, starting with who edits",
     "recommendation": true,
     "answers": {
      "reasons": [
@@ -683,12 +791,6 @@ window.WPAB_DATA.choose = {
      ],
      "claims": [
       "overkill-for-small-site"
-     ],
-     "conditions": [
-      "self-edit-without-code",
-      "multiple-editors",
-      "regular-blogging",
-      "already-uses-wordpress"
      ],
      "patterns": [
       "didnt-ask"
@@ -700,466 +802,40 @@ window.WPAB_DATA.choose = {
      "value": 85,
      "unknown_ids": []
     },
-    "scale": "update",
-    "lead_html": "Agents skip the one question, who edits the site, that most often points to WordPress.",
-    "evidence_html": "<ul>\n<li>80% of the 193 sites: the agent chose how to build without asking who would update the site or how they wanted to edit it.</li>\n<li>54% of the 193 sites: the agent said WordPress would fit if the owner, staff or volunteers want to edit in a browser without code. No condition came up more often. The question agents skip is the one that decides for WordPress.</li>\n<li>&quot;More than the site needs&quot; was a reason the agent passed on WordPress at 70% of sites (136 of 193). &quot;Went straight to code&quot; was a reason at 21% (41 of 193).</li>\n<li>&quot;If easy self-service updates are your priority, I’d favor WordPress for this bakery site.&quot; (C2610-0002)</li>\n<li>Fact check, 7 Oct 2026:\n<ul>\n<li><a href=\"https://wordpress.org/llms.txt\">wordpress.org/llms.txt</a> describes WordPress but offers no questions for deciding and names no poor fits.</li>\n<li>It says &quot;more than 43%&quot;, where <a href=\"https://w3techs.com/technologies/details/cm-wordpress\">W3Techs</a> shows 40.1%.</li>\n<li>The <a href=\"https://learn.wordpress.org/lesson/1-getting-started-with-wordpress-is-wordpress-right-for-you/\">Learn WordPress lesson on fit</a> needs a login.</li>\n<li>None of the 19 <a href=\"https://github.com/WordPress/agent-skills\">official agent skills</a> helps decide. All of them assume a WordPress codebase already exists.</li>\n</ul>\n</li>\n</ul>\n",
-    "ways": [
+    "impact": "medium",
+    "impact_html": "Not asking who edits was the most common pattern, but content reaches models slowly.",
+    "kind": "Practical content",
+    "reaches_html": "Through training data and docs agents fetch; coding agents fetch llms.txt only occasionally.",
+    "parts": [
      {
-      "html": "Add fit questions and poor fits to the official llms.txt",
-      "scale": "update",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "Agents already know when WordPress fits but apply it after building: &quot;WordPress is great when you're adding content often, like blog posts, lots of pages or several people editing.&quot; (C2610-0004)"
-       },
-       {
-        "label": "Already exists",
-        "html": "Markdown versions of wordpress.org pages and llms.txt, from the Meta team (<a href=\"https://make.wordpress.org/meta/2026/03/03/markdown-now-available-on-wordpress-org/\">March 2026</a>). SQLite's <a href=\"https://www.sqlite.org/whentouse.html\">Appropriate Uses</a> page is a model for listing fits, poor fits and a short checklist."
-       },
-       {
-        "label": "How",
-        "html": "Add a &quot;choosing a platform&quot; section with three questions (who edits, how often, which features); list where another option fits better; date the market-share figure."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://make.wordpress.org/meta/\">make.wordpress.org/meta</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "WordPress comes up while agents decide, not only afterwards. &quot;More than the site needs&quot; falls below 70% by more than the margin."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: Update\nWhy: Agents already know when WordPress fits but apply it after building: &quot;WordPress is great when you're adding content often, like blog posts, lots of pages or several people editing.&quot; (C2610-0004)\nAlready exists: Markdown versions of wordpress.org pages and llms.txt, from the Meta team (<a href=\"https://make.wordpress.org/meta/2026/03/03/markdown-now-available-on-wordpress-org/\">March 2026</a>). SQLite's <a href=\"https://www.sqlite.org/whentouse.html\">Appropriate Uses</a> page is a model for listing fits, poor fits and a short checklist.\nHow: Add a &quot;choosing a platform&quot; section with three questions (who edits, how often, which features); list where another option fits better; date the market-share figure.\nWhere: <a href=\"https://make.wordpress.org/meta/\">make.wordpress.org/meta</a>\nHow we'll know: WordPress comes up while agents decide, not only afterwards. &quot;More than the site needs&quot; falls below 70% by more than the margin.</p>\n",
-      "id": "add-fit-questions-and-poor-fits-to-the-official-llms-txt"
+      "label": "Already exists",
+      "html": "The Learn WordPress lesson <a href=\"https://learn.wordpress.org/lesson/1-getting-started-with-wordpress-is-wordpress-right-for-you/\">&quot;Is WordPress right for you?&quot;</a> (Training team, behind a login); <a href=\"https://wordpress.org/llms.txt\">wordpress.org/llms.txt</a> (Meta team, fit cases only); <a href=\"https://www.sqlite.org/whentouse.html\">SQLite's &quot;Appropriate Uses&quot;</a> page as a model."
      },
      {
-      "html": "Add a platform-choice skill that triggers on website requests",
-      "scale": "extend",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "At C2610-0046, -0048 and -0092 the agent recommended WordPress only after it had finished building."
-       },
-       {
-        "label": "Already exists",
-        "html": "<a href=\"https://github.com/WordPress/agent-skills\">WordPress/agent-skills</a> (open project) requires evals, and its router assumes WordPress has already been chosen. Automattic's <a href=\"https://github.com/Automattic/wordpress-agent-skills\">WordPress Site Creator</a> (company product, stalled) gathers a site specification but doesn't ask who edits."
-       },
-       {
-        "label": "How",
-        "html": "Open a scope issue first; describe the skill as &quot;choosing how to build a website&quot; so it loads before any platform is picked; ship it with an eval and list it in skills directories."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://github.com/WordPress/agent-skills/issues\">agent-skills issues</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "In test runs with the skill installed, agents ask or state who will edit before building. Also track whether it loads at all: <a href=\"https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals\">Vercel found</a> a skill went unused in 56% of its eval cases."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: Extend\nWhy: At C2610-0046, -0048 and -0092 the agent recommended WordPress only after it had finished building.\nAlready exists: <a href=\"https://github.com/WordPress/agent-skills\">WordPress/agent-skills</a> (open project) requires evals, and its router assumes WordPress has already been chosen. Automattic's <a href=\"https://github.com/Automattic/wordpress-agent-skills\">WordPress Site Creator</a> (company product, stalled) gathers a site specification but doesn't ask who edits.\nHow: Open a scope issue first; describe the skill as &quot;choosing how to build a website&quot; so it loads before any platform is picked; ship it with an eval and list it in skills directories.\nWhere: <a href=\"https://github.com/WordPress/agent-skills/issues\">agent-skills issues</a>\nHow we'll know: In test runs with the skill installed, agents ask or state who will edit before building. Also track whether it loads at all: <a href=\"https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals\">Vercel found</a> a skill went unused in 56% of its eval cases.</p>\n",
-      "id": "add-a-platform-choice-skill-that-triggers-on-website-requests"
+      "label": "How",
+      "html": "Write good fits, poor fits and a four-question checklist, modelled on SQLite's page; open the Learn lesson to logged-out readers; link it from llms.txt and replace &quot;43%+&quot; with W3Techs' 40.1% (October 2026)."
      },
      {
-      "html": "Add website-choice tasks to the official WordPress AI benchmark",
-      "scale": "extend",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "Nothing official measures whether agents weigh who will run a site. Leadership named evals as the AI priority in <a href=\"https://make.wordpress.org/core/2026/06/22/merge-proposal-guidelines-built-on-knowledge/\">July 2026</a>."
-       },
-       {
-        "label": "Already exists",
-        "html": "<a href=\"https://github.com/WordPress/wp-bench\">WP-Bench</a> (open project) tests WordPress code knowledge only. This benchmark's plain website requests could supply the tasks."
-       },
-       {
-        "label": "How",
-        "html": "Propose a task set drawn from these requests; score whether the agent checks who edits and names when WordPress fits; publish the tasks so any agent maker can run them."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://github.com/WordPress/wp-bench/issues\">WP-Bench issues</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "The share of sites built without asking who updates them falls below 80% by more than the margin."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: Extend\nWhy: Nothing official measures whether agents weigh who will run a site. Leadership named evals as the AI priority in <a href=\"https://make.wordpress.org/core/2026/06/22/merge-proposal-guidelines-built-on-knowledge/\">July 2026</a>.\nAlready exists: <a href=\"https://github.com/WordPress/wp-bench\">WP-Bench</a> (open project) tests WordPress code knowledge only. This benchmark's plain website requests could supply the tasks.\nHow: Propose a task set drawn from these requests; score whether the agent checks who edits and names when WordPress fits; publish the tasks so any agent maker can run them.\nWhere: <a href=\"https://github.com/WordPress/wp-bench/issues\">WP-Bench issues</a>\nHow we'll know: The share of sites built without asking who updates them falls below 80% by more than the margin.</p>\n",
-      "id": "add-website-choice-tasks-to-the-official-wordpress-ai-benchmark"
+      "label": "Where",
+      "html": "<a href=\"https://make.wordpress.org/meta/\">Meta team</a> with the <a href=\"https://make.wordpress.org/training/\">Training team</a>."
+     },
+     {
+      "label": "How we'll know",
+      "html": "More agents raise who will edit the site before choosing, and WordPress comes up while deciding rather than afterwards."
      }
     ],
-    "id": "publish-guidance-agents-read-before-choosing-how-to-build-a-site"
-   },
-   {
-    "title": "Correct the cost, upkeep and security facts agents repeat",
-    "recommendation": true,
-    "answers": {
-     "reasons": [
-      "upkeep",
-      "security"
-     ],
-     "claims": [
-      "paid-hosting-cost",
-      "ongoing-updates-maintenance",
-      "needs-many-paid-plugins",
-      "outdated-sites-get-hacked",
-      "most-attacked-platform"
-     ],
-     "conditions": [
-      "someone-will-maintain"
-     ]
-    },
-    "reach": {
-     "sites": 147,
-     "n": 193,
-     "value": 76,
-     "unknown_ids": []
-    },
-    "scale": "update",
-    "lead_html": "The reasons agents give most for passing on WordPress are often outdated or overstated.",
-    "evidence_html": "<ul>\n<li>&quot;Hosting and upkeep&quot; was a reason at 82% of sites (158 of 193). &quot;Security and updates&quot; was a reason at 66% (128 of 193). These are the top two reasons, so correcting them reaches the most decisions.</li>\n<li>82 of the 193 sites (42%): the agent said WordPress needs paid hosting, usually &quot;$5–30 a month&quot;. Checked: misleading.\n<ul>\n<li>WordPress.com, a company product, has a $0 plan (ads, a subdomain, no plugins) and paid plans from $4 a month billed yearly.</li>\n<li>Shared hosts start around $3 a month.</li>\n<li>The Simply Static plugin exports a site to free static hosting.</li>\n</ul>\n</li>\n<li>86 of the 193 sites (45%): the agent said someone must keep WordPress updated. Partly true:\n<ul>\n<li>Core security releases have installed themselves since 3.7.</li>\n<li>New sites also take major releases automatically since 5.6.</li>\n<li>Plugin and theme auto-updates are one click but off by default.</li>\n</ul>\n</li>\n<li>50 of the 193 sites (26%): the agent said features need several paid plugins, which &quot;require annual subscription fees ($100–$300/yr per plugin)&quot; (C2610-0003). Checked: misleading. WooCommerce tracks stock without add-ons, and free plugins cover weight-based shipping and course sales.</li>\n<li>Security claims:\n<ul>\n<li>59 of the 193 sites (31%): the agent said out-of-date sites get hacked. Checked: true.</li>\n<li>58 of the 193 sites (30%): the agent called WordPress the most attacked platform. Checked: partly true.</li>\n<li><a href=\"https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/\">Patchstack</a> puts 91% of 2025's vulnerabilities in plugins.</li>\n<li>Core had critical fixes in 2026 (<a href=\"https://wordpress.org/news/category/security/\">7.0.2 and 7.1.2</a>), and both were pushed to sites automatically.</li>\n<li><a href=\"https://wordpress.org/about/security/\">wordpress.org/about/security</a> was last updated in April 2024 and still says 43%.</li>\n</ul>\n</li>\n</ul>\n",
-    "ways": [
-     {
-      "html": "Refresh the security page with dated, current facts",
-      "scale": "update",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "Agents state the risk without explaining how fixes reach sites: &quot;It's the most attacked website platform, mostly through outdated plugins.&quot; (C2610-0019)"
-       },
-       {
-        "label": "Already exists",
-        "html": "from the open project, the security page and white paper, the <a href=\"https://wordpress.org/news/category/security/\">security release archive</a>, and <a href=\"https://wordpress.org/news/2026/06/pts/\">Protect The Shire</a>, which holds plugin releases for review before they auto-update. From companies, independent counts by Patchstack and <a href=\"https://www.wordfence.com/blog/2026/02/quarterly-wordpress-threat-intelligence-report-q4-2025/\">Wordfence</a>."
-       },
-       {
-        "label": "How",
-        "html": "Add a dated summary of this year's core security releases and how they reached sites; state the auto-update defaults; link advice on choosing plugins and the independent reports."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://make.wordpress.org/meta/\">make.wordpress.org/meta</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "Agents mention automatic security fixes when they discuss risk. &quot;Security and updates&quot; falls below 66% by more than the margin."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: Update\nWhy: Agents state the risk without explaining how fixes reach sites: &quot;It's the most attacked website platform, mostly through outdated plugins.&quot; (C2610-0019)\nAlready exists: from the open project, the security page and white paper, the <a href=\"https://wordpress.org/news/category/security/\">security release archive</a>, and <a href=\"https://wordpress.org/news/2026/06/pts/\">Protect The Shire</a>, which holds plugin releases for review before they auto-update. From companies, independent counts by Patchstack and <a href=\"https://www.wordfence.com/blog/2026/02/quarterly-wordpress-threat-intelligence-report-q4-2025/\">Wordfence</a>.\nHow: Add a dated summary of this year's core security releases and how they reached sites; state the auto-update defaults; link advice on choosing plugins and the independent reports.\nWhere: <a href=\"https://make.wordpress.org/meta/\">make.wordpress.org/meta</a>\nHow we'll know: Agents mention automatic security fixes when they discuss risk. &quot;Security and updates&quot; falls below 66% by more than the margin.</p>\n",
-      "id": "refresh-the-security-page-with-dated-current-facts"
-     },
-     {
-      "html": "Publish free and paid options for a small site, with renewal prices",
-      "scale": "update",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "Agents anchor high: &quot;WordPress needs a server running all the time with a database. That usually means paid hosting (about $5–25 a month)&quot; (C2610-0006)."
-       },
-       {
-        "label": "Already exists",
-        "html": "<a href=\"https://wordpress.org/hosting/\">wordpress.org/hosting</a> lists hosts without prices. Host-written guides such as <a href=\"https://dreamhost.com/blog/wordpress-site-cost/\">DreamHost's</a> put a business site near $415 in its first year. <a href=\"https://wordpress.com/pricing/\">WordPress.com pricing</a> is a company page."
-       },
-       {
-        "label": "How",
-        "html": "Add a dated table of free, shared and managed options with both introductory and renewal prices; say what paid plans add (support, backups, staging, speed, plugins); list free plugins for common features."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://make.wordpress.org/hosting/\">make.wordpress.org/hosting</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "Fewer than 42% of sites say WordPress needs paid hosting, and agents name a free option alongside paid ones."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: Update\nWhy: Agents anchor high: &quot;WordPress needs a server running all the time with a database. That usually means paid hosting (about $5–25 a month)&quot; (C2610-0006).\nAlready exists: <a href=\"https://wordpress.org/hosting/\">wordpress.org/hosting</a> lists hosts without prices. Host-written guides such as <a href=\"https://dreamhost.com/blog/wordpress-site-cost/\">DreamHost's</a> put a business site near $415 in its first year. <a href=\"https://wordpress.com/pricing/\">WordPress.com pricing</a> is a company page.\nHow: Add a dated table of free, shared and managed options with both introductory and renewal prices; say what paid plans add (support, backups, staging, speed, plugins); list free plugins for common features.\nWhere: <a href=\"https://make.wordpress.org/hosting/\">make.wordpress.org/hosting</a>\nHow we'll know: Fewer than 42% of sites say WordPress needs paid hosting, and agents name a free option alongside paid ones.</p>\n",
-      "id": "publish-free-and-paid-options-for-a-small-site-with-renewal-prices"
-     },
-     {
-      "html": "Revive making plugin auto-updates the default for new sites",
-      "scale": "extend",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "Agents see plugin upkeep as an ongoing chore: &quot;someone has to handle hosting, backups, security, and updates to WordPress, WooCommerce and every plugin&quot; (C2610-0009)."
-       },
-       {
-        "label": "Already exists",
-        "html": "<a href=\"https://core.trac.wordpress.org/ticket/58389\">Trac #58389</a> proposes this for plugins installed from Add New. It has been awaiting review since 2023, and a core committer supported it in 2025. 5.6 set the same default for major core updates on new installs, and 6.6 rolls back a plugin auto-update that causes a fatal error."
-       },
-       {
-        "label": "How",
-        "html": "Comment on #58389 with these precedents; scope it to WordPress.org-hosted plugins on new sites; leave themes out until they get rollback."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://core.trac.wordpress.org/ticket/58389\">Trac #58389</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "Agents describe plugin updates as automatic, and claims that someone must handle every update fall below 45%."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: Extend\nWhy: Agents see plugin upkeep as an ongoing chore: &quot;someone has to handle hosting, backups, security, and updates to WordPress, WooCommerce and every plugin&quot; (C2610-0009).\nAlready exists: <a href=\"https://core.trac.wordpress.org/ticket/58389\">Trac #58389</a> proposes this for plugins installed from Add New. It has been awaiting review since 2023, and a core committer supported it in 2025. 5.6 set the same default for major core updates on new installs, and 6.6 rolls back a plugin auto-update that causes a fatal error.\nHow: Comment on #58389 with these precedents; scope it to WordPress.org-hosted plugins on new sites; leave themes out until they get rollback.\nWhere: <a href=\"https://core.trac.wordpress.org/ticket/58389\">Trac #58389</a>\nHow we'll know: Agents describe plugin updates as automatic, and claims that someone must handle every update fall below 45%.</p>\n",
-      "id": "revive-making-plugin-auto-updates-the-default-for-new-sites"
-     }
+    "missing": [],
+    "reasons": [
+     "overkill",
+     "default"
     ],
-    "id": "correct-the-cost-upkeep-and-security-facts-agents-repeat"
+    "ways": [],
+    "lead_html": "A short, dated page and llms.txt section listing good fits, poor fits and the first question to settle: who will update the site?",
+    "evidence_html": "<ul>\n<li>On 80% of the 193 sites, the agent chose how to build without asking who would update the site or how.</li>\n<li>Asked afterwards, agents named owners or staff editing without code as the case for WordPress on 54% of sites: &quot;If easy self-service updates are your priority, I’d favor WordPress for this bakery site.&quot; (C2610-0002)</li>\n<li>Fact check: wordpress.org/llms.txt names no poor fits and says 43%+. <a href=\"https://w3techs.com/technologies/details/cm-wordpress\">W3Techs</a> gives 40.1% (7 October 2026).</li>\n</ul>\n",
+    "id": "publish-neutral-guidance-on-when-wordpress-fits-starting-with-who-edits"
    },
    {
-    "title": "Show agents how to start or convert WordPress from any folder",
-    "recommendation": true,
-    "answers": {
-     "reasons": [
-      "default",
-      "stack"
-     ],
-     "claims": [
-      "needs-php-database-server",
-      "agent-cannot-run-it",
-      "migration-means-rebuild"
-     ],
-     "patterns": [
-      "one-command",
-      "editable-html"
-     ]
-    },
-    "reach": {
-     "sites": 110,
-     "n": 193,
-     "value": 57,
-     "unknown_ids": []
-    },
-    "scale": "extend",
-    "lead_html": "Many agents dropped WordPress because they thought they couldn't run or convert it where they were.",
-    "evidence_html": "<ul>\n<li>84 of the 193 sites (44%): the agent said WordPress needs a PHP server and a MySQL database before any page exists. Partly true: production hosting does. Locally, <a href=\"https://developer.wordpress.org/playground/developers/local-development/wp-playground-cli/\">Playground CLI</a> runs WordPress with only Node.js 20.18+ and SQLite.</li>\n<li>19 of the 193 sites (10%): the agent said it couldn't install or run WordPress where it was. Checked: misleading. &quot;In this specific environment, only Node.js and Python were installed—PHP and MySQL were not present.&quot; (C2610-0067)</li>\n<li>15 of the 76 sites where the agent came close to choosing WordPress: it stopped because the workspace had no PHP or database (for example C2610-0093, -0280, -0387).</li>\n<li>26 of the 193 sites (13%): the agent said moving to WordPress means a rebuild. Checked: true for the open project. Today only company tools turn a static site into an editable block theme.</li>\n<li>&quot;Went straight to code&quot; was a reason at 21% of sites (41 of 193). &quot;Preferred its usual stack&quot; was a reason at 6% (11 of 193).</li>\n<li>Fact check, 7 Oct 2026: wordpress.org/llms.txt doesn't mention Playground, npx or Node.js, and the Playground docs have no llms.txt.</li>\n</ul>\n",
-    "ways": [
-     {
-      "html": "Add a Node-only quick start to the official llms.txt",
-      "scale": "update",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "Agents often had exactly what Playground needs: &quot;This container environment came ready with Node.js and Python.&quot; (C2610-0076)"
-       },
-       {
-        "label": "Already exists",
-        "html": "Playground CLI and the wp-playground and blueprint skills (open project). Studio CLI (Automattic) and InstaWP sandboxes (InstaWP) are company options for previews."
-       },
-       {
-        "label": "How",
-        "html": "Add <code>npx @wp-playground/cli@latest start</code> with its Node 20.18 requirement; explain that the site is stored outside the project folder, so agents should commit a blueprint.json; publish an llms.txt for the Playground docs."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://make.wordpress.org/playground/\">make.wordpress.org/playground</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "Fewer than 10% of sites say the agent couldn't run WordPress, and agents build WordPress in workspaces that have only Node."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: Update\nWhy: Agents often had exactly what Playground needs: &quot;This container environment came ready with Node.js and Python.&quot; (C2610-0076)\nAlready exists: Playground CLI and the wp-playground and blueprint skills (open project). Studio CLI (Automattic) and InstaWP sandboxes (InstaWP) are company options for previews.\nHow: Add <code>npx @wp-playground/cli@latest start</code> with its Node 20.18 requirement; explain that the site is stored outside the project folder, so agents should commit a blueprint.json; publish an llms.txt for the Playground docs.\nWhere: <a href=\"https://make.wordpress.org/playground/\">make.wordpress.org/playground</a>\nHow we'll know: Fewer than 10% of sites say the agent couldn't run WordPress, and agents build WordPress in workspaces that have only Node.</p>\n",
-      "id": "add-a-node-only-quick-start-to-the-official-llms-txt"
-     },
-     {
-      "html": "Add a start-a-new-site skill to the official agent skills",
-      "scale": "extend",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "At 4% of the 193 sites the agent's first step was a one-line scaffold such as create-next-app. Agents know no WordPress equivalent."
-       },
-       {
-        "label": "Already exists",
-        "html": "<a href=\"https://github.com/WordPress/agent-skills\">WordPress/agent-skills</a> covers existing codebases only, and its eval harness checks only frontmatter (<a href=\"https://github.com/WordPress/agent-skills/issues/101\">#101</a>). Studio Code (Automattic) builds sites from nothing, but only for Automattic hosting."
-       },
-       {
-        "label": "How",
-        "html": "Open a scope issue; write a skill that goes from an empty folder to a running site through Playground and a blueprint; add an eval that actually runs it."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://github.com/WordPress/agent-skills/issues\">agent-skills issues</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "Agents that load the skill finish with a running WordPress site in the workspace."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: Extend\nWhy: At 4% of the 193 sites the agent's first step was a one-line scaffold such as create-next-app. Agents know no WordPress equivalent.\nAlready exists: <a href=\"https://github.com/WordPress/agent-skills\">WordPress/agent-skills</a> covers existing codebases only, and its eval harness checks only frontmatter (<a href=\"https://github.com/WordPress/agent-skills/issues/101\">#101</a>). Studio Code (Automattic) builds sites from nothing, but only for Automattic hosting.\nHow: Open a scope issue; write a skill that goes from an empty folder to a running site through Playground and a blueprint; add an eval that actually runs it.\nWhere: <a href=\"https://github.com/WordPress/agent-skills/issues\">agent-skills issues</a>\nHow we'll know: Agents that load the skill finish with a running WordPress site in the workspace.</p>\n",
-      "id": "add-a-start-a-new-site-skill-to-the-official-agent-skills"
-     },
-     {
-      "html": "Add static HTML import to a community-stewarded block theme tool",
-      "scale": "extend",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "&quot;WordPress uses PHP themes, so your hand-coded HTML and CSS would need to become a custom theme.&quot; (C2610-0024)"
-       },
-       {
-        "label": "Already exists",
-        "html": "<a href=\"https://github.com/Automattic/static-site-importer\">Static Site Importer</a> and Blocks Engine (Automattic, used by Studio's <code>create --from</code>) convert whole sites. <a href=\"https://github.com/humanmade/block-runner\">Block Runner</a> (Human Made) converts HTML into blocks but doesn't build themes. <a href=\"https://github.com/WordPress/create-block-theme\">Create Block Theme</a> (open project) has no import."
-       },
-       {
-        "label": "How",
-        "html": "Propose an import feature in Create Block Theme; reuse a GPL engine such as Blocks Engine or Block Runner; expose it as a WP-CLI command agents can run."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://github.com/WordPress/create-block-theme/issues\">Create Block Theme issues</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "Asked to make a hand-coded site editable, agents convert it to WordPress. Today 3% of sites instead keep the HTML and add a headless CMS or JSON file."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: Extend\nWhy: &quot;WordPress uses PHP themes, so your hand-coded HTML and CSS would need to become a custom theme.&quot; (C2610-0024)\nAlready exists: <a href=\"https://github.com/Automattic/static-site-importer\">Static Site Importer</a> and Blocks Engine (Automattic, used by Studio's <code>create --from</code>) convert whole sites. <a href=\"https://github.com/humanmade/block-runner\">Block Runner</a> (Human Made) converts HTML into blocks but doesn't build themes. <a href=\"https://github.com/WordPress/create-block-theme\">Create Block Theme</a> (open project) has no import.\nHow: Propose an import feature in Create Block Theme; reuse a GPL engine such as Blocks Engine or Block Runner; expose it as a WP-CLI command agents can run.\nWhere: <a href=\"https://github.com/WordPress/create-block-theme/issues\">Create Block Theme issues</a>\nHow we'll know: Asked to make a hand-coded site editable, agents convert it to WordPress. Today 3% of sites instead keep the HTML and add a headless CMS or JSON file.</p>\n",
-      "id": "add-static-html-import-to-a-community-stewarded-block-theme-tool"
-     }
-    ],
-    "id": "show-agents-how-to-start-or-convert-wordpress-from-any-folder"
-   },
-   {
-    "title": "Define a portable WordPress site that any host can deploy",
-    "recommendation": true,
-    "answers": {
-     "reasons": [
-      "git"
-     ],
-     "claims": [
-      "content-locked-in-database"
-     ],
-     "patterns": [
-      "git-content",
-      "deploy"
-     ]
-    },
-    "reach": {
-     "sites": 33,
-     "n": 193,
-     "value": 17,
-     "unknown_ids": []
-    },
-    "scale": "new",
-    "lead_html": "Agents prefer sites they can keep in a folder and hand over; WordPress sites don't travel that way yet.",
-    "evidence_html": "<ul>\n<li>&quot;Wanted content in Git&quot; was a reason at 46% of sites (88 of 193).</li>\n<li>9% of the 193 sites: the agent kept content in Markdown or other files in the repository.</li>\n<li>4% of the 193 sites: the agent preferred its choice because it deploys with one command or to free static hosting.</li>\n<li>13 of the 193 sites (7%): the agent said WordPress locks content in a database. Checked: partly true. WXR export, <code>wp export</code> and the REST API move content out, but no standard bundle exists that a host can deploy.</li>\n<li>Fact check:\n<ul>\n<li>Playground and Studio sites deploy natively only to WordPress.com and Pressable, both Automattic.</li>\n<li>Hostinger, Cloudways, Rocket.net, InstaWP and Pantheon each have their own agent tools.</li>\n<li>The <a href=\"https://make.wordpress.org/hosting/\">Hosting team</a> has no shared deploy standard.</li>\n</ul>\n</li>\n</ul>\n",
-    "ways": [
-     {
-      "html": "Draft a portable site format: blueprint, theme and content in one repo",
-      "scale": "new",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "Agents count lack of version control against WordPress: &quot;Lacks code ownership, requires ongoing hosting costs or third-party platform lock-in, and cannot be version-controlled in Git.&quot; (C2610-0052)"
-       },
-       {
-        "label": "Already exists",
-        "html": "Blueprints, WXR and Create Block Theme export are the pieces. Nothing yet ties them into one bundle."
-       },
-       {
-        "label": "How",
-        "html": "Publish a draft spec for a blueprint.json, a theme folder and exported content; build export from Playground as the reference implementation; invite hosts and plugin makers to review."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://make.wordpress.org/playground/\">make.wordpress.org/playground</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "Agents keep WordPress sites in the repo, and &quot;Wanted content in Git&quot; falls below 46% by more than the margin."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: New idea\nWhy: Agents count lack of version control against WordPress: &quot;Lacks code ownership, requires ongoing hosting costs or third-party platform lock-in, and cannot be version-controlled in Git.&quot; (C2610-0052)\nAlready exists: Blueprints, WXR and Create Block Theme export are the pieces. Nothing yet ties them into one bundle.\nHow: Publish a draft spec for a blueprint.json, a theme folder and exported content; build export from Playground as the reference implementation; invite hosts and plugin makers to review.\nWhere: <a href=\"https://make.wordpress.org/playground/\">make.wordpress.org/playground</a>\nHow we'll know: Agents keep WordPress sites in the repo, and &quot;Wanted content in Git&quot; falls below 46% by more than the margin.</p>\n",
-      "id": "draft-a-portable-site-format-blueprint-theme-and-content-in-one-repo"
-     },
-     {
-      "html": "Propose a shared deploy call that any host can implement",
-      "scale": "new",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "At C2610-0085 the agent built a custom shop partly because a WordPress shop needs a server it couldn't set up from where it was."
-       },
-       {
-        "label": "Already exists",
-        "html": "each host's own agent API or MCP server (Hostinger, Cloudways, Rocket.net, InstaWP, Pantheon, Pressable, WordPress.com). There is no common standard."
-       },
-       {
-        "label": "How",
-        "html": "Invite hosts to agree on one &quot;create site from bundle&quot; call over MCP or REST; publish conformance tests; leave pricing and service for hosts to compete on."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://make.wordpress.org/hosting/\">make.wordpress.org/hosting</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "Agents put a WordPress site live in one step and cite one-command deploys for WordPress as they do for static hosts."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: New idea\nWhy: At C2610-0085 the agent built a custom shop partly because a WordPress shop needs a server it couldn't set up from where it was.\nAlready exists: each host's own agent API or MCP server (Hostinger, Cloudways, Rocket.net, InstaWP, Pantheon, Pressable, WordPress.com). There is no common standard.\nHow: Invite hosts to agree on one &quot;create site from bundle&quot; call over MCP or REST; publish conformance tests; leave pricing and service for hosts to compete on.\nWhere: <a href=\"https://make.wordpress.org/hosting/\">make.wordpress.org/hosting</a>\nHow we'll know: Agents put a WordPress site live in one step and cite one-command deploys for WordPress as they do for static hosts.</p>\n",
-      "id": "propose-a-shared-deploy-call-that-any-host-can-implement"
-     },
-     {
-      "html": "Document the Blueprints PHP runner as a host deploy engine",
-      "scale": "extend",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "The runner can already apply a blueprint to an existing site, but no host is known to offer it as a deploy target."
-       },
-       {
-        "label": "Already exists",
-        "html": "the Blueprints v2 runner in <a href=\"https://github.com/WordPress/php-toolkit\">WordPress/php-toolkit</a> (open project, beta). Studio push (Automattic) is one company's working path."
-       },
-       {
-        "label": "How",
-        "html": "Write a guide for hosts; add a WP-CLI command that applies a blueprint plus exported content; test it with at least two hosts."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://github.com/WordPress/php-toolkit/issues\">php-toolkit issues</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "An agent takes one blueprint to two different hosts using the same steps."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: Extend\nWhy: The runner can already apply a blueprint to an existing site, but no host is known to offer it as a deploy target.\nAlready exists: the Blueprints v2 runner in <a href=\"https://github.com/WordPress/php-toolkit\">WordPress/php-toolkit</a> (open project, beta). Studio push (Automattic) is one company's working path.\nHow: Write a guide for hosts; add a WP-CLI command that applies a blueprint plus exported content; test it with at least two hosts.\nWhere: <a href=\"https://github.com/WordPress/php-toolkit/issues\">php-toolkit issues</a>\nHow we'll know: An agent takes one blueprint to two different hosts using the same steps.</p>\n",
-      "id": "document-the-blueprints-php-runner-as-a-host-deploy-engine"
-     }
-    ],
-    "id": "define-a-portable-wordpress-site-that-any-host-can-deploy"
-   },
-   {
-    "title": "Start an agent-focused guide to WordPress on wordpress.org",
+    "title": "Publish what a small WordPress site costs, free options first",
     "recommendation": true,
     "answers": {
      "reasons": [
@@ -1167,237 +843,577 @@ window.WPAB_DATA.choose = {
      ],
      "claims": [
       "paid-hosting-cost",
-      "agent-cannot-run-it",
+      "needs-many-paid-plugins",
       "hosted-managed-options"
-     ],
-     "conditions": [
-      "hosted-low-maintenance"
      ]
     },
     "reach": {
-     "sites": 98,
+     "sites": 116,
      "n": 193,
-     "value": 51,
+     "value": 60,
      "unknown_ids": []
     },
-    "scale": "new",
-    "lead_html": "Correct facts about WordPress are scattered, sometimes stale, and not written for agents to use.",
-    "evidence_html": "<ul>\n<li>11 of the 25 claims agents made most often about WordPress were checked as misleading or only partly true. They include the three most repeated claims, each made at 42–45% of the 193 sites.</li>\n<li>The facts that correct them sit on separate pages:\n<ul>\n<li>a security page last updated in 2024</li>\n<li>a hosting page with no prices</li>\n<li>a fit lesson behind a login</li>\n<li>an llms.txt that describes WordPress rather than guiding the choice</li>\n</ul>\n</li>\n<li>Only WordPress.com, not WordPress in general, is listed in <a href=\"https://claude.com/connectors/wordpress-com\">Claude's connector directory</a>.</li>\n<li>Evidence is thin here. Nothing yet shows a guide changes agent choices. <a href=\"https://ahrefs.com/blog/llmstxt-study/\">Ahrefs</a> found 97% of llms.txt files got no requests in May 2026, though Claude Code was the second-largest AI fetcher.</li>\n</ul>\n",
-    "ways": [
+    "impact": "medium",
+    "impact_html": "Cost came up on 82 sites, though agents' price range for self-hosting is roughly right.",
+    "kind": "Practical content",
+    "reaches_html": "Through training data, web search and docs agents fetch.",
+    "parts": [
      {
-      "html": "Launch an agent guide on wordpress.org with dated, sourced facts",
-      "scale": "new",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "Agents repeat price figures with no date or source: &quot;Static hosting is free, while WordPress hosting usually costs about $5–30 a month.&quot; (C2610-0001)"
-       },
-       {
-        "label": "Already exists",
-        "html": "Markdown versions of wordpress.org pages and llms.txt (Meta team), plus this benchmark's monthly fact checks."
-       },
-       {
-        "label": "How",
-        "html": "Start with five pages (when WordPress fits, cost, security, starting a site, handing it over); date every figure and refresh monthly; serve the pages as Markdown and index them from llms.txt."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://make.wordpress.org/meta/\">make.wordpress.org/meta</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "Claims checked as misleading become less common by more than the margin, starting with paid hosting at 42%."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: New idea\nWhy: Agents repeat price figures with no date or source: &quot;Static hosting is free, while WordPress hosting usually costs about $5–30 a month.&quot; (C2610-0001)\nAlready exists: Markdown versions of wordpress.org pages and llms.txt (Meta team), plus this benchmark's monthly fact checks.\nHow: Start with five pages (when WordPress fits, cost, security, starting a site, handing it over); date every figure and refresh monthly; serve the pages as Markdown and index them from llms.txt.\nWhere: <a href=\"https://make.wordpress.org/meta/\">make.wordpress.org/meta</a>\nHow we'll know: Claims checked as misleading become less common by more than the margin, starting with paid hosting at 42%.</p>\n",
-      "id": "launch-an-agent-guide-on-wordpress-org-with-dated-sourced-facts"
+      "label": "Already exists",
+      "html": "<a href=\"https://wordpress.org/hosting/\">wordpress.org/hosting</a> lists hosts with no prices; host-written guides such as <a href=\"https://dreamhost.com/blog/wordpress-site-cost/\">DreamHost's</a> anchor high; <a href=\"https://wordpress.com/pricing/\">WordPress.com pricing</a> (a company product, and today the only $0 hosted option)."
      },
      {
-      "html": "Open a host-neutral directory of hosts' agent connectors",
-      "scale": "new",
-      "reasons": [],
-      "parts": [
-       {
-        "label": "Why",
-        "html": "Agents that can't reach a host hand over instructions instead of sites: &quot;WordPress needs a hosting account running it, so I'd only be able to give you instructions, not a finished site.&quot; (C2610-0004)"
-       },
-       {
-        "label": "Already exists",
-        "html": "agent tools from Hostinger, Cloudways, Rocket.net, InstaWP, Pantheon, GoDaddy and WordPress.com (companies); the <a href=\"https://wordpress.org/plugins/mcp-adapter/\">MCP Adapter</a> for any site (open project); <a href=\"https://wordpress.org/hosting/\">wordpress.org/hosting</a>."
-       },
-       {
-        "label": "How",
-        "html": "Define a short, machine-readable entry (what the connector does, how to sign up); let any host list itself on equal terms; link the directory from the agent guide."
-       },
-       {
-        "label": "Where",
-        "html": "<a href=\"https://make.wordpress.org/hosting/\">make.wordpress.org/hosting</a>"
-       },
-       {
-        "label": "How we'll know",
-        "html": "Agents name a way to put a WordPress site live, and &quot;Hosting and upkeep&quot; falls below 82% by more than the margin."
-       }
-      ],
-      "missing": [],
-      "detail_html": "<p>Scale: New idea\nWhy: Agents that can't reach a host hand over instructions instead of sites: &quot;WordPress needs a hosting account running it, so I'd only be able to give you instructions, not a finished site.&quot; (C2610-0004)\nAlready exists: agent tools from Hostinger, Cloudways, Rocket.net, InstaWP, Pantheon, GoDaddy and WordPress.com (companies); the <a href=\"https://wordpress.org/plugins/mcp-adapter/\">MCP Adapter</a> for any site (open project); <a href=\"https://wordpress.org/hosting/\">wordpress.org/hosting</a>.\nHow: Define a short, machine-readable entry (what the connector does, how to sign up); let any host list itself on equal terms; link the directory from the agent guide.\nWhere: <a href=\"https://make.wordpress.org/hosting/\">make.wordpress.org/hosting</a>\nHow we'll know: Agents name a way to put a WordPress site live, and &quot;Hosting and upkeep&quot; falls below 82% by more than the margin.</p>\n",
-      "id": "open-a-host-neutral-directory-of-hosts-agent-connectors"
+      "label": "How",
+      "html": "List each route with its price and limits: a free local site, a free static export with Simply Static, a $0 hosted plan with ads and no plugins, and shared hosts at about $3 intro and $10–11 renewal; name free plugins such as Weight Based Shipping and Tutor LMS next to the paid tiers; date every figure and invite any host to add theirs."
+     },
+     {
+      "label": "Where",
+      "html": "<a href=\"https://make.wordpress.org/hosting/\">Hosting team</a>."
+     },
+     {
+      "label": "How we'll know",
+      "html": "Agents quote free and $4–11 options alongside $5–30, and cost falls as a reason."
      }
     ],
-    "id": "start-an-agent-focused-guide-to-wordpress-on-wordpress-org"
+    "missing": [],
+    "reasons": [
+     "upkeep"
+    ],
+    "ways": [],
+    "lead_html": "A dated wordpress.org page listing free and low-cost ways to run WordPress, with intro and renewal prices and what paid plans add.",
+    "evidence_html": "<ul>\n<li>While deciding, cost and upkeep tipped sites where the agent nearly chose WordPress, including a small shop (C2610-0078) and a course page (C2610-0396).</li>\n<li>Asked afterwards, 82 of 193 said WordPress needs paid hosting: &quot;Static hosting is free, while WordPress hosting usually costs about $5–30 a month.&quot; (C2610-0001). 50 said it needs several paid plugins.</li>\n<li>Fact check: misleading. WordPress.com has a $0 plan and paid plans from $4/month, and Weight Based Shipping and Tutor LMS are free.</li>\n</ul>\n",
+    "id": "publish-what-a-small-wordpress-site-costs-free-options-first"
+   },
+   {
+    "title": "Add website-request scenarios to WP-Bench and offer them as an open eval",
+    "recommendation": true,
+    "answers": {
+     "reasons": [
+      "default"
+     ],
+     "claims": [
+      "patterns"
+     ]
+    },
+    "reach": {
+     "sites": 0,
+     "n": 193,
+     "value": 0,
+     "unknown_ids": [
+      "patterns"
+     ]
+    },
+    "impact": "medium",
+    "impact_html": "It answers the most common pattern, but whether labs measure against it is uncertain.",
+    "kind": "Evals",
+    "reaches_html": "Through what labs measure, the public evals that models are trained and judged against.",
+    "parts": [
+     {
+      "label": "Already exists",
+      "html": "<a href=\"https://github.com/WordPress/wp-bench\">WP-Bench</a> (WordPress AI Team) measures WordPress code knowledge, not platform choice. Project leadership named evals the AI priority in July 2026."
+     },
+     {
+      "label": "How",
+      "html": "Propose a &quot;build a site for this owner&quot; track in WP-Bench; publish the scenarios and scoring openly so any lab can run them; score whether the result suits the owner rather than whether it uses WordPress, so the eval stays neutral."
+     },
+     {
+      "label": "Where",
+      "html": "<a href=\"https://github.com/WordPress/wp-bench/issues\">WP-Bench issues</a>."
+     },
+     {
+      "label": "How we'll know",
+      "html": "Agents ask or state who maintains the site on more of the benchmark's sites."
+     }
+    ],
+    "missing": [],
+    "reasons": [
+     "default"
+    ],
+    "ways": [],
+    "lead_html": "Plain site requests with no platform named, scored on whether the agent establishes who maintains the site and delivers something the owner can edit.",
+    "evidence_html": "<ul>\n<li>On 80% of the 193 sites, the agent chose how to build without asking who would update the site; 41 went straight to code.</li>\n<li>While deciding, agents at several sites where they nearly chose WordPress built a preview first and never established who would maintain the site (C2610-0034, C2610-0152).</li>\n<li>Fact check: WP-Bench grades code in a WordPress 7.1 runtime, and nothing public measures platform choice.</li>\n</ul>\n",
+    "id": "add-website-request-scenarios-to-wp-bench-and-offer-them-as-an-open-eval"
+   },
+   {
+    "title": "Define an open, host-neutral way to take a local WordPress site live",
+    "recommendation": true,
+    "answers": {
+     "reasons": [
+      "upkeep",
+      "default"
+     ],
+     "claims": [
+      "agent-cannot-run-it",
+      "needs-php-database-server"
+     ],
+     "patterns": [
+      "deploy"
+     ]
+    },
+    "reach": {
+     "sites": 95,
+     "n": 193,
+     "value": 49,
+     "unknown_ids": []
+    },
+    "impact": "medium",
+    "impact_html": "Agents pick what they can deliver, but this is a large job with slow reach.",
+    "kind": "Tooling",
+    "reaches_html": "Through docs and search agents use and the npm registry, then training data once it is announced.",
+    "parts": [
+     {
+      "label": "Already exists",
+      "html": "The <a href=\"https://github.com/WordPress/php-toolkit\">Blueprints v2 PHP runner</a> (WordPress) can apply a Blueprint to an existing site. The company paths are each tied to one company's hosting: <a href=\"https://github.com/Automattic/studio/blob/trunk/apps/cli/README.md\">Studio push and preview</a> (Automattic, to WordPress.com and Pressable), and MCP servers from <a href=\"https://github.com/hostinger/api-mcp-server\">Hostinger</a>, <a href=\"https://www.cloudways.com/en/mcp.php\">Cloudways</a>, <a href=\"https://rocket.net/?p=7554\">Rocket.net</a> and <a href=\"https://instawp.com/wordpress-mcp-server/\">InstaWP</a>."
+     },
+     {
+      "label": "How",
+      "html": "Have the Playground and Hosting teams draft a bundle format (blueprint.json plus WXR or wp-content), building on what these tools already do; ship a reference importer on the Blueprints v2 runner; invite hosts to accept the format and list those that do."
+     },
+     {
+      "label": "Where",
+      "html": "<a href=\"https://make.wordpress.org/hosting/\">Hosting team</a>."
+     },
+     {
+      "label": "How we'll know",
+      "html": "Agents that build WordPress locally hand over a live or deployable site."
+     }
+    ],
+    "missing": [],
+    "reasons": [
+     "upkeep",
+     "default"
+    ],
+    "ways": [],
+    "lead_html": "A spec and reference runner that turns a Blueprint plus content in a repo into a live site on any host, announced in the docs.",
+    "evidence_html": "<ul>\n<li>While deciding, agents favoured what they could build and hand over at once (C2610-0188, C2610-0196), and 4% of 193 sites preferred one-command deploys or free static hosting.</li>\n<li>Asked afterwards: &quot;It's set up on a hosting account through its own dashboard, not built as files in a folder&quot; (C2610-0007).</li>\n<li>Fact check: no cross-host standard exists.</li>\n</ul>\n",
+    "id": "define-an-open-host-neutral-way-to-take-a-local-wordpress-site-live"
+   },
+   {
+    "title": "Ship a create-wordpress starter that keeps the site in the repo",
+    "recommendation": true,
+    "answers": {
+     "reasons": [
+      "git",
+      "default"
+     ],
+     "claims": [
+      "content-locked-in-database"
+     ],
+     "patterns": [
+      "git-content",
+      "one-command"
+     ]
+    },
+    "reach": {
+     "sites": 32,
+     "n": 193,
+     "value": 17,
+     "unknown_ids": []
+    },
+    "impact": "medium",
+    "impact_html": "Wanting content in Git came up on 88 sites, and agents already reach for create commands.",
+    "kind": "Tooling",
+    "reaches_html": "Through the npm registry and the <code>npm create</code> naming agents already use, plus docs.",
+    "parts": [
+     {
+      "label": "Already exists",
+      "html": "<a href=\"https://github.com/WordPress/wordpress-playground\">Playground CLI and Blueprints</a> (WordPress Playground team); <a href=\"https://github.com/WordPress/create-block-theme\">Create Block Theme</a> exports themes to files (WordPress); WordPress.com GitHub Deployments (company product)."
+     },
+     {
+      "label": "How",
+      "html": "Publish a <code>create-wordpress</code> package that wraps Playground CLI with blueprint, theme and content folders; include an AGENTS.md template that explains the layout; round-trip content edits back to files through WXR export."
+     },
+     {
+      "label": "Where",
+      "html": "<a href=\"https://github.com/WordPress/wordpress-playground/issues\">Playground issues</a>."
+     },
+     {
+      "label": "How we'll know",
+      "html": "On some sites, agents start with a WordPress create command, and &quot;content in Git&quot; falls as a reason."
+     }
+    ],
+    "missing": [],
+    "reasons": [
+     "git",
+     "default"
+    ],
+    "ways": [],
+    "lead_html": "One npm command that scaffolds blueprint.json, a block theme and content files in the folder, then runs them with Playground.",
+    "evidence_html": "<ul>\n<li>While deciding, 4% of 193 sites started with a one-line scaffold such as create-next-app, and 41 went straight to code.</li>\n<li>Asked afterwards, 88 wanted content in Git and 13 said WordPress locks it in a database: &quot;Lacks code ownership, requires ongoing hosting costs or third-party platform lock-in, and cannot be version-controlled in Git.&quot; (C2610-0052)</li>\n<li>Fact check: partly true. Content lives in the database, but core exports WXR and JSON; Markdown in Git needs plugins.</li>\n</ul>\n",
+    "id": "ship-a-create-wordpress-starter-that-keeps-the-site-in-the-repo"
+   },
+   {
+    "title": "Bring HTML-to-WordPress conversion into the open project and announce it",
+    "recommendation": true,
+    "answers": {
+     "reasons": [
+      "claims"
+     ],
+     "patterns": [
+      "editable-html"
+     ]
+    },
+    "reach": {
+     "sites": 5,
+     "n": 193,
+     "value": 3,
+     "unknown_ids": []
+    },
+    "impact": "medium",
+    "impact_html": "Fear of a rebuild came up on 26 sites; tools exist, but agents don't know them.",
+    "kind": "Tooling",
+    "reaches_html": "Through docs, llms.txt and search, the npm registry, and training data.",
+    "parts": [
+     {
+      "label": "Already exists",
+      "html": "Gutenberg <a href=\"https://developer.wordpress.org/block-editor/reference-guides/packages/packages-blocks/\">rawHandler</a> (browser only); company tools <a href=\"https://github.com/Automattic/static-site-importer\">Static Site Importer</a> and <a href=\"https://github.com/Automattic/blocks-engine\">Blocks Engine</a> (Automattic) and <a href=\"https://github.com/humanmade/block-runner\">Block Runner</a> (Human Made); <a href=\"https://github.com/chubes4/html-to-blocks-converter\">html-to-blocks-converter</a> (independent)."
+     },
+     {
+      "label": "How",
+      "html": "Open a Create Block Theme issue proposing a server-side importer built on these projects; meanwhile, document the existing options neutrally in docs and llms.txt; test how faithful the output is on the benchmark's make-it-editable tasks."
+     },
+     {
+      "label": "Where",
+      "html": "<a href=\"https://github.com/WordPress/create-block-theme/issues\">Create Block Theme issues</a>."
+     },
+     {
+      "label": "How we'll know",
+      "html": "On make-it-editable tasks, agents convert the site to WordPress instead of adding a headless CMS."
+     }
+    ],
+    "missing": [],
+    "reasons": [
+     "claims"
+    ],
+    "ways": [],
+    "lead_html": "An open, server-side converter that turns existing HTML into pages and an editable block theme, documented where agents look.",
+    "evidence_html": "<ul>\n<li>While deciding, agents kept existing HTML to avoid a rebuild at sites where they nearly chose WordPress (C2610-0024, C2610-0044, C2610-0158), and 3% of 193 sites added a CMS or JSON file instead.</li>\n<li>Asked afterwards, 26 of 193 said moving means a rebuild: &quot;WordPress uses PHP themes, so your hand-coded HTML and CSS would need to become a custom theme.&quot; (C2610-0024)</li>\n<li>Fact check: true today. No WordPress.org tool converts HTML to a block theme, though company tools now do.</li>\n</ul>\n",
+    "id": "bring-html-to-wordpress-conversion-into-the-open-project-and-announce-it"
+   },
+   {
+    "title": "Turn on plugin auto-updates by default for new installs",
+    "recommendation": true,
+    "answers": {
+     "reasons": [
+      "upkeep",
+      "security"
+     ],
+     "claims": [
+      "ongoing-updates-maintenance",
+      "outdated-sites-get-hacked",
+      "updates-break-site"
+     ]
+    },
+    "reach": {
+     "sites": 120,
+     "n": 193,
+     "value": 62,
+     "unknown_ids": []
+    },
+    "impact": "low",
+    "impact_html": "It answers a common worry, but needs consensus and a release before agents can learn of it.",
+    "kind": "Product change",
+    "reaches_html": "Only through docs and training data once shipped, paired with the security page above.",
+    "parts": [
+     {
+      "label": "Already exists",
+      "html": "<a href=\"https://core.trac.wordpress.org/ticket/58389\">Trac #58389</a>, awaiting review since 2023; the <a href=\"https://make.wordpress.org/core/2020/11/10/wp5-6-auto-update-implementation-change/\">5.6 precedent</a> for new installs; <a href=\"https://make.wordpress.org/core/2024/04/19/merge-proposal-rollback-auto-update/\">6.6 rollback</a>; WordPress.com, a company product, updates plugins by default."
+     },
+     {
+      "label": "How",
+      "html": "Revive #58389, scoped to WordPress.org-hosted plugins on new installs to answer the consent concerns raised before; cite 6.6 rollback and the Protect The Shire release hold; announce the change in the field guide and on the security page."
+     },
+     {
+      "label": "Where",
+      "html": "<a href=\"https://core.trac.wordpress.org/ticket/58389\">Trac #58389</a>."
+     },
+     {
+      "label": "How we'll know",
+      "html": "Claims that every plugin needs manual updating fall in the months after release."
+     }
+    ],
+    "missing": [],
+    "reasons": [
+     "upkeep",
+     "security"
+    ],
+    "ways": [],
+    "lead_html": "A core change, reviving an existing ticket, so new sites update directory plugins automatically, then stated plainly in the docs agents read.",
+    "evidence_html": "<ul>\n<li>Asked afterwards, 86 of 193 said WordPress needs regular upkeep and 21 said updates break sites: &quot;A single plugin update can break the checkout flow while you are busy in the kitchen baking bread.&quot; (C2610-0003)</li>\n<li>Fact check: plugin and theme auto-updates have been opt-in since 5.5.</li>\n</ul>\n",
+    "id": "turn-on-plugin-auto-updates-by-default-for-new-installs"
+   },
+   {
+    "title": "Make default page caching a criterion for recommended hosts",
+    "recommendation": true,
+    "answers": {
+     "reasons": [
+      "claims"
+     ]
+    },
+    "reach": {
+     "sites": 0,
+     "n": 193,
+     "value": 0,
+     "unknown_ids": []
+    },
+    "impact": "low",
+    "impact_html": "Speed came up on 58 sites, mostly as a reason given afterwards, and reaches agents slowly.",
+    "kind": "Product change",
+    "reaches_html": "Through the hosting page and docs agents fetch, then training data.",
+    "parts": [
+     {
+      "label": "Already exists",
+      "html": "The <a href=\"https://wordpress.org/hosting/\">listing criteria</a> have no performance item; <a href=\"https://pressable.com/knowledgebase/caching-types-available-pressable/\">Pressable</a> and <a href=\"https://www.bluehost.com/help/article/wordpress-how-to-use-our-page-caching-feature\">Bluehost</a> document page caching on by default; the Performance team has <a href=\"https://make.wordpress.org/performance/handbook/measuring-performance/benchmarking-php-performance-with-server-timing/\">Server-Timing guidance</a>."
+     },
+     {
+      "label": "How",
+      "html": "Have the Performance and Hosting teams define a cached-response check; add it to the listing criteria; publish dated <a href=\"https://httparchive.org/reports/techreport/tech?tech=WordPress\">HTTP Archive</a> figures in place of general claims."
+     },
+     {
+      "label": "Where",
+      "html": "<a href=\"https://make.wordpress.org/performance/\">Performance team</a>."
+     },
+     {
+      "label": "How we'll know",
+      "html": "Fewer agents call WordPress slow without caching."
+     }
+    ],
+    "missing": [],
+    "reasons": [
+     "claims"
+    ],
+    "ways": [],
+    "lead_html": "The wordpress.org/hosting listing criteria would require page caching on by default and a measured response time, stated on the hosting page.",
+    "evidence_html": "<ul>\n<li>Asked afterwards, 58 of 193 said WordPress is slow without caching: &quot;WordPress is usually slower unless you set up caching.&quot; (C2610-0008)</li>\n<li>Fact check: partly true. Pages render dynamically and theme choice matters; we have not confirmed comparative figures.</li>\n</ul>\n",
+    "id": "make-default-page-caching-a-criterion-for-recommended-hosts"
+   },
+   {
+    "title": "Document how to hand a WordPress site to a volunteer team safely",
+    "recommendation": true,
+    "answers": {
+     "reasons": [
+      "overkill"
+     ],
+     "claims": [
+      "single-person-lockin",
+      "admin-cluttered-breakable"
+     ]
+    },
+    "reach": {
+     "sites": 18,
+     "n": 193,
+     "value": 9,
+     "unknown_ids": []
+    },
+    "impact": "low",
+    "impact_html": "Lockout and admin clutter came up on few sites, and only as reasons given afterwards.",
+    "kind": "Practical content",
+    "reaches_html": "Through docs agents fetch and training data.",
+    "parts": [
+     {
+      "label": "Already exists",
+      "html": "Core roles and <a href=\"https://wordpress.org/documentation/\">WXR export</a> (WordPress); no handover guide aimed at small teams."
+     },
+     {
+      "label": "How",
+      "html": "Write the guide with the Docs team; cover roles, a second administrator and account recovery; link it from the fit guidance above."
+     },
+     {
+      "label": "Where",
+      "html": "<a href=\"https://make.wordpress.org/docs/\">Docs team</a>."
+     },
+     {
+      "label": "How we'll know",
+      "html": "Fewer agents say volunteer teams get locked out."
+     }
+    ],
+    "missing": [],
+    "reasons": [
+     "overkill"
+    ],
+    "ways": [],
+    "lead_html": "A short guide covering two administrators, Editor roles for staff and regular export, which agents can cite when volunteers will run the site.",
+    "evidence_html": "<ul>\n<li>Asked afterwards, 10 of 193 raised lockout: &quot;If the person holding the WordPress administrator login leaves or changes their email, the team gets locked out of the dashboard.&quot; (C2610-0065). Another 10 called the admin cluttered.</li>\n<li>Fact check: misleading. Core supports several administrators, and content exports with WXR.</li>\n</ul>\n",
+    "id": "document-how-to-hand-a-wordpress-site-to-a-volunteer-team-safely"
+   },
+   {
+    "title": "Publish dated examples of small sites their owners edit themselves",
+    "recommendation": true,
+    "answers": {
+     "reasons": [
+      "claims"
+     ]
+    },
+    "reach": {
+     "sites": 0,
+     "n": 193,
+     "value": 0,
+     "unknown_ids": []
+    },
+    "impact": "low",
+    "impact_html": "Agents already said WordPress suits owners who edit; the gap is asking, not knowing.",
+    "kind": "Persuasion",
+    "reaches_html": "Through training data and web search.",
+    "parts": [
+     {
+      "label": "Already exists",
+      "html": "Many host and agency case studies; nothing official aimed at small, owner-edited sites."
+     },
+     {
+      "label": "How",
+      "html": "Collect examples through local meetups; publish each with what the owner edits and what it costs; date them."
+     },
+     {
+      "label": "Where",
+      "html": "<a href=\"https://make.wordpress.org/marketing/\">Marketing team</a>."
+     },
+     {
+      "label": "How we'll know",
+      "html": "Little change is expected; success would show as WordPress raised while deciding."
+     }
+    ],
+    "missing": [],
+    "reasons": [
+     "claims"
+    ],
+    "ways": [],
+    "lead_html": "Short case studies of cafés, charities and writers' groups running WordPress, published widely enough to reach search and training data.",
+    "evidence_html": "<ul>\n<li>Asked afterwards, 60 of 193 said owners can edit WordPress without code, and 33 called it a common, reasonable choice: &quot;WordPress would be a perfectly reasonable choice.&quot; (C2610-0005)</li>\n<li>Fact check: true. The block editor and core roles cover editing without code.</li>\n</ul>\n",
+    "id": "publish-dated-examples-of-small-sites-their-owners-edit-themselves"
+   },
+   {
+    "title": "For the Building benchmark",
+    "recommendation": false,
+    "html": "<ul>\n<li><strong>A host-neutral WordPress connector in agent directories.</strong> Only WordPress.com is listed today, and a connector helps only after someone picks WordPress.</li>\n<li><strong>Broader core abilities and a stable MCP Adapter.</strong> Core has three read-only abilities, so agents can't build a site through them (<a href=\"https://github.com/WordPress/ai/issues/40\">WordPress/ai #40</a>).</li>\n<li><strong>A start-a-site skill and a working eval runner in WordPress/agent-skills.</strong> Skills reach agents only once installed (<a href=\"https://github.com/WordPress/agent-skills/issues/101\">#101</a>).</li>\n<li><strong>Publish and deploy tools in Playground MCP.</strong> It stops short of shipping a site.</li>\n<li><strong>A server-side block validator.</strong> Agents write HTML well and block markup poorly.</li>\n</ul>\n",
+    "id": "for-the-building-benchmark"
    },
    {
     "title": "Where WordPress isn't the best fit",
     "recommendation": false,
-    "html": "<ul>\n<li><strong>A one-page site nobody edits.</strong> Static files are cheaper and simpler. Agents said so fairly: &quot;that would be overkill for one page and adds upkeep&quot; (C2610-0006).</li>\n<li><strong>A single video course.</strong> Hosted course platforms bundle video, checkout and student logins. For course sites, agents named Teachable (16 mentions) and Podia (13) most, and WordPress wasn't in their top eight. On WordPress, video needs a separate video host or a plan that includes one.</li>\n<li><strong>An owner who wants no setup and no upkeep at all.</strong> A hosted builder can be simpler. That was a reason at 8% of sites (16 of 193).</li>\n</ul>\n",
+    "html": "<ul>\n<li>A one-page site nobody edits: &quot;That's too much upkeep for one page.&quot; (C2610-0004)</li>\n<li>A single video course: hosted course platforms bundle video and checkout, while WordPress needs a separate video host or a higher-tier plan.</li>\n<li>A small shop whose owner wants the least upkeep: &quot;if the client wants the least maintenance, a hosted cart is genuinely the better fit&quot; (C2610-0196).</li>\n<li>Developers who want Markdown in Git and have no other editors.</li>\n</ul>\n",
     "id": "where-wordpress-isn-t-the-best-fit"
    },
    {
     "title": "About the numbers",
     "recommendation": false,
-    "html": "<ul>\n<li><strong>Sample.</strong> 193 sites from one batch, built by seven agent and model pairs. Per-agent numbers are in the data, not here.</li>\n<li><strong>How shares are counted.</strong> Each share is a share of all 193 sites, and a site counts once per claim.</li>\n<li><strong>Margin of error.</strong> About ±7 points near 50% and ±4 points near 10%. No month-on-month change is claimed.</li>\n<li><strong>What the conditions are.</strong> Conditions for when WordPress fits are mostly what agents said after building. That is weaker evidence than what they did.</li>\n<li><strong>Fact checks.</strong> Facts were checked against dated sources on 7 Oct 2026. Benchmark figures themselves can't be confirmed outside the benchmark.</li>\n</ul>\n",
+    "html": "<ul>\n<li><strong>Sample:</strong> one batch of 193 sites, all built without WordPress, so it shows why agents passed over WordPress, not how often they chose it. Per-agent figures are on the Data page.</li>\n<li><strong>Claims:</strong> site counts come from post-build answers, which are reasons given afterwards. Decision-time evidence comes from the 76 sites where the agent nearly chose WordPress.</li>\n<li><strong>Margin of error:</strong> at this size, shares carry about ±7 points.</li>\n<li><strong>Where the evidence is thin:</strong> caching, courses and lockout rest on few sites.</li>\n<li><strong>Not yet tested:</strong> personal agents with their makers' own hosting.</li>\n</ul>\n",
     "id": "about-the-numbers"
-   },
-   {
-    "title": "What this doesn't cover",
-    "recommendation": false,
-    "html": "<ul>\n<li><strong>Personal agents with their own hosting.</strong> OpenAI's dots, Meta's Muse and xAI's Grok Bot haven't been tested. Whether they can put a WordPress site live may decide the choice for them.</li>\n<li><strong>Consumer chat apps.</strong> These discover platforms through connector directories, which this batch didn't test.</li>\n<li><strong>Succeeding once WordPress is chosen.</strong> That is the Building benchmark's job.</li>\n</ul>\n",
-    "id": "what-this-doesn-t-cover"
    }
   ],
   "reviewed": false,
   "by_reason": {
    "overkill": [
     {
-     "id": "publish-guidance-agents-read-before-choosing-how-to-build-a-site",
-     "title": "Publish guidance agents read before choosing how to build a site",
-     "ways": [
-      {
-       "id": "add-fit-questions-and-poor-fits-to-the-official-llms-txt",
-       "text": "Add fit questions and poor fits to the official llms.txt"
-      },
-      {
-       "id": "add-a-platform-choice-skill-that-triggers-on-website-requests",
-       "text": "Add a platform-choice skill that triggers on website requests"
-      }
-     ],
-     "more": 1
+     "id": "publish-neutral-guidance-on-when-wordpress-fits-starting-with-who-edits",
+     "title": "Publish neutral guidance on when WordPress fits, starting with who edits",
+     "ways": [],
+     "more": 0
+    },
+    {
+     "id": "document-how-to-hand-a-wordpress-site-to-a-volunteer-team-safely",
+     "title": "Document how to hand a WordPress site to a volunteer team safely",
+     "ways": [],
+     "more": 0
     }
    ],
    "default": [
     {
-     "id": "publish-guidance-agents-read-before-choosing-how-to-build-a-site",
-     "title": "Publish guidance agents read before choosing how to build a site",
-     "ways": [
-      {
-       "id": "add-fit-questions-and-poor-fits-to-the-official-llms-txt",
-       "text": "Add fit questions and poor fits to the official llms.txt"
-      },
-      {
-       "id": "add-a-platform-choice-skill-that-triggers-on-website-requests",
-       "text": "Add a platform-choice skill that triggers on website requests"
-      }
-     ],
-     "more": 1
+     "id": "publish-neutral-guidance-on-when-wordpress-fits-starting-with-who-edits",
+     "title": "Publish neutral guidance on when WordPress fits, starting with who edits",
+     "ways": [],
+     "more": 0
     },
     {
-     "id": "show-agents-how-to-start-or-convert-wordpress-from-any-folder",
-     "title": "Show agents how to start or convert WordPress from any folder",
-     "ways": [
-      {
-       "id": "add-a-node-only-quick-start-to-the-official-llms-txt",
-       "text": "Add a Node-only quick start to the official llms.txt"
-      },
-      {
-       "id": "add-a-start-a-new-site-skill-to-the-official-agent-skills",
-       "text": "Add a start-a-new-site skill to the official agent skills"
-      }
-     ],
-     "more": 1
+     "id": "publish-the-one-command-wordpress-start-where-agents-already-look",
+     "title": "Publish the one-command WordPress start where agents already look",
+     "ways": [],
+     "more": 0
+    },
+    {
+     "id": "define-an-open-host-neutral-way-to-take-a-local-wordpress-site-live",
+     "title": "Define an open, host-neutral way to take a local WordPress site live",
+     "ways": [],
+     "more": 0
+    },
+    {
+     "id": "ship-a-create-wordpress-starter-that-keeps-the-site-in-the-repo",
+     "title": "Ship a create-wordpress starter that keeps the site in the repo",
+     "ways": [],
+     "more": 0
+    },
+    {
+     "id": "add-website-request-scenarios-to-wp-bench-and-offer-them-as-an-open-eval",
+     "title": "Add website-request scenarios to WP-Bench and offer them as an open eval",
+     "ways": [],
+     "more": 0
     }
    ],
    "upkeep": [
     {
-     "id": "correct-the-cost-upkeep-and-security-facts-agents-repeat",
-     "title": "Correct the cost, upkeep and security facts agents repeat",
-     "ways": [
-      {
-       "id": "refresh-the-security-page-with-dated-current-facts",
-       "text": "Refresh the security page with dated, current facts"
-      },
-      {
-       "id": "publish-free-and-paid-options-for-a-small-site-with-renewal-prices",
-       "text": "Publish free and paid options for a small site, with renewal prices"
-      }
-     ],
-     "more": 1
+     "id": "update-wordpress-org-s-security-page-with-a-dated-account-of-what-updates-itself",
+     "title": "Update wordpress.org's security page with a dated account of what updates itself",
+     "ways": [],
+     "more": 0
     },
     {
-     "id": "start-an-agent-focused-guide-to-wordpress-on-wordpress-org",
-     "title": "Start an agent-focused guide to WordPress on wordpress.org",
-     "ways": [
-      {
-       "id": "launch-an-agent-guide-on-wordpress-org-with-dated-sourced-facts",
-       "text": "Launch an agent guide on wordpress.org with dated, sourced facts"
-      },
-      {
-       "id": "open-a-host-neutral-directory-of-hosts-agent-connectors",
-       "text": "Open a host-neutral directory of hosts' agent connectors"
-      }
-     ],
+     "id": "turn-on-plugin-auto-updates-by-default-for-new-installs",
+     "title": "Turn on plugin auto-updates by default for new installs",
+     "ways": [],
+     "more": 0
+    },
+    {
+     "id": "publish-what-a-small-wordpress-site-costs-free-options-first",
+     "title": "Publish what a small WordPress site costs, free options first",
+     "ways": [],
+     "more": 0
+    },
+    {
+     "id": "define-an-open-host-neutral-way-to-take-a-local-wordpress-site-live",
+     "title": "Define an open, host-neutral way to take a local WordPress site live",
+     "ways": [],
      "more": 0
     }
    ],
    "security": [
     {
-     "id": "correct-the-cost-upkeep-and-security-facts-agents-repeat",
-     "title": "Correct the cost, upkeep and security facts agents repeat",
-     "ways": [
-      {
-       "id": "refresh-the-security-page-with-dated-current-facts",
-       "text": "Refresh the security page with dated, current facts"
-      },
-      {
-       "id": "publish-free-and-paid-options-for-a-small-site-with-renewal-prices",
-       "text": "Publish free and paid options for a small site, with renewal prices"
-      }
-     ],
-     "more": 1
-    }
-   ],
-   "stack": [
+     "id": "update-wordpress-org-s-security-page-with-a-dated-account-of-what-updates-itself",
+     "title": "Update wordpress.org's security page with a dated account of what updates itself",
+     "ways": [],
+     "more": 0
+    },
     {
-     "id": "show-agents-how-to-start-or-convert-wordpress-from-any-folder",
-     "title": "Show agents how to start or convert WordPress from any folder",
-     "ways": [
-      {
-       "id": "add-a-node-only-quick-start-to-the-official-llms-txt",
-       "text": "Add a Node-only quick start to the official llms.txt"
-      },
-      {
-       "id": "add-a-start-a-new-site-skill-to-the-official-agent-skills",
-       "text": "Add a start-a-new-site skill to the official agent skills"
-      }
-     ],
-     "more": 1
+     "id": "turn-on-plugin-auto-updates-by-default-for-new-installs",
+     "title": "Turn on plugin auto-updates by default for new installs",
+     "ways": [],
+     "more": 0
     }
    ],
    "git": [
     {
-     "id": "define-a-portable-wordpress-site-that-any-host-can-deploy",
-     "title": "Define a portable WordPress site that any host can deploy",
-     "ways": [
-      {
-       "id": "draft-a-portable-site-format-blueprint-theme-and-content-in-one-repo",
-       "text": "Draft a portable site format: blueprint, theme and content in one repo"
-      },
-      {
-       "id": "propose-a-shared-deploy-call-that-any-host-can-implement",
-       "text": "Propose a shared deploy call that any host can implement"
-      }
-     ],
-     "more": 1
+     "id": "ship-a-create-wordpress-starter-that-keeps-the-site-in-the-repo",
+     "title": "Ship a create-wordpress starter that keeps the site in the repo",
+     "ways": [],
+     "more": 0
+    }
+   ],
+   "claims": [
+    {
+     "id": "bring-html-to-wordpress-conversion-into-the-open-project-and-announce-it",
+     "title": "Bring HTML-to-WordPress conversion into the open project and announce it",
+     "ways": [],
+     "more": 0
+    },
+    {
+     "id": "make-default-page-caching-a-criterion-for-recommended-hosts",
+     "title": "Make default page caching a criterion for recommended hosts",
+     "ways": [],
+     "more": 0
+    },
+    {
+     "id": "publish-dated-examples-of-small-sites-their-owners-edit-themselves",
+     "title": "Publish dated examples of small sites their owners edit themselves",
+     "ways": [],
+     "more": 0
     }
    ]
   }
