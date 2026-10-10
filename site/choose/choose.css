@@ -1114,7 +1114,7 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
 
 /* Recommendations: one row per idea, labelled and coloured by impact. Type matches the site's tables. */
 .ir-head, .ir > details > summary { display: grid; grid-template-columns: 96px minmax(0, 1fr) 160px 90px; gap: var(--space-24); align-items: baseline; }
-.ir-head { padding: 0 var(--space-16) 10px; border-bottom: 1px solid var(--rule); font-size: 15px; font-weight: 500; color: var(--muted); }
+.ir-head { padding: 0 var(--space-16) 10px; border-left: 3px solid transparent; border-bottom: 1px solid var(--rule); font-size: 15px; font-weight: 500; color: var(--muted); }
 .ir-head span:last-child, .ir-n { text-align: right; }
 .irs { list-style: none; margin: 0; padding: 0; font-variant-numeric: tabular-nums; }
 .ir { border-bottom: 1px solid var(--rule); border-left: 3px solid transparent; scroll-margin-top: var(--space-24); }
