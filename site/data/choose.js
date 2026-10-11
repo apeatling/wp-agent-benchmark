@@ -2,7 +2,7 @@
 window.WPAB_DATA = window.WPAB_DATA || {};
 window.WPAB_DATA.choose = {
  "schema_version": "1.0",
- "generated": "2026-10-10T01:27:53+00:00",
+ "generated": "2026-10-11T19:03:34+00:00",
  "batch": {
   "id": "2026-10",
   "name": "October 2026",
@@ -845,7 +845,8 @@ window.WPAB_DATA.choose = {
       "paid-hosting-cost",
       "needs-many-paid-plugins",
       "hosted-managed-options"
-     ]
+     ],
+     "patterns": []
     },
     "reach": {
      "sites": 116,
@@ -891,17 +892,16 @@ window.WPAB_DATA.choose = {
      "reasons": [
       "default"
      ],
-     "claims": [
-      "patterns"
+     "claims": [],
+     "patterns": [
+      "didnt-ask"
      ]
     },
     "reach": {
-     "sites": 0,
+     "sites": 154,
      "n": 193,
-     "value": 0,
-     "unknown_ids": [
-      "patterns"
-     ]
+     "value": 80,
+     "unknown_ids": []
     },
     "impact": "medium",
     "impact_html": "It answers the most common pattern, but whether labs measure against it is uncertain.",
@@ -1046,17 +1046,19 @@ window.WPAB_DATA.choose = {
     "title": "Bring HTML-to-WordPress conversion into the open project and announce it",
     "recommendation": true,
     "answers": {
-     "reasons": [
-      "claims"
+     "reasons": [],
+     "claims": [
+      "migration-means-rebuild",
+      "custom-design-constraints"
      ],
      "patterns": [
       "editable-html"
      ]
     },
     "reach": {
-     "sites": 5,
+     "sites": 44,
      "n": 193,
-     "value": 3,
+     "value": 23,
      "unknown_ids": []
     },
     "impact": "medium",
@@ -1082,9 +1084,7 @@ window.WPAB_DATA.choose = {
      }
     ],
     "missing": [],
-    "reasons": [
-     "claims"
-    ],
+    "reasons": [],
     "ways": [],
     "lead_html": "An open, server-side converter that turns existing HTML into pages and an editable block theme, documented where agents look.",
     "evidence_html": "<ul>\n<li>While deciding, agents kept existing HTML to avoid a rebuild at sites where they nearly chose WordPress (C2610-0024, C2610-0044, C2610-0158), and 3% of 193 sites added a CMS or JSON file instead.</li>\n<li>Asked afterwards, 26 of 193 said moving means a rebuild: &quot;WordPress uses PHP themes, so your hand-coded HTML and CSS would need to become a custom theme.&quot; (C2610-0024)</li>\n<li>Fact check: true today. No WordPress.org tool converts HTML to a block theme, though company tools now do.</li>\n</ul>\n",
@@ -1102,7 +1102,8 @@ window.WPAB_DATA.choose = {
       "ongoing-updates-maintenance",
       "outdated-sites-get-hacked",
       "updates-break-site"
-     ]
+     ],
+     "patterns": []
     },
     "reach": {
      "sites": 120,
@@ -1146,14 +1147,16 @@ window.WPAB_DATA.choose = {
     "title": "Make default page caching a criterion for recommended hosts",
     "recommendation": true,
     "answers": {
-     "reasons": [
-      "claims"
-     ]
+     "reasons": [],
+     "claims": [
+      "slow-without-caching"
+     ],
+     "patterns": []
     },
     "reach": {
-     "sites": 0,
+     "sites": 58,
      "n": 193,
-     "value": 0,
+     "value": 30,
      "unknown_ids": []
     },
     "impact": "low",
@@ -1179,9 +1182,7 @@ window.WPAB_DATA.choose = {
      }
     ],
     "missing": [],
-    "reasons": [
-     "claims"
-    ],
+    "reasons": [],
     "ways": [],
     "lead_html": "The wordpress.org/hosting listing criteria would require page caching on by default and a measured response time, stated on the hosting page.",
     "evidence_html": "<ul>\n<li>Asked afterwards, 58 of 193 said WordPress is slow without caching: &quot;WordPress is usually slower unless you set up caching.&quot; (C2610-0008)</li>\n<li>Fact check: partly true. Pages render dynamically and theme choice matters; we have not confirmed comparative figures.</li>\n</ul>\n",
@@ -1197,7 +1198,8 @@ window.WPAB_DATA.choose = {
      "claims": [
       "single-person-lockin",
       "admin-cluttered-breakable"
-     ]
+     ],
+     "patterns": []
     },
     "reach": {
      "sites": 18,
@@ -1240,14 +1242,17 @@ window.WPAB_DATA.choose = {
     "title": "Publish dated examples of small sites their owners edit themselves",
     "recommendation": true,
     "answers": {
-     "reasons": [
-      "claims"
-     ]
+     "reasons": [],
+     "claims": [
+      "browser-editing-no-code",
+      "popular-common-choice"
+     ],
+     "patterns": []
     },
     "reach": {
-     "sites": 0,
+     "sites": 84,
      "n": 193,
-     "value": 0,
+     "value": 44,
      "unknown_ids": []
     },
     "impact": "low",
@@ -1273,9 +1278,7 @@ window.WPAB_DATA.choose = {
      }
     ],
     "missing": [],
-    "reasons": [
-     "claims"
-    ],
+    "reasons": [],
     "ways": [],
     "lead_html": "Short case studies of cafés, charities and writers' groups running WordPress, published widely enough to reach search and training data.",
     "evidence_html": "<ul>\n<li>Asked afterwards, 60 of 193 said owners can edit WordPress without code, and 33 called it a common, reasonable choice: &quot;WordPress would be a perfectly reasonable choice.&quot; (C2610-0005)</li>\n<li>Fact check: true. The block editor and core roles cover editing without code.</li>\n</ul>\n",
@@ -1324,6 +1327,12 @@ window.WPAB_DATA.choose = {
      "more": 0
     },
     {
+     "id": "add-website-request-scenarios-to-wp-bench-and-offer-them-as-an-open-eval",
+     "title": "Add website-request scenarios to WP-Bench and offer them as an open eval",
+     "ways": [],
+     "more": 0
+    },
+    {
      "id": "publish-the-one-command-wordpress-start-where-agents-already-look",
      "title": "Publish the one-command WordPress start where agents already look",
      "ways": [],
@@ -1338,12 +1347,6 @@ window.WPAB_DATA.choose = {
     {
      "id": "ship-a-create-wordpress-starter-that-keeps-the-site-in-the-repo",
      "title": "Ship a create-wordpress starter that keeps the site in the repo",
-     "ways": [],
-     "more": 0
-    },
-    {
-     "id": "add-website-request-scenarios-to-wp-bench-and-offer-them-as-an-open-eval",
-     "title": "Add website-request scenarios to WP-Bench and offer them as an open eval",
      "ways": [],
      "more": 0
     }
@@ -1392,26 +1395,6 @@ window.WPAB_DATA.choose = {
     {
      "id": "ship-a-create-wordpress-starter-that-keeps-the-site-in-the-repo",
      "title": "Ship a create-wordpress starter that keeps the site in the repo",
-     "ways": [],
-     "more": 0
-    }
-   ],
-   "claims": [
-    {
-     "id": "bring-html-to-wordpress-conversion-into-the-open-project-and-announce-it",
-     "title": "Bring HTML-to-WordPress conversion into the open project and announce it",
-     "ways": [],
-     "more": 0
-    },
-    {
-     "id": "make-default-page-caching-a-criterion-for-recommended-hosts",
-     "title": "Make default page caching a criterion for recommended hosts",
-     "ways": [],
-     "more": 0
-    },
-    {
-     "id": "publish-dated-examples-of-small-sites-their-owners-edit-themselves",
-     "title": "Publish dated examples of small sites their owners edit themselves",
      "ways": [],
      "more": 0
     }
