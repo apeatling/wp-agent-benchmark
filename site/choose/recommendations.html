@@ -42,7 +42,7 @@
   // The month's advice. Ideas lead, grouped by how much each would raise the share of sites agents build with
   // WordPress (the advice rates each one). Under them, the problems they answer, each with its evidence. Every
   // word comes from advice.md, split by the build without changing it.
-  const D = window.WPAB_DATA.choose, C = window.CHOOSE, { esc, fmt } = C;
+  const D = window.WPAB_DATA.choose, C = window.CHOOSE, { esc } = C;
   const $ = id => document.getElementById(id);
   const CHEV = '<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
   // ?batch=2026-10 shows an earlier month's recommendations, as they were.
@@ -58,20 +58,19 @@
   const clean = t => t.replace(/^\d+\.\s*/, '');
   const sols = A.sections.filter(s => s.recommendation);
 
-  // Every idea in the same row: impact, the idea and why, its kind, and how many sites it came up at. Colour and
+  // Every idea in the same row: impact, the idea and why, and its kind. Colour and
   // weight follow impact, so the list scans top to bottom. Each row opens to a few short lines and the evidence.
   const LEVEL = { high: 'High', medium: 'Medium', low: 'Low' }, ORDER = ['high', 'medium', 'low'];
   const ideas = sols.filter(x => LEVEL[x.impact]).sort((a, b) => ORDER.indexOf(a.impact) - ORDER.indexOf(b.impact));
   const row = x => `<li class="ir ir-${x.impact}" id="${x.id}"><details>
       <summary><span class="ir-lv">${LEVEL[x.impact]}</span>
         <span class="ir-t"><b>${esc(clean(x.title))}</b><span>${x.impact_html || ''}</span></span>
-        <span class="ir-k">${esc(x.kind || '')}</span>
-        <span class="ir-n">${x.reach.sites ? `${fmt(x.reach.sites)}<small> sites</small>` : '<small>—</small>'}</span></summary>
+        <span class="ir-k">${esc(x.kind || '')}</span></summary>
       <div class="ir-d adv-body">${x.lead_html ? `<p>${x.lead_html}</p>` : ''}
         <dl>${x.reaches_html ? `<dt>Reaches agents</dt><dd>${x.reaches_html}</dd>` : ''}${(x.parts || []).map(p => `<dt>${esc(p.label)}</dt><dd>${p.html}</dd>`).join('')}</dl>
         ${x.evidence_html ? `<details class="sol-ev"><summary>The evidence</summary><div class="adv-body">${x.evidence_html}</div></details>` : ''}</div>
     </details></li>`;
-  $('tiers').innerHTML = `<section class="section"><div class="ir-head"><span>Impact</span><span>Idea</span><span>Kind</span><span>Came up at</span></div>
+  $('tiers').innerHTML = `<section class="section"><div class="ir-head"><span>Impact</span><span>Idea</span><span>Kind</span></div>
     <ul class="irs">${ideas.map(row).join('')}</ul></section>`;
 
   // Run IDs in the evidence link to their run.
