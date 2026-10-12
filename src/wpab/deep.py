@@ -410,7 +410,8 @@ def sections(batch):
         answers = re.search(r'<!--\s*answers:(.*?)-->', rest, re.S)
         links = {}
         if answers:
-            for key, ids in re.findall(r'(reasons|claims|conditions|patterns)\s*=\s*([\w,\-:]+)', answers.group(1)):
+            # An empty value ("claims= patterns=x") stays empty instead of taking the next key's name.
+            for key, ids in re.findall(r'(reasons|claims|conditions|patterns)\s*=[ \t]*(?!(?:reasons|claims|conditions|patterns)\s*=)([\w,\-:]*)', answers.group(1)):
                 links[key] = [i.strip() for i in ids.split(',') if i.strip()]
         rest = re.sub(r'<!--.*?-->', '', rest, flags=re.S).strip()
         pieces.append(head)
