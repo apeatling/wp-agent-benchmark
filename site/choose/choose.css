@@ -1113,6 +1113,8 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
 .sol-ev .adv-body { margin-top: var(--space-12); padding: 0; }
 
 /* Recommendations: one row per idea, labelled and coloured by impact. Type matches the site's tables. */
+/* The list follows the intro directly; the page head already leaves room above it. */
+#tiers > .section { padding-top: 0; }
 .ir-head, .ir > details > summary { display: grid; grid-template-columns: 96px minmax(0, 1fr) 160px; gap: var(--space-24); align-items: baseline; }
 .ir-head { padding: 0 var(--space-16) 10px; border-left: 3px solid transparent; border-bottom: 1px solid var(--rule); font-size: 15px; font-weight: 500; color: var(--muted); }
 .irs { list-style: none; margin: 0; padding: 0; font-variant-numeric: tabular-nums; }
