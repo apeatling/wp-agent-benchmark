@@ -248,7 +248,8 @@ Use Markdown, exactly in this shape, so a page can lay it out without changing a
   8. "How we'll know: " what the benchmark would show if it worked.
   9. "Evidence:" then two or three short bullets, one line each: what agents did or said, out of the {n} sites, in
      plain words, and fact checks. Say "sites where the agent nearly chose WordPress", never "near misses". Lead with
-     what happened while agents were deciding; label reasons given afterwards as such.
+     what happened while agents were deciding, but only sites in raised_while_deciding count as that: a site where the
+     agent nearly chose WordPress may have offered it only after building. Label reasons given afterwards as such.
   10. One hidden line: <!-- answers: reasons=<dashboard reason ids> claims=<claim ids> patterns=<pattern ids> -->
       "reasons" are dashboard_reasons ids the idea answers (the Data page links them); claims and patterns are what
       it answers, used to count the sites it reached. List only what it really answers.
@@ -318,13 +319,17 @@ def write(batch):
             pattern_runs.setdefault(p, set()).add(r['run_id'])
     cat = {p['id']: p['question'] for p in defs.catalog('choose')['pattern']}
     n = grouped['n']
+    # Only runs the classifier marked as bringing WordPress up before choosing are decision-time evidence.
+    deciding = {r['run_id']: r for r in lost_runs(batch) if r.get('considered_wordpress')}
     evidence = {
         'sites': n,
         'claims': [{k: c[k] for k in ('id', 'claim', 'share', 'by_agent', 'quotes')} for c in grouped['claims']],
         'conditions': [{k: c[k] for k in ('id', 'condition', 'share', 'quotes')} for c in grouped['conditions']],
         'patterns': [{'id': p, 'question': cat.get(p, ''), 'share': round(100 * len(v) / n)} for p, v in pattern_runs.items()],
         'alternatives_by_site_type': grouped['alternatives'],
-        'near_misses': grouped['near_misses'],
+        'near_misses': [{**m, 'raised_while_deciding': m['run'] in deciding} for m in grouped['near_misses']],
+        'raised_while_deciding': [{'run': i, 'agent': r['agent'], 'kind': r['kind'], 'built_with': r['platform'],
+                                   'reasons': r.get('reasons_deciding') or []} for i, r in deciding.items()],
         'what_would_have_changed_their_mind': grouped['would_change'][:60],
         'dashboard_reasons': dashboard_reasons(batch),
     }
@@ -344,7 +349,8 @@ def write(batch):
     header = f"<!-- Drafted by Opus 5.5 ({ADVICE_EFFORT} effort) from the batch data and data/choose/principles.md ({principles_version()[:7]}). Unreviewed. -->\n\n"
     out.write_text(header + text.strip() + '\n')
     checks = check_advice(batch)
-    bare = checks['ways_without_detail'] + (['opening too long'] if checks['opening_words'] > 50 else [])
+    bare = checks['ways_without_detail'] + (['opening too long'] if checks['opening_words'] > 50 else []) \
+        + [f'{rid} cited as while deciding, but it didn\'t raise WordPress then' for rid in checks['deciding_runs_not_raised']]
     if bare:
         print(f'  For review: {len(bare)} gaps in the draft (see advice.checks.json)')
     return out
@@ -365,11 +371,16 @@ def check_advice(batch):
     bad_quotes = [{'run': rid, 'quote': q} for q, rid in quotes if q not in full.get(rid, '')]
     urls = sorted(set(re.findall(r'\((https?://[^)\s]+)\)', md)))
     unknown = [u for u in urls if u not in known]
+    # A run cited as evidence of what happened while deciding must have brought WordPress up while deciding.
+    raised = {rid for rid, r in rs.items() if r.get('considered_wordpress')}
+    sentences = [t for line in md.splitlines() for t in re.split(r'(?<=[.!?])\s+(?=[A-Z"“])', line)]
+    not_raised = sorted({rid for t in sentences if re.search(r'(?i)while deciding', t)
+                         for rid in re.findall(r'C\d{4}-\d{4}', t) if rid not in raised})
     bare = [f"{sec['title']}: missing {', '.join(sec['missing'])}" for sec in sections(batch)['sections'] if sec.get('missing')]
     bare += [f"{sec['title']}: no claims or patterns tagged, so its reach can't be counted" for sec in sections(batch)['sections']
              if sec.get('recommendation') and not sec['reach']['sites']]
     out = {'quotes_checked': len(quotes), 'quotes_not_found': bad_quotes, 'links_checked': len(urls), 'links_not_in_sources': unknown,
-           'ways_without_detail': bare, 'opening_words': len(re.sub('<[^>]+>', ' ', sections(batch)['intro_html']).split())}
+           'ways_without_detail': bare, 'deciding_runs_not_raised': not_raised, 'opening_words': len(re.sub('<[^>]+>', ' ', sections(batch)['intro_html']).split())}
     (base / 'advice.checks.json').write_text(json.dumps(out, ensure_ascii=False, indent=1))
     return out
 
