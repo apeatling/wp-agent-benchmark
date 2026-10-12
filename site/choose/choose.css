@@ -1113,9 +1113,8 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
 .sol-ev .adv-body { margin-top: var(--space-12); padding: 0; }
 
 /* Recommendations: one row per idea, labelled and coloured by impact. Type matches the site's tables. */
-.ir-head, .ir > details > summary { display: grid; grid-template-columns: 96px minmax(0, 1fr) 160px 90px; gap: var(--space-24); align-items: baseline; }
+.ir-head, .ir > details > summary { display: grid; grid-template-columns: 96px minmax(0, 1fr) 160px; gap: var(--space-24); align-items: baseline; }
 .ir-head { padding: 0 var(--space-16) 10px; border-left: 3px solid transparent; border-bottom: 1px solid var(--rule); font-size: 15px; font-weight: 500; color: var(--muted); }
-.ir-head span:last-child, .ir-n { text-align: right; }
 .irs { list-style: none; margin: 0; padding: 0; font-variant-numeric: tabular-nums; }
 .ir { border-bottom: 1px solid var(--rule); border-left: 3px solid transparent; scroll-margin-top: var(--space-24); }
 .ir-high { border-left-color: var(--wp); background: color-mix(in srgb, var(--wp) 7%, transparent); }
@@ -1131,18 +1130,16 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
 .ir-t b { display: block; font-weight: 500; line-height: 1.45; color: var(--ink); }
 .ir-t span { display: block; margin-top: 2px; line-height: 1.5; color: var(--muted); }
 .ir-k { color: var(--ink-2); }
-.ir-n { color: var(--ink); }
-.ir-n small { font-size: inherit; color: var(--muted); }
-.ir-low .ir-t b, .ir-low .ir-n { color: var(--ink-2); }
+.ir-low .ir-t b { color: var(--ink-2); }
 .ir-d { padding: 0 var(--space-16) var(--space-24) calc(96px + var(--space-24) + var(--space-16)); }
 .ir-d.adv-body { max-width: calc(760px + 136px); }
 .ir-d dl { margin: 0; }
 .ir-d dt { margin-top: var(--space-12); font-size: 15px; font-weight: 500; color: var(--muted); }
 .ir-d dd { margin: 2px 0 0; }
 @media (max-width: 900px) {
-  /* Narrow: impact and sites on a top line, the idea full width under them, so every row lines up. */
+  /* Narrow: impact on a top line, the idea full width under it, so every row lines up. */
   .ir-head { display: none; }
-  .ir > details > summary { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "lv n" "t t"; row-gap: 8px; }
-  .ir-lv { grid-area: lv; } .ir-n { grid-area: n; } .ir-t { grid-area: t; } .ir-k { display: none; }
+  .ir > details > summary { grid-template-columns: minmax(0, 1fr); grid-template-areas: "lv" "t"; row-gap: 8px; }
+  .ir-lv { grid-area: lv; } .ir-t { grid-area: t; } .ir-k { display: none; }
   .ir-d { padding-left: var(--space-16); }
 }
