@@ -1,6 +1,6 @@
 {
  "schema_version": "1.0",
- "generated": "2026-10-11T19:03:34+00:00",
+ "generated": "2026-10-12T23:59:08+00:00",
  "batch": {
   "id": "2026-10",
   "name": "October 2026",
@@ -720,7 +720,7 @@
     ],
     "ways": [],
     "lead_html": "A plain line in wordpress.org/llms.txt, the docs and npm saying <code>npx @wp-playground/cli@latest start</code> runs WordPress with only Node.",
-    "evidence_html": "<ul>\n<li>While deciding, 18 of the 76 sites where the agent nearly chose WordPress dropped it because the workspace had Node but no PHP or MySQL.</li>\n<li>Asked afterwards, 84 of 193 said WordPress needs a PHP and MySQL server: &quot;In this specific environment, only Node.js and Python were installed—PHP and MySQL were not present.&quot; (C2610-0067)</li>\n<li>Fact check: this is misleading for a local start, because Playground CLI needs only Node 20.18+ and SQLite. It is true for production hosting, which needs PHP 8.3+ and MySQL 8.0+ (<a href=\"https://wordpress.org/about/requirements/\">requirements</a>, Oct 2026).</li>\n</ul>\n",
+    "evidence_html": "<ul>\n<li>At 18 of the 76 sites where the agent nearly chose WordPress, needing PHP or MySQL tipped it away, often in a workspace that only had Node.</li>\n<li>Asked afterwards, 84 of 193 said WordPress needs a PHP and MySQL server: &quot;In this specific environment, only Node.js and Python were installed—PHP and MySQL were not present.&quot; (C2610-0067)</li>\n<li>Fact check: this is misleading for a local start, because Playground CLI needs only Node 20.18+ and SQLite. It is true for production hosting, which needs PHP 8.3+ and MySQL 8.0+ (<a href=\"https://wordpress.org/about/requirements/\">requirements</a>, Oct 2026).</li>\n</ul>\n",
     "id": "publish-the-one-command-wordpress-start-where-agents-already-look"
    },
    {
@@ -776,7 +776,7 @@
     ],
     "ways": [],
     "lead_html": "A refreshed wordpress.org/about/security that states auto-update defaults, recent core fixes and plugin risk plainly, where models and searches find it.",
-    "evidence_html": "<ul>\n<li>Hosting and upkeep came up on 158 of 193 sites and security on 128, the two most common reasons.</li>\n<li>While deciding, upkeep tipped sites where the agent nearly chose WordPress (C2610-0005, C2610-0395). Asked afterwards: &quot;WordPress sites require continuous maintenance: weekly core updates, PHP version upgrades, database optimizations, and plugin updates.&quot; (C2610-0003)</li>\n<li>Fact check: partly true. Core patches itself, but plugins held 91% of 2025 vulnerabilities, and 46% of vulnerabilities had no fix at disclosure (Patchstack, 2026).</li>\n</ul>\n",
+    "evidence_html": "<ul>\n<li>Hosting and upkeep came up on 158 of 193 sites and security on 128, the two most common reasons.</li>\n<li>Upkeep was the most common reason at the 9 sites where agents raised WordPress while deciding (4 of 9, e.g. C2610-0094). It also tipped sites where the agent nearly chose WordPress (C2610-0005, C2610-0395). Asked afterwards: &quot;WordPress sites require continuous maintenance: weekly core updates, PHP version upgrades, database optimizations, and plugin updates.&quot; (C2610-0003)</li>\n<li>Fact check: partly true. Core patches itself, but plugins held 91% of 2025 vulnerabilities, and 46% of vulnerabilities had no fix at disclosure (Patchstack, 2026).</li>\n</ul>\n",
     "id": "update-wordpress-org-s-security-page-with-a-dated-account-of-what-updates-itself"
    },
    {
@@ -880,7 +880,7 @@
     ],
     "ways": [],
     "lead_html": "A dated wordpress.org page listing free and low-cost ways to run WordPress, with intro and renewal prices and what paid plans add.",
-    "evidence_html": "<ul>\n<li>While deciding, cost and upkeep tipped sites where the agent nearly chose WordPress, including a small shop (C2610-0078) and a course page (C2610-0396).</li>\n<li>Asked afterwards, 82 of 193 said WordPress needs paid hosting: &quot;Static hosting is free, while WordPress hosting usually costs about $5–30 a month.&quot; (C2610-0001). 50 said it needs several paid plugins.</li>\n<li>Fact check: misleading. WordPress.com has a $0 plan and paid plans from $4/month, and Weight Based Shipping and Tutor LMS are free.</li>\n</ul>\n",
+    "evidence_html": "<ul>\n<li>Cost and upkeep tipped sites where the agent nearly chose WordPress, including a small shop (C2610-0078) and a course page (C2610-0396).</li>\n<li>Asked afterwards, 82 of 193 said WordPress needs paid hosting: &quot;Static hosting is free, while WordPress hosting usually costs about $5–30 a month.&quot; (C2610-0001). 50 said it needs several paid plugins.</li>\n<li>Fact check: misleading. WordPress.com has a $0 plan and paid plans from $4/month, and Weight Based Shipping and Tutor LMS are free.</li>\n</ul>\n",
     "id": "publish-what-a-small-wordpress-site-costs-free-options-first"
    },
    {
@@ -929,7 +929,7 @@
     ],
     "ways": [],
     "lead_html": "Plain site requests with no platform named, scored on whether the agent establishes who maintains the site and delivers something the owner can edit.",
-    "evidence_html": "<ul>\n<li>On 80% of the 193 sites, the agent chose how to build without asking who would update the site; 41 went straight to code.</li>\n<li>While deciding, agents at several sites where they nearly chose WordPress built a preview first and never established who would maintain the site (C2610-0034, C2610-0152).</li>\n<li>Fact check: WP-Bench grades code in a WordPress 7.1 runtime, and nothing public measures platform choice.</li>\n</ul>\n",
+    "evidence_html": "<ul>\n<li>On 80% of the 193 sites, the agent chose how to build without asking who would update the site; 41 went straight to code.</li>\n<li>At several sites where they nearly chose WordPress, agents built a preview first and never established who would maintain the site (C2610-0034, C2610-0152).</li>\n<li>Fact check: WP-Bench grades code in a WordPress 7.1 runtime, and nothing public measures platform choice.</li>\n</ul>\n",
     "id": "add-website-request-scenarios-to-wp-bench-and-offer-them-as-an-open-eval"
    },
    {
@@ -983,7 +983,7 @@
     ],
     "ways": [],
     "lead_html": "A spec and reference runner that turns a Blueprint plus content in a repo into a live site on any host, announced in the docs.",
-    "evidence_html": "<ul>\n<li>While deciding, agents favoured what they could build and hand over at once (C2610-0188, C2610-0196), and 4% of 193 sites preferred one-command deploys or free static hosting.</li>\n<li>Asked afterwards: &quot;It's set up on a hosting account through its own dashboard, not built as files in a folder&quot; (C2610-0007).</li>\n<li>Fact check: no cross-host standard exists.</li>\n</ul>\n",
+    "evidence_html": "<ul>\n<li>At sites where they nearly chose WordPress, agents favoured what they could build and hand over at once (C2610-0188, C2610-0196), and 4% of 193 sites preferred one-command deploys or free static hosting.</li>\n<li>Asked afterwards: &quot;It's set up on a hosting account through its own dashboard, not built as files in a folder&quot; (C2610-0007).</li>\n<li>Fact check: no cross-host standard exists.</li>\n</ul>\n",
     "id": "define-an-open-host-neutral-way-to-take-a-local-wordpress-site-live"
    },
    {
@@ -1037,7 +1037,7 @@
     ],
     "ways": [],
     "lead_html": "One npm command that scaffolds blueprint.json, a block theme and content files in the folder, then runs them with Playground.",
-    "evidence_html": "<ul>\n<li>While deciding, 4% of 193 sites started with a one-line scaffold such as create-next-app, and 41 went straight to code.</li>\n<li>Asked afterwards, 88 wanted content in Git and 13 said WordPress locks it in a database: &quot;Lacks code ownership, requires ongoing hosting costs or third-party platform lock-in, and cannot be version-controlled in Git.&quot; (C2610-0052)</li>\n<li>Fact check: partly true. Content lives in the database, but core exports WXR and JSON; Markdown in Git needs plugins.</li>\n</ul>\n",
+    "evidence_html": "<ul>\n<li>At the start, 4% of 193 sites began with a one-line scaffold such as create-next-app, and 41 went straight to code.</li>\n<li>Asked afterwards, 88 wanted content in Git and 13 said WordPress locks it in a database: &quot;Lacks code ownership, requires ongoing hosting costs or third-party platform lock-in, and cannot be version-controlled in Git.&quot; (C2610-0052)</li>\n<li>Fact check: partly true. Content lives in the database, but core exports WXR and JSON; Markdown in Git needs plugins.</li>\n</ul>\n",
     "id": "ship-a-create-wordpress-starter-that-keeps-the-site-in-the-repo"
    },
    {
@@ -1085,7 +1085,7 @@
     "reasons": [],
     "ways": [],
     "lead_html": "An open, server-side converter that turns existing HTML into pages and an editable block theme, documented where agents look.",
-    "evidence_html": "<ul>\n<li>While deciding, agents kept existing HTML to avoid a rebuild at sites where they nearly chose WordPress (C2610-0024, C2610-0044, C2610-0158), and 3% of 193 sites added a CMS or JSON file instead.</li>\n<li>Asked afterwards, 26 of 193 said moving means a rebuild: &quot;WordPress uses PHP themes, so your hand-coded HTML and CSS would need to become a custom theme.&quot; (C2610-0024)</li>\n<li>Fact check: true today. No WordPress.org tool converts HTML to a block theme, though company tools now do.</li>\n</ul>\n",
+    "evidence_html": "<ul>\n<li>Agents kept existing HTML to avoid a rebuild at sites where they nearly chose WordPress (C2610-0024, C2610-0044, C2610-0158), and 3% of 193 sites added a CMS or JSON file instead.</li>\n<li>Asked afterwards, 26 of 193 said moving means a rebuild: &quot;WordPress uses PHP themes, so your hand-coded HTML and CSS would need to become a custom theme.&quot; (C2610-0024)</li>\n<li>Fact check: true today. No WordPress.org tool converts HTML to a block theme, though company tools now do.</li>\n</ul>\n",
     "id": "bring-html-to-wordpress-conversion-into-the-open-project-and-announce-it"
    },
    {
@@ -1297,7 +1297,7 @@
    {
     "title": "About the numbers",
     "recommendation": false,
-    "html": "<ul>\n<li><strong>Sample:</strong> one batch of 193 sites, all built without WordPress, so it shows why agents passed over WordPress, not how often they chose it. Per-agent figures are on the Data page.</li>\n<li><strong>Claims:</strong> site counts come from post-build answers, which are reasons given afterwards. Decision-time evidence comes from the 76 sites where the agent nearly chose WordPress.</li>\n<li><strong>Margin of error:</strong> at this size, shares carry about ±7 points.</li>\n<li><strong>Where the evidence is thin:</strong> caching, courses and lockout rest on few sites.</li>\n<li><strong>Not yet tested:</strong> personal agents with their makers' own hosting.</li>\n</ul>\n",
+    "html": "<ul>\n<li><strong>Sample:</strong> one batch of 193 sites, all built without WordPress, so it shows why agents passed over WordPress, not how often they chose it. Per-agent figures are on the Data page.</li>\n<li><strong>Claims:</strong> site counts come from post-build answers, which are reasons given afterwards. Only 9 sites raised WordPress while deciding; the 76 where the agent nearly chose WordPress also include agents that leaned away from it or offered it only after building.</li>\n<li><strong>Margin of error:</strong> at this size, shares carry about ±7 points.</li>\n<li><strong>Where the evidence is thin:</strong> caching, courses and lockout rest on few sites.</li>\n<li><strong>Not yet tested:</strong> personal agents with their makers' own hosting.</li>\n</ul>\n",
     "id": "about-the-numbers"
    }
   ],

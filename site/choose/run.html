@@ -22,7 +22,15 @@
 <script src="../data/choose.js?v=15"></script>
 <script src="data.js?v=67"></script>
 <script>
-(function () {
+{
+// A run from an earlier month opens with that month's data, loaded by the month in its ID (C2610-… is 2026-10).
+// Only a well-formed ID picks the file.
+const wanted = new URLSearchParams(location.search).get('id') || '';
+const month = /^C(\d{2})(\d{2})-\d{4}$/.exec(wanted);
+const earlier = month && window.CHOOSE && !window.CHOOSE.RUNS.some(x => x.id === wanted) && `20${month[1]}-${month[2]}` !== window.CHOOSE.MONTH.id;
+const load = src => new Promise((ok, fail) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = fail; document.head.append(s); });
+(earlier ? load(`../data/choose-20${month[1]}-${month[2]}.js`).then(() => load(document.querySelector('script[src^="data.js"]').src)).catch(() => {})
+  : Promise.resolve()).then(function () {
   const C = window.CHOOSE, { esc } = C;
   const $ = id => document.getElementById(id);
   // Long answers show their opening, with the rest a click away.
@@ -40,7 +48,13 @@
   };
   // Only accept real run IDs, so a crafted link can't put another command in the copy button.
   const asked = new URLSearchParams(location.search).get('id') || '';
-  const r = C.RUNS.find(x => x.id === asked) || C.RUNS[0];
+  const r = C.RUNS.find(x => x.id === asked);
+  if (!r) {
+    document.title = 'Run not found · Choosing WordPress · Agent Benchmarks';
+    $('run').innerHTML = `<header class="page-head"><a class="go back" href="runs">Back to runs</a><h1 class="title">Run not found</h1>
+      <p class="lede">${asked ? `No published run has the ID ${esc(asked)}.` : 'No run ID was given.'}</p></header>`;
+    return;
+  }
   const wp = r.out === 'WordPress';
   // Back returns to the filtered list the reader came from, but only on this site.
   const ref = document.referrer ? new URL(document.referrer) : null;
@@ -81,7 +95,8 @@
       </aside>
     </section>`;
 
-})();
+});
+}
 </script>
 </body>
 </html>

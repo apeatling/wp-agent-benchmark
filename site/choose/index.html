@@ -206,7 +206,7 @@
     return { m, n: mine.length, nf: mf.length, p: rate(mine), pf: rate(mf), named: mAsked.length ? mAsked.filter(named).length / mAsked.length : null, weighed: mf.length ? mf.filter(weighedIt).length / mf.length : 0, never: lost.length ? lost.filter(r => !r.considered).length / lost.length : 0, alt: (Object.entries(alt).sort((a, b) => b[1] - a[1])[0] || [''])[0] };
   }).sort((a, b) => b.pf - a.pf);
   const heads = agents.filter(a => a.m.head);
-  $('fit-head').innerHTML = `<tr><th>Type of site</th><th class="all">Average across ${heads.length === 1 ? 'the agent' : `${NUM[heads.length] || heads.length} agents`}</th>${heads.map(a => `<th class="n">${C.logo(a.m, 13)}${nb(a.m.name)}</th>`).join('')}</tr>`;
+  $('fit-head').innerHTML = `<tr><th>Type of site</th><th class="all">All sites</th>${heads.map(a => `<th class="n">${C.logo(a.m, 13)}${nb(a.m.name)}</th>`).join('')}</tr>`;
   let outlier = null;
   const typeRows = C.TYPES.filter(t => !t.control).map(t => {
     const tr = all.filter(r => r.type === t), pAll = rate(tr);
@@ -221,7 +221,7 @@
   if (!best.pAll && asked.length) {
     // Nothing to compare at 0%, so the table shows how often agents named WordPress afterwards, by type of site.
     const namedRate = rs => { const a = rs.filter(r => isWP(r) || r.unprompted !== null && r.unprompted !== undefined); return a.length ? a.filter(named).length / a.length : 0; };
-    $('fit-head').innerHTML = `<tr><th>Type of site</th><th class="all">Named WordPress afterwards<span>average across ${heads.length === 1 ? 'the agent' : `${NUM[heads.length] || heads.length} agents`}</span></th>${heads.map(a => `<th class="n">${C.logo(a.m, 13)}${nb(a.m.name)}</th>`).join('')}</tr>`;
+    $('fit-head').innerHTML = `<tr><th>Type of site</th><th class="all">Named WordPress afterwards<span>all sites</span></th>${heads.map(a => `<th class="n">${C.logo(a.m, 13)}${nb(a.m.name)}</th>`).join('')}</tr>`;
     const rows = C.TYPES.filter(t => !t.control).map(t => {
       const tr = all.filter(r => r.type === t), pN = namedRate(tr);
       const cells = heads.map(a => `<td class="n"><a href="${runsLink({ agent: a.m.id, type: t.id, wp: 'named' })}">${Math.round(namedRate(tr.filter(r => r.m === a.m)) * 100)}%</a></td>`).join('');
@@ -237,7 +237,7 @@
   } else {
   $('fit-h').textContent = `Agents choose WordPress for ${PL[best.t.id]}, rarely for ${PL[worst.t.id]}.`;
   $('fit-lede').textContent = `${Math.round(best.pAll * 100)}% of ${PL[best.t.id]} were built with WordPress, against ${Math.round(worst.pAll * 100)}% of ${PL[worst.t.id]}, though WordPress suits both.` +
-    (outlier ? ` ${outlier.a.m.name} stands out on ${PL[outlier.t.id]}: ${Math.round(outlier.p * 100)}%, against a ${Math.round(outlier.pAll * 100)}% average.` : '');
+    (outlier ? ` ${outlier.a.m.name} stands out on ${PL[outlier.t.id]}: ${Math.round(outlier.p * 100)}%, against ${Math.round(outlier.pAll * 100)}% across all sites.` : '');
   }
   // 3. Why: only requests where WordPress fits but the agent built something else.
   // Reasons draw on every agent tested, like the Recommendations, so their shares match; the headline stays with the most-used.

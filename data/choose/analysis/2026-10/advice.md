@@ -23,7 +23,7 @@ Where: [Meta team](https://make.wordpress.org/meta/) with the [Playground team](
 How we'll know: Fewer sites cite a missing PHP or database, and agents run WordPress in Node-only workspaces.
 
 Evidence:
-- While deciding, 18 of the 76 sites where the agent nearly chose WordPress dropped it because the workspace had Node but no PHP or MySQL.
+- At 18 of the 76 sites where the agent nearly chose WordPress, needing PHP or MySQL tipped it away, often in a workspace that only had Node.
 - Asked afterwards, 84 of 193 said WordPress needs a PHP and MySQL server: "In this specific environment, only Node.js and Python were installed—PHP and MySQL were not present." (C2610-0067)
 - Fact check: this is misleading for a local start, because Playground CLI needs only Node 20.18+ and SQLite. It is true for production hosting, which needs PHP 8.3+ and MySQL 8.0+ ([requirements](https://wordpress.org/about/requirements/), Oct 2026).
 
@@ -49,7 +49,7 @@ How we'll know: Fewer agents say WordPress needs weekly manual updates, and secu
 
 Evidence:
 - Hosting and upkeep came up on 158 of 193 sites and security on 128, the two most common reasons.
-- While deciding, upkeep tipped sites where the agent nearly chose WordPress (C2610-0005, C2610-0395). Asked afterwards: "WordPress sites require continuous maintenance: weekly core updates, PHP version upgrades, database optimizations, and plugin updates." (C2610-0003)
+- Upkeep was the most common reason at the 9 sites where agents raised WordPress while deciding (4 of 9, e.g. C2610-0094). It also tipped sites where the agent nearly chose WordPress (C2610-0005, C2610-0395). Asked afterwards: "WordPress sites require continuous maintenance: weekly core updates, PHP version upgrades, database optimizations, and plugin updates." (C2610-0003)
 - Fact check: partly true. Core patches itself, but plugins held 91% of 2025 vulnerabilities, and 46% of vulnerabilities had no fix at disclosure (Patchstack, 2026).
 
 <!-- answers: reasons=upkeep,security claims=ongoing-updates-maintenance,outdated-sites-get-hacked,most-attacked-platform,updates-break-site patterns=security -->
@@ -98,7 +98,7 @@ Where: [Hosting team](https://make.wordpress.org/hosting/).
 How we'll know: Agents quote free and $4–11 options alongside $5–30, and cost falls as a reason.
 
 Evidence:
-- While deciding, cost and upkeep tipped sites where the agent nearly chose WordPress, including a small shop (C2610-0078) and a course page (C2610-0396).
+- Cost and upkeep tipped sites where the agent nearly chose WordPress, including a small shop (C2610-0078) and a course page (C2610-0396).
 - Asked afterwards, 82 of 193 said WordPress needs paid hosting: "Static hosting is free, while WordPress hosting usually costs about $5–30 a month." (C2610-0001). 50 said it needs several paid plugins.
 - Fact check: misleading. WordPress.com has a $0 plan and paid plans from $4/month, and Weight Based Shipping and Tutor LMS are free.
 
@@ -124,7 +124,7 @@ How we'll know: Agents ask or state who maintains the site on more of the benchm
 
 Evidence:
 - On 80% of the 193 sites, the agent chose how to build without asking who would update the site; 41 went straight to code.
-- While deciding, agents at several sites where they nearly chose WordPress built a preview first and never established who would maintain the site (C2610-0034, C2610-0152).
+- At several sites where they nearly chose WordPress, agents built a preview first and never established who would maintain the site (C2610-0034, C2610-0152).
 - Fact check: WP-Bench grades code in a WordPress 7.1 runtime, and nothing public measures platform choice.
 
 <!-- answers: reasons=default claims= patterns=didnt-ask -->
@@ -148,7 +148,7 @@ Where: [Hosting team](https://make.wordpress.org/hosting/).
 How we'll know: Agents that build WordPress locally hand over a live or deployable site.
 
 Evidence:
-- While deciding, agents favoured what they could build and hand over at once (C2610-0188, C2610-0196), and 4% of 193 sites preferred one-command deploys or free static hosting.
+- At sites where they nearly chose WordPress, agents favoured what they could build and hand over at once (C2610-0188, C2610-0196), and 4% of 193 sites preferred one-command deploys or free static hosting.
 - Asked afterwards: "It's set up on a hosting account through its own dashboard, not built as files in a folder" (C2610-0007).
 - Fact check: no cross-host standard exists.
 
@@ -173,7 +173,7 @@ Where: [Playground issues](https://github.com/WordPress/wordpress-playground/iss
 How we'll know: On some sites, agents start with a WordPress create command, and "content in Git" falls as a reason.
 
 Evidence:
-- While deciding, 4% of 193 sites started with a one-line scaffold such as create-next-app, and 41 went straight to code.
+- At the start, 4% of 193 sites began with a one-line scaffold such as create-next-app, and 41 went straight to code.
 - Asked afterwards, 88 wanted content in Git and 13 said WordPress locks it in a database: "Lacks code ownership, requires ongoing hosting costs or third-party platform lock-in, and cannot be version-controlled in Git." (C2610-0052)
 - Fact check: partly true. Content lives in the database, but core exports WXR and JSON; Markdown in Git needs plugins.
 
@@ -198,7 +198,7 @@ Where: [Create Block Theme issues](https://github.com/WordPress/create-block-the
 How we'll know: On make-it-editable tasks, agents convert the site to WordPress instead of adding a headless CMS.
 
 Evidence:
-- While deciding, agents kept existing HTML to avoid a rebuild at sites where they nearly chose WordPress (C2610-0024, C2610-0044, C2610-0158), and 3% of 193 sites added a CMS or JSON file instead.
+- Agents kept existing HTML to avoid a rebuild at sites where they nearly chose WordPress (C2610-0024, C2610-0044, C2610-0158), and 3% of 193 sites added a CMS or JSON file instead.
 - Asked afterwards, 26 of 193 said moving means a rebuild: "WordPress uses PHP themes, so your hand-coded HTML and CSS would need to become a custom theme." (C2610-0024)
 - Fact check: true today. No WordPress.org tool converts HTML to a block theme, though company tools now do.
 
@@ -318,7 +318,7 @@ Evidence:
 ## About the numbers
 
 - **Sample:** one batch of 193 sites, all built without WordPress, so it shows why agents passed over WordPress, not how often they chose it. Per-agent figures are on the Data page.
-- **Claims:** site counts come from post-build answers, which are reasons given afterwards. Decision-time evidence comes from the 76 sites where the agent nearly chose WordPress.
+- **Claims:** site counts come from post-build answers, which are reasons given afterwards. Only 9 sites raised WordPress while deciding; the 76 where the agent nearly chose WordPress also include agents that leaned away from it or offered it only after building.
 - **Margin of error:** at this size, shares carry about ±7 points.
 - **Where the evidence is thin:** caching, courses and lockout rest on few sites.
 - **Not yet tested:** personal agents with their makers' own hosting.
