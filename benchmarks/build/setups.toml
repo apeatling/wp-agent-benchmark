@@ -1,0 +1,57 @@
+# How the agent reaches the site. Every setup is the same site, request, owner and checks; only this differs.
+# Every setup starts with its connection already in place: what's measured is what gets done once connected.
+# Setting up a connection (installing, configuring, approving) isn't part of the runs.
+# A new setup (for example a third-party connector) is a new entry here, set up the way its own documentation
+# describes. Tasks are built for every setup a request lists.
+#
+# id        used in task names and run records.
+# name      how results name it.
+# kind      base (no connector), official (WordPress's connector) or third (a third-party connector).
+# plugins   wordpress.org plugins it needs, "<slug> <version>", downloaded when the site's image is built.
+# seed      WP-CLI commands run after the site is seeded ($WP is the WP-CLI command; plugin zips are in
+#           /opt/wpab/plugins/<slug>.<version>.zip). {user} is the fixture owner's login.
+# connector the site's MCP endpoint (path), and how the connector container signs in: auth "basic" (the
+#           owner's user and the Connector application password), "bearer" (token), or "header" (token in the
+#           named header). With from_seed = true the credential is made while the site is seeded (some plugins
+#           only make random tokens): the seed writes the header's whole value to /run/wpab-connector/value,
+#           which only the site and connector containers share. The agent connects to the container over HTTP
+#           and never has the login.
+# access    the last line of the request: how the owner tells the agent to reach the site.
+#
+# Third-party connector: AI Engine, the most-installed free plugin on wordpress.org whose job is managing a site
+# over MCP and that runs on the site itself (90,000+ active installs, checked 9 Oct 2026), at its latest version on
+# the batch date. It's set up as its own documentation describes, with everything on that the free version turns
+# on by default. It's a reference figure only.
+#
+# Not counted as general connectors: plugins whose MCP server only covers their own features (for example
+# Elementor's page building and All in One SEO's SEO data).
+
+[[setup]]
+id = "none"
+name = "No MCP connector"
+kind = "base"
+access = "My site is http://{host}. You're connected to it through its REST API: username {user}, application password {password_spaced}."
+
+[[setup]]
+id = "official"
+name = "WordPress’s MCP connector"
+kind = "official"
+plugins = ["mcp-adapter 0.7.0"]
+seed = """
+$WP plugin install /opt/wpab/plugins/mcp-adapter.0.7.0.zip --activate
+"""
+connector = { path = "/wp-json/mcp/mcp-adapter-default-server", auth = "basic" }
+access = "My site is http://{host}, and it's connected to you."
+
+[[setup]]
+id = "ai-engine"
+name = "AI Engine"
+kind = "third"
+plugins = ["ai-engine 3.8.4"]
+# MCP is off by default; its documentation turns it on with a bearer token in AI Engine's settings.
+seed = """
+$WP plugin install /opt/wpab/plugins/ai-engine.3.8.4.zip --activate
+$WP option update mwai_options '{"module_mcp":true,"mcp_core":true,"mcp_role":"admin","mcp_bearer_token":"Xxvr79zg4MX7vbisBLdFb5rzpu8n6VDy"}' --format=json
+"""
+connector = { path = "/wp-json/mcp/v1/http", auth = "bearer", token = "Xxvr79zg4MX7vbisBLdFb5rzpu8n6VDy" }
+access = "My site is http://{host}, and it's connected to you."

@@ -1,0 +1,17 @@
+# The Portwen Sailing Club site: a volunteer-run dinghy club, on WordPress since 2017. Astra (Brainstorm Force),
+# a classic theme, written in the classic editor, with the most-installed plugin for each job a club's site does,
+# from different companies: The Events Calendar (StellarWP), Akismet (Automattic), Wordfence (Defiant),
+# LiteSpeed Cache (LiteSpeed Technologies), Contact Form 7 (Takayuki Miyoshi), Classic Editor (WordPress
+# contributors), User Role Editor (Vladimir Garagulya), TablePress (Tobias Bäthge), WP-Optimize (Team Updraft),
+# Advanced Custom Fields (WP Engine), Regenerate Thumbnails (Alex Mills), and inactive: All-in-One WP Migration
+# (ServMask).
+# Test values for a throwaway site that only exists inside a run's sandbox.
+# They're filled into seed/seed.sh, the request (password), the connector (connector_password), the solution
+# (password) and the checks (monitor_password) when tasks are built.
+host = "portwensailing.test"
+user = "portwensc"
+password = "5biAdo8eiwY3rGgAGh6WsnM9"          # the owner's application password, which the request gives the agent
+connector_password = "eVy0mInmI4HBH0VkUNWdXk8S"  # a third, held only by the connector container
+monitor_password = "1DBY3trmWzdO5yQE4zaFvLF2"  # a second application password, used only by the checks
+db_password = "jOdsPoVlZajBlP0MLFkAusOF"  # the site's database; only the site has it, never the agent
+admin_password = "vLGMR8qZV7MTatpuYD7w"    # the owner's login password; not given to anyone

@@ -113,7 +113,7 @@
 .masthead-id .home-logo { display: inline-flex; color: var(--ink); }
 .masthead-id > span { display: grid; gap: 2px; }
 .masthead-id .crumb { font-size: var(--fs-small); color: var(--muted); text-decoration: none; width: fit-content; }
-.masthead-id .crumb:hover { color: var(--ink); }
+a.crumb:hover { color: var(--ink); }
 .masthead-id .week { font-size: var(--fs-caption); color: var(--muted); margin: 0; }
 .dash-switch { position: relative; }
 .dash-switch summary { list-style: none; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; border-radius: var(--radius-s); }
@@ -816,6 +816,7 @@ dl.adv-step-d { padding-left: var(--space-12); padding-right: var(--space-12); }
 
 /* Run page: the site's page head, then the 12-column grid: the run on the left (8 columns), its details on the right */
 .run-page { max-width: var(--container); padding-top: 0; }
+.run-page > .go.back:first-child { margin-top: var(--page-top); }  /* pages that open on a back link, with no page head */
 .run-page .page-head { padding-top: var(--page-top); }
 body main .go.back.go.back::after { content: none; }
 .run-page .back { display: inline-block; margin-bottom: var(--space-32); }

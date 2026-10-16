@@ -1,0 +1,13 @@
+# A new WordPress site, as a host's one-click install leaves it: WordPress with its default theme (Twenty
+# Twenty-Five), the default "Hello world!" post and "Sample Page", the plugins WordPress ships with (Akismet and
+# Hello Dolly, inactive), and pretty permalinks. Requests that start from it set up the owner's own situation on
+# top (requests/<id>/setup.sh): their email, and for an owner whose site already exists, its few pages. Each
+# request gives the site its own address (host in requests.toml).
+# Test values for a throwaway site that only exists inside a run's sandbox.
+host = "mynewsite.test"
+user = "owner"
+password = "MEbRfe8xcEAzd54BvDeSI6Hl"          # the owner's application password, which the request gives the agent
+connector_password = "fWqUdS5pPYpJytLt4ZMYbF8P"  # a third, held only by the connector container
+monitor_password = "tghF3CedDCREGktqnaSiG8nu"  # a second application password, used only by the checks
+db_password = "HnCpARs51yRyXXl2hprTQXBq"  # the site's database; only the site has it, never the agent
+admin_password = "TbdNsRAKucBXUgtV171i"    # the owner's login password; not given to anyone

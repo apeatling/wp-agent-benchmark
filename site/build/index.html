@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- shared head: edit templates/head.html, then run scripts/sync_head.py -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css?v=210">
+<link rel="stylesheet" href="/vt.css?v=7">
+<link rel="stylesheet" href="/choose/choose.css?v=265">
+<link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
+<meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://wpab.view.fast/social-card.png?v=1">
+<!-- /shared head -->
+<!-- Hold the first render until the page is complete, so the page transition moves the finished header and numbers -->
+<link rel="expect" href="#vt-ready" blocking="render">
+<title>Data · Building with WordPress · Agent Benchmarks</title>
+<style>
+  /* Page transition from the benchmark picker: Building's names for the shared pieces (choose.css names Choosing's) */
+  .c-hero .question { view-transition-name: vt-build-q; }
+  .c-hero .stat { view-transition-name: vt-build-stat; }
+  .c-hero .stat-caption { view-transition-name: vt-build-cap; max-width: 36ch; }
+  .c-hero .changes { view-transition-name: vt-build-chg; }
+  /* The hero, as on Choose: the number and its bar. The bar's colours are what happened to what was asked for. */
+  #share .seg-code { background: repeating-linear-gradient(135deg, rgba(61, 155, 255, .5) 0 2px, rgba(61, 155, 255, .14) 2px 7px); }
+  #share .seg-cms { background: var(--cat-code); }
+  #share .seg-hosted { background: #6e4246; }
+  /* Bottom right, under the bar: the other two routes, each a thin bar in the same colours, on the right half */
+  #share .seg-code { background: repeating-linear-gradient(135deg, rgba(61, 155, 255, .5) 0 2px, rgba(61, 155, 255, .14) 2px 7px); }
+  .c-hero .alt { position: relative; grid-row: 2; justify-self: end; width: 50%; display: grid; grid-template-columns: 1fr 1fr; margin-top: var(--space-16); }
+  .alt-l { position: absolute; top: 0; right: 100%; padding-right: var(--space-24); white-space: nowrap; font-size: 15px; line-height: 22px; color: var(--muted); }
+  /* Each route: name on top, how much got done below in the headline's figure style, like the 95% CI and Change pairs */
+  .alt-i { display: flex; flex-direction: column; gap: 14px; padding-left: var(--space-24); border-left: 1px solid var(--rule-strong); }
+  .alt-t { display: flex; align-items: center; gap: 8px; min-height: 22px; white-space: nowrap; font-size: 15px; line-height: 22px; color: var(--ink-2); }
+  .alt-i b { font-family: var(--serif); font-size: 72px; font-weight: 700; line-height: .82; letter-spacing: -.03em; color: var(--ink); font-variant-numeric: lining-nums; }
+  .alt .ic { display: inline-flex; flex: none; gap: 3px; }
+  .alt .ic img, .alt .ic .glyph { width: 18px; height: 18px; border-radius: 4px; }
+  .alt .ic .glyph { display: grid; place-items: center; background: var(--cat-code); color: var(--ink); }
+  .alt .ic .glyph svg { width: 12px; height: 12px; }
+  @media (max-width: 900px) {
+    .c-hero .alt { grid-row: 4; justify-self: stretch; width: auto; margin-top: var(--space-32); row-gap: var(--space-12); }
+    .alt-l { position: static; grid-column: 1 / -1; padding: 0; }
+    .alt-i { padding-left: var(--space-16); }
+    .alt-i b { font-size: 56px; }
+    .c-hero .alt { grid-template-columns: 1fr 1fr; }
+    .alt-t { font-size: 14px; }
+  }
+  details.more { margin-top: var(--space-48); }
+  /* The bar can need more than one label under it, so How this is measured goes below them rather than beside. */
+  .c-hero .how { grid-row: 3; margin-top: var(--space-12); }
+  .how-l { list-style: none; margin: var(--space-12) 0 0; padding: 0; }
+  .how-l li { margin: 0 0 var(--space-8); line-height: 1.5; }
+  .how-l b { margin-right: .3em; font-weight: 600; color: var(--ink-2); }
+  details.more > summary { cursor: pointer; font-size: 16px; color: var(--ink-2); width: fit-content; }
+  details.more > summary:hover { color: var(--ink); }
+
+  .back { margin: 0 0 var(--space-16); font-size: 15px; }
+  .back a { color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+  .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  :root { --no: #e58b8b; --part: #f2b45a; }
+
+  /* 2. Same agents, same requests: a dot per run, both ways in, a row per need. Pairs of dots are one request. */
+  .field { width: 100%; border-collapse: collapse; }
+  .field th, .field td { padding: 0; text-align: left; font-weight: 400; }
+  .field thead th { padding-bottom: var(--space-24); vertical-align: bottom; }
+  .field thead th + th { padding-left: var(--space-48); }
+  /* A setup's name, the same everywhere on the page: its icon, then the label */
+  .setup { display: flex; align-items: center; gap: 12px; font-size: 17px; font-weight: 600; line-height: 1.3; color: var(--ink); }
+  .setup .glyph { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 6px; background: var(--cat-code); color: var(--ink); }
+  .setup .glyph svg { width: 15px; height: 15px; }
+  .field .ct { display: block; margin-top: 10px; font-family: var(--serif); font-size: 64px; font-weight: 700; line-height: .9; letter-spacing: -.03em; color: var(--ink); font-variant-numeric: lining-nums; }
+  .field .ct small { margin-left: -.08em; font-size: 24px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+  .field tbody th, .field tbody td { padding: 18px 0; border-top: 1px solid var(--rule); vertical-align: middle; }
+  .field tbody td { padding-left: var(--space-48); }
+  .field tbody th, .field tbody th a { font-family: var(--serif); font-size: 22px; color: var(--ink); text-decoration: none; }
+  .field tbody th a:hover { text-decoration: underline; text-underline-offset: 5px; text-decoration-color: var(--rule-strong); }
+  .pairs { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+  /* One line of dots per agent in each cell, led by the agent's logo */
+  .field tbody th a.go { display: block; width: fit-content; margin-top: 6px; font-family: var(--sans, inherit); font-size: var(--fs-small); color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); }
+  .field tbody th a.go:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
+  .field { table-layout: fixed; }
+  /* A rule between the two setups, with the same space either side */
+  .field thead th:nth-child(2), .field tbody td:nth-child(2) { padding-left: 0; padding-right: var(--space-48); }
+  .field thead th:nth-child(3), .field tbody td:nth-child(3) { border-left: 1px solid var(--rule); }
+  .field thead th:first-child { width: 28%; }
+  /* The dots fill their column: each line is a grid of equal cells, so they grow with the space */
+  .alines { display: grid; gap: 10px; }
+  .aline { display: flex; align-items: center; gap: 14px; }
+  .aline .logo { flex: none; color: var(--ink-2); }
+  .aline .pairs { flex: 1; display: grid; grid-template-columns: repeat(var(--n, 7), minmax(0, 1fr)); gap: clamp(4px, 1vw, 12px); }
+  .aline .dot { width: 100%; height: auto; aspect-ratio: 1; box-shadow: inset 0 0 0 2px var(--rule-strong); }
+  .aline .dot.on { position: relative; box-shadow: none; }
+  /* Not completed: a red ring with a cross */
+  .aline .dot:not(.on) { position: relative; box-shadow: inset 0 0 0 2px var(--no); }
+  .aline .dot:not(.on)::after { content: ""; position: absolute; inset: 0; background: var(--no); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 8l8 8M16 8l-8 8' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center / 58% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 8l8 8M16 8l-8 8' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center / 58% no-repeat; }
+  /* The card shown on hovering or focusing a run's dot */
+  .dot-card { position: absolute; z-index: 20; width: 300px; padding: 14px 16px; background: var(--raise); border: 1px solid var(--rule-strong); border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, .45); font-size: 14px; line-height: 1.45; color: var(--ink-2); pointer-events: none; }
+  .dot-card[hidden] { display: none; }
+  .dot-card p { margin: 0; }
+  .dot-card .dc-q { font-family: var(--serif); font-size: 17px; line-height: 1.3; color: var(--ink); }
+  .dot-card .dc-who { display: flex; align-items: center; gap: 6px; margin-top: 8px; color: var(--muted); }
+  .dot-card .dc-who .logo { color: var(--ink-2); }
+  .dot-card .dc-res { margin-top: 10px; font-weight: 600; color: var(--ink); }
+  .dot-card .dc-res.no { color: var(--ink-2); }
+  .dot-card .dc-why { margin-top: 4px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .dot-card .dc-why b { font-weight: 600; color: var(--ink-2); }
+  .dot-card .dc-go { margin-top: 10px; font-size: 13px; color: var(--muted); }
+  /* A tick in each completed dot, cut in the page colour */
+  .aline .dot.on::after { content: ""; position: absolute; inset: 0; background: var(--page);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 62% no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 62% no-repeat; }
+  .pair { display: inline-flex; gap: 5px; }
+  .dot { display: block; width: 18px; height: 18px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--rule-strong); }
+  .dot.on { background: var(--ink); box-shadow: none; }
+  .dot:hover { box-shadow: 0 0 0 3px var(--rule-strong); }
+  .dot.on:hover { box-shadow: 0 0 0 3px var(--rule-strong); }
+  .dot:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .key { margin: var(--space-32) 0 0 28%; font-size: 14px; color: var(--muted); }
+
+  /* Every request, behind the toggle */
+
+  /* The worked example: one request, start to finish */
+  .one { margin-top: var(--space-96); padding-top: var(--space-64); border-top: 1px solid var(--rule); }
+  /* What owners asked for: every request in the owner's words, a column per need */
+  .asks { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: var(--space-48); }
+  .asks h3 { margin: 0 0 var(--space-16); padding-bottom: 12px; border-bottom: 1px solid var(--rule); font-family: var(--serif); font-size: 24px; font-weight: 400; color: var(--ink); }
+  .asks ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .asks li a { display: block; font-size: 15px; line-height: 1.5; color: var(--ink-2); text-decoration: none; }
+  .asks li a::before { content: "“"; } .asks li a::after { content: "”"; }
+  .asks li a:hover { color: var(--ink); }
+  .asks-more { margin: var(--space-32) 0 0; }
+  /* The three needs: what each covers, and one of its requests as the owner's message */
+  .needs3 { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); column-gap: var(--space-48); align-items: start; }
+  /* Each column shares the grid's rows (title, description, messages, toggle), so they line up across the needs */
+  .needs3 > div { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; }
+  .needs3 .more { display: flex; flex-direction: column; align-items: flex-start; }
+  .needs3 h3 { margin: 0 0 8px; font-family: var(--serif); font-size: 26px; font-weight: 400; line-height: 1.15; color: var(--ink); }
+  .needs3 p { margin: 0 0 var(--space-16); font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+  /* The example as the user's message, right-aligned like the worked example's chats */
+  .needs3 .msgs { display: grid; gap: 14px; }
+  .needs3 .msg { display: flex; flex-direction: column; align-items: stretch; gap: 6px; }
+  .needs3 .msg .who { align-self: flex-end; }
+  .needs3 .msg + .msg .who { display: none; }  /* "User" once, on the first prompt in each column */
+  .needs3 .msgs { align-content: start; }
+  .needs3 .msg.extra { display: none; }
+  .needs3 .all .msg.extra { display: flex; }
+  .needs3 .more-btn { justify-self: start; align-self: start; margin-top: var(--space-16); }
+  .more-btn { padding: 0; background: none; border: 0; font: inherit; font-size: 16px; color: var(--ink-2); cursor: pointer; }
+  .more-btn { font-weight: 500; }
+  /* Points the way the list moves: down to show more, up to show fewer */
+  .more-btn::before { content: "▼"; display: inline-block; margin-right: 6px; font-size: .7em; vertical-align: 1px; } .more-btn[aria-expanded="true"]::before { content: "▲"; }
+  .more-btn:hover { color: var(--ink); }
+  .needs3 .who { padding: 0 4px; font-size: 13px; color: var(--muted); }
+  .needs3 a { display: block; align-self: stretch; padding: 10px 14px; background: var(--track-strong); border-radius: 16px; border-top-right-radius: 4px; font-size: 14px; line-height: 1.45; color: var(--ink); text-decoration: none; }
+  .needs3 a:hover { background: color-mix(in srgb, var(--track-strong) 85%, var(--ink)); }
+  .asks-all { margin-top: var(--space-48); }
+  .asks-all[open] > summary { margin-bottom: var(--space-24); }
+  .one-h { margin: 0 0 var(--space-12); font-family: var(--serif); font-size: 40px; font-weight: 400; line-height: 1.1; color: var(--ink); }
+  .one-lede { margin: 0 0 40px; max-width: 60ch; font-size: 17px; line-height: 1.5; color: var(--ink-2); }
+  /* Each setup as a chat: the user's messages, the agent's actions as a tree, its replies, then the result */
+  .ex-chats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-96); align-items: stretch; }
+  /* No boxes: a line runs down from under each title's icon, and the chat hangs off it */
+  .ex-chat { position: relative; display: flex; flex-direction: column; gap: 18px; padding-left: 48px; }
+  .ex-chat::before { content: ""; position: absolute; left: 12.5px; top: 36px; bottom: 0; border-left: 1px solid var(--rule); }
+  /* Each chat's setup as its title, with the hero's icons, so which is which can't be missed */
+  .ex-chat .lab { margin: 0 0 4px -48px; padding: 0; }
+  .ex-turn { display: flex; flex-direction: column; gap: 6px; }
+  .ex-turn.user { align-items: flex-end; }
+  .ex-turn.agent { align-items: flex-start; }
+  .ex-who { display: flex; align-items: center; gap: 6px; padding: 0 4px; font-size: 13px; color: var(--muted); }
+  .ex-bub { max-width: 85%; padding: 12px 16px; border-radius: 16px; font-size: 16px; line-height: 1.45; color: var(--ink); }
+  .ex-bub.user { background: var(--track-strong); border-top-right-radius: 4px; }
+  .ex-bub.agent { background: var(--raise); border: 1px solid var(--rule); border-top-left-radius: 4px; }
+  .ex-bub p { margin: 0; } .ex-bub p + ol, .ex-bub ol + p { margin-top: 8px; }
+  .ex-bub ol { margin: 0; padding-left: 1.3em; } .ex-bub li { margin: 4px 0; } .ex-bub li b { font-weight: 600; }
+  .ex-acts { align-self: stretch; margin: -6px 15% 0 9px; padding-top: 6px; }
+  .ex-act { position: relative; padding: 4px 0 4px 20px; font-size: 14px; line-height: 1.4; color: var(--ink-2); }
+  .ex-act::before { content: ""; position: absolute; left: 0; top: 0; width: 12px; height: 15px; border-left: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); border-bottom-left-radius: 5px; }
+  .ex-act:not(:last-child)::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; border-left: 1.5px solid var(--muted); }
+  .ex-act.change { font-weight: 600; color: var(--ink); }
+  .ex-act.none { font-style: italic; color: var(--muted); }
+  .ex-fact { max-width: 85%; margin: 4px 0 0; padding: 2px 0 2px 12px; border-left: 2px solid var(--no); font-size: 14px; line-height: 1.45; color: var(--ink-2); }
+  .ex-fact b { display: block; margin-bottom: 2px; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--no); }
+  .ex-res { margin-top: auto; padding: var(--space-16) var(--space-24) 20px; background: transparent; border: 1px solid var(--rule); border-radius: 10px; }
+  .ex-res-l { display: block; margin-bottom: 8px; font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .ex-res-o { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 20px; font-weight: 600; line-height: 1.3; color: var(--ink); }
+  .ex-res-o i { position: relative; flex: none; width: 26px; height: 26px; border-radius: 50%; }
+  .ex-res.ok .ex-res-o i { background: var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%230d0f14' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 62% no-repeat; }
+  .ex-res.no .ex-res-o i { box-shadow: inset 0 0 0 2px var(--no); }
+  .ex-res.no .ex-res-o i::after { content: ""; position: absolute; inset: 0; background: var(--no); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 8l8 8M16 8l-8 8' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center / 58% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 8l8 8M16 8l-8 8' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center / 58% no-repeat; }
+  .ex-res-s { margin: 6px 0 0 36px; font-size: 14px; color: var(--muted); }
+  .ex-res-s .go { font-size: 14px; }
+  .one-foot { margin: var(--space-24) 0 0; font-size: 15px; color: var(--muted); }
+
+  /* 3. What the MCP adapter was missing, then where the work went */
+
+  /* 4. What would close the gap: each fix, beside what it would clear */
+  /* What would close the gap: each row is every request; a dot fills when the MCP adapter has every ability it needs */
+  .steps2-key { display: flex; flex-wrap: wrap; gap: 8px var(--space-24); margin: 0 0 var(--space-16); font-size: 14px; color: var(--muted); }
+  .steps2-key i.had { background: var(--ink-2); box-shadow: none; } .steps2-key i.new { background: var(--wp); box-shadow: none; }
+  .steps2-key i { display: inline-block; width: 12px; height: 12px; margin-right: 6px; border-radius: 2px; vertical-align: -1px; box-shadow: inset 0 0 0 1.5px var(--rule-strong); }
+  .steps2 { border-top: 1px solid var(--rule); }
+  .st2 { display: grid; grid-template-columns: minmax(0, 1fr) auto 110px; gap: var(--space-32); align-items: center; padding: 22px 0; border-bottom: 1px solid var(--rule); }
+  .st2 .what b { display: block; font-size: 17px; font-weight: 600; line-height: 1.35; color: var(--ink); }
+  .st2 .what b a { color: inherit; text-decoration: none; }
+  .st2 .what b a:hover { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+  .st2 .what small { display: block; margin-top: 4px; font-size: 14px; line-height: 1.45; color: var(--muted); }
+  .st2 .what small a { color: var(--ink-2); }
+  .st2.now .what b { font-weight: 500; color: var(--ink-2); }
+  /* One bar per row, filled to the requests the MCP adapter would have every ability for */
+  .st2 { grid-template-columns: minmax(0, 1fr) minmax(220px, 420px) 110px; }
+  .st2 .bar { position: relative; display: flex; height: 10px; border-radius: 5px; background: var(--track, rgba(180, 188, 203, .12)); overflow: hidden; }
+  .st2 .bar i { display: block; height: 100%; }
+  .st2 .bar i.had { background: var(--ink-2); }
+  .st2 .bar i.new { background: var(--wp); }
+  .steps2-key i { border-radius: 50%; }
+  /* Requests are squares; circles on this page are always runs */
+  .st2 .n { text-align: right; font-family: var(--serif); font-size: 34px; line-height: 1; color: var(--ink); }
+  .st2 .n small { display: block; margin-top: 2px; font-family: var(--sans); font-size: 13px; color: var(--muted); }
+  .st2.now .n { color: var(--ink-2); }
+  .steps2-note { margin: var(--space-24) 0 0; max-width: 70ch; font-size: 15px; line-height: 1.55; color: var(--muted); }
+  .steps2-more { margin: var(--space-16) 0 0; }
+
+  @media (max-width: 900px) {
+    /* The need goes above its dots, so both ways in keep half the width each */
+    .field thead tr, .field tbody tr { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--space-16); }
+    .field thead th:first-child { display: none; }
+    .field thead th + th { padding-left: 0; }
+    .field tbody th { grid-column: 1 / -1; padding: 16px 0 10px; }
+    .field tbody td { padding: 0 0 18px; border-top: 0; }
+    .field thead th:nth-child(3), .field tbody td:nth-child(3) { border-left: 0; }
+    .key { margin-left: 0; }
+    .field .ct { font-size: 44px; } .field .ct small { display: block; margin: 6px 0 0; font-size: 17px; }
+    .field .setup { font-size: 14px; gap: 8px; } .field .setup .glyph { width: 22px; height: 22px; }
+    .field tbody th, .field tbody th a { font-size: 19px; }
+    .pairs { gap: 5px 9px; } .pair { gap: 3px; } .dot { width: 12px; height: 12px; }
+    .one-h { font-size: 30px; }
+    .asks, .needs3 { grid-template-columns: 1fr; gap: var(--space-32); }
+    .needs3 > div { grid-row: auto; grid-template-rows: none; }
+    .ex-chats { grid-template-columns: 1fr; gap: var(--space-48); }
+    .ex-chat { padding-left: 36px; } .ex-chat .lab { margin-left: -36px; }
+    .st2 { grid-template-columns: minmax(0, 1fr) auto; } .st2 .bar { grid-column: 1 / -1; grid-row: 2; }
+  }
+  /* Why the MCP adapter did less. Two ways into the same site, side by side, as the worked example's chats */
+  .why2 { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--space-96); row-gap: 0; }
+  .why2-col { position: relative; padding-left: 48px; display: grid; grid-template-rows: subgrid; grid-row: span 5; align-content: start; }
+  .why2-col > * { align-self: start; }
+  .why2-col::before { content: ""; position: absolute; left: 12.5px; top: 36px; bottom: 0; border-left: 1px solid var(--rule); }
+  .why2-col .lab { margin: 0 0 var(--space-16) -48px; }
+  .why2-way { margin: 0 0 var(--space-32); max-width: 44ch; font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+  .why2-n { margin: 0; font-family: var(--serif); font-size: 96px; font-weight: 700; line-height: .9; letter-spacing: -.03em; color: var(--ink); font-variant-numeric: lining-nums; }
+  .why2-n small { font-size: 36px; font-weight: 400; letter-spacing: 0; color: var(--muted); }
+  .why2-nl { margin: 8px 0 var(--space-32); font-size: 17px; color: var(--ink-2); }
+  .why2-l { list-style: none; margin: 0; padding: 0; }
+  .why2-l li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-16); align-items: baseline; padding: 12px 0; border-top: 1px solid var(--rule); font-size: 16px; color: var(--ink); }
+  .why2-l li:last-child { border-bottom: 1px solid var(--rule); }
+  .why2-l li span small { display: block; font-size: 14px; color: var(--muted); }
+  .why2-l li b { font-family: var(--serif); font-size: 24px; font-weight: 400; font-variant-numeric: tabular-nums; }
+  .why2-l li.ro, .why2-l li.ro b { color: var(--muted); }
+  .why2-h { margin: var(--space-24) 0 8px; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .why2-so { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-96); margin-top: var(--space-96); padding-top: var(--space-48); border-top: 1px solid; border-image: var(--fade-x) 1; }
+  .why2-so h3 { margin: 0; font-family: var(--serif); font-size: 32px; font-weight: 500; line-height: 1.15; color: var(--ink); }
+  .why2-so p { margin: 0 0 var(--space-16); max-width: 52ch; font-size: 18px; line-height: 1.5; color: var(--ink); }
+  @media (max-width: 900px) { .why2, .why2-so { grid-template-columns: 1fr; gap: var(--space-48); } .why2-n { font-size: 72px; } }
+</style>
+</head>
+<body data-page="overview">
+<main class="container">
+  <section class="c-hero" aria-label="The headline result">
+    <p class="back" id="back" hidden><a href="./">All needs</a></p>
+    <h1 class="question" id="q">When site owners ask for help, do agents get it done?</h1>
+    <div class="c-figure">
+      <div class="stat" id="big"></div>
+      <div class="c-cap"><p class="stat-caption" id="big-cap"></p></div>
+      <div class="changes" id="changes"></div>
+    </div>
+    <div class="share" id="share"><div class="share-bar" role="img"></div><div class="callouts" aria-hidden="true"></div><details class="how"><summary>How this is measured</summary><ul class="how-l" id="how"></ul></details><div class="alt" id="alt"></div></div>
+  </section>
+
+  <section class="section" aria-labelledby="asks-h" id="asks">
+    <div class="section-head">
+      <h2 class="heading" id="asks-h">What the agents were asked.</h2>
+      <p class="lede lede--wide" id="asks-lede"></p>
+    </div>
+    <div class="needs3" id="needs3"></div>
+  </section>
+
+  <section class="section" aria-labelledby="same-h" id="same">
+    <div class="section-head">
+      <h2 class="heading" id="same-h">Two agents tried every prompt, with and without the MCP adapter.</h2>
+      <p class="lede lede--wide" id="same-lede"></p>
+    </div>
+    <table class="field" id="field"></table>
+    <p class="key" id="key"></p>
+    <div class="one" id="one">
+      <h3 class="one-h">One prompt up close, with and without the MCP adapter.</h3>
+      <p class="one-lede" id="one-lede"></p>
+      <div class="ex-chats" id="chats"></div>
+      <p class="one-foot" id="one-foot"></p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="gap-h" id="gaps">
+    <div class="section-head">
+      <h2 class="heading" id="gap-h">With the MCP adapter, agents could only do what had been made an ability.</h2>
+      <p class="lede lede--wide">The setups gave agents different ways into the same site. Without the MCP adapter, the owner handed over their login for WordPress’s built-in API. With it, the adapter was the only way in.</p>
+    </div>
+    <div class="why2" id="why2"></div>
+    <div class="why2-so">
+      <h3>Why it worked so well without the MCP adapter</h3>
+      <div>
+        <p>WordPress’s built-in API already covers nearly everything an owner can do in the dashboard, and plugins add their own parts to it when they’re installed. Agents know it well, and in these runs they used WooCommerce’s, Redirection’s and three other plugins’ without being told how.</p>
+        <p>The MCP adapter starts with only what has been written as an ability. WordPress’s own three only read site, user and server information, and only a few plugins have added any yet. Neither the agents nor MCP were the problem: the abilities just haven’t been written yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="fix-h" id="fix">
+    <div class="section-head">
+      <h2 class="heading" id="fix-h">What would close the gap.</h2>
+      <p class="lede lede--wide" id="fix-lede"></p>
+    </div>
+    <p class="steps2-key" aria-hidden="true"><span><i class="had"></i>Prompts it could already handle</span><span><i class="new"></i>Added by this change</span></p>
+    <div class="steps2" id="steps"></div>
+    <p class="steps2-note" id="rest-miss"></p>
+    <p class="steps2-more"><a class="go" id="more-ideas" href="recommendations"></a></p>
+  </section>
+  <section class="section section--last c-sec dig" aria-labelledby="dig-h" id="dig-in">
+    <div class="dig-col">
+      <h2 class="heading" id="dig-h">Dig into the data</h2>
+      <p class="lede">Every run is here: the prompt, how it ended, and the checks behind the result.</p>
+    </div>
+    <div class="dig-col dig-links">
+      <a class="dig-link" href="runs"><b>Explore the runs</b><span>Filter by agent, prompt and setup</span></a>
+      <a class="dig-link" href="prompts"><b>See all 21 prompts</b><span>Every prompt, by need, with how each agent did</span></a>
+      <a class="dig-link" href="recommendations"><b>Read the recommendations</b><span>What could help agents get more done with WordPress</span></a>
+      <a class="dig-link" href="../about"><b>How this is measured</b><span>The agents, the setups and how runs are checked</span></a>
+    </div>
+  </section>
+</main>
+<script src="../site.js"></script>
+<script src="chrome.js?v=21"></script>
+<script src="../data/choose.js?v=15"></script>
+<script src="../choose/data.js?v=67"></script>
+<script src="../data/build.js?v=1"></script>
+<script>
+// Real runs: site/data/build.js, made by `wpab site build` from the run records and the deeper read.
+const D = window.WPAB_DATA.build;
+const NEEDS = D.needs;
+// A need page is this page filtered to one need: index.html?need=move
+const NEED = NEEDS.find(n => n.id === new URLSearchParams(location.search).get('need'));
+// The third-party reference runs come separately (need and outcome only), for the hero's reference figure.
+const ALL = D.runs.concat((D.reference || []).map(r => ({ ...r, kind: 'third' })));
+const RUNS = NEED ? ALL.filter(r => r.need === NEED.id) : ALL;
+// The page is about WordPress's own routes. Third-party MCP plugins are only a reference figure in the hero;
+// their runs are left out of everything below it.
+const ROUTES = [
+  { id: 'base', name: 'No MCP adapter installed' },
+  { id: 'official', name: 'MCP adapter installed' },
+];
+const OURS = RUNS.filter(r => ROUTES.some(g => g.id === r.kind));
+const HEAD = 'official';  // the headline route: WordPress's own way for agents to reach a site
+const $ = id => document.getElementById(id);
+const runsOf = k => RUNS.filter(r => r.kind === k);
+const reqById = Object.fromEntries(D.requests.map(q => [q.id, q]));
+const deById = Object.fromEntries(D.dead_ends.map(d => [d.id, d]));
+// What happened to a request: done (everything checked, within the access given), done only with access the
+// agent gave itself, handed back to the owner, or left undone without saying.
+const asked = r => Object.entries(r.checks).filter(([k, c]) => c.required !== false && !(reqById[r.request].checks.find(c => c.id === k) || {}).guard);
+const outcome = r => r.success_within ? 'done' : r.success ? 'esc'
+  : r.told_owner ? 'told' : 'silent';
+// Plain run counts: every request has the same number of runs, so each need counts the same.
+const tally = rs => { const n = { done: 0, esc: 0, told: 0, silent: 0 }; rs.forEach(r => { n[outcome(r)] += 1 / rs.length; }); return n; };
+const share = rs => rs.length ? tally(rs).done : 0;
+const pc = p => Math.round(p * 100) + '%';
+const wilson = (p, n, z = 1.96) => { if (!n) return [0, 1]; const d = 1 + z * z / n, c = p + z * z / (2 * n), m = z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)); return [Math.max(0, (c - m) / d), Math.min(1, (c + m) / d)]; };
+const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+// Dead ends in plain words: the deeper read's write-up where there is one, else the catalogue's.
+const DE_NAME = id => (deById[id] || { title: id }).title;
+const DE_WHAT = id => { const d = deById[id] || {}; return d.what || (d.write_up && d.write_up.what_happens) || d.seen || ''; };
+
+// 1. Headline: of the requests owners made, how many got done through WordPress's MCP adapter plugin, without the agent
+// giving itself more access. The other routes sit right under it.
+const head = runsOf(HEAD), p = share(head), [lo, hi] = wilson(p, head.length);
+$('big').textContent = pc(p);
+// First mention on the page: the plugin's full name, linked. "The MCP adapter" after.
+$('big-cap').innerHTML = 'of jobs were completed through <a href="https://wordpress.org/plugins/mcp-adapter/">WordPress’s MCP adapter</a>.';
+$('changes').innerHTML = `<div class="chg-i"><span class="chg-l">95% CI</span><span class="chg-v ci-v">${Math.round(lo * 100)}–${Math.round(hi * 100)}%</span></div>`
+  + `<div class="chg-i"><span class="chg-l">Change</span><span class="chg-v steady">First month</span></div>`;
+const NAMES = { done: 'Completed', esc: 'Completed with access it gave itself', told: 'Told the owner it couldn’t', silent: 'Left unfinished without saying' };
+const fate = rs => { const n = tally(rs), keys = { done: 'wp', esc: 'code', told: 'cms', silent: 'hosted' };
+  // Done is rounded as everywhere else on the page; the rest share what's left so the bar adds up to 100.
+  const raw = Object.keys(n).map(k => n[k] * 100), fl = raw.map((v, i) => i === 0 ? Math.round(v) : Math.floor(v));
+  let left = 100 - fl.reduce((a, b) => a + b, 0);
+  raw.map((v, i) => [v - fl[i], i]).filter(([, i]) => i > 0).sort((a, b) => b[0] - a[0]).forEach(([, i]) => { if (left > 0 && raw[i] > 0) { fl[i]++; left--; } else if (left < 0 && fl[i] > 0) { fl[i]--; left++; } });
+  return Object.keys(n).map((k, i) => [keys[k], NAMES[k], fl[i]]).filter(x => x[2] > 0); };
+const donePct = rs => ((fate(rs).find(x => x[0] === 'wp') || [])[2] || 0) + '%';
+renderShare($('share'), fate(head), 'What happened to the jobs owners asked for through the MCP adapter');
+// A plug for the third-party MCP plugin; it isn't named, as it's only a reference point.
+const PLUG = '<span class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5M9 8V2M15 8V2M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/></svg></span>';
+const UNPLUG = '<span class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m19 5 3-3M2 22l3-3M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4ZM7.5 13.5 10 11M10.5 16.5 13 14M12 6l6 6 2.3-2.3a2.4 2.4 0 0 0 0-3.4l-2.6-2.6a2.4 2.4 0 0 0-3.4 0Z"/></svg></span>';
+const OTHERS = [
+  ['base', 'No MCP adapter installed', UNPLUG, 'The same sites with no MCP plugin installed'],
+  ['third', 'Third-party MCP plugin', PLUG, 'A third-party MCP plugin, for reference'],
+].filter(([id]) => runsOf(id).length);
+$('alt').innerHTML = '<span class="alt-l">Compared with:</span>' + OTHERS.map(([id, label, ic, about]) =>
+  `<div class="alt-i" title="${about}"><span class="alt-t">${ic ? `<span class="ic">${ic}</span>` : ''}<span>${label}</span></span><b>${donePct(runsOf(id))}</b></div>`).join('');
+
+const nReq = new Set(RUNS.map(r => r.request)).size;
+// How this is measured: four short lines, in the order a reader asks them. The Prompts page has the detail.
+const howRows = [
+  ['Prompts', `${nReq} test prompts, written the way small-business owners ask for help, on realistic WordPress sites. <a href="prompts${NEED ? '#' + NEED.id : ''}">View the prompts</a>`],
+  ['Agents', `${D.agents.map(a => `${esc(a.name)} in ${esc(a.harness)}`).join(' and ')}, with a terminal but no browser, so no dashboard.`],
+  ['Completed', 'Every check on the finished site passes, nothing else is lost, and the agent gave itself no extra access.'],
+  ['Runs', `${OURS.length}, each prompt with and without the MCP adapter installed${runsOf('third').length ? ' (the third-party plugin is for reference only)' : ''}. ${D.batch.name.split(',')[0]}; the samples are small, so differences aren’t firm yet.`],
+];
+$('how').innerHTML = howRows.map(([k, v]) => `<li><b>${k}</b> ${v}</li>`).join('');
+
+if (NEED) {
+  $('q').textContent = `${NEED.name}. Do agents get it done?`;
+  $('back').hidden = false;
+  document.title = `${NEED.name} · Building with WordPress · Agent Benchmarks`;
+}
+const AG = D.agents;  // the order the dots go in, everywhere
+const agentName = id => (AG.find(a => a.id === id) || { name: id }).name;
+const short = q => q.prompt.split(/(?<=[.?!])\s/)[0];
+const base = runsOf('base'), off = runsOf(HEAD), done = rs => rs.filter(r => r.success_within).length;
+const ROUTE_IN = { base: 'No MCP adapter installed', official: 'MCP adapter installed' };
+const SETUP_IC = { base: UNPLUG, official: PLUG };  // the hero's icons, wherever a setup is named
+const shown = D.requests.filter(q => OURS.some(r => r.request === q.id));
+const dotFor = r => `<a class="dot${r.success_within ? ' on' : ''}" href="run?id=${r.id}"><span class="vh">${esc(agentName(r.agent))}: ${r.success_within ? 'completed' : 'not completed'}</span></a>`;
+const byAgent = rs => AG.map(a => rs.filter(r => r.agent === a.id)).flat();
+
+// 2. Same agents, same requests, two ways in: a row per need, and in each cell a line of dots per agent, one dot
+// per request, led by the agent's logo. More agents add lines, not width.
+// What the agents were asked: the test requests, written in an owner's voice, a column per need. The page's grounding.
+const askNeeds = NEEDS.filter(n => shown.some(q => q.need === n.id));
+const WORD = ['No', 'One', 'Two', 'Three', 'Four', 'Five'];
+$('asks-h').textContent = `${WORD[askNeeds.length] || askNeeds.length} thing${askNeeds.length === 1 ? '' : 's'} owners need help with, asked ${shown.length} ways.`;
+$('asks-lede').textContent = `${shown.length} test prompts, written the way small-business owners ask for help, each on a realistic WordPress site${askNeeds.length > 1 ? `: ${shown.length / askNeeds.length} for each of ${askNeeds.length === 3 ? 'three' : askNeeds.length} needs` : ''}. Agents could ask questions, answered as the owner, and the finished site was checked from outside.`;
+// The three needs, each with what it covers (by hand, from its requests) and one everyday request as the example.
+const NEED_SAYS = { online: 'A first website, or a new part of one: a menu, opening hours, a shop, bookings.',
+  'look-after': 'Day-to-day upkeep: new products and prices, someone leaving, a broken or slow site, updates.',
+  move: 'Bringing pages, posts and photos over from Wix, Squarespace, Blogger and others.' };
+// Three everyday ones per need show first; the rest open below them.
+const SAMPLE = ['online-cafe-menu', 'online-hours-page', 'online-candle-shop', 'plumber-prices', 'dave-left', 'critical-error', 'move-off-weebly', 'move-squarespace', 'move-blog-posts'];
+$('needs3').style.setProperty('--cols', askNeeds.length);
+$('needs3').innerHTML = askNeeds.map(n => { const qs = shown.filter(q => q.need === n.id);
+  const first = qs.filter(q => SAMPLE.includes(q.id)).sort((a, b) => SAMPLE.indexOf(a.id) - SAMPLE.indexOf(b.id)), rest = qs.filter(q => !first.includes(q));
+  const msg = (q, extra) => `<div class="msg${extra ? ' extra' : ''}"><span class="who">User</span><a href="request?id=${q.id}">${esc(q.prompt)}</a></div>`;
+  return `<div><h3>${esc(n.name)}</h3><p>${esc(NEED_SAYS[n.id] || '')}</p><div class="more"><div class="msgs">${first.map(q => msg(q)).join('')}${rest.map(q => msg(q, true)).join('')}</div>${rest.length
+    ? `<button type="button" class="more-btn" aria-expanded="false" data-n="${qs.length}">Show all ${qs.length} prompts</button>` : ''}</div></div>`; }).join('');
+// Each column opens on its own.
+$('needs3').querySelectorAll('.more-btn').forEach(b => b.addEventListener('click', () => { const open = b.getAttribute('aria-expanded') !== 'true';
+  b.parentElement.classList.toggle('all', open); b.setAttribute('aria-expanded', open); b.textContent = open ? 'Show fewer' : `Show all ${b.dataset.n} prompts`; }));
+// Runs, set up once: one agent on one request, in one setup.
+$('same-h').textContent = `${WORD[AG.length] || AG.length} agent${AG.length === 1 ? '' : 's'} tried every prompt, with and without the MCP adapter.`;
+$('same-lede').textContent = `${AG.map(a => `${a.name} in ${a.harness}`).join(' and ')} each got every one of these ${shown.length} prompts twice, on the same site: once with no MCP adapter installed, once with it. That’s ${base.length} runs each way.`;
+const pairs = (rs, need) => `<span class="pairs">${shown.filter(q => q.need === need).map(q => `<span class="pair">${byAgent(rs.filter(r => r.request === q.id)).map(dotFor).join('')}</span>`).join('')}</span>`;
+const lines = (rs, need) => `<div class="alines">${AG.map(a => `<div class="aline" title="${esc(a.name)} in ${esc(a.harness)}">${window.CHOOSE.logo({ id: a.logo }, 18)}<span class="vh">${esc(a.name)}</span><span class="pairs" style="--n:${shown.filter(q => q.need === need).length}">${shown.filter(q => q.need === need).map(q => rs.filter(r => r.request === q.id && r.agent === a.id).map(dotFor).join('')).join('')}</span></div>`).join('')}</div>`;
+$('field').innerHTML = `<thead><tr><th><span class="vh">Need</span></th>${ROUTES.map(g => { const rs = runsOf(g.id);
+    return `<th scope="col"><span class="setup">${SETUP_IC[g.id]}${ROUTE_IN[g.id]}</span><span class="ct">${done(rs)} <small>of ${rs.length} runs completed</small></span></th>`; }).join('')}</tr></thead><tbody>`
+  + NEEDS.filter(n => shown.some(q => q.need === n.id)).map(n => `<tr><th scope="row">${NEED ? esc(n.name) : `<a href="?need=${n.id}">${esc(n.name)}</a>`}<a class="go to-reqs" href="prompts#${n.id}">View the ${shown.filter(q => q.need === n.id).length} prompts</a></th>${ROUTES.map(g => `<td>${lines(runsOf(g.id), n.id)}</td>`).join('')}</tr>`).join('')
+  + '</tbody>';
+$('key').textContent = 'Each dot is one run: one agent on one prompt, two to a prompt. A tick means it was completed: everything the owner asked for, checked on the finished site. A cross means it wasn’t.';
+// Hovering or focusing a dot shows that run: the prompt, who ran it and how, the result, and what stopped it.
+const SETUP_NAME = { base: 'No MCP adapter installed', official: 'MCP adapter installed' };
+const stopOf = r => { const q = reqById[r.request], e = Object.entries(r.checks).find(([, c]) => !c.passed && c.required !== false && !['not_reached', 'not_judged'].includes(c.status));
+  return e ? { name: ((q.checks.find(c => c.id === e[0]) || {}).name) || e[0], why: e[1].what_stopped || e[1].detail || '' } : null; };
+const card = document.createElement('div'); card.className = 'dot-card'; card.hidden = true; card.setAttribute('aria-hidden', 'true'); document.body.append(card);
+const showCard = el => { const r = ALL.find(x => el.getAttribute('href') === `run?id=${x.id}`); if (!r) return;
+  const a = AG.find(x => x.id === r.agent) || { name: r.agent }, st = r.success_within ? null : stopOf(r);
+  card.innerHTML = `<p class="dc-q">“${esc(short(reqById[r.request]))}”</p>
+    <p class="dc-who">${a.logo ? window.CHOOSE.logo({ id: a.logo }, 14) : ''}${esc(a.name)} · ${SETUP_NAME[r.kind] || ''}</p>
+    <p class="dc-res${r.success_within ? '' : ' no'}">${r.success_within ? 'Completed' : r.success ? 'Completed, with access it gave itself' : 'Not completed'}</p>
+    ${st ? `<p class="dc-why"><b>${esc(st.name)}.</b> ${esc(st.why)}</p>` : ''}
+    <p class="dc-go">Click to open the run</p>`;
+  card.hidden = false;
+  const b = el.getBoundingClientRect(), w = card.offsetWidth, h = card.offsetHeight;
+  const left = Math.min(Math.max(8, b.left + b.width / 2 - w / 2), document.documentElement.clientWidth - w - 8);
+  const below = b.bottom + 10 + h < innerHeight;
+  card.style.left = left + scrollX + 'px'; card.style.top = (below ? b.bottom + 10 : b.top - 10 - h) + scrollY + 'px'; };
+const hideCard = () => { card.hidden = true; };
+$('field').addEventListener('mouseover', e => { const d = e.target.closest('.dot'); if (d) showCard(d); });
+$('field').addEventListener('mouseout', e => { if (e.target.closest('.dot')) hideCard(); });
+$('field').addEventListener('focusin', e => { const d = e.target.closest('.dot'); if (d) showCard(d); });
+$('field').addEventListener('focusout', hideCard);
+addEventListener('scroll', hideCard, { passive: true });
+
+// The worked example: the smallest, most ordinary request, stopped by the commonest gap (no way to edit a page).
+// One agent both ways in, each run as a chat: the user's messages, what the agent did (from the run's own log of
+// requests to the site), what it said (quotes checked against the run), and how the site was left. Selected moments
+// in the order they happened, not the transcript.
+const ONE = reqById['dave-left'], LEAD = AG[0];
+const runOf = k => ALL.find(r => r.request === (ONE || {}).id && r.kind === k && r.agent === (LEAD || {}).id);
+if (ONE && LEAD && runOf('base') && runOf(HEAD) && (!NEED || ONE.need === NEED.id)) {
+  const R = runOf('base'), M = runOf(HEAD);
+  const said = (r, re) => r.owner_said.find(x => re.test(x));
+  const q = t => esc(String(t || '').replace(/\*\*/g, ''));
+  const TURNS = {
+    base: [['user', ONE.prompt],
+      ['agent', { tools: [['read', 'Listed the pages and posts'], ['read', 'Opened the Who’s who page'], ['change', 'Took Dave off the Who’s who page'], ['read', 'Checked the contact form, settings and user accounts']],
+        // The agent's question, word for word from the run (trimmed): the only line taken from its conversation.
+        html: '<p>I found that Dave still has his own login to the website, as an “editor”. That means he can still change or delete pages and posts. …</p><ol><li><b>Downgrade his account (my suggestion).</b> He could still log in but couldn’t change anything.</li><li><b>Delete his account completely.</b> This can’t be undone …</li></ol><p>Which would you like me to do?</p>' }],
+      ['user', said(R, /delete/i)],
+      ['agent', { tools: [['change', 'Changed Dave’s account so he can no longer get in'], ['read', 'Checked his account']] }]],
+    official: [['user', ONE.prompt],
+      ['agent', { tools: [['read', 'Connected to the MCP adapter and listed its tools'], ['read', 'Asked which abilities the site offers'], ['read', 'Ran one: get the site’s information'], ['read', 'Listed the tools again, three more times'], ['none', 'Made no changes to the site']],
+        says: (M.told_wrong[0] || {}).quote, note: 'There’s no such setting. The MCP adapter only offers abilities that code on the site has registered.' }],
+      ['user', said(M, /technical|know how/i)],
+      ['agent', { says: (M.handled_well[0] || {}).quote }]],
+  };
+  const logo = window.CHOOSE.logo({ id: LEAD.logo }, 12), who = `<span class="ex-who">${logo}${esc(LEAD.name)}</span>`;
+  const turn = ([kind, t]) => {
+    if (kind === 'user') return t ? `<div class="ex-turn user"><span class="ex-who">User</span><div class="ex-bub user">${q(t)}</div></div>` : '';
+    // What the agent did and what it said are separate turns; our fact check sits outside its bubble.
+    const msg = t.html ? `<div class="ex-bub agent">${t.html}</div>` : t.says ? `<div class="ex-bub agent">${q(t.says)}</div>${t.note ? `<p class="ex-fact"><b>Fact check</b>${esc(t.note)}</p>` : ''}` : '';
+    return (t.tools ? `<div class="ex-turn agent">${who}<div class="ex-acts">${t.tools.map(([k, label]) => `<div class="ex-act ${k}">${esc(label)}</div>`).join('')}</div></div>` : '')
+      + (msg ? `<div class="ex-turn agent">${who}${msg}</div>` : ''); };
+  const END = { base: 'Dave is off the site.', official: 'Dave is still on the site.' };
+  $('one-lede').textContent = `Two real runs from this batch: ${LEAD.name} in ${LEAD.harness}, given the same prompt from a sailing club’s site owner, once with no MCP adapter installed and once with it. Selected moments from each, in order.`;
+  $('chats').innerHTML = [['base', R], [HEAD, M]].map(([k, r]) => `<div class="ex-chat"><h4 class="lab setup">${SETUP_IC[k]}${ROUTE_IN[k]}</h4>${TURNS[k].map(turn).join('')}
+    <div class="ex-res ${r.success_within ? 'ok' : 'no'}"><span class="ex-res-l">Result</span><p class="ex-res-o"><i aria-hidden="true"></i>${END[k]}</p>
+      <p class="ex-res-s">${r.success_within ? 'Completed' : 'Not completed'} · <a class="go" href="run?id=${r.id}">Open the run</a></p></div></div>`).join('');
+  $('one-foot').textContent = AG.slice(1).map(a => { const rs = k => ALL.filter(r => r.request === ONE.id && r.kind === k && r.agent === a.id);
+    return `${a.name} in ${a.harness} ended the same way: ${done(rs('base')) ? 'Dave gone' : 'Dave still there'} without the MCP adapter, ${done(rs(HEAD)) ? 'Dave gone' : 'Dave still there'} with it.`; }).join(' ');
+} else $('one').remove();
+
+// 3. What the MCP adapter was missing: the deeper read's write-ups of what stopped its runs, with what the owner saw.
+const offTask = t => /-official$/.test(t) && (!NEED || (reqById[t.replace(/-official$/, '')] || {}).need === NEED.id);
+const gaps = (D.write_ups || []).map(w => ({ ...w, reqs: (w.requests || []).filter(offTask) })).filter(w => w.reqs.length)
+  .map(w => ({ ...w, n: NEED ? w.reqs.length * 2 : w.runs })).sort((a, b) => b.n - a.n);
+// 3. What each setup changed on the site, from this batch's site request logs (successful writes by the agent). Not
+// exported by `wpab site build` yet; counted by hand from base-3.
+const WHY = {
+  base: { n: 677, runs: 37, way: 'The owner gave the agent their application password. It worked through WordPress’s built-in API, the one the block editor uses.',
+    rows: [['Images uploaded', 202], ['Posts written or edited', 124], ['Pages built or edited', 109], ['Redirects added', 60, 'Through Redirection’s own API'],
+      ['Shop products added or edited', 43, 'Through WooCommerce’s own API'], ['Bookings and booking settings', 34, 'Through Simply Schedule Appointments’ own API'],
+      ['Plugins installed or turned on', 24], ['Site settings, templates and menus', 37], ['Forms, categories, comments and more', 44]] },
+  official: { n: 11, runs: 4, way: 'The agent had no login of its own. It could only use the abilities WordPress and the site’s plugins had registered.',
+    rows: [['Shop products added or edited', 11, 'WooCommerce’s product abilities, the only ones here that change anything']],
+    reads: [['Site information', 33, 'WordPress'], ['User information', 16, 'WordPress'], ['Server information', 5, 'WordPress'], ['SEO scores and post analysis', 8, 'Rank Math'], ['Forms and form stats', 6, 'WPForms'], ['Product lists', 4, 'WooCommerce']] },
+};
+const why2Row = (cls = '') => ([t, n, sub]) => `<li class="${cls}"><span>${esc(t)}${sub ? `<small>${esc(sub)}</small>` : ''}</span><b>${n}</b></li>`;
+$('why2').innerHTML = ['base', HEAD].map(k => { const w = WHY[k];
+  return `<div class="why2-col"><h3 class="lab setup">${SETUP_IC[k]}${ROUTE_IN[k]}</h3>
+    <p class="why2-way">${w.way}</p>
+    <p class="why2-n">${w.n} <small>changes</small></p><p class="why2-nl">to the site, in ${w.runs} of 42 runs</p>
+    <div><ul class="why2-l">${w.rows.map(why2Row()).join('')}</ul>
+    ${w.reads ? `<p class="why2-h">Everything else it ran only read the site</p><ul class="why2-l">${w.reads.map(why2Row('ro')).join('')}</ul>` : ''}</div></div>`; }).join('');
+
+// 4. What would close the gap: one bar per change, filled to the requests the MCP adapter would have every ability for, as
+// each recommended change is added. The first two clear the most requests; the last row gathers the rest.
+// Which missing abilities each recommendation covers (the deeper read's write-up titles), by hand.
+const CLEARS = {
+  'core-write-abilities': /edit pages|create posts|site title|delete|front page|menus/i,
+  'media-upload-ability': /upload images/i,
+  'importer-ability': /create posts/i,
+  'update-routes': /update/i,
+  'plugin-write-abilities': /form/i,
+  'install-plugin-ability': /install a plugin/i,
+  'redirect-ability': /redirect/i,
+};
+const IDEAS = Object.fromEntries(((D.advice || {}).ideas || []).map(x => [x.id, x]));
+const missing = q => gaps.filter(w => w.reqs.includes(q + '-official')).map(w => w.title);
+const prompts = [...new Set(off.map(r => r.request))].map(id => reqById[id]);
+const covered = ids => new Set(prompts.filter(q => missing(q.id).every(t => ids.some(id => CLEARS[id] && CLEARS[id].test(t)))).map(q => q.id));
+const LATER = ['update-routes', 'plugin-write-abilities', 'install-plugin-ability', 'redirect-ability'].filter(id => IDEAS[id]);
+const STEPS = [[], ['core-write-abilities'], ['media-upload-ability'], LATER].map((ids, i, all) => ({ ids, set: covered(all.slice(0, i + 1).flat()) }));
+// Every row in the same order: covered today, then by each step in turn, then the rest.
+const rank = q => { const i = STEPS.findIndex(s => s.set.has(q.id)); return i < 0 ? 99 : i; };
+const inOrder = prompts.slice().sort((a, b) => rank(a) - rank(b));
+const SHORT = { 'update-routes': 'updates', 'plugin-write-abilities': 'forms', 'install-plugin-ability': 'plugin installs', 'redirect-ability': 'redirects' };
+const stepName = (s, i) => !i ? 'Today' : i < 3 ? `+ <a href="idea?id=${s.ids[0]}">${esc(IDEAS[s.ids[0]].title)}</a>`
+  : `+ Getting to ${prompts.length}: ${s.ids.map(id => `<a href="idea?id=${id}">${SHORT[id]}</a>`).join(', ').replace(/, ([^,]*)$/, ' and $1')}`;
+// Under each step, what agents could then do for owners, in one sentence (by hand, per step).
+const STEP_SAYS = {
+  'core-write-abilities': 'Agents could edit pages and settings, so owners asking for new prices, a menu or opening hours would get them.',
+  'media-upload-ability': 'Agents could add photos, which most site moves and new sites need.',
+  'update-routes': 'Agents could run updates, add a booking form, set up a shop and keep old links working after a move.',
+};
+const stepSub = (s, i) => !i ? 'With WordPress’s own abilities and those the plugins on these sites add' : esc(STEP_SAYS[s.ids[0]] || '');
+const shown4 = STEPS.filter((s, i) => i < 3 || s.set.size > STEPS[2].set.size);
+const nChanges = shown4.slice(1).reduce((n, s) => n + s.ids.length, 0), last = shown4[shown4.length - 1].set.size;
+const WORDN = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+$('fix-h').textContent = last === prompts.length ? `${(WORDN[nChanges] || nChanges).replace(/^./, c => c.toUpperCase())} changes would let the MCP adapter handle all ${prompts.length} prompts.`
+  : `${(WORDN[nChanges] || nChanges).replace(/^./, c => c.toUpperCase())} changes would let the MCP adapter handle ${last} of the ${prompts.length} prompts.`;
+$('fix-lede').textContent = `Today the MCP adapter can handle ${STEPS[0].set.size} of the ${prompts.length} prompts. The first two changes, both to WordPress, would take it to ${STEPS[2].set.size}.`;
+$('steps').innerHTML = shown4.map((s, i) => { const prev = i ? shown4[i - 1].set : new Set();
+  return `<div class="st2${i ? '' : ' now'}"><div class="what"><b>${stepName(s, i)}</b><small>${stepSub(s, i)}</small></div>
+    <div class="bar" role="img" aria-label="${s.set.size} of ${prompts.length} prompts"><i class="had" style="width:${(i ? prev.size : s.set.size) / prompts.length * 100}%"></i>${i ? `<i class="new" style="width:${(s.set.size - prev.size) / prompts.length * 100}%"></i>` : ''}</div>
+    <div class="n">${s.set.size}<small>of ${prompts.length} prompts</small></div></div>`; }).join('');
+// Having the abilities isn't completing: what stopped runs with no MCP adapter installed, in one line.
+const baseMiss = base.filter(r => !r.success_within).length;
+$('rest-miss').textContent = `Having the abilities isn’t the same as completing the job.${baseMiss ? ` Even with no MCP adapter installed, ${baseMiss} of ${base.length} runs weren’t completed: some needed the dashboard or the server, and some were the agent’s own misses.` : ''}`;
+const more = Object.keys(IDEAS).filter(id => !STEPS.some(s => s.ids.includes(id))).length;
+$('more-ideas').textContent = more ? `${more} more ideas in the recommendations` : 'All recommendations';
+if (!prompts.length || !IDEAS['core-write-abilities']) $('fix').remove();
+</script>
+<div id="vt-ready" hidden></div>
+</body>
+</html>

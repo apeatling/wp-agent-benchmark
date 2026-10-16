@@ -70,7 +70,7 @@
   --centre-gap: 96px;      /* gutter between the two halves of the page */
   --section: 80px;         /* vertical padding of a section */
   --section-tight: 40px;   /* sections on tool pages */
-  --page-top: 56px;        /* masthead to first content */
+  --page-top: 96px;        /* masthead to first content, the same on every page */
   --page-top-hero: 120px;  /* the same on the overview, where the hero needs air */
   --radius-s: 4px;
   --radius-m: 6px;
@@ -80,6 +80,7 @@
     --page-pad: 18px;
     --section: 56px;
     --page-top-hero: 104px;
+    --page-top: 72px;
     --fs-stat: 112px;
     --fs-title: 36px;
     --fs-heading: 32px;
@@ -687,6 +688,7 @@ main.container { padding-bottom: var(--space-64); }
 @media (max-width: 600px) {
 
   /* Masthead: smaller identity, one tidy nav row with room to tap */
+  :root { --page-top: 40px; }
   .masthead { padding-top: var(--space-16); gap: var(--space-12); }
   .masthead-id { gap: var(--space-12); }
   .masthead-id svg { width: 38px; height: 38px; }

@@ -1,0 +1,9 @@
+body{margin:0;font-family:Georgia,serif;color:#333;background:#fbf9f5}
+.dusk-header{background:#2f4a5f;color:#fff;padding:20px 0}
+.container{max-width:960px;margin:0 auto;padding:0 20px}
+#wsite-title{color:#fff;font-size:28px}
+.wsite-menu-default{list-style:none;padding:0}
+.wsite-menu-default li{display:inline-block;margin-right:20px}
+.wsite-menu-item{color:#fff;text-decoration:none}
+.wsite-content-title{font-size:26px;color:#2f4a5f}
+.footer-wrap{background:#eee;padding:20px 0;font-size:14px}

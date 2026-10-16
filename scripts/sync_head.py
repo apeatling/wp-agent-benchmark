@@ -2,7 +2,7 @@
 
 The site is plain HTML with no build step, so each page carries its own copy of the shared head, between
 <!-- shared head --> and <!-- /shared head -->. Edit templates/head.html (for example to bump a ?v= number),
-then run this. Lines marked data-section="choose" only go into pages under site/choose/. Everything else in
+then run this. Lines marked data-section="choose build" only go into pages under site/choose/ and site/build/. Everything else in
 a page's head (its title, page-only styles) stays in the page.
 
     python3 scripts/sync_head.py            update every page
@@ -16,14 +16,14 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / 'site'
 START, END = '<!-- shared head: edit templates/head.html, then run scripts/sync_head.py -->', '<!-- /shared head -->'
 # Pages kept locally and never published or committed.
-SKIP = ('site/build/', 'site/data-local/', 'site/choose/_')
+SKIP = ('site/data-local/', 'site/choose/_')
 
 
 def block(page):
     lines = (ROOT / 'templates' / 'head.html').read_text().strip().splitlines()
     section = page.relative_to(SITE).parts[0]
     keep = [re.sub(r' data-section="[^"]*"', '', l) for l in lines
-            if 'data-section=' not in l or f'data-section="{section}"' in l]
+            if 'data-section=' not in l or section in re.search(r'data-section="([^"]*)"', l)[1].split()]
     return '\n'.join([START, *keep, END])
 
 

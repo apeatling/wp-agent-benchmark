@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- shared head: edit templates/head.html, then run scripts/sync_head.py -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css?v=210">
+<link rel="stylesheet" href="/vt.css?v=7">
+<link rel="stylesheet" href="/choose/choose.css?v=265">
+<link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
+<meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://wpab.view.fast/social-card.png?v=1">
+<!-- /shared head -->
+<title>Recommendations · Building with WordPress · Agent Benchmarks</title>
+<style>
+  /* No impact ratings on Building: each row is the idea and its kind */
+  @media (max-width: 900px) { .ir > details > summary { grid-template-columns: minmax(0, 1fr); grid-template-areas: "t"; } }
+  /* The three ideas that matter most, side by side above the full list; titles line up, each Read more follows its own text */
+  .top3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--space-48); }  /* rows line up across the three */
+  .top3 > a { display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; align-content: start; padding-top: var(--space-24); border-top: 1px solid var(--rule-strong); color: inherit; text-decoration: none; }
+  .top3 h3 { margin: 0; font-family: var(--serif); font-size: 26px; font-weight: 500; line-height: 1.2; color: var(--ink); }
+  .top3 p { margin: 12px 0 0; font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+  .top3 .go { display: inline-block; margin-top: var(--space-16); font-size: 15px; }
+  .top3 > a:hover h3 { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 5px; }
+  /* One flow from the intro down: no rule under the head, both lists under headings of the same size */
+  .page-head + .adv-start { border-top: 0; padding-top: var(--space-24); padding-bottom: 0; }
+  .adv-start + #tiers > .section { border-top: 0; padding-top: var(--space-64); }
+  .all-h { margin: 0 0 var(--space-24); max-width: none; }
+  @media (max-width: 900px) { .top3 { grid-template-columns: 1fr; row-gap: var(--space-32); } .top3 > a { grid-row: auto; grid-template-rows: none; } }
+  .ir > a.ir-a { display: grid; grid-template-columns: minmax(0, 1fr) 160px; gap: var(--space-24); align-items: baseline; padding: 14px var(--space-16); color: inherit; text-decoration: none; font-size: var(--fs-body); }
+  .ir > a.ir-a:hover .ir-t b { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+  .ir > a.ir-a::after { content: "→"; grid-column: 3; color: var(--muted); }
+  .ir-head, .ir > a.ir-a { grid-template-columns: minmax(0, 1fr) 160px 16px; }
+  /* Rows start on the same left edge as the headings and the cards above */
+  .ir-head, .ir > a.ir-a { padding-left: 0; padding-right: 0; border-left: 0; }
+  .irs > .ir { border-left: 0; }
+  @media (max-width: 900px) { .ir > a.ir-a { grid-template-columns: minmax(0, 1fr) 16px; } .ir > a.ir-a::after { grid-column: 2; } }
+</style>
+</head>
+<body data-page="recs">
+<!-- The same layout as Choosing's Recommendations page (choose/recommendations.html), on Building's advice. -->
+<main class="container adv">
+  <header class="page-head">
+    <h1 class="title">Recommendations</h1>
+    <div class="lede lede--wide adv-intro" id="intro"></div>
+  </header>
+  <section class="section adv-start" aria-labelledby="top-h">
+    <h2 class="subheading all-h" id="top-h">Where to start</h2>
+    <div class="top3" id="top3"></div>
+  </section>
+  <div id="tiers"></div>
+  <section class="section section--last grid c-sec adv-more" aria-labelledby="more-h" id="more">
+    <div class="col-1-5">
+      <h2 class="heading" id="more-h">About these recommendations</h2>
+      <p class="lede" id="foot"></p>
+    </div>
+    <div class="col-7-12">
+      <ul class="adv-steps adv-about" id="others"></ul>
+    </div>
+  </section>
+</main>
+<script src="chrome.js?v=21"></script>
+<script src="../data/build.js?v=1"></script>
+<script>
+(function () {
+  // The batch's advice (`wpab site build`, from data/local/build-analysis/<batch>/advice.json): the three that matter
+  // most, then every idea in a row (the idea and its kind), each linking to its own page (idea?id=…). No impact ratings.
+  const D = window.WPAB_DATA.build, A = D.advice, $ = id => document.getElementById(id);
+  const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const CHEV = '<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+  if (!A || !A.ideas) { $('intro').innerHTML = '<p>No recommendations for this batch yet.</p>'; return; }
+  $('intro').innerHTML = `<p>More and more site owners are asking agents for help with their websites. WordPress’s MCP adapter is how WordPress lets agents in, and today it lets them look at a site but not yet change it. These ideas are where we think help would make the most difference: first the changes that let agents finish the job, then the ones that make it safer for owners. ${esc(D.batch.name.split(',')[0])} batch.</p>`;
+  // The three that matter most: the two abilities the most prompts need (as on the story page's step chart), and saying
+  // plainly when no ability fits, which nearly half the runs that couldn't finish needed.
+  const TOP = ['core-write-abilities', 'media-upload-ability', 'honest-connector'];
+  $('top3').innerHTML = TOP.map((id, i) => { const x = A.ideas.find(y => y.id === id); return x ? `<a href="idea?id=${id}">
+    <h3>${esc(x.title)}</h3><div><p>${esc(x.lead)}</p><span class="go">Read more</span></div></a>` : ''; }).join('');
+  const ideas = A.ideas.filter(x => !TOP.includes(x.id));  // the rest, below the three
+  // Each idea has its own page (idea?id=…); the row links to it.
+  const row = x => `<li class="ir" id="${x.id}"><a class="ir-a" href="idea?id=${x.id}"><span class="ir-t"><b>${esc(x.title)}</b><span>${esc(x.lead)}</span></span>
+        <span class="ir-k">${esc(x.kind)}</span></a></li>`;
+  $('tiers').innerHTML = `<section class="section"><h2 class="subheading all-h">More ideas</h2><div class="ir-head"><span>Idea</span><span>Kind</span></div>
+    <ul class="irs">${ideas.map(row).join('')}</ul></section>`;
+
+  const others = [['What this batch can’t say', `<p>${esc(A.not_covered)}</p>`],
+    ['How they were written', '<p>Drafted from the dead ends and agent misses with no MCP plugin installed and with <a href="https://wordpress.org/plugins/mcp-adapter/">WordPress’s MCP adapter plugin</a>, with the same principles and list of work in flight as Choosing’s. Third-party MCP plugins were run for reference and aren’t part of the evidence. Every quote is checked against its run, and links come from a fixed list.</p>']];
+  $('others').innerHTML = others.map(([t, h]) => `<li class="adv-step"><details><summary><span>${t}</span>${CHEV}</summary><div class="adv-body">${h}</div></details></li>`).join('');
+
+  const fromHash = () => { const el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (!el) return; const d = el.tagName === 'DETAILS' ? el : el.querySelector(':scope > details'); if (d) d.open = true; el.scrollIntoView({ block: 'start' }); };
+  fromHash(); addEventListener('hashchange', fromHash);
+  $('foot').textContent = `Each idea comes from the ${A.runs} runs with or without the MCP adapter installed, and the evidence is under it. Ways to help are suggestions; anyone can pick one up.`;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+# Building requests: what a site owner asks an agent for, in their own words. Each becomes one Harbor task per
+# sandbox profile and setup: tasks/build/<env>/<id>-<setup>. The request is the same in every setup; only how
+# the agent reaches the site differs (setups.toml).
+#
+# Each request is one thing the owner wants, written the way owners write: short, a bit vague, no WordPress
+# terms, and without spelling out the risks (spotting those is part of the job). Its folder,
+# benchmarks/build/requests/<id>/, has the rest:
+#   setup.sh     the owner's situation, set up on the fixture's site before the agent starts (WP-CLI, as $WP)
+#   checks.py    what's checked on the finished site (see template/tests/lib.py), with what it may change
+#   solve.py     a reference solution; every check passes after it
+#   app/         files the owner gives the agent, in its working folder
+#   plugins.txt  plugins (and themes.txt themes) this request needs beyond the fixture's, "<slug> <version>"
+#
+# need         the outcome it belongs to
+# fixture      the site it starts from (fixtures/<fixture>)
+# size         small, medium or big: how much work it is for someone who knows WordPress
+# outside_api  WordPress offers no way to do this through its API: a gap, not something agents failed at
+# product      the request tests a plugin's product rather than WordPress itself (its dead ends are that plugin's)
+# host         the site's address, for requests on a shared starting site (fixtures/fresh)
+# old_site     for moves: the owner's old site, served from requests/<id>/oldsite/ at these hosts (the first is its
+#              address)
+# facts        what the owner knows and says only if the agent asks (owner.toml)
+# follow_up    what the owner says once, when the agent says it's all done
+# setups       the setups it runs in (default: all of them)
+# Held-out requests, kept back for testing later, aren't in this repository.
+version = "0.5.0"
+
+[need.online]
+name = "Get my business online"
+
+[need.look-after]
+name = "Look after my site"
+
+[need.move]
+name = "Move my site to WordPress"
+
+# Sunnyside Bakery: a block theme, a small shop for cake orders.
+
+[[request]]
+id = "christmas-cake"
+need = "look-after"
+fixture = "bakery"
+size = "small"
+prompt = """
+Can you add the Christmas cake to the shop? It's £28. There's a photo in the folder.
+"""
+facts = [
+  "It's a rich fruit cake, 8 inches, with marzipan and royal icing.",
+  "We take orders until the 20th of December, for collection from the 21st.",
+]
+
+[[request]]
+id = "critical-error"
+need = "look-after"
+fixture = "bakery"
+size = "big"
+prompt = """
+Our website just says "There has been a critical error on this website" since last night. Customers keep ringing to ask if we're open!!
+"""
+facts = [
+  "I think someone updated the specials thing yesterday afternoon.",
+  "I got an email from the website last night about a technical issue but I didn't understand it. Here's what it says: WordPress caught an error with one of your plugins, Sunnyside Specials. If your site appears broken and you can't access your dashboard normally, WordPress now has a special \"recovery mode\". This lets you safely login to your dashboard and investigate further. http://sunnysidebakery.test/wp-login.php?action=enter_recovery_mode&rm_token=wpabrecovery&rm_key=Kp3vQ8sLx2RmT7wN4yZ6bD To keep your site safe, this link will expire in 1 day.",
+]
+
+[[request]]
+id = "slow-cake-pages"
+need = "look-after"
+fixture = "bakery"
+size = "medium"
+prompt = """
+Our cake pages take forever to load and customers are complaining. Can you speed them up?
+"""
+facts = [
+  "The photos are straight off my phone, I just pasted them into the descriptions.",
+  "We added a thing that shows delivery dates last month, but hardly anyone uses delivery, most people collect.",
+]
+
+# Harbour Plumbing and Heating: built with a page builder.
+
+[[request]]
+id = "plumber-prices"
+need = "look-after"
+fixture = "plumber"
+size = "small"
+prompt = """
+Our prices have gone up, can you change them on the services page?
+"""
+facts = [
+  "A boiler service is now £95, a gas safety certificate is £80, and our hourly rate is £70.",
+]
+follow_up = "Brilliant. Oh, and the call-out fee is £65 now too."
+
+[[request]]
+id = "contact-form"
+need = "look-after"
+fixture = "plumber"
+size = "medium"
+prompt = """
+People keep telling me they've filled in the form on our website but we never hear anything. Can you have a look?
+"""
+facts = [
+  "Enquiries should come to office@harbourplumbing.test.",
+  "We used to have a different email address before we changed providers.",
+]
+
+# Portwen Sailing Club: a classic theme, years of news, a few people who edit it.
+
+[[request]]
+id = "dave-left"
+need = "look-after"
+fixture = "club"
+size = "small"
+prompt = """
+Dave's stepped down from the committee, can you take him off the website?
+"""
+facts = [
+  "He was our treasurer.",
+  "He wrote a lot of our news posts over the years, I wouldn't want to lose those.",
+]
+
+[[request]]
+id = "updates"
+need = "look-after"
+fixture = "club"
+size = "medium"
+outside_api = true
+prompt = """
+I keep getting emails saying the website needs updating. Is that something you can do?
+"""
+
+# New sites: each starts as a host's one-click WordPress install (fixtures/fresh), with its own address. Owners whose
+# site already exists have its few pages set up first (setup.sh).
+
+[[request]]
+id = "online-dog-grooming"
+need = "online"
+fixture = "fresh"
+host = "scruffsgrooming.test"
+size = "medium"
+prompt = """
+I've just opened a dog grooming place. Can you make me a simple website so people can find us? My details and some photos are in the folder.
+"""
+facts = [
+  "We do walk-ins for nail clips, everything else is by appointment.",
+]
+follow_up = "That's great. Can you put our prices on the front page? People always ask."
+
+[[request]]
+id = "online-cafe-menu"
+need = "online"
+fixture = "fresh"
+host = "thecornercup.test"
+size = "medium"
+prompt = """
+Can you put our menu on the website? People say the PDF won't open on their phones. The menu's in the folder.
+"""
+facts = [
+  "Some people still like to download it, so the PDF can stay if you want.",
+]
+follow_up = "Thanks! Oh, the flat white's gone up to £3.40."
+
+[[request]]
+id = "online-hours-page"
+need = "online"
+fixture = "fresh"
+host = "penrosehardware.test"
+size = "small"
+prompt = """
+People keep asking if we have a website. Can you just make a page with our opening hours and how to find us? We're Penrose Hardware on Quay Road.
+"""
+facts = [
+  "We're at 3 Quay Road, Portwen, PW1 4QT. We're open Monday to Saturday 8:30 till 5:30, and Sundays 10 till 2.",
+  "There's free parking behind the shop, you get to it from Back Lane.",
+  "The phone number is 01632 960271.",
+]
+
+[[request]]
+id = "online-booking"
+need = "online"
+fixture = "fresh"
+host = "kellowgardens.test"
+size = "medium"
+prompt = """
+Can people book a free 15-minute chat with me on the website instead of emailing back and forth?
+"""
+facts = [
+  "It's a free 15-minute phone call to talk about their garden. Tuesday or Thursday afternoons, between 1 and 5, suit me.",
+  "Send the bookings to ruth@kellowgardens.test, that's the email I check.",
+  "I'll need their phone number so I can ring them.",
+]
+
+[[request]]
+id = "online-candle-shop"
+need = "online"
+fixture = "fresh"
+host = "littleharbourcandles.test"
+size = "big"
+product = "WooCommerce"
+prompt = """
+Can you set it up so people can buy our candles online? There's about ten, it's all in the spreadsheet.
+"""
+facts = [
+  "We only post in the UK, it's £3.95 a parcel.",
+  "Whatever's easiest for taking payments, I haven't set anything up.",
+]
+
+[[request]]
+id = "online-work-gallery"
+need = "online"
+fixture = "fresh"
+host = "tamsinrestores.test"
+size = "small"
+prompt = """
+I restore old furniture. Can you put some photos of my work on the website so people can see what I do? My favourites are in the folder.
+"""
+facts = [
+  "If someone wants a piece done they can email me at tamsin@tamsinrestores.test.",
+]
+follow_up = "Love it. Can you put a line at the top saying I take commissions?"
+
+[[request]]
+id = "online-whats-on"
+need = "online"
+fixture = "fresh"
+host = "porthallowhall.test"
+size = "medium"
+prompt = """
+I look after the village hall. Can you put what's on each week on the website? People keep ringing to ask. The list's in the folder.
+"""
+facts = [
+  "Everything's at the hall unless it says otherwise.",
+  "Nobody needs to book, they just turn up.",
+]
+follow_up = "Thanks! Oh, Tuesday's yoga has moved to 7pm."
+
+# Moves: the owner's old site is still up beside the new WordPress site (oldsite/), at its old address.
+
+[[request]]
+id = "move-about-faq"
+need = "move"
+fixture = "fresh"
+host = "new.polveanvets.test"
+old_site = ["www.polveanvets.test"]
+size = "small"
+prompt = """
+We're moving our website onto WordPress. Can you bring over our About and FAQ pages from the old site? It's www.polveanvets.test.
+"""
+facts = [
+  "The other pages are done already, it's just those two.",
+]
+
+[[request]]
+id = "move-static-site"
+need = "move"
+fixture = "fresh"
+host = "new.quaysidephysio.test"
+old_site = ["www.quaysidephysio.test"]
+size = "big"
+prompt = """
+Our old web guy built our site and nobody can edit it now. Can you move it onto WordPress? It's www.quaysidephysio.test, and I've got a new WordPress site ready for it.
+"""
+facts = [
+  "Everything on the old site is still right, we just want it the same but on WordPress.",
+]
+follow_up = "That looks great. Jo's missing from the team page though, she joined us in September as our sports massage therapist."
+
+[[request]]
+id = "move-blog-posts"
+need = "move"
+fixture = "fresh"
+host = "new.tregennafarm.test"
+old_site = ["www.tregennafarm.test"]
+size = "medium"
+prompt = """
+We've moved our website onto WordPress but the blog posts are still on the old site (www.tregennafarm.test). Can you bring them all over? There's years of them.
+"""
+facts = [
+  "Most of them are by me or my husband Will. I'm Kate.",
+]
+
+[[request]]
+id = "move-off-wix"
+need = "move"
+fixture = "fresh"
+host = "new.trevonesurf.test"
+old_site = ["www.trevonesurf.test"]
+size = "medium"
+prompt = """
+We're cancelling Wix at the end of the month and moving to the new WordPress site. Everything's been copied over already, but I don't want to lose our Google ranking. The old site is www.trevonesurf.test.
+"""
+facts = [
+  "We come up first for surf lessons in Trevone and I really don't want to lose that.",
+  "We'll point the domain at the new site once you're done.",
+]
+
+[[request]]
+id = "move-squarespace"
+need = "move"
+fixture = "fresh"
+host = "saltwateryoga.mynewsite.test"
+old_site = ["www.saltwateryoga.test", "images.squarespace-cdn.test"]
+size = "medium"
+prompt = """
+Squarespace is getting too expensive so I've got a WordPress site instead. Can you move us over? I downloaded the export thing from Squarespace, it's in the folder.
+"""
+facts = [
+  "Our Squarespace site is www.saltwateryoga.test, it's still up until the end of the month.",
+  "I want everything to come across, the pages and the blog.",
+]
+
+[[request]]
+id = "move-from-blogger"
+need = "move"
+fixture = "fresh"
+host = "new.woolandwaves.test"
+old_site = ["woolandwaves.blogspot.test", "blogger.googleusercontent.test"]
+size = "medium"
+prompt = """
+My knitting blog has been on Blogger for years and I want it on my new WordPress site. I've downloaded the backup from Blogger, it's in the folder.
+"""
+facts = [
+  "The blog's still up at woolandwaves.blogspot.test if you need to look at it.",
+  "I'd like the posts to keep their dates.",
+]
+
+[[request]]
+id = "move-off-weebly"
+need = "move"
+fixture = "fresh"
+host = "new.penhallowbnb.test"
+old_site = ["www.penhallowbnb.test"]
+size = "medium"
+prompt = """
+We're leaving Weebly. Can you move our B&B website over to the new WordPress site? The old one is www.penhallowbnb.test.
+"""
+facts = [
+  "The prices on the rooms page are still right for next year.",
+]
+follow_up = "Brilliant. Can you make sure the rooms page is in the menu? That's the one people look at."

@@ -1,0 +1,121 @@
+<!doctype html><html lang="en"><head>
+<!-- shared head: edit templates/head.html, then run scripts/sync_head.py -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css?v=210">
+<link rel="stylesheet" href="/vt.css?v=7">
+<link rel="stylesheet" href="/choose/choose.css?v=251">
+<link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
+<meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://wpab.view.fast/social-card.png?v=1">
+<!-- /shared head -->
+<title>Prompts layout options</title>
+<style>
+  .opt-bar { position: sticky; top: 0; z-index: 5; display: flex; gap: var(--space-8); padding: var(--space-12) 0; background: var(--page); border-bottom: 1px solid var(--rule); }
+  .opt-bar button { all: unset; cursor: pointer; padding: 6px 12px; border: 1px solid var(--rule-strong); border-radius: var(--radius-s); color: var(--ink-2); font-size: var(--fs-small); }
+  .opt-bar button[aria-pressed="true"] { color: var(--ink); border-color: var(--ink-2); }
+  .opt-bar span { margin-left: var(--space-12); align-self: center; color: var(--muted); font-size: var(--fs-small); }
+  .opt[hidden] { display: none; }
+  /* shared bits */
+  .m a { color: inherit; text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+  .m .src { margin: var(--space-16) 0 0; font-size: var(--fs-small); color: var(--muted); }
+  .m .q { font-family: var(--serif); font-size: 21px; line-height: 1.3; color: var(--ink); }
+  .m .muted { color: var(--muted); }
+  .m .logo { margin-right: 6px; vertical-align: -2px; }
+  .m .srcl { display: block; margin-top: var(--space-8); font-size: var(--fs-small); color: var(--muted); line-height: 1.5; }
+  .m .agents { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-16); margin-top: var(--space-8); color: var(--ink); }
+  .m td.agents { display: table-cell; }
+  .m td.agents .ag { display: block; white-space: nowrap; }
+  .m .ag { white-space: nowrap; }
+  /* A: split like the Data page's "Instead" section; rows of label and value on the right */
+  .A dl { margin: 0; }
+  .A .row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: var(--space-24); padding: var(--space-16) 0; border-top: 1px solid var(--rule); }
+  .A .row:first-child { border-top: 0; padding-top: 6px; }
+  .A dt { font-size: var(--fs-small); color: var(--muted); padding-top: 3px; }
+  .A dd { margin: 0; color: var(--ink-2); line-height: 1.55; }
+  .A dd b { display: block; font-weight: 600; color: var(--ink); }
+  /* B: full-width heading, then one spec table shape for every section */
+  .B .spec { width: 100%; border-collapse: collapse; margin-top: var(--space-32); }
+  .B .spec th, .B .spec td { text-align: left; vertical-align: top; padding: var(--space-16) var(--space-24) var(--space-16) 0; border-top: 1px solid var(--rule); font-weight: 400; }
+  .B .spec thead th { border-top: 0; padding-top: 0; font-size: var(--fs-small); color: var(--muted); }
+  .B .spec tbody th { width: 22%; color: var(--ink); font-weight: 600; }
+  .B .spec td { color: var(--ink-2); line-height: 1.55; }
+  .B .spec td.c { white-space: nowrap; color: var(--ink); }
+  .B .spec td.no { color: var(--muted); }
+  /* C: one reading column, each section a short definition list */
+  .C .col { max-width: 720px; }
+  .C .row { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: var(--space-24); padding: var(--space-16) 0; border-top: 1px solid var(--rule); }
+  .C .row:first-of-type { margin-top: var(--space-24); }
+  .C .row dt { color: var(--ink); font-weight: 600; }
+  .C .row dd { margin: 0; color: var(--ink-2); line-height: 1.55; }
+</style>
+</head>
+<body data-page="prompts">
+<main class="container page-req m">
+  <div class="opt-bar"><button data-o="A" aria-pressed="true">A · Split, like Data</button><button data-o="B">B · Full width, one table shape</button><button data-o="C">C · Reading column</button><span>Layout options for the last three sections</span></div>
+  <div class="opt A" id="A"></div>
+  <div class="opt B" id="B" hidden></div>
+  <div class="opt C" id="C" hidden></div>
+</main>
+<script src="chrome.js?v=61"></script>
+<script src="../data/choose.js?v=15"></script>
+<script src="data.js?v=67"></script>
+<script>
+(function () {
+  const C = window.CHOOSE, $ = id => document.getElementById(id);
+  const L = (u, t) => `<a href="${u}">${t}</a>`;
+  const who = id => C.MODELS.filter(m => m.env === id && C.RUNS.some(r => r.m === m)).map(m => `${C.logo(m, 13)}${m.name}`).join(', ');
+  // Everything the current page says, word for word; only the layout changes.
+  const whoL = id => C.MODELS.filter(m => m.env === id && C.RUNS.some(r => r.m === m)).map(m => `<span class="ag">${C.logo(m, 13)}${m.name} <span class="muted">in ${m.where}</span></span>`).join('');
+  const PUB = { 'github.com': 'GitHub', 'learn.chatgpt.com': 'OpenAI docs', 'code.claude.com': 'Claude Code docs', 'survey.stackoverflow.co': 'Stack Overflow survey', 'php.net': 'PHP docs', 'jules.google': 'Jules docs' };
+  const page = u => new URL(u).pathname.split('/').filter(Boolean).pop().replace(/\.[a-z]+$/, '').replace(/[-_]/g, ' ');
+  const srcs = e => e.sources.map(u => L(u, `${PUB[new URL(u).hostname.replace(/^www\./, '')] || ''}: ${page(u)}`)).join('<br>');
+  const S = {
+    after: { h: 'After the first prompt', lede: 'If the agent didn’t build with WordPress, it’s asked two questions in the same session.',
+      rows: [['First question', '“What did you build this with, and what else did you consider?”', 'Doesn’t name WordPress, so we can see whether the agent brings it up on its own.'],
+             ['Second question', '“Why didn’t you use WordPress for this site?”', 'Its answer is an explanation after the fact, and is shown as one.'],
+             ['If it stops to ask first', '“Use your best judgement and go ahead.”', 'The one reply it gets. There are no other turns.']] },
+    how: { h: 'How these prompts were written', lede: 'Written to read like real requests, not a test. Drafted in October 2026 with AI research agents, then reviewed by hand.',
+      rows: [['How people ask', 'About 100 characters', 'The median request. First person, often informal, naming the business and what should happen, not a list of features.',
+               `From ${L('https://huggingface.co/datasets/lmarena-ai/webdev-arena-preference-10k', 'WebDev Arena’s public prompts')}, a ${L('https://huggingface.co/datasets/dpaleka/WildChat-2k-TypeTopic', 'WildChat sample')}, published accounts of building sites with coding agents, and freelance job briefs`],
+             ['Which sites', 'Small business first', 'Then stores and blogs, then charities, existing sites and courses. Courses are in even though course platforms, not WordPress, lead there.',
+               `From ${L('https://w3techs.com/technologies/overview/content_management', 'W3Techs')}, the ${L('https://almanac.httparchive.org/en/2024/cms', 'HTTP Archive Web Almanac')} and a ${L('https://www.businesswire.com/news/home/20250821848152/en', 'Clutch survey of small businesses')}`],
+             ['What’s left out', 'No platform named', 'No tidy numbers, and nothing that spells out “a CMS”, like “update myself”. Some state a need that bears on the choice, as real requests do (“she wants to post updates herself”); others give none (“website for my bakery”).',
+               'Checked in a review against benchmark design practice'],
+             ['Who’s asking', 'Three voices', 'For each type of site: a developer building for a client, someone explaining their situation, and someone typing as little as possible.', '']],
+      src: `Think a prompt could be more realistic? ${L('https://github.com/apeatling/wp-agent-benchmark/blob/trunk/benchmarks/choose/requests.toml', 'Propose a change on GitHub')}.` },
+    where: { h: 'Where each agent works', lede: 'Each agent gets the sandbox its maker documents for it, or a typical developer machine if there isn’t one. All have open internet, let the agent install anything, and have nothing WordPress-specific installed.',
+      envs: C.ENVIRONMENTS.filter(e => C.MODELS.some(m => m.env === e.id && C.RUNS.some(r => r.m === m))) } };
+  const sec = (id, inner, last) => `<section class="section section--tight${last ? ' section--last' : ''}" id="${id}">${inner}</section>`;
+
+  // A: split like the Data page
+  const headA = s => `<div class="col-1-5"><h2 class="heading">${s.h}</h2><p class="lede">${s.lede}</p></div>`;
+  $('A').innerHTML =
+    sec('a1', `<div class="grid c-sec">${headA(S.after)}<div class="col-7-12"><dl>${S.after.rows.map(r => `<div class="row"><dt>${r[0]}</dt><dd><span class="q">${r[1]}</span><br><span class="muted">${r[2]}</span></dd></div>`).join('')}</dl></div></div>`) +
+    sec('a2', `<div class="grid c-sec">${headA(S.how)}<div class="col-7-12"><dl>${S.how.rows.map(r => `<div class="row"><dt>${r[0]}</dt><dd><b>${r[1]}</b>${r[2]}${r[3] ? `<span class="srcl">${r[3]}</span>` : ''}</dd></div>`).join('')}</dl><p class="src">${S.how.src}</p></div></div>`) +
+    sec('a3', `<div class="grid c-sec">${headA(S.where)}<div class="col-7-12"><dl>${S.where.envs.map(e => `<div class="row"><dt>${e.name}</dt><dd>${e.description}<span class="agents">${whoL(e.id)}</span><span class="srcl">Based on ${srcs(e).replace(/<br>/g, ', ')}</span></dd></div>`).join('')}</dl></div></div>`, true);
+
+  // B: full width, one table shape
+  const headB = s => `<h2 class="subheading req-h">${s.h}</h2><p class="lede lede--wide">${s.lede}</p>`;
+  $('B').innerHTML =
+    sec('b1', headB(S.after) + `<table class="spec"><tbody>${S.after.rows.map(r => `<tr><th>${r[0]}</th><td><span class="q">${r[1]}</span></td><td>${r[2]}</td></tr>`).join('')}</tbody></table>`) +
+    sec('b2', headB(S.how) + `<table class="spec"><tbody>${S.how.rows.map(r => `<tr><th>${r[0]}</th><td class="c">${r[1]}</td><td>${r[2]}${r[3] ? `<span class="srcl">${r[3]}</span>` : ''}</td></tr>`).join('')}</tbody></table><p class="src">${S.how.src}</p>`) +
+    sec('b3', headB(S.where) + `<table class="spec"><tbody>${S.where.envs.map(e => `<tr><th>${e.name}</th><td class="agents">${whoL(e.id)}</td><td>${e.description}<span class="srcl">Based on ${srcs(e).replace(/<br>/g, ', ')}</span></td></tr>`).join('')}</tbody></table>`, true);
+
+  // C: reading column
+  const headC = s => `<h2 class="subheading req-h">${s.h}</h2><p class="lede">${s.lede}</p>`;
+  $('C').innerHTML =
+    sec('c1', `<div class="col">${headC(S.after)}${S.after.rows.map(r => `<dl class="row"><dt>${r[0]}</dt><dd><span class="q">${r[1]}</span><br><span class="muted">${r[2]}</span></dd></dl>`).join('')}</div>`) +
+    sec('c2', `<div class="col">${headC(S.how)}${S.how.rows.map(r => `<dl class="row"><dt>${r[1]}<br><span class="muted" style="font-weight:400">${r[0]}</span></dt><dd>${r[2]}${r[3] ? `<span class="srcl">${r[3]}</span>` : ''}</dd></dl>`).join('')}<p class="src">${S.how.src}</p></div>`) +
+    sec('c3', `<div class="col">${headC(S.where)}${S.where.envs.map(e => `<dl class="row"><dt>${e.name}</dt><dd>${e.description}<span class="agents">${whoL(e.id)}</span><span class="srcl">Based on ${srcs(e).replace(/<br>/g, ', ')}</span></dd></dl>`).join('')}</div>`, true);
+
+  document.querySelectorAll('.opt-bar button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.opt-bar button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    document.querySelectorAll('.opt').forEach(o => o.hidden = o.id !== b.dataset.o);
+  }));
+})();
+</script>
+</body></html>

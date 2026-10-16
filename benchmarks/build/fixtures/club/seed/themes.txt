@@ -1,0 +1,2 @@
+# Themes: Astra, the classic theme the club has used since 2017.
+astra 4.14.0

@@ -1,0 +1,54 @@
+# The site's services, merged into each Build task's docker-compose.yaml beside the agent's sandbox (main).
+# The site's host name and the setup are filled in when tasks are built.
+services:
+  main:
+    depends_on:
+      wp:
+        condition: service_healthy
+  wp:
+    build:
+      context: ./wp
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_NAME: wordpress
+      WPAB_SITE_URL: http://${SITE_HOST}
+      WPAB_SETUP: ${SETUP}
+      # Nothing updates itself during a run: any update is the agent's.
+      WORDPRESS_CONFIG_EXTRA: |
+        define('AUTOMATIC_UPDATER_DISABLED', true);
+        define('WP_ENVIRONMENT_TYPE', 'production');
+        define('WP_MEMORY_LIMIT', '256M');
+        define('WP_MAX_MEMORY_LIMIT', '512M');
+        define('WPAB_MONITOR_KEY', '${MONITOR_PASSWORD}');
+    depends_on:
+      db:
+        condition: service_healthy
+      mail:
+        condition: service_started
+    networks:
+      default:
+        aliases: [${SITE_HOST}]
+      # The database is on a network only the site is on: the agent reaches the site over the web, as it
+      # would a real one, never its database.
+      site: {}
+  db:
+    image: mariadb:11.4@sha256:1292844148b311e4ed4300022a996d39083f415a963e970cf47cad1b3b18e3a6
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+    networks: [site]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 2s
+      timeout: 3s
+      retries: 60
+  # Catches everything the site sends (mu-plugins/wpab-mail.php). The checks read it at http://mail:8025.
+  mail:
+    image: axllent/mailpit:v1.27@sha256:e22dce5b36f93c77082e204a3942fb6b283b7896e057458400a4c88344c3df68
+    environment:
+      # Only the checks can read it: the owner's inbox isn't the agent's.
+      MP_UI_AUTH: "checks:${MONITOR_PASSWORD}"

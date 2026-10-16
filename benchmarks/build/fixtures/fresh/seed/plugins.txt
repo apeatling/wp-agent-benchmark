@@ -1,0 +1,1 @@
+# Nothing beyond what WordPress ships with (Akismet and Hello Dolly, inactive).
