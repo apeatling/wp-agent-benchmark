@@ -10,10 +10,10 @@ Everything is looked at from outside: pages as a visitor gets them, the REST API
 (mu-plugins/wpab-monitor.php) with the checks' own key, which the agent never had, and the mail the
 site sent (Mailpit). Nothing is checked about how the agent worked, only what the site is like now.
 
-Writes /logs/verifier/checks.json (every check, with what failed) and reward.json: success is 1 only if every
-check passed. With --snapshot it prints the same results as one JSON line and writes nothing: the harness runs
-it that way between turns, piping this file in with the settings in WPAB_SITE, so the checks' password is
-never stored in the sandbox.
+Runs in the task's checker (environment/checker), beside the site, never in the agent's sandbox, so the checks'
+login stays out of the agent's reach. Writes checks.json (every check, with what failed), reward.json (success is 1
+only if every check passed) and checks.txt to WPAB_CHECKS_OUT, for the verifier to copy in (test.sh). With
+--snapshot it prints the same results as one JSON line and writes nothing: the harness runs it that way between turns.
 """
 import base64
 import html
@@ -27,12 +27,12 @@ import urllib.request
 from functools import cache
 from pathlib import Path
 
-CONFIG = json.loads(os.environ['WPAB_SITE']) if os.environ.get('WPAB_SITE') else json.loads((Path(__file__).parent / 'site.json').read_text())
+CONFIG = json.loads((Path(__file__).parent / 'site.json').read_text())
 SITE = CONFIG['url'].rstrip('/')
 MAIL = CONFIG.get('mail', 'http://mail:8025').rstrip('/')
 # The mail catcher's login, so only the checks can read the owner's inbox, not the agent.
 MAIL_AUTH = 'Basic ' + base64.b64encode(f"checks:{CONFIG['monitor_password']}".encode()).decode()
-LOGS = Path('/logs/verifier')
+LOGS = Path(os.environ.get('WPAB_CHECKS_OUT', '/logs/verifier'))
 # The checks' key: they act as the owner (mu-plugins/wpab-monitor.php), with nothing the agent can revoke.
 KEY = CONFIG['monitor_password']
 CRITICAL = 'there has been a critical error on this website'
@@ -357,6 +357,8 @@ def main(checks):
     (LOGS / 'checks.json').write_text(json.dumps({'success': success, 'passed': sum(bool(r['passed']) for r in results),
                                                   'total': len(results), 'checks': results}, indent=2))
     (LOGS / 'reward.json').write_text(json.dumps({'success': success, **{r['id']: int(r['passed']) for r in results if r['passed'] is not None}}))
-    for r in results:
-        print(('SKIP ' if r['passed'] is None else 'PASS ' if r['passed'] else 'FAIL ') + r['name'] + ('' if r['required'] else ' (not required)') + (f": {r['detail']}" if r['detail'] else ''))
+    lines = [('SKIP ' if r['passed'] is None else 'PASS ' if r['passed'] else 'FAIL ') + r['name'] + ('' if r['required'] else ' (not required)')
+             + (f": {r['detail']}" if r['detail'] else '') for r in results]
+    (LOGS / 'checks.txt').write_text(''.join(l + '\n' for l in lines))
+    print('\n'.join(lines))
     return 0

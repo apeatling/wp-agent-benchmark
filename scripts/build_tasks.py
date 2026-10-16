@@ -216,14 +216,21 @@ def build_build_task(task, env, req, setup, defs):
         (task_env / 'wp' / 'seed' / 'setup-plugins.txt').write_text(f"# Setup: {setup['name']}.\n" + '\n'.join(setup['plugins']) + '\n')
     if setup.get('seed'):
         (task_env / 'wp' / 'seed' / 'setup.sh').write_text(f"#!/bin/bash\n# Setup: {setup['name']} (benchmarks/build/setups.toml).\nset -euo pipefail\n{fill(setup['seed'].strip(), {'user': site['user']})}\n")
-    # Checks, and the reference solution: the shared part, then the request's own, as one file each.
+    # Checks, and the reference solution: the shared part, then the request's own, as one file each. The checks and
+    # their login go only into the checker beside the site (environment/checker), never into the agent's sandbox or
+    # tests/: the verifier only copies in what the checker found.
     (task / 'tests').mkdir()
-    shutil.copy(template / 'tests' / 'test.sh', task / 'tests' / 'test.sh')
-    (task / 'tests' / 'checks.py').write_text(
+    for name in ('test.sh', 'Dockerfile'):
+        shutil.copy(template / 'tests' / name, task / 'tests' / name)
+    checker = task_env / 'checker'
+    shutil.copytree(source / 'environment' / 'checker', checker)
+    # Not even in the build context of the agent's sandbox.
+    (task_env / '.dockerignore').write_text('checker/\n')
+    (checker / 'checks.py').write_text(
         (template / 'tests' / 'lib.py').read_text() + f"\n\n# Checks for {req['id']} (benchmarks/build/requests/{req['id']}/checks.py).\n"
         + fill((request / 'checks.py').read_text(), {'host': site['host']}) + "\n\nif __name__ == '__main__':\n    sys.exit(main(CHECKS))\n")
-    (task / 'tests' / 'site.json').write_text(json.dumps({'url': f"http://{site['host']}", 'user': site['user'],
-                                                          'monitor_password': site['monitor_password'], 'mail': 'http://mail:8025'}, indent=2) + '\n')
+    (checker / 'site.json').write_text(json.dumps({'url': f"http://{site['host']}", 'user': site['user'],
+                                                   'monitor_password': site['monitor_password'], 'mail': 'http://mail:8025'}, indent=2) + '\n')
     (task / 'solution').mkdir()
     shutil.copy(template / 'solution' / 'solve.sh', task / 'solution' / 'solve.sh')
     (task / 'solution' / 'solve.py').write_text(

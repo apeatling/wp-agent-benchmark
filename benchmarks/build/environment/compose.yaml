@@ -52,3 +52,9 @@ services:
     environment:
       # Only the checks can read it: the owner's inbox isn't the agent's.
       MP_UI_AUTH: "checks:${MONITOR_PASSWORD}"
+  # Runs the checks (environment/checker), so their login is never in the agent's sandbox. It only makes requests:
+  # nothing listens in it for the agent to reach.
+  checker:
+    build:
+      context: ./checker
+    init: true
