@@ -1230,5 +1230,6 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
 .kinds .more-btn { justify-self: start; margin-top: 12px; padding: 0; background: none; border: 0; font: inherit; font-size: 15px; font-weight: 500; color: var(--ink-2); cursor: pointer; }
 .kinds .more-btn::before { content: "▼"; display: inline-block; margin-right: 6px; font-size: .7em; vertical-align: 1px; } .kinds .more-btn[aria-expanded="true"]::before { content: "▲"; }
 .kinds .more-btn:hover { color: var(--ink); }
-.asks-all { margin: var(--space-40) 0 0; }
+.asks-note { margin: var(--space-40) 0 0; max-width: 62ch; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
+.asks-all { margin: var(--space-16) 0 0; }
 @media (max-width: 900px) { .kinds { grid-template-columns: 1fr; gap: var(--space-24); } }
