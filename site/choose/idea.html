@@ -20,11 +20,11 @@
 <!-- The same layout as Building's idea page (build/idea.html), on Choosing's advice. -->
 <main class="container idea section--last" id="page"></main>
 <script src="chrome.js?v=61"></script>
-<script src="../data/choose.js?v=15"></script>
+<script src="../data/choose.js?v=16"></script>
 <script src="data.js?v=70"></script>
 <script>
 (function () {
-  // One recommendation: idea?id=…. The idea in a reading column with a rail beside it (the reasons and patterns it
+  // One recommendation: idea?id=…. Its pitch (written by hand, pitches.json) in a reading column with a rail beside it (the reasons and patterns it
   // answers), then what we saw and the plan in order, then the ideas either side.
   const D = window.WPAB_DATA.choose, C = window.CHOOSE, { esc } = C, $p = document.getElementById('page');
   const q = new URLSearchParams(location.search), id = q.get('id') || '', H = D.advice_history || {};
@@ -59,7 +59,7 @@
     <h1 class="title">${esc(clean(x.title))}</h1>
     <div class="idea-body">
       <div class="idea-main">
-        <div class="idea-pitch">${x.lead_html ? `<p>${x.lead_html}</p>` : ''}${x.impact_html ? `<p>${x.impact_html}</p>` : ''}</div>
+        <div class="idea-pitch">${x.pitch ? x.pitch.map(t => `<p>${esc(t)}</p>`).join('') : [x.lead_html, x.impact_html].filter(Boolean).map(h => `<p>${h}</p>`).join('')}</div>
         ${points.length || says.length ? `<section class="idea-part"><h2>What we saw</h2>
           ${points.length ? `<ul class="idea-pts">${points.map(e => `<li>${e}</li>`).join('')}</ul>` : ''}
           ${says.length ? `<ul class="idea-says">${says.map(s => `<li><blockquote>${s.said}</blockquote><cite>${s.run ? `${esc(s.run.m.name)}, ` : ''}<a href="run?id=${s.id}">run ${s.id}</a></cite></li>`).join('')}</ul>` : ''}

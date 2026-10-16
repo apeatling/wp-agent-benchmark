@@ -1,6 +1,6 @@
 {
  "schema_version": "1.0",
- "generated": "2026-10-12T23:59:08+00:00",
+ "generated": "2026-10-16T05:14:33+00:00",
  "batch": {
   "id": "2026-10",
   "name": "October 2026",
@@ -721,7 +721,11 @@
     "ways": [],
     "lead_html": "A plain line in wordpress.org/llms.txt, the docs and npm saying <code>npx @wp-playground/cli@latest start</code> runs WordPress with only Node.",
     "evidence_html": "<ul>\n<li>At 18 of the 76 sites where the agent nearly chose WordPress, needing PHP or MySQL tipped it away, often in a workspace that only had Node.</li>\n<li>Asked afterwards, 84 of 193 said WordPress needs a PHP and MySQL server: &quot;In this specific environment, only Node.js and Python were installed—PHP and MySQL were not present.&quot; (C2610-0067)</li>\n<li>Fact check: this is misleading for a local start, because Playground CLI needs only Node 20.18+ and SQLite. It is true for production hosting, which needs PHP 8.3+ and MySQL 8.0+ (<a href=\"https://wordpress.org/about/requirements/\">requirements</a>, Oct 2026).</li>\n</ul>\n",
-    "id": "publish-the-one-command-wordpress-start-where-agents-already-look"
+    "id": "publish-the-one-command-wordpress-start-where-agents-already-look",
+    "pitch": [
+     "Asked for a website, agents often ruled WordPress out before they began: it needs PHP and a database server, they said, and their workspace only had Node. It was the most common wrong belief we heard, and it ended the choice before WordPress was ever weighed.",
+     "WordPress Playground already runs a full WordPress site with one command and nothing but Node. Saying so plainly where agents look first, in wordpress.org’s llms.txt, the docs and npm, would take away the reason they gave most often for passing WordPress by, using a tool that’s already built."
+    ]
    },
    {
     "title": "Update wordpress.org's security page with a dated account of what updates itself",
@@ -777,7 +781,11 @@
     "ways": [],
     "lead_html": "A refreshed wordpress.org/about/security that states auto-update defaults, recent core fixes and plugin risk plainly, where models and searches find it.",
     "evidence_html": "<ul>\n<li>Hosting and upkeep came up on 158 of 193 sites and security on 128, the two most common reasons.</li>\n<li>Upkeep was the most common reason at the 9 sites where agents raised WordPress while deciding (4 of 9, e.g. C2610-0094). It also tipped sites where the agent nearly chose WordPress (C2610-0005, C2610-0395). Asked afterwards: &quot;WordPress sites require continuous maintenance: weekly core updates, PHP version upgrades, database optimizations, and plugin updates.&quot; (C2610-0003)</li>\n<li>Fact check: partly true. Core patches itself, but plugins held 91% of 2025 vulnerabilities, and 46% of vulnerabilities had no fix at disclosure (Patchstack, 2026).</li>\n</ul>\n",
-    "id": "update-wordpress-org-s-security-page-with-a-dated-account-of-what-updates-itself"
+    "id": "update-wordpress-org-s-security-page-with-a-dated-account-of-what-updates-itself",
+    "pitch": [
+     "Upkeep and security were the reasons agents gave most often for skipping WordPress: constant updates, plugins that break, sites that get hacked. Some of that is true, and some is years out of date, since WordPress now installs most of its own updates.",
+     "wordpress.org’s security page was last changed in 2024. A dated, plain account of what updates itself, what still needs care and the few habits that keep a small site safe would give agents something accurate to repeat, including the parts that are still a real risk."
+    ]
    },
    {
     "title": "Publish neutral guidance on when WordPress fits, starting with who edits",
@@ -830,7 +838,11 @@
     "ways": [],
     "lead_html": "A short, dated page and llms.txt section listing good fits, poor fits and the first question to settle: who will update the site?",
     "evidence_html": "<ul>\n<li>On 80% of the 193 sites, the agent chose how to build without asking who would update the site or how.</li>\n<li>Asked afterwards, agents named owners or staff editing without code as the case for WordPress on 54% of sites: &quot;If easy self-service updates are your priority, I’d favor WordPress for this bakery site.&quot; (C2610-0002)</li>\n<li>Fact check: wordpress.org/llms.txt names no poor fits and says 43%+. <a href=\"https://w3techs.com/technologies/details/cm-wordpress\">W3Techs</a> gives 40.1% (7 October 2026).</li>\n</ul>\n",
-    "id": "publish-neutral-guidance-on-when-wordpress-fits-starting-with-who-edits"
+    "id": "publish-neutral-guidance-on-when-wordpress-fits-starting-with-who-edits",
+    "pitch": [
+     "Most agents chose how to build a site without asking who would keep it up to date. Yet asked afterwards, many said WordPress was the right choice for owners who want to make changes without code. They knew; the question just never came up.",
+     "A short, honest page on when WordPress fits and when it doesn’t, starting with who will edit the site, would put that question in front of agents at the moment they choose. Naming the poor fits too is what makes it worth trusting."
+    ]
    },
    {
     "title": "Publish what a small WordPress site costs, free options first",
@@ -881,7 +893,11 @@
     "ways": [],
     "lead_html": "A dated wordpress.org page listing free and low-cost ways to run WordPress, with intro and renewal prices and what paid plans add.",
     "evidence_html": "<ul>\n<li>Cost and upkeep tipped sites where the agent nearly chose WordPress, including a small shop (C2610-0078) and a course page (C2610-0396).</li>\n<li>Asked afterwards, 82 of 193 said WordPress needs paid hosting: &quot;Static hosting is free, while WordPress hosting usually costs about $5–30 a month.&quot; (C2610-0001). 50 said it needs several paid plugins.</li>\n<li>Fact check: misleading. WordPress.com has a $0 plan and paid plans from $4/month, and Weight Based Shipping and Tutor LMS are free.</li>\n</ul>\n",
-    "id": "publish-what-a-small-wordpress-site-costs-free-options-first"
+    "id": "publish-what-a-small-wordpress-site-costs-free-options-first",
+    "pitch": [
+     "Agents often steered owners away from WordPress on cost, saying it needs paid hosting and a stack of paid plugins. Their prices for running it yourself are roughly right, but they leave out the free and very cheap ways to run a small site.",
+     "A dated page on wordpress.org listing each way to run WordPress with its real price, from a free local site to free hosted plans and low-cost shared hosting, with renewal prices and free plugins named beside the paid ones, would let agents give owners the whole picture. Any host could add its own figures."
+    ]
    },
    {
     "title": "Add website-request scenarios to WP-Bench and offer them as an open eval",
@@ -930,7 +946,11 @@
     "ways": [],
     "lead_html": "Plain site requests with no platform named, scored on whether the agent establishes who maintains the site and delivers something the owner can edit.",
     "evidence_html": "<ul>\n<li>On 80% of the 193 sites, the agent chose how to build without asking who would update the site; 41 went straight to code.</li>\n<li>At several sites where they nearly chose WordPress, agents built a preview first and never established who would maintain the site (C2610-0034, C2610-0152).</li>\n<li>Fact check: WP-Bench grades code in a WordPress 7.1 runtime, and nothing public measures platform choice.</li>\n</ul>\n",
-    "id": "add-website-request-scenarios-to-wp-bench-and-offer-them-as-an-open-eval"
+    "id": "add-website-request-scenarios-to-wp-bench-and-offer-them-as-an-open-eval",
+    "pitch": [
+     "Most agents went straight to code without asking who would run the site, which matters more to the owner than any platform. Nothing public measures that habit, so nothing pushes models to get better at it.",
+     "Adding plain website requests to WP-Bench, scored on whether the agent finds out who will look after the site and delivers something the owner can edit, would give labs an open test of it. Scoring the fit rather than whether WordPress was used keeps it fair, and what labs measure is what improves."
+    ]
    },
    {
     "title": "Define an open, host-neutral way to take a local WordPress site live",
@@ -984,7 +1004,11 @@
     "ways": [],
     "lead_html": "A spec and reference runner that turns a Blueprint plus content in a repo into a live site on any host, announced in the docs.",
     "evidence_html": "<ul>\n<li>At sites where they nearly chose WordPress, agents favoured what they could build and hand over at once (C2610-0188, C2610-0196), and 4% of 193 sites preferred one-command deploys or free static hosting.</li>\n<li>Asked afterwards: &quot;It's set up on a hosting account through its own dashboard, not built as files in a folder&quot; (C2610-0007).</li>\n<li>Fact check: no cross-host standard exists.</li>\n</ul>\n",
-    "id": "define-an-open-host-neutral-way-to-take-a-local-wordpress-site-live"
+    "id": "define-an-open-host-neutral-way-to-take-a-local-wordpress-site-live",
+    "pitch": [
+     "Agents like to hand over a finished site. A static site goes live in one command on a free host, but a WordPress site built on the agent’s computer has no standard way to get from there to the web, so agents chose the stack they could ship.",
+     "An open format for a site kept in a folder, its Blueprint and its content, with a reference tool that puts it live on any host that accepts it, would give WordPress the same last step. Several hosts and companies already offer their own route; a shared one would let agents use any of them without choosing a company for the owner. It’s a bigger job than most here, but it closes the gap between starting WordPress and delivering it."
+    ]
    },
    {
     "title": "Ship a create-wordpress starter that keeps the site in the repo",
@@ -1038,7 +1062,11 @@
     "ways": [],
     "lead_html": "One npm command that scaffolds blueprint.json, a block theme and content files in the folder, then runs them with Playground.",
     "evidence_html": "<ul>\n<li>At the start, 4% of 193 sites began with a one-line scaffold such as create-next-app, and 41 went straight to code.</li>\n<li>Asked afterwards, 88 wanted content in Git and 13 said WordPress locks it in a database: &quot;Lacks code ownership, requires ongoing hosting costs or third-party platform lock-in, and cannot be version-controlled in Git.&quot; (C2610-0052)</li>\n<li>Fact check: partly true. Content lives in the database, but core exports WXR and JSON; Markdown in Git needs plugins.</li>\n</ul>\n",
-    "id": "ship-a-create-wordpress-starter-that-keeps-the-site-in-the-repo"
+    "id": "ship-a-create-wordpress-starter-that-keeps-the-site-in-the-repo",
+    "pitch": [
+     "Developers and agents like a site that lives in files they can keep in Git, and many agents said WordPress locks everything in a database. To start a project they reach for a create command, like create-next-app, and WordPress doesn’t have one.",
+     "A create-wordpress command that sets up a site as files in the folder, with its settings, theme and content, and runs it with Playground, would give agents a familiar start and keep the site in the repository. The pieces already exist in Playground and Create Block Theme; this puts them behind one command."
+    ]
    },
    {
     "title": "Bring HTML-to-WordPress conversion into the open project and announce it",
@@ -1086,7 +1114,11 @@
     "ways": [],
     "lead_html": "An open, server-side converter that turns existing HTML into pages and an editable block theme, documented where agents look.",
     "evidence_html": "<ul>\n<li>Agents kept existing HTML to avoid a rebuild at sites where they nearly chose WordPress (C2610-0024, C2610-0044, C2610-0158), and 3% of 193 sites added a CMS or JSON file instead.</li>\n<li>Asked afterwards, 26 of 193 said moving means a rebuild: &quot;WordPress uses PHP themes, so your hand-coded HTML and CSS would need to become a custom theme.&quot; (C2610-0024)</li>\n<li>Fact check: true today. No WordPress.org tool converts HTML to a block theme, though company tools now do.</li>\n</ul>\n",
-    "id": "bring-html-to-wordpress-conversion-into-the-open-project-and-announce-it"
+    "id": "bring-html-to-wordpress-conversion-into-the-open-project-and-announce-it",
+    "pitch": [
+     "Many owners already have a site in hand-written HTML. Asked to make it editable, agents kept the HTML and added a separate CMS or a data file, because they believed moving to WordPress meant rebuilding every page as a theme.",
+     "Tools that turn HTML into WordPress pages and an editable block theme already exist, from several companies and independent developers, but agents don’t know about them. An open converter in the WordPress project, and the existing options documented where agents look, would make WordPress the easy answer for owners who want to edit the site they already have."
+    ]
    },
    {
     "title": "Turn on plugin auto-updates by default for new installs",
@@ -1139,7 +1171,11 @@
     "ways": [],
     "lead_html": "A core change, reviving an existing ticket, so new sites update directory plugins automatically, then stated plainly in the docs agents read.",
     "evidence_html": "<ul>\n<li>Asked afterwards, 86 of 193 said WordPress needs regular upkeep and 21 said updates break sites: &quot;A single plugin update can break the checkout flow while you are busy in the kitchen baking bread.&quot; (C2610-0003)</li>\n<li>Fact check: plugin and theme auto-updates have been opt-in since 5.5.</li>\n</ul>\n",
-    "id": "turn-on-plugin-auto-updates-by-default-for-new-installs"
+    "id": "turn-on-plugin-auto-updates-by-default-for-new-installs",
+    "pitch": [
+     "Agents often warned owners that WordPress plugins need constant manual updating, and that one bad update can break a site. WordPress keeps itself up to date, but plugin auto-updates stay off until the owner turns them on.",
+     "Turning them on by default for WordPress.org plugins on new sites, a change first proposed in 2023, would make that warning out of date, and WordPress can already roll back an update that fails. It needs agreement and a release before agents learn of it, so it goes hand in hand with the security page."
+    ]
    },
    {
     "title": "Make default page caching a criterion for recommended hosts",
@@ -1184,7 +1220,11 @@
     "ways": [],
     "lead_html": "The wordpress.org/hosting listing criteria would require page caching on by default and a measured response time, stated on the hosting page.",
     "evidence_html": "<ul>\n<li>Asked afterwards, 58 of 193 said WordPress is slow without caching: &quot;WordPress is usually slower unless you set up caching.&quot; (C2610-0008)</li>\n<li>Fact check: partly true. Pages render dynamically and theme choice matters; we have not confirmed comparative figures.</li>\n</ul>\n",
-    "id": "make-default-page-caching-a-criterion-for-recommended-hosts"
+    "id": "make-default-page-caching-a-criterion-for-recommended-hosts",
+    "pitch": [
+     "Some agents said WordPress is slow unless you set up caching. It came up mostly afterwards, as a reason given when asked, rather than while they were choosing.",
+     "If the hosts wordpress.org recommends had to switch page caching on by default and meet a measured response time, a new WordPress site on any of them would be fast from the start. Dated figures would replace general claims."
+    ]
    },
    {
     "title": "Document how to hand a WordPress site to a volunteer team safely",
@@ -1234,7 +1274,11 @@
     "ways": [],
     "lead_html": "A short guide covering two administrators, Editor roles for staff and regular export, which agents can cite when volunteers will run the site.",
     "evidence_html": "<ul>\n<li>Asked afterwards, 10 of 193 raised lockout: &quot;If the person holding the WordPress administrator login leaves or changes their email, the team gets locked out of the dashboard.&quot; (C2610-0065). Another 10 called the admin cluttered.</li>\n<li>Fact check: misleading. Core supports several administrators, and content exports with WXR.</li>\n</ul>\n",
-    "id": "document-how-to-hand-a-wordpress-site-to-a-volunteer-team-safely"
+    "id": "document-how-to-hand-a-wordpress-site-to-a-volunteer-team-safely",
+    "pitch": [
+     "For clubs and charities, agents sometimes worried that whoever holds the WordPress login could leave and lock everyone else out, or that the dashboard would be too much for volunteers. It came up rarely, and only when asked afterwards.",
+     "A short guide to handing a site to a team, with two administrators, editor accounts for everyone else and a regular export, would give agents something to point to. WordPress already does all of it; nobody has written it down for small teams."
+    ]
    },
    {
     "title": "Publish dated examples of small sites their owners edit themselves",
@@ -1280,7 +1324,11 @@
     "ways": [],
     "lead_html": "Short case studies of cafés, charities and writers' groups running WordPress, published widely enough to reach search and training data.",
     "evidence_html": "<ul>\n<li>Asked afterwards, 60 of 193 said owners can edit WordPress without code, and 33 called it a common, reasonable choice: &quot;WordPress would be a perfectly reasonable choice.&quot; (C2610-0005)</li>\n<li>Fact check: true. The block editor and core roles cover editing without code.</li>\n</ul>\n",
-    "id": "publish-dated-examples-of-small-sites-their-owners-edit-themselves"
+    "id": "publish-dated-examples-of-small-sites-their-owners-edit-themselves",
+    "pitch": [
+     "Agents already know WordPress suits owners who want to edit their own site; many said so when asked. What’s missing is that thought at the moment of choosing, when it rarely came up.",
+     "Short, dated stories of cafés, charities and writers’ groups running their own WordPress sites, gathered through local meetups and shared widely, would keep that picture current in search and in what models learn from. On its own it would change little, but it supports the ideas above."
+    ]
    },
    {
     "title": "For the Building benchmark",
