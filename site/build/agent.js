@@ -13,7 +13,7 @@
     <h1 class="title">${esc(a.name)} in ${esc(a.harness)}</h1>
     <p class="run-sub"><span>${R.done(rs)} of ${rs.length} runs completed, with or without the MCP adapter</span><span>${esc(D.batch.name.split(",")[0])} batch</span></p>
     <dl class="run-facts">
-      ${R.fact('Completed', `<table class="p-table"><thead><tr><th></th><th class="num">No MCP adapter installed</th><th class="num">${R.ADAPTER}</th></tr></thead><tbody>${row('All prompts', rs)}${D.needs.map(n => row(esc(n.name), rs.filter(r => r.need === n.id))).join('')}</tbody></table>`)}
+      ${R.fact('Completed', `<table class="p-table"><thead><tr><th></th><th class="num">No MCP adapter installed</th><th class="num">MCP adapter installed</th></tr></thead><tbody>${row('All prompts', rs)}${D.needs.map(n => row(esc(n.name), rs.filter(r => r.need === n.id))).join('')}</tbody></table>`)}
       ${R.fact('What stopped it', `<ul class="p-list">${Object.entries(causes).sort((x, y) => y[1] - x[1]).map(([k, n]) => `<li><a href="runs?agent=${id}&amp;cause=${k}">${esc(R.CAUSE[k] || k)}</a><small>${n} ${n === 1 ? 'run' : 'runs'}</small></li>`).join('')}</ul>`)}
       ${R.fact('Told owners wrongly', quotes('told_wrong') ? `<ul class="p-list">${quotes('told_wrong')}</ul>` : '', 'Things that were wrong or that the owner couldn’t use, quoted from the runs.')}
       ${R.fact('Handled well', quotes('handled_well') ? `<ul class="p-list">${quotes('handled_well')}</ul>` : '', 'What the checks don’t credit, quoted from the runs.')}

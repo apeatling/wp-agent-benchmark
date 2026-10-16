@@ -102,7 +102,7 @@
 @media (max-width: 900px) {
   .c-sec > div + div { margin-top: var(--space-32); }
   .bars a, .bars-h { grid-template-columns: minmax(0, 130px) minmax(0, 1fr) 52px; }
-  .run-facts, .run-meta dl { grid-template-columns: 1fr; gap: 6px; }
+  .run-facts, .run-meta dl { grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .run-facts dd { margin-bottom: var(--space-16); }
 }
 .page-runs .page-head { padding-bottom: var(--space-32); }
@@ -1231,3 +1231,12 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
 .kinds .more-btn:hover { color: var(--ink); }
 .asks-all { margin: var(--space-40) 0 0; }
 @media (max-width: 900px) { .kinds { grid-template-columns: 1fr; gap: var(--space-24); } }
+
+/* A run, on Building's pages: a tick when it was completed, a red ring and cross when not, a faint ring when a
+   check wasn't reached. 24px everywhere; 16px in keys and dense tables. */
+.rd { position: relative; flex: none; display: inline-block; width: 24px; height: 24px; border-radius: 50%; vertical-align: middle; }
+.rd.on { background: var(--ink); }
+.rd.on::after { content: ""; position: absolute; inset: 0; background: var(--page); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 62% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 62% no-repeat; }
+.rd.no { box-shadow: inset 0 0 0 2px var(--no, #e58b8b); }
+.rd.no::after { content: ""; position: absolute; inset: 0; background: var(--no, #e58b8b); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 8l8 8M16 8l-8 8' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center / 58% no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 8l8 8M16 8l-8 8' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center / 58% no-repeat; }
+.rd.skip { box-shadow: inset 0 0 0 1.5px var(--rule-strong); }
