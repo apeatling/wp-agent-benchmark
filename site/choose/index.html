@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site.css?v=210">
 <link rel="stylesheet" href="/vt.css?v=7">
-<link rel="stylesheet" href="/choose/choose.css?v=266">
+<link rel="stylesheet" href="/choose/choose.css?v=270">
 <link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
@@ -29,6 +29,14 @@
       <div class="changes" id="changes"></div>
     </div>
     <div class="share" id="share"><div class="share-bar" role="img"></div><div class="callouts" aria-hidden="true"></div><details class="how" id="how"></details></div>
+  </section>
+  <section class="section" aria-labelledby="asks-h" id="asks">
+    <div class="section-head">
+      <h2 class="heading" id="asks-h"></h2>
+      <p class="lede lede--wide" id="asks-note"></p>
+    </div>
+    <ul class="kinds" id="kinds"></ul>
+    <p class="asks-all"><a class="go" href="prompts" id="asks-all"></a></p>
   </section>
   <section class="section" aria-labelledby="agents-h" id="all-agents">
     <div class="section-head">
@@ -82,7 +90,7 @@
   <section class="section section--last c-sec dig" aria-labelledby="dig-h" id="dig-in">
     <div class="dig-col">
       <h2 class="heading" id="dig-h">Dig into the data</h2>
-      <p class="lede">Every run is published: the request, what the agent built, and what it said about WordPress.</p>
+      <p class="lede">Every run is published: the prompt, what the agent built, and what it said about WordPress.</p>
     </div>
     <div class="dig-col dig-links">
       <a class="dig-link" id="all-runs" href="runs"><b>Explore the runs</b><span id="all-runs-n">Filter by agent, type of site, what it built and why</span></a>
@@ -229,10 +237,10 @@
     });
     $('fit-body').innerHTML = [...rows].sort((x, y) => y.pN - x.pN).map(r => r.html).join('');
     const byNamed = [...rows].sort((a, b) => b.pN - a.pN);
-    $('fit-h').textContent = `No agent chose WordPress for any type of site. They named it most for ${PL[byNamed[0].t.id]}.`;
+    $('fit-h').textContent = `No kind of site got WordPress, though agents named it most for ${PL[byNamed[0].t.id]}.`;
     $('fit-lede').textContent = `Asked afterwards what else they’d considered, agents named WordPress for ${Math.round(byNamed[0].pN * 100)}% of ${PL[byNamed[0].t.id]} and ${Math.round(byNamed[byNamed.length - 1].pN * 100)}% of ${PL[byNamed[byNamed.length - 1].t.id]}.`;
   } else if (!best.pAll) {
-    $('fit-h').textContent = 'No agent chose WordPress for any type of site.';
+    $('fit-h').textContent = 'No kind of site got WordPress.';
     $('fit-lede').textContent = `Not for ${PL[strongRows[0].t.id]}, ${PL[strongRows[1].t.id]} or any other type, though WordPress suits them all.`;
   } else {
   $('fit-h').textContent = `Agents choose WordPress for ${PL[best.t.id]}, rarely for ${PL[worst.t.id]}.`;
@@ -262,7 +270,7 @@
   const sh = pcts(plats.map(p => p.k));
   // A platform some site used never reads 0%: under half a percent shows as "<1%", with a sliver of bar.
   $('built').innerHTML = plats.map((p, i) => `<li${i === 0 ? ' class="top"' : ''}><a href="${runsLink({ built: p.pl })}"><span class="l">${p.pl}</span><span class="t"><i style="width:${sh[i] || .5}%"></i></span><span class="v">${sh[i] || '<1'}%</span></a></li>`).join('');
-  $('built-h').textContent = `Instead, they mostly reached for ${plats[0].pl}.`;
+  $('built-h').textContent = `Instead, they mostly reached for ${plats[0].pl.replace(/^Plain /, 'plain ')}.`;  // mid-sentence, so "plain HTML"
   // The list repeats the shares, so the lede compares the leader with WordPress across every site built.
   // Same runs on both sides as the list above: every agent, controls aside.
   const built = C.RUNS.filter(r => !r.control), leadAll = Math.round(plats[0].k / built.length * 100), wpAll = Math.round(rate(built) * 100);
@@ -282,8 +290,8 @@
   }).join('');
   const top = agents[0], last = agents[agents.length - 1];
   const firsts = agents.filter(x => x.rank === 1).map(x => nb(x.m.name));
-  const none = agents.every(a => !a.pf);
-  $('agents-h').textContent = none ? 'None of the agents chose WordPress.' : firsts.length > 1 ? `${firsts.slice(0, -1).join(', ')} and ${firsts[firsts.length - 1]} choose it most.` : `${firsts[0]} chooses it most.`;
+  const none = agents.every(a => !a.pf), WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+  $('agents-h').textContent = none ? `${WORDS[agents.length] || agents.length} agents tried these prompts. None chose WordPress.` : firsts.length > 1 ? `${firsts.slice(0, -1).join(', ')} and ${firsts[firsts.length - 1]} choose it most.` : `${firsts[0]} chooses it most.`;
   $('agents-lede').textContent = `${agents.length >= 10 ? 'The ten most-used coding agents' : `The ${NUM[agents.length] || agents.length} agents tested so far`}, each a model in its maker’s own harness, or in OpenCode where the maker has none, with default settings.${firsts.length > 1 && !none ? ` The top ${firsts.length} are too close to call.` : ''}`;
   // The month in the column heading, and no Change column until there's an earlier batch to compare with.
   document.querySelector('.agents th.now span').textContent = `in ${C.MONTH.short}`;
@@ -291,6 +299,27 @@
   $('all-runs').href = runsLink({ agent: 'all' });
   $('all-runs').querySelector('b').textContent = `Explore all ${fmt(C.RUNS.length)} runs`;
   document.addEventListener('click', e => { const row = e.target.closest('tr[data-href]'); if (row && !e.target.closest('a')) location.href = row.dataset.href; });
+})();
+</script>
+<script>
+// What the agents were asked: one prompt for each kind of site, the controls after.
+(function () {
+  const D = window.WPAB_DATA.choose, { esc } = window.CHOOSE, $ = id => document.getElementById(id);
+  const PICK = { business: 'business-2', store: 'store-3', blog: 'blog-2', org: 'org-2', editable: 'editable-2', course: 'course-2', app: 'app-2', docs: 'docs-2', page: 'page-3' };
+  const fit = D.kinds.filter(k => !k.control), ctl = D.kinds.filter(k => k.control);
+  // One prompt shows, picked so each row's are the same length (three lines for the kinds, two for the controls); the rest open under it.
+  const col = k => { const all = D.requests.filter(r => r.kind === k.id), q = all.find(r => r.id === PICK[k.id]) || all[0];
+    const rest = all.filter(r => r !== q), a = (r, x) => `<a${x ? ' class="extra"' : ''} href="runs?request=${r.id}">${esc(r.prompt)}</a>`;
+    return `<li><h3>${esc(k.name)}</h3><div class="msgs">${a(q)}${rest.map(r => a(r, true)).join('')}${rest.length
+      ? `<button type="button" class="more-btn" aria-expanded="false" data-n="${all.length}">Show all ${all.length}</button>` : ''}</div></li>`; };
+  $('asks-h').textContent = 'The prompts: six kinds of site WordPress suits, and three controls.';
+  // The controls follow in the same grid, drawn quieter.
+  $('kinds').innerHTML = fit.map(col).join('') + ctl.map(k => col(k).replace('<li>', '<li class="ctl">')).join('');
+  document.querySelectorAll('#asks .more-btn').forEach(b => b.addEventListener('click', () => { const open = b.getAttribute('aria-expanded') !== 'true';
+    b.parentElement.classList.toggle('all', open); b.setAttribute('aria-expanded', open); b.textContent = open ? 'Show fewer' : `Show all ${b.dataset.n}`; }));
+  const n = ks => D.requests.filter(r => ks.some(k => k.id === r.kind)).length;
+  $('asks-note').textContent = `${D.requests.length} prompts, written the way people ask an agent for a website. None names a platform. The last three kinds are controls: sites where WordPress usually isn’t the answer. Their ${n(ctl)} prompts don’t count towards the headline; they check that agents don’t pick WordPress everywhere.`;
+  $('asks-all').textContent = `See all ${D.requests.length} prompts`;
 })();
 </script>
 <div id="vt-ready" hidden></div>
