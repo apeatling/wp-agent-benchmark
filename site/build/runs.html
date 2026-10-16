@@ -6,9 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/site.css?v=210">
+<link rel="stylesheet" href="/site.css?v=213">
 <link rel="stylesheet" href="/vt.css?v=7">
-<link rel="stylesheet" href="/choose/choose.css?v=270">
+<link rel="stylesheet" href="/choose/choose.css?v=272">
 <link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
@@ -32,8 +32,14 @@
   .runs td .none { color: var(--muted); }
   .runs td.res .said-m { display: none; }
   @media (max-width: 900px) { .runs--build col.c-res { width: 42%; } }
+  .runs .res-b { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
+  .runs .res-b .rd { width: 16px; height: 16px; }
+  .runs td.res small { padding-left: 24px; }
   @media (max-width: 600px) {
     .runs tr.run td.res { grid-area: res; padding-bottom: 4px; }
+    /* Narrow: the agent's name alone, so it isn't cut off; its harness is on the run's page */
+    .runs--build tr.run td.who small { display: none; }
+    .runs--build tr.run td.res small { padding-left: 0; }
     .runs td.res .said-m { display: inline; margin-left: 8px; font-size: 15px; color: var(--muted); }
   }
 </style>
@@ -61,7 +67,7 @@
   <section class="section section--tight section--last">
     <div class="rf-head"><span class="count" id="count"></span><button type="button" class="btn-link" id="f-clear" hidden>Reset filters</button></div>
     <div class="table-scroll runs-wide">
-      <table class="table runs">
+      <table class="table runs runs--build">
         <colgroup><col class="c-id"><col class="c-date"><col class="c-who"><col class="c-kind"><col class="c-res"><col class="c-why"><col class="c-go"></colgroup>
         <thead><tr></tr></thead>
         <tbody id="body"></tbody>
@@ -74,7 +80,7 @@
 <script src="../data/choose.js?v=16"></script>
 <script src="../choose/data.js?v=70"></script>
 <script src="../data/build.js?v=1"></script>
-<script src="real.js?v=11"></script>
+<script src="real.js?v=12"></script>
 <script>
 (function () {
   // Every run in the batch, laid out as Choosing's Runs page: the main filters, more behind "More filters", sortable
@@ -129,7 +135,8 @@
     document.querySelectorAll('.runs th[data-k]').forEach(th => th.setAttribute('aria-sort', th.dataset.k === sort ? (dir > 0 ? 'ascending' : 'descending') : 'none'));
     $('body').innerHTML = runs.slice(0, shown).map(r => {
       const href = `run?id=${r.id}`, a = R.agents[r.agent], q = R.requests[r.request], c = r.success_within ? null : stop(r);
-      const res = result(r) === 'done' ? '<span class="res-wp">Completed</span>' : `<span class="res-no">${result(r) === 'esc' ? 'Completed with access it gave itself' : 'Not completed'}</span>`;
+      // The result with the run circle every Building page uses: a tick when completed, a red cross when not.
+      const res = `<span class="res-b"><span class="rd ${result(r) === 'done' ? 'on' : 'no'}" aria-hidden="true"></span>${result(r) === 'done' ? 'Completed' : result(r) === 'esc' ? 'Completed with access it gave itself' : 'Not completed'}</span>`;
       const why = c ? `<span class="why-n">${esc(R.CAUSE[c.cause] || c.detail || 'Not completed')}</span><small>${r.told_owner ? 'told the owner' : 'didn’t say'}</small>` : '<span class="none">–</span>';
       return `<tr class="run" data-href="${href}" data-id="${r.id}"><td class="id"><a href="${href}">${r.id}</a></td><td class="date">${r.started ? `${new Date(r.started).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })}<small>${new Date(r.started).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' })} UTC</small>` : ''}</td><td class="who">${C.logo({ id: a.logo }, 14)}${esc(a.name)}<small>${esc(a.harness)}</small></td><td class="kind">${esc(R.short(q))}</td><td class="res">${res}<small>${esc(R.ROUTE[r.kind])}</small></td><td class="why">${why}</td><td class="go-c" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></td></tr>`;
     }).join('') || '<tr><td colspan="7" style="padding:32px 12px;color:var(--ink-2)">No runs match these filters. Reset them to see every run.</td></tr>';

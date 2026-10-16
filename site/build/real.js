@@ -23,9 +23,9 @@
   // The ideas in the recommendations that would clear a dead end.
   const ideasFor = id => ((D.advice || {}).ideas || []).filter(x => (x.clears || []).includes(id));
   // A list of runs, each linked: the run, its agent, route and request, and its result.
-  const runsTable = rs => `<table class="p-table"><thead><tr><th>Run</th><th>Agent</th><th>Setup</th><th>Prompt</th><th>Result</th></tr></thead><tbody>${
+  const runsTable = rs => `<div class="table-scroll"><table class="p-table"><thead><tr><th>Run</th><th>Agent</th><th>Setup</th><th>Prompt</th><th>Result</th></tr></thead><tbody>${
     rs.map(r => `<tr><td>${link.run(r)}</td><td>${link.agent(agents[r.agent])}</td><td>${esc(ROUTE[r.kind])}</td><td>${link.request(requests[r.request])}</td><td>${
-      r.success_within ? 'Completed' : r.success ? 'Completed, with access it gave itself' : 'Not completed'}</td></tr>`).join('')}</tbody></table>`;
+      r.success_within ? 'Completed' : r.success ? 'Completed, with access it gave itself' : 'Not completed'}</td></tr>`).join('')}</tbody></table></div>`;
   const fact = (label, value, note) => value ? `<dt>${label}</dt><dd>${value}${note ? `<small>${note}</small>` : ''}</dd>` : '';
   const missing = (el, what, id) => { el.innerHTML = `<a class="go back" href="${base}runs">All runs</a><h1 class="title">We couldn’t find that ${what}</h1>
     <p class="lede">${id ? `There’s no ${what} “${esc(id)}”.` : `No ${what} was chosen.`}</p>`; };

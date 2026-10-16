@@ -191,6 +191,7 @@ main.container { padding-bottom: var(--space-64); }
 @media (max-width: 900px) { .masthead { flex-wrap: wrap; gap: var(--space-16); } }
 @media (max-width: 560px) { .masthead-id b, .masthead-id span { white-space: nowrap; } }
 
+@media (max-width: 370px) { .masthead .nav-icons { display: none; } }
 /* Site navigation: page links, then code and data. The header stacks them in two rows
    level with the name and the week; the footer runs them in one row. */
 .site-nav { display: flex; }
@@ -695,8 +696,10 @@ main.container { padding-bottom: var(--space-64); }
   .masthead-id b { font-size: 22px; }
   .masthead-id span span { font-size: 15px; }
   .masthead .site-nav { width: 100%; justify-content: space-between; padding-top: var(--space-4); border-top: 1px solid var(--rule); }
-  .masthead .nav-links { gap: var(--space-4); margin-left: -10px; }
-  .masthead .nav-links a { padding: 12px 10px 10px; border-bottom-width: 2px; font-size: var(--fs-ui); }
+  /* Four links and the code icon on one line: tighter tap padding, no wrapping */
+  .masthead .site-nav, .masthead .nav-links { flex-wrap: nowrap; }
+  .masthead .nav-links { gap: 0; margin-left: -6px; }
+  .masthead .nav-links a { padding: 12px 6px 10px; border-bottom-width: 2px; font-size: var(--fs-ui); }
   .masthead .nav-icons { gap: var(--space-4); margin-right: -10px; }
   .masthead .nav-icons a, .masthead .nav-icons a:first-child { padding: 10px; border-left: 0; }
 
@@ -756,9 +759,10 @@ main.container { padding-bottom: var(--space-64); }
 }
 /* Nothing on the site is smaller than 15px */
 small { font-size: max(15px, .85em); }
-@media (max-width: 560px) { .masthead .site-nav { flex-wrap: wrap; row-gap: var(--space-12); } .masthead .nav-links { gap: 20px; flex-wrap: wrap; row-gap: var(--space-8); } }
 .prose, .about-sec > * { min-width: 0; } .table-scroll { max-width: 100%; }
 .site-footer .site-nav, .site-footer .nav-links { flex-wrap: wrap; row-gap: var(--space-12); }
+/* Phones: the footer's links and code icon on one line, like the masthead's */
+@media (max-width: 600px) { .site-footer .site-nav, .site-footer .nav-links { flex-wrap: nowrap; } .site-footer .nav-links { gap: 14px; } }
 
 /* Links, site-wide, as on the Building recommendations page: grey text with a quiet underline that brightens on
    hover. Links that take you somewhere on their own carry an arrow. No blue or bold links. */
