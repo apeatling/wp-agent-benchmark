@@ -548,7 +548,7 @@ def advise(args):
 def site(args):
     if args.benchmark == 'build':
         data = sitedata.build('build', args.batch)
-        print(f"{defs.SITE_DATA.relative_to(defs.ROOT)}/build.json: {len(data['runs'])} runs, batch {args.batch}.")
+        print(f"{defs.LOCAL_SITE_DATA.relative_to(defs.ROOT)}/build.json (public copy: site/data/build.js): {len(data['runs'])} runs, batch {args.batch}.")
         return 0
     if not defs.runs_file(args.benchmark, args.batch).exists():
         sys.exit(f"No runs for {args.batch} in {defs.runs_file(args.benchmark, args.batch).parent.relative_to(defs.ROOT)}/ yet. "
