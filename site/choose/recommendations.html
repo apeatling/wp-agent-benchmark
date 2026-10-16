@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site.css?v=210">
 <link rel="stylesheet" href="/vt.css?v=7">
-<link rel="stylesheet" href="/choose/choose.css?v=265">
+<link rel="stylesheet" href="/choose/choose.css?v=266">
 <link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
@@ -17,12 +17,16 @@
 <title>Recommendations · Choosing WordPress · Agent Benchmarks</title>
 </head>
 <body data-page="recs">
+<!-- The same layout as Building's Recommendations page (build/recommendations.html), on Choosing's advice. -->
 <main class="container adv">
   <header class="page-head">
     <h1 class="title">Recommendations</h1>
-    <p class="adv-when" id="when"></p>
     <div class="lede lede--wide adv-intro" id="intro"></div>
   </header>
+  <section class="section adv-start" aria-labelledby="top-h">
+    <h2 class="subheading all-h" id="top-h">Where to start</h2>
+    <div class="top3" id="top3"></div>
+  </section>
   <div id="tiers"></div>
   <section class="section section--last grid c-sec adv-more" aria-labelledby="more-h" id="more">
     <div class="col-1-5">
@@ -35,55 +39,44 @@
   </section>
 </main>
 <script src="chrome.js?v=61"></script>
-<script src="../data/choose.js?v=15"></script>
-<script src="data.js?v=67"></script>
+<script src="../data/choose.js?v=16"></script>
+<script src="data.js?v=70"></script>
 <script>
 (function () {
-  // The month's advice. Ideas lead, grouped by how much each would raise the share of sites agents build with
-  // WordPress (the advice rates each one). Under them, the problems they answer, each with its evidence. Every
-  // word comes from advice.md, split by the build without changing it.
+  // The month's advice (advice.md, split by the build): the three that matter most, then every other idea in a row
+  // (the idea and its kind), each linking to its own page (idea?id=…). Ideas are in the advice's order of impact.
   const D = window.WPAB_DATA.choose, C = window.CHOOSE, { esc } = C;
   const $ = id => document.getElementById(id);
   const CHEV = '<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+  // Old links opened an idea in place (recommendations#id); each idea now has its own page.
+  if (location.hash && (D.advice?.sections || []).some(s => s.recommendation && s.id === location.hash.slice(1))) {
+    location.replace(`idea?id=${encodeURIComponent(location.hash.slice(1))}${location.search.replace('?', '&')}`); return; }
   // ?batch=2026-10 shows an earlier month's recommendations, as they were.
   const asked = new URLSearchParams(location.search).get('batch'), H = D.advice_history || {};
   const batch = asked && H[asked] ? asked : D.batch.id, A = batch === D.batch.id ? D.advice : H[batch];
+  const old = batch !== D.batch.id, qs = old ? `&batch=${batch}` : '';
   const monthName = b => new Date(b + '-01T12:00:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
   if (!A) { $('intro').innerHTML = '<p>No recommendations for this month yet.</p>'; return; }
   const earlier = Object.keys(H).filter(b => b !== batch).sort().reverse();
-  $('when').innerHTML = `${batch === D.batch.id ? '' : 'Earlier version: '}${monthName(batch)} recommendations` +
-    (batch !== D.batch.id ? ` <a class="see-inline" href="recommendations">See the latest</a>` : '') +
-    (earlier.length ? ` <span class="adv-earlier">Earlier months: ${earlier.map(b => `<a href="?batch=${b}">${monthName(b)}</a>`).join(', ')}</span>` : '');
-  $('intro').innerHTML = A.intro_html;
+  $('intro').innerHTML = `<p>More and more people ask AI agents to build their websites, and unless they name WordPress, agents rarely reach for it. These ideas are where we think help would make the most difference: first making WordPress as quick to start, take live and move a site into as what agents reach for now, then answering the worries that steer them away. ${monthName(batch)} batch.` +
+    (old ? ` <a class="see-inline" href="recommendations">See the latest</a>` : '') +
+    (earlier.length ? ` Earlier months: ${earlier.map(b => `<a href="?batch=${b}">${monthName(b)}</a>`).join(', ')}.` : '') + '</p>';
   const clean = t => t.replace(/^\d+\.\s*/, '');
-  const sols = A.sections.filter(s => s.recommendation);
-
-  // Every idea in the same row: impact, the idea and why, and its kind. Colour and
-  // weight follow impact, so the list scans top to bottom. Each row opens to a few short lines and the evidence.
-  const LEVEL = { high: 'High', medium: 'Medium', low: 'Low' }, ORDER = ['high', 'medium', 'low'];
-  const ideas = sols.filter(x => LEVEL[x.impact]).sort((a, b) => ORDER.indexOf(a.impact) - ORDER.indexOf(b.impact));
-  const row = x => `<li class="ir ir-${x.impact}" id="${x.id}"><details>
-      <summary><span class="ir-lv">${LEVEL[x.impact]}</span>
-        <span class="ir-t"><b>${esc(clean(x.title))}</b><span>${x.impact_html || ''}</span></span>
-        <span class="ir-k">${esc(x.kind || '')}</span></summary>
-      <div class="ir-d adv-body">${x.lead_html ? `<p>${x.lead_html}</p>` : ''}
-        <dl>${x.reaches_html ? `<dt>Reaches agents</dt><dd>${x.reaches_html}</dd>` : ''}${(x.parts || []).map(p => `<dt>${esc(p.label)}</dt><dd>${p.html}</dd>`).join('')}</dl>
-        ${x.evidence_html ? `<details class="sol-ev"><summary>The evidence</summary><div class="adv-body">${x.evidence_html}</div></details>` : ''}</div>
-    </details></li>`;
-  $('tiers').innerHTML = `<section class="section"><div class="ir-head"><span>Impact</span><span>Idea</span><span>Kind</span></div>
-    <ul class="irs">${ideas.map(row).join('')}</ul></section>`;
-
-  // Run IDs in the evidence link to their run.
-  document.querySelectorAll('.ir-d').forEach(el => el.querySelectorAll('*').forEach(n => [...n.childNodes].forEach(t => {
-    if (t.nodeType !== 3 || !/C\d{4}-\d{4}/.test(t.textContent) || n.closest('a')) return;
-    const x = document.createElement('template'); x.innerHTML = esc(t.textContent).replace(/\b(C\d{4}-\d{4})\b/g, '<a href="run?id=$1">$1</a>'); t.replaceWith(x.content); })));
+  const { top, rest } = C.ideas(A);
+  const link = x => `idea?id=${encodeURIComponent(x.id)}${qs}`;
+  $('top3').innerHTML = top.map(x => `<a href="${link(x)}">
+    <h3>${esc(clean(x.title))}</h3><div><p>${x.lead_html || ''}</p><span class="go">Read more</span></div></a>`).join('');
+  const row = x => `<li class="ir" id="${x.id}"><a class="ir-a" href="${link(x)}"><span class="ir-t"><b>${esc(clean(x.title))}</b><span>${x.lead_html || ''}</span></span>
+        <span class="ir-k">${esc(x.kind || '')}</span></a></li>`;
+  $('tiers').innerHTML = `<section class="section"><h2 class="subheading all-h">More ideas</h2><div class="ir-head"><span>Idea</span><span>Kind</span></div>
+    <ul class="irs">${rest.map(row).join('')}</ul></section>`;
 
   $('others').innerHTML = A.sections.filter(s => !s.recommendation).map(s => `<li class="adv-step"><details id="${s.id || ''}"><summary><span>${esc(clean(s.title))}</span>${CHEV}</summary><div class="adv-body">${s.html}</div></details></li>`).join('');
 
   const fromHash = () => { const el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
-    if (!el) return; const d = el.tagName === 'DETAILS' ? el : el.querySelector(':scope > details, .b > details'); if (d) d.open = true; el.scrollIntoView({ block: 'start' }); };
+    if (!el) return; const d = el.tagName === 'DETAILS' ? el : el.querySelector(':scope > details'); if (d) d.open = true; el.scrollIntoView({ block: 'start' }); };
   fromHash(); addEventListener('hashchange', fromHash);
-  $('foot').textContent = `Impact is the advice’s judgement of how much each idea would raise the share of sites agents build with WordPress: how often the problem it answers came up in ${monthName(batch)}, and how surely it reaches agents before they choose. Ideas that only help once WordPress is chosen are listed for the Building benchmark. Ways to help are suggestions; anyone can pick one up.`;
+  $('foot').textContent = `Ideas are listed by how much we expect each to raise the share of sites agents build with WordPress: how often the problem it answers came up in ${monthName(batch)}, and how surely it reaches agents before they choose. Ideas that only help once WordPress is chosen are listed for the Building benchmark. Ways to help are suggestions; anyone can pick one up.`;
 })();
 </script>
 <div id="vt-ready" hidden></div>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- shared head: edit templates/head.html, then run scripts/sync_head.py -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css?v=210">
+<link rel="stylesheet" href="/vt.css?v=7">
+<link rel="stylesheet" href="/choose/choose.css?v=266">
+<link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
+<meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
+<meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://wpab.view.fast/social-card.png?v=1">
+<!-- /shared head -->
+<title>Idea · Choosing WordPress · Agent Benchmarks</title>
+</head>
+<body data-page="recs">
+<!-- The same layout as Building's idea page (build/idea.html), on Choosing's advice. -->
+<main class="container idea section--last" id="page"></main>
+<script src="chrome.js?v=61"></script>
+<script src="../data/choose.js?v=16"></script>
+<script src="data.js?v=70"></script>
+<script>
+(function () {
+  // One recommendation: idea?id=…. Its pitch (written by hand, pitches.json) in a reading column with a rail beside it (the reasons and patterns it
+  // answers), then what we saw and the plan in order, then the ideas either side.
+  const D = window.WPAB_DATA.choose, C = window.CHOOSE, { esc } = C, $p = document.getElementById('page');
+  const q = new URLSearchParams(location.search), id = q.get('id') || '', H = D.advice_history || {};
+  const batch = H[q.get('batch')] ? q.get('batch') : D.batch.id, A = batch === D.batch.id ? D.advice : H[batch];
+  const qs = batch === D.batch.id ? '' : `&batch=${batch}`, back = `recommendations${qs.replace('&', '?')}`;
+  const { all } = C.ideas(A), i = all.findIndex(x => x.id === id), x = all[i];
+  if (!x) { $p.innerHTML = `<a class="go back" href="${back}">All recommendations</a><h1 class="title">Idea not found</h1>
+    <p class="lede">There’s no idea called “${esc(id)}” in these recommendations.</p>`; return; }
+  const clean = t => t.replace(/^\d+\.\s*/, '');
+  document.title = `${clean(x.title)} · Choosing WordPress · Agent Benchmarks`;
+
+  // The evidence, point by point. An agent's own words, quoted with their run, are pulled out to stand on their own.
+  const RUN = Object.fromEntries(C.RUNS.map(r => [r.id, r]));
+  const says = [], points = [];
+  const text = h => h.split(/(<[^>]+>)/).map((s, k) => k % 2 ? s : s
+    .replace(/(?<![\w$£€.])(\d+ of (?:the )?\d+(?: sites)?|\d+(?:\.\d+)?%)/g, '<b>$1</b>')
+    .replace(/\b(C\d{4}-\d{4})\b/g, '<a href="run?id=$1">$1</a>')).join('');
+  [...(x.evidence_html || '').matchAll(/<li>([\s\S]*?)<\/li>/g)].forEach(([, li]) => {
+    li = li.replace(/:?\s*&quot;(.+?)&quot;\s*\((C\d{4}-\d{4})\)\.?/g, (m, said, run) => { says.push({ said, run: RUN[run], id: run }); return '. '; })
+      .replace(/\.\s+\./g, '.').replace(/\s*Asked afterwards\.\s*$/, '').trim();
+    if (li) points.push(text(li).replace(/^Fact check:/, '<b>Fact check:</b>'));
+  });
+  const part = label => (x.parts || []).find(p => p.label.toLowerCase().replace(/’/g, "'") === label)?.html;
+  const steps = [['Today', part('already exists')], ['What to build', part('how')], ['How it reaches agents', x.reaches_html],
+    ['How we’ll know', part("how we'll know")]].filter(s => s[1]);
+  const box = (h, body) => body ? `<section><h2>${h}</h2>${body}</section>` : '';
+  const reasons = (x.answers?.reasons || []).map(r => C.REASONS.find(y => y.id === r)).filter(Boolean);
+  const patterns = (x.answers?.patterns || []).map(p => C.PATTERNS.find(y => y.id === p)).filter(Boolean);
+  const prev = all[i - 1], next = all[i + 1], link = y => `idea?id=${encodeURIComponent(y.id)}${qs}`;
+
+  $p.innerHTML = `<a class="go back" href="${back}">All recommendations</a>
+    <h1 class="title">${esc(clean(x.title))}</h1>
+    <div class="idea-body">
+      <div class="idea-main">
+        <div class="idea-pitch">${x.pitch ? x.pitch.map(t => `<p>${esc(t)}</p>`).join('') : [x.lead_html, x.impact_html].filter(Boolean).map(h => `<p>${h}</p>`).join('')}</div>
+        ${points.length || says.length ? `<section class="idea-part"><h2>What we saw</h2>
+          ${points.length ? `<ul class="idea-pts">${points.map(e => `<li>${e}</li>`).join('')}</ul>` : ''}
+          ${says.length ? `<ul class="idea-says">${says.map(s => `<li><blockquote>${s.said}</blockquote><cite>${s.run ? `${esc(s.run.m.name)}, ` : ''}<a href="run?id=${s.id}">run ${s.id}</a></cite></li>`).join('')}</ul>` : ''}
+        </section>` : ''}
+        ${steps.length ? `<section class="idea-part"><h2>What it would take</h2>
+          <ol class="idea-steps">${steps.map(([h, t]) => `<li><h3>${h}</h3><p>${t}</p></li>`).join('')}</ol></section>` : ''}
+      </div>
+      <aside class="idea-rail" aria-label="What this idea answers">
+        ${box('Reasons it answers', reasons.length && `<ul>${reasons.map(r => `<li><a href="runs?reason=${r.id}">${esc(r.name)}</a></li>`).join('')}</ul>`)}
+        ${box('Patterns it answers', patterns.length && `<ul>${patterns.map(p => `<li><a href="runs?pattern=${p.id}">${esc(p.short)}</a></li>`).join('')}</ul>`)}
+      </aside>
+    </div>
+    <nav class="idea-nav" aria-label="Other ideas">
+      <div>${prev ? `<a href="${link(prev)}"><small>Previous idea</small><span>${esc(clean(prev.title))}</span></a>` : ''}</div>
+      <div class="next">${next ? `<a href="${link(next)}"><small>Next idea</small><span>${esc(clean(next.title))}</span></a>` : ''}</div>
+    </nav>`;
+})();
+</script>
+<div id="vt-ready" hidden></div>
+</body>
+</html>

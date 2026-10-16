@@ -1,0 +1,50 @@
+{
+  "publish-the-one-command-wordpress-start-where-agents-already-look": [
+    "Asked for a website, agents often ruled WordPress out before they began: it needs PHP and a database server, they said, and their workspace only had Node. It was the most common wrong belief we heard, and it ended the choice before WordPress was ever weighed.",
+    "WordPress Playground already runs a full WordPress site with one command and nothing but Node. Saying so plainly where agents look first, in wordpress.org’s llms.txt, the docs and npm, would take away the reason they gave most often for passing WordPress by, using a tool that’s already built."
+  ],
+  "define-an-open-host-neutral-way-to-take-a-local-wordpress-site-live": [
+    "Agents like to hand over a finished site. A static site goes live in one command on a free host, but a WordPress site built on the agent’s computer has no standard way to get from there to the web, so agents chose the stack they could ship.",
+    "An open format for a site kept in a folder, its Blueprint and its content, with a reference tool that puts it live on any host that accepts it, would give WordPress the same last step. Several hosts and companies already offer their own route; a shared one would let agents use any of them without choosing a company for the owner. It’s a bigger job than most here, but it closes the gap between starting WordPress and delivering it."
+  ],
+  "bring-html-to-wordpress-conversion-into-the-open-project-and-announce-it": [
+    "Many owners already have a site in hand-written HTML. Asked to make it editable, agents kept the HTML and added a separate CMS or a data file, because they believed moving to WordPress meant rebuilding every page as a theme.",
+    "Tools that turn HTML into WordPress pages and an editable block theme already exist, from several companies and independent developers, but agents don’t know about them. An open converter in the WordPress project, and the existing options documented where agents look, would make WordPress the easy answer for owners who want to edit the site they already have."
+  ],
+  "update-wordpress-org-s-security-page-with-a-dated-account-of-what-updates-itself": [
+    "Upkeep and security were the reasons agents gave most often for skipping WordPress: constant updates, plugins that break, sites that get hacked. Some of that is true, and some is years out of date, since WordPress now installs most of its own updates.",
+    "wordpress.org’s security page was last changed in 2024. A dated, plain account of what updates itself, what still needs care and the few habits that keep a small site safe would give agents something accurate to repeat, including the parts that are still a real risk."
+  ],
+  "publish-neutral-guidance-on-when-wordpress-fits-starting-with-who-edits": [
+    "Most agents chose how to build a site without asking who would keep it up to date. Yet asked afterwards, many said WordPress was the right choice for owners who want to make changes without code. They knew; the question just never came up.",
+    "A short, honest page on when WordPress fits and when it doesn’t, starting with who will edit the site, would put that question in front of agents at the moment they choose. Naming the poor fits too is what makes it worth trusting."
+  ],
+  "publish-what-a-small-wordpress-site-costs-free-options-first": [
+    "Agents often steered owners away from WordPress on cost, saying it needs paid hosting and a stack of paid plugins. Their prices for running it yourself are roughly right, but they leave out the free and very cheap ways to run a small site.",
+    "A dated page on wordpress.org listing each way to run WordPress with its real price, from a free local site to free hosted plans and low-cost shared hosting, with renewal prices and free plugins named beside the paid ones, would let agents give owners the whole picture. Any host could add its own figures."
+  ],
+  "add-website-request-scenarios-to-wp-bench-and-offer-them-as-an-open-eval": [
+    "Most agents went straight to code without asking who would run the site, which matters more to the owner than any platform. Nothing public measures that habit, so nothing pushes models to get better at it.",
+    "Adding plain website requests to WP-Bench, scored on whether the agent finds out who will look after the site and delivers something the owner can edit, would give labs an open test of it. Scoring the fit rather than whether WordPress was used keeps it fair, and what labs measure is what improves."
+  ],
+  "ship-a-create-wordpress-starter-that-keeps-the-site-in-the-repo": [
+    "Developers and agents like a site that lives in files they can keep in Git, and many agents said WordPress locks everything in a database. To start a project they reach for a create command, like create-next-app, and WordPress doesn’t have one.",
+    "A create-wordpress command that sets up a site as files in the folder, with its settings, theme and content, and runs it with Playground, would give agents a familiar start and keep the site in the repository. The pieces already exist in Playground and Create Block Theme; this puts them behind one command."
+  ],
+  "turn-on-plugin-auto-updates-by-default-for-new-installs": [
+    "Agents often warned owners that WordPress plugins need constant manual updating, and that one bad update can break a site. WordPress keeps itself up to date, but plugin auto-updates stay off until the owner turns them on.",
+    "Turning them on by default for WordPress.org plugins on new sites, a change first proposed in 2023, would make that warning out of date, and WordPress can already roll back an update that fails. It needs agreement and a release before agents learn of it, so it goes hand in hand with the security page."
+  ],
+  "make-default-page-caching-a-criterion-for-recommended-hosts": [
+    "Some agents said WordPress is slow unless you set up caching. It came up mostly afterwards, as a reason given when asked, rather than while they were choosing.",
+    "If the hosts wordpress.org recommends had to switch page caching on by default and meet a measured response time, a new WordPress site on any of them would be fast from the start. Dated figures would replace general claims."
+  ],
+  "document-how-to-hand-a-wordpress-site-to-a-volunteer-team-safely": [
+    "For clubs and charities, agents sometimes worried that whoever holds the WordPress login could leave and lock everyone else out, or that the dashboard would be too much for volunteers. It came up rarely, and only when asked afterwards.",
+    "A short guide to handing a site to a team, with two administrators, editor accounts for everyone else and a regular export, would give agents something to point to. WordPress already does all of it; nobody has written it down for small teams."
+  ],
+  "publish-dated-examples-of-small-sites-their-owners-edit-themselves": [
+    "Agents already know WordPress suits owners who want to edit their own site; many said so when asked. What’s missing is that thought at the moment of choosing, when it rarely came up.",
+    "Short, dated stories of cafés, charities and writers’ groups running their own WordPress sites, gathered through local meetups and shared widely, would keep that picture current in search and in what models learn from. On its own it would change little, but it supports the ideas above."
+  ]
+}

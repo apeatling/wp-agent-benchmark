@@ -1113,36 +1113,103 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
 .sol-ev[open] summary::after { transform: rotate(90deg); }
 .sol-ev .adv-body { margin-top: var(--space-12); padding: 0; }
 
-/* Recommendations: one row per idea, labelled and coloured by impact. Type matches the site's tables. */
-/* The list follows the intro directly; the page head already leaves room above it. */
+/* Recommendations: one row per idea. Type matches the site's tables. */
 #tiers > .section { padding-top: 0; }
-.ir-head, .ir > details > summary { display: grid; grid-template-columns: 96px minmax(0, 1fr) 160px; gap: var(--space-24); align-items: baseline; }
-.ir-head { padding: 0 var(--space-16) 10px; border-left: 3px solid transparent; border-bottom: 1px solid var(--rule); font-size: 15px; font-weight: 500; color: var(--muted); }
+.ir-head { display: grid; gap: var(--space-24); align-items: baseline; padding-bottom: 10px; border-bottom: 1px solid var(--rule); font-size: 15px; font-weight: 500; color: var(--muted); }
 .irs { list-style: none; margin: 0; padding: 0; font-variant-numeric: tabular-nums; }
-.ir { border-bottom: 1px solid var(--rule); border-left: 3px solid transparent; scroll-margin-top: var(--space-24); }
-.ir-high { border-left-color: var(--wp); background: color-mix(in srgb, var(--wp) 7%, transparent); }
-.ir-medium { border-left-color: color-mix(in srgb, var(--wp) 45%, var(--rule-strong)); }
-.ir-low { border-left-color: var(--rule-strong); }
-.ir > details > summary { padding: 14px var(--space-16); cursor: pointer; list-style: none; font-size: var(--fs-body); }
-.ir > details > summary::-webkit-details-marker { display: none; }
-.ir > details > summary:hover .ir-t b { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
-.ir-lv { justify-self: start; padding: 1px 10px; border-radius: 999px; font-size: 14px; font-weight: 500; }
-.ir-high .ir-lv { background: var(--wp); color: #0b1220; }
-.ir-medium .ir-lv { border: 1px solid color-mix(in srgb, var(--wp) 60%, transparent); color: var(--wp); }
-.ir-low .ir-lv { border: 1px solid var(--rule-strong); color: var(--muted); }
+.ir { border-bottom: 1px solid var(--rule); scroll-margin-top: var(--space-24); }
 .ir-t b { display: block; font-weight: 500; line-height: 1.45; color: var(--ink); }
 .ir-t span { display: block; margin-top: 2px; line-height: 1.5; color: var(--muted); }
 .ir-k { color: var(--ink-2); }
-.ir-low .ir-t b { color: var(--ink-2); }
-.ir-d { padding: 0 var(--space-16) var(--space-24) calc(96px + var(--space-24) + var(--space-16)); }
-.ir-d.adv-body { max-width: calc(760px + 136px); }
-.ir-d dl { margin: 0; }
-.ir-d dt { margin-top: var(--space-12); font-size: 15px; font-weight: 500; color: var(--muted); }
-.ir-d dd { margin: 2px 0 0; }
-@media (max-width: 900px) {
-  /* Narrow: impact on a top line, the idea full width under it, so every row lines up. */
-  .ir-head { display: none; }
-  .ir > details > summary { grid-template-columns: minmax(0, 1fr); grid-template-areas: "lv" "t"; row-gap: 8px; }
-  .ir-lv { grid-area: lv; } .ir-t { grid-area: t; } .ir-k { display: none; }
-  .ir-d { padding-left: var(--space-16); }
+@media (max-width: 900px) { .ir-head, .ir-k { display: none; } }
+
+/* Recommendations: the three that matter most, then every other idea as a row linking to its own page (Choosing and Building). */
+/* The three ideas that matter most, side by side above the full list; titles line up, each Read more follows its own text */
+.top3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--space-48); }  /* rows line up across the three */
+.top3 > a { display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; align-content: start; padding-top: var(--space-24); border-top: 1px solid var(--rule-strong); color: inherit; text-decoration: none; }
+.top3 h3 { margin: 0; font-family: var(--serif); font-size: 26px; font-weight: 500; line-height: 1.2; color: var(--ink); }
+.top3 p { margin: 12px 0 0; font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+.top3 .go { display: inline-block; margin-top: var(--space-16); font-size: 15px; }
+.top3 > a:hover h3 { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 5px; }
+/* One flow from the intro down: no rule under the head, both lists under headings of the same size */
+.page-head + .adv-start { border-top: 0; padding-top: var(--space-24); padding-bottom: 0; }
+.adv-start + #tiers > .section { border-top: 0; padding-top: var(--space-64); }
+.all-h { margin: 0 0 var(--space-24); max-width: none; }
+@media (max-width: 900px) { .top3 { grid-template-columns: 1fr; row-gap: var(--space-32); } .top3 > a { grid-row: auto; grid-template-rows: none; } }
+.ir > a.ir-a { display: grid; grid-template-columns: minmax(0, 1fr) 160px; gap: var(--space-24); align-items: baseline; padding: 14px var(--space-16); color: inherit; text-decoration: none; font-size: var(--fs-body); }
+.ir > a.ir-a:hover .ir-t b { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.ir > a.ir-a::after { content: "→"; grid-column: 3; color: var(--muted); }
+.ir-head, .ir > a.ir-a { grid-template-columns: minmax(0, 1fr) 160px 16px; }
+/* Rows start on the same left edge as the headings and the cards above */
+.ir-head, .ir > a.ir-a { padding-left: 0; padding-right: 0; border-left: 0; }
+.irs > .ir { border-left: 0; }
+@media (max-width: 900px) { .ir > a.ir-a { grid-template-columns: minmax(0, 1fr) 16px; } .ir > a.ir-a::after { grid-column: 2; } }
+
+/* One recommendation's own page (idea?id=…), on Choosing and Building. */
+/* One recommendation, set for reading. The pitch leads in a reading column; beside it a rail holds what you'd act on
+   (the prompts that need it, the dead ends it clears). Below the pitch, what we saw, then the plan as a
+   sequence: what exists today, what to build, how it reaches agents, how we'll know. */
+.idea { padding-top: var(--page-top); }
+.idea .back { display: inline-block; }
+.idea h1 { margin: var(--space-32) 0 0; font-size: clamp(36px, 4.6vw, 56px); line-height: 1.08; max-width: 26ch; }
+.idea-body { display: grid; grid-template-columns: minmax(0, 680px) minmax(240px, 300px); justify-content: space-between; column-gap: var(--space-80); margin-top: var(--space-48); }
+.idea-main { min-width: 0; }
+/* The pitch */
+.idea-pitch p { margin: 0; font-size: 19px; line-height: 1.65; color: var(--ink-2); }
+.idea-pitch p:first-child { font-family: var(--serif); font-size: 27px; line-height: 1.42; color: var(--ink); }
+.idea-pitch p + p { margin-top: var(--space-24); }
+/* Parts below the pitch */
+.idea-part { margin-top: var(--space-80); }
+.idea-part > h2 { margin: 0 0 var(--space-24); padding-top: var(--space-24); border-top: 1px solid; border-image: linear-gradient(to right, rgba(180, 188, 203, .28), transparent 80%) 1; font-family: var(--serif); font-size: 30px; font-weight: 500; line-height: 1.2; color: var(--ink); }
+.idea-part p { margin: 0; font-size: 17px; line-height: 1.65; color: var(--ink-2); }
+.idea-pts { margin: 0; padding: 0; list-style: none; }
+.idea-pts li { position: relative; padding-left: 20px; font-size: 17px; line-height: 1.65; color: var(--ink-2); }
+.idea-pts li + li { margin-top: 12px; }
+.idea-pts li::before { content: ""; position: absolute; left: 2px; top: .72em; width: 5px; height: 5px; border-radius: 50%; background: var(--muted); }
+.idea-pts b { font-weight: 500; color: var(--ink); }
+/* What an agent told the owner, in its own words */
+.idea-says { margin: var(--space-40) 0 0; padding: 0; list-style: none; display: grid; gap: var(--space-32); }
+.idea-says li { padding-left: var(--space-24); border-left: 2px solid var(--rule-strong); }
+.idea-says blockquote { margin: 0; font-family: var(--serif); font-size: 23px; line-height: 1.45; color: var(--ink); }
+.idea-says cite { display: block; margin-top: 12px; font-size: 14px; font-style: normal; color: var(--muted); }
+.idea-says cite a { color: var(--ink-2); }
+/* The plan, in order: a label beside each step, joined by a line */
+.idea-steps { margin: 0; padding: 0; list-style: none; }
+.idea-steps li { display: grid; grid-template-columns: 196px minmax(0, 1fr); column-gap: var(--space-24); position: relative; padding-bottom: var(--space-32); }
+.idea-steps li:last-child { padding-bottom: 0; }
+.idea-steps h3 { margin: 0; padding-left: 22px; position: relative; font-size: 15px; font-weight: 600; line-height: 1.75; color: var(--ink); }
+.idea-steps h3::before { content: ""; position: absolute; left: 0; top: .62em; width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ink-2); background: var(--page); box-sizing: border-box; z-index: 1; }
+.idea-steps li:not(:last-child)::before { content: ""; position: absolute; left: 4px; top: calc(.62em + 9px); bottom: 0; width: 1px; background: var(--rule-strong); }
+/* The rail: each part a block split by a rule; links read as rows, not underlined text */
+.idea-rail { align-self: start; padding: 4px var(--space-24); background: var(--panel); border: 1px solid var(--rule); border-radius: 14px; }
+.idea-rail section { padding: var(--space-24) 0; }
+.idea-rail section + section { border-top: 1px solid var(--rule); }
+.idea-rail h2 { margin: 0 0 var(--space-8); font-size: 14px; font-weight: 600; color: var(--muted); }
+.idea-rail ul { margin: 0; padding: 0; list-style: none; }
+.idea-rail li { padding: 10px 0; }
+.idea-rail li + li { margin: 0; border-top: 1px solid var(--rule); }
+.idea-rail li a { font-size: 15px; line-height: 1.4; color: var(--ink-2); text-decoration: none;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.idea-rail li a:hover { color: var(--ink); }
+.idea-rail li.more-item { display: none; }
+.idea-rail ul.open li.more-item { display: list-item; }
+.idea-rail .toggle { margin-top: 6px; padding: 0; background: none; border: 0; font: inherit; font-size: 14px; color: var(--muted); cursor: pointer; }
+.idea-rail .toggle:hover { color: var(--ink); }
+.idea-nav { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-32); margin-top: var(--space-96); padding-top: var(--space-32); border-top: 1px solid var(--rule); }
+.idea-nav a { display: block; color: var(--ink); text-decoration: none; }
+.idea-nav a small { display: block; margin-bottom: 6px; font-size: 14px; color: var(--muted); }
+.idea-nav a span { font-family: var(--serif); font-size: 22px; line-height: 1.25; }
+.idea-nav a:hover span { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.idea-nav .next { text-align: right; }
+@media (max-width: 1000px) {
+  .idea-body { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-64); }
+  .idea-main { max-width: 680px; }
+  .idea-rail { position: static; max-width: 680px; }
+}
+@media (max-width: 640px) {
+  .idea-pitch p:first-child { font-size: 22px; }
+  .idea-part > h2 { font-size: 26px; }
+  .idea-steps li { grid-template-columns: minmax(0, 1fr); row-gap: 4px; padding-left: 0; }
+  .idea-steps li p { padding-left: 22px; }
+  .idea-nav { grid-template-columns: 1fr; } .idea-nav .next { text-align: left; }
 }

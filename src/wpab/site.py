@@ -33,6 +33,11 @@ def advice(batch):
         return None
     adv = {**deep.sections(batch), 'reviewed': (base / 'advice.reviewed').exists()}
     assign_ids(adv)
+    # Each idea's pitch, the paragraphs that open its page, written by hand (pitches.json next to the advice).
+    pitch = json.loads((base / 'pitches.json').read_text()) if (base / 'pitches.json').exists() else {}
+    for s in adv['sections']:
+        if s.get('id') in pitch:
+            s['pitch'] = pitch[s['id']]
     adv['by_reason'] = reason_links(batch, adv)
     from .deep import dashboard_reasons
     missing = [r['name'] for r in dashboard_reasons(batch) if r['id'] not in adv['by_reason']]

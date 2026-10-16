@@ -93,7 +93,24 @@
   const UP = '<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1 9.5 8h-9z" fill="currentColor"/></svg>';
   const DOWN = '<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 9 9.5 2h-9z" fill="currentColor"/></svg>';
 
+  // A month's ideas in the order the pages show them: the three that matter most, then the rest by impact and by how
+  // many sites they reach. The three: showing agents the one-command start (that WordPress needs a server was the most
+  // common wrong claim), an open way to take that local site live (agents favoured what they could hand over at once),
+  // and turning existing HTML into WordPress (agents kept hand-coded sites to avoid a rebuild). Another month falls
+  // back to the advice's own order.
+  const TOP_IDEAS = ['publish-the-one-command-wordpress-start-where-agents-already-look',
+    'define-an-open-host-neutral-way-to-take-a-local-wordpress-site-live',
+    'bring-html-to-wordpress-conversion-into-the-open-project-and-announce-it'];
+  const IMPACT = ['high', 'medium', 'low'];
+  const ideas = A => {
+    const all = (A?.sections || []).filter(s => s.recommendation && IMPACT.includes(s.impact))
+      .sort((a, b) => IMPACT.indexOf(a.impact) - IMPACT.indexOf(b.impact) || (b.reach?.sites || 0) - (a.reach?.sites || 0));
+    const picked = TOP_IDEAS.map(id => all.find(x => x.id === id)).filter(Boolean);
+    const top = picked.length === 3 ? picked : all.slice(0, 3);
+    return { top, rest: all.filter(x => !top.includes(x)), all: [...top, ...all.filter(x => !top.includes(x))] };
+  };
+
   const SUITE = D.suite_version;
   window.CHOOSE = { ENVIRONMENTS, REQUESTS, SUITE, MONTH, MONTHS, HISTORY, PER_MONTH, since, VERSIONS, RUNS_URL, logo, NEVER, PATTERNS, MODELS, TYPES, GROUPS, DETECT, DETECT_CHECK, REASONS, RUNS, NOTHING, TREND, EVENTS, PL, SAMPLE: !!D.sample,
-    pct, pcts, pts, fmt, wilson, real, groupOf, esc, md, UP, DOWN };
+    pct, pcts, pts, fmt, wilson, real, groupOf, esc, md, ideas, UP, DOWN };
 })();
