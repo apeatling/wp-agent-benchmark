@@ -117,7 +117,7 @@ main.selector { flex: 1; display: flex; flex-direction: column; justify-content:
     const n = rs.length, z = 1.96, d = 1 + z * z / n, c = p + z * z / (2 * n), m = z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n));
     $('b-stat').textContent = Math.round(p * 100) + '%';
     $('b-chg').innerHTML = ci(Math.max(0, (c - m) / d), Math.min(1, (c + m) / d))
-      + `<div class="chg-i"><span class="chg-l">Change</span><span class="chg-v steady">${D.batch.id === 'base-1' ? 'First batch' : 'Not comparable yet'}</span></div>`;
+      + `<div class="chg-i"><span class="chg-l">Change</span><span class="chg-v steady">First month</span></div>`;
   }
 })();
 </script>
