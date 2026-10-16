@@ -255,8 +255,8 @@ class SiteOwner:
     is written next to the step's logs on the host (owner-dialogue.json, with the agent's messages, so it's a
     transcript: never committed), and a summary goes in wpab.json.
 
-    The task's checks are found by its instruction: tasks/build/*/*/instruction.md. Its checks are the same in
-    every sandbox profile.
+    A Building task is recognised by its instruction (tasks/build/*/*/instruction.md); its checks run in the task's
+    checker, not here (see _snapshot).
     """
     STREAM = None  # the file the harness writes each turn's output to, in logs_dir
 
@@ -267,22 +267,11 @@ class SiteOwner:
         return next((f.parent for f in sorted((defs.ROOT / 'tasks' / 'build').glob('*/*/instruction.md'))
                      if f.read_text().strip() == instruction.strip()), None)
 
-    async def _snapshot(self, environment, task_dir):
-        """The checks right now, copied into the sandbox with their settings, run and deleted while the agent is
-        between turns, so nothing is left behind for the agent to find. Copied as a file, not sent in the command,
-        so the logged command stays one line and never includes the checks' key."""
-        import secrets
-        import tempfile
-        site = json.dumps(json.loads((task_dir / 'tests' / 'site.json').read_text()))
-        script = f"import os\nos.environ['WPAB_SITE'] = {site!r}\n" + (task_dir / 'tests' / 'checks.py').read_text()
-        target = f'/tmp/.wpab-{secrets.token_hex(8)}.py'
-        with tempfile.NamedTemporaryFile('w', suffix='.py', delete=False) as f:
-            f.write(script)
-        try:
-            await environment.upload_file(f.name, target)
-            result = await self.exec_as_root(environment, f'chmod 600 {target}; python3 {target} --snapshot 2>&1; rm -f {target}', timeout_sec=180)
-        finally:
-            Path(f.name).unlink(missing_ok=True)
+    async def _snapshot(self, environment):
+        """The checks right now, run in the task's checker beside the site (environment/checker) while the agent is
+        between turns. The checks and their login are only ever in the checker, never in the agent's sandbox, so
+        nothing the agent leaves running can read them or change what they find."""
+        result = await environment.service_exec('python3 /checks/checks.py --snapshot 2>&1', service='checker', timeout_sec=180)
         lines = [l for l in (result.stdout or '').splitlines() if l.startswith('{')]
         return json.loads(lines[-1]) if lines else {'error': (result.stdout or '')[-300:]}
 
@@ -302,7 +291,7 @@ class SiteOwner:
             text = stream.read_text(errors='replace') if stream.exists() else ''
             (logs / f'turn-{turn}-{self.STREAM}').write_text(text)
             message = self._last_message(text) or ''
-            entry = {'turn': turn, 'message': message, 'checks': await self._snapshot(environment, task_dir) if task_dir else None}
+            entry = {'turn': turn, 'message': message, 'checks': await self._snapshot(environment) if task_dir else None}
             dialogue.append(entry)
             if replies >= max_replies:
                 end = 'reply_limit'

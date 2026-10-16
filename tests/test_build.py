@@ -1,12 +1,16 @@
-"""Building: the site owner's replies and the dead-end rules."""
+"""Building: the site owner's replies, the dead-end rules, and where the checks run."""
+import asyncio
+import importlib.util
 import json
+import tomllib
 import tempfile
 import unittest
 from pathlib import Path
 
 from harbor.models.task.config import MCPServerConfig
 
-from wpab import dead_ends, owner
+from wpab import dead_ends, defs, owner
+from wpab.agents import ClaudeCodeWithOwner
 from wpab.owner_agents import AntigravityCliWithOwner, GrokBuildWithOwner
 
 FACTS = ['The bakery is Sunnyside Bakery.', "This week's specials are pear and ginger cake."]
@@ -179,6 +183,60 @@ class OwnerHarnesses(unittest.TestCase):
         agy = AntigravityCliWithOwner(logs_dir=self.logs(), model_name='google/gemini-3.8-flash', mcp_servers=self.WORDPRESS)
         self.assertEqual(agy._build_settings_config('gemini-3.8-flash', register_model=False)['mcpServers'],
                          {'wordpress': {'httpUrl': 'http://wordpress-connector/mcp'}})
+
+
+class ChecksOutOfReach(unittest.TestCase):
+    """The checks and their login are only in the checker beside the site, never in the agent's sandbox: not for the
+    snapshots between turns, and not for the final checks, which run after Harbor has stopped the sandbox."""
+
+    @classmethod
+    def setUpClass(cls):
+        spec = importlib.util.spec_from_file_location('build_tasks', defs.ROOT / 'scripts' / 'build_tasks.py')
+        build_tasks = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(build_tasks)
+        cls.out = Path(tempfile.mkdtemp())
+        build_tasks.build_build(cls.out, only=['dave-left'])
+        cls.task = cls.out / 'build' / 'claude-cloud' / 'dave-left-official'
+
+    def test_checks_and_login_only_in_the_checker(self):
+        checker = self.task / 'environment' / 'checker'
+        self.assertTrue((checker / 'checks.py').exists())
+        self.assertIn('monitor_password', json.loads((checker / 'site.json').read_text()))
+        self.assertEqual(sorted(f.name for f in (self.task / 'tests').iterdir()), ['Dockerfile', 'test.sh'])
+        self.assertIn('checker/', (self.task / 'environment' / '.dockerignore').read_text().splitlines())
+        self.assertNotIn('checker', (self.task / 'environment' / 'Dockerfile').read_text())
+
+    def test_final_checks_run_in_the_checker_after_the_sandbox_stops(self):
+        config = tomllib.loads((self.task / 'task.toml').read_text())
+        verifier = config['verifier']
+        self.assertEqual(verifier['environment_mode'], 'separate')  # Harbor stops main before sidecar collect hooks
+        self.assertEqual(verifier['environment']['network_mode'], 'no-network')
+        self.assertEqual([c['service'] for c in verifier['collect']], ['checker'])
+        self.assertIn({'source': '/var/log/wpab/checks', 'service': 'checker'}, config['artifacts'])
+        self.assertIn('  checker:\n    build:\n      context: ./checker\n', (self.task / 'environment' / 'docker-compose.yaml').read_text())
+
+    def test_snapshot_runs_in_the_checker(self):
+        class Environment:
+            calls = []
+
+            async def service_exec(self, command, service=None, **kw):
+                self.calls.append(('service_exec', service, command))
+                return type('Result', (), {'stdout': 'noise\n{"success": 0, "checks": {"a": false}}\n'})()
+
+            def __getattr__(self, name):  # anything else (exec, upload_file, ...) would touch the sandbox
+                async def call(*args, **kw):
+                    Environment.calls.append((name,))
+                return call
+
+        env = Environment()
+        agent = ClaudeCodeWithOwner(logs_dir=Path(tempfile.mkdtemp()), model_name='anthropic/claude-opus-4-8')
+        result = asyncio.run(agent._snapshot(env))
+        self.assertEqual(result, {'success': 0, 'checks': {'a': False}})
+        self.assertEqual(len(env.calls), 1)
+        _, service, command = env.calls[0]
+        self.assertEqual(service, 'checker')
+        password = json.loads((self.task / 'environment' / 'checker' / 'site.json').read_text())['monitor_password']
+        self.assertNotIn(password, command)
 
 
 if __name__ == '__main__':

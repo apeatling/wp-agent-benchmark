@@ -32,10 +32,24 @@ storage_mb = 20480
 timeout_sec = 6000.0
 user = "{user}"
 
-# The checks run after the agent, in its sandbox, and look at the site over the network. See tests/checks.py.
+# The checks run after the agent, never in its sandbox: Harbor stops the sandbox (and anything the agent left running),
+# the task's checker looks at the site over the network (environment/checker), and the verifier, in a container of
+# its own, copies in what it found (tests/test.sh).
 [verifier]
 timeout_sec = 180.0
-environment_mode = "shared"
+environment_mode = "separate"
+
+[verifier.environment]
+network_mode = "no-network"
+
+[[verifier.collect]]
+service = "checker"
+command = "python3 /checks/checks.py"
+timeout_sec = 180.0
+
+[[artifacts]]
+source = "/var/log/wpab/checks"
+service = "checker"
 
 # What the site saw during the run (mu-plugins/wpab-activity.php), collected from the site's container.
 [[artifacts]]
