@@ -90,7 +90,7 @@
   <section class="section section--last c-sec dig" aria-labelledby="dig-h" id="dig-in">
     <div class="dig-col">
       <h2 class="heading" id="dig-h">Dig into the data</h2>
-      <p class="lede">Every run is published: the request, what the agent built, and what it said about WordPress.</p>
+      <p class="lede">Every run is published: the prompt, what the agent built, and what it said about WordPress.</p>
     </div>
     <div class="dig-col dig-links">
       <a class="dig-link" id="all-runs" href="runs"><b>Explore the runs</b><span id="all-runs-n">Filter by agent, type of site, what it built and why</span></a>
@@ -237,10 +237,10 @@
     });
     $('fit-body').innerHTML = [...rows].sort((x, y) => y.pN - x.pN).map(r => r.html).join('');
     const byNamed = [...rows].sort((a, b) => b.pN - a.pN);
-    $('fit-h').textContent = `No agent chose WordPress for any type of site. They named it most for ${PL[byNamed[0].t.id]}.`;
+    $('fit-h').textContent = `No kind of site got WordPress, though agents named it most for ${PL[byNamed[0].t.id]}.`;
     $('fit-lede').textContent = `Asked afterwards what else they’d considered, agents named WordPress for ${Math.round(byNamed[0].pN * 100)}% of ${PL[byNamed[0].t.id]} and ${Math.round(byNamed[byNamed.length - 1].pN * 100)}% of ${PL[byNamed[byNamed.length - 1].t.id]}.`;
   } else if (!best.pAll) {
-    $('fit-h').textContent = 'No agent chose WordPress for any type of site.';
+    $('fit-h').textContent = 'No kind of site got WordPress.';
     $('fit-lede').textContent = `Not for ${PL[strongRows[0].t.id]}, ${PL[strongRows[1].t.id]} or any other type, though WordPress suits them all.`;
   } else {
   $('fit-h').textContent = `Agents choose WordPress for ${PL[best.t.id]}, rarely for ${PL[worst.t.id]}.`;
@@ -270,7 +270,7 @@
   const sh = pcts(plats.map(p => p.k));
   // A platform some site used never reads 0%: under half a percent shows as "<1%", with a sliver of bar.
   $('built').innerHTML = plats.map((p, i) => `<li${i === 0 ? ' class="top"' : ''}><a href="${runsLink({ built: p.pl })}"><span class="l">${p.pl}</span><span class="t"><i style="width:${sh[i] || .5}%"></i></span><span class="v">${sh[i] || '<1'}%</span></a></li>`).join('');
-  $('built-h').textContent = `Instead, they mostly reached for ${plats[0].pl}.`;
+  $('built-h').textContent = `Instead, they mostly reached for ${plats[0].pl.replace(/^Plain /, 'plain ')}.`;  // mid-sentence, so "plain HTML"
   // The list repeats the shares, so the lede compares the leader with WordPress across every site built.
   // Same runs on both sides as the list above: every agent, controls aside.
   const built = C.RUNS.filter(r => !r.control), leadAll = Math.round(plats[0].k / built.length * 100), wpAll = Math.round(rate(built) * 100);
@@ -290,8 +290,8 @@
   }).join('');
   const top = agents[0], last = agents[agents.length - 1];
   const firsts = agents.filter(x => x.rank === 1).map(x => nb(x.m.name));
-  const none = agents.every(a => !a.pf);
-  $('agents-h').textContent = none ? 'None of the agents chose WordPress.' : firsts.length > 1 ? `${firsts.slice(0, -1).join(', ')} and ${firsts[firsts.length - 1]} choose it most.` : `${firsts[0]} chooses it most.`;
+  const none = agents.every(a => !a.pf), WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+  $('agents-h').textContent = none ? `${WORDS[agents.length] || agents.length} agents tried these prompts. None chose WordPress.` : firsts.length > 1 ? `${firsts.slice(0, -1).join(', ')} and ${firsts[firsts.length - 1]} choose it most.` : `${firsts[0]} chooses it most.`;
   $('agents-lede').textContent = `${agents.length >= 10 ? 'The ten most-used coding agents' : `The ${NUM[agents.length] || agents.length} agents tested so far`}, each a model in its maker’s own harness, or in OpenCode where the maker has none, with default settings.${firsts.length > 1 && !none ? ` The top ${firsts.length} are too close to call.` : ''}`;
   // The month in the column heading, and no Change column until there's an earlier batch to compare with.
   document.querySelector('.agents th.now span').textContent = `in ${C.MONTH.short}`;
