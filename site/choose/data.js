@@ -93,7 +93,23 @@
   const UP = '<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1 9.5 8h-9z" fill="currentColor"/></svg>';
   const DOWN = '<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 9 9.5 2h-9z" fill="currentColor"/></svg>';
 
+  // A month's ideas in the order the pages show them: the three that matter most, then the rest by impact and by how
+  // many sites they reach. The three: showing agents the one-command start (that WordPress needs a server was the most
+  // common wrong claim), answering upkeep and security (the two most common reasons), and asking who edits the site
+  // (most agents never did). Another month falls back to the advice's own order.
+  const TOP_IDEAS = ['publish-the-one-command-wordpress-start-where-agents-already-look',
+    'update-wordpress-org-s-security-page-with-a-dated-account-of-what-updates-itself',
+    'publish-neutral-guidance-on-when-wordpress-fits-starting-with-who-edits'];
+  const IMPACT = ['high', 'medium', 'low'];
+  const ideas = A => {
+    const all = (A?.sections || []).filter(s => s.recommendation && IMPACT.includes(s.impact))
+      .sort((a, b) => IMPACT.indexOf(a.impact) - IMPACT.indexOf(b.impact) || (b.reach?.sites || 0) - (a.reach?.sites || 0));
+    const picked = TOP_IDEAS.map(id => all.find(x => x.id === id)).filter(Boolean);
+    const top = picked.length === 3 ? picked : all.slice(0, 3);
+    return { top, rest: all.filter(x => !top.includes(x)), all: [...top, ...all.filter(x => !top.includes(x))] };
+  };
+
   const SUITE = D.suite_version;
   window.CHOOSE = { ENVIRONMENTS, REQUESTS, SUITE, MONTH, MONTHS, HISTORY, PER_MONTH, since, VERSIONS, RUNS_URL, logo, NEVER, PATTERNS, MODELS, TYPES, GROUPS, DETECT, DETECT_CHECK, REASONS, RUNS, NOTHING, TREND, EVENTS, PL, SAMPLE: !!D.sample,
-    pct, pcts, pts, fmt, wilson, real, groupOf, esc, md, UP, DOWN };
+    pct, pcts, pts, fmt, wilson, real, groupOf, esc, md, ideas, UP, DOWN };
 })();
