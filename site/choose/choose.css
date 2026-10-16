@@ -1213,3 +1213,22 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
   .idea-steps li p { padding-left: 22px; }
   .idea-nav { grid-template-columns: 1fr; } .idea-nav .next { text-align: left; }
 }
+
+/* Data page: what the agents were asked. A column per kind of site, each with one of its prompts as the user's message;
+   the controls after, quieter. */
+.kinds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-40) var(--space-48); align-items: start; margin: 0; padding: 0; list-style: none; }
+.kinds li { display: flex; flex-direction: column; }
+.kinds h3 { margin: 0 0 var(--space-12); font-family: var(--serif); font-size: 24px; font-weight: 400; line-height: 1.15; color: var(--ink); }
+.kinds a { display: block; padding: 10px 14px; background: var(--track-strong); border-radius: 16px; border-top-right-radius: 4px; font-size: 14px; line-height: 1.45; color: var(--ink); text-decoration: none; }
+.kinds a:hover { background: color-mix(in srgb, var(--track-strong) 85%, var(--ink)); }
+.ctl-h { margin: var(--space-64) 0 var(--space-24); padding-top: var(--space-32); border-top: 1px solid var(--rule); font-family: var(--serif); font-size: 26px; font-weight: 400; color: var(--ink); }
+.kinds.ctl h3 { font-size: 20px; color: var(--ink-2); }
+.kinds.ctl a { background: transparent; border: 1px solid var(--rule-strong); color: var(--ink-2); }
+.kinds .msgs { display: grid; gap: 10px; }
+.kinds .extra { display: none; }
+.kinds .all .extra { display: block; }
+.kinds .more-btn { justify-self: start; margin-top: 12px; padding: 0; background: none; border: 0; font: inherit; font-size: 15px; font-weight: 500; color: var(--ink-2); cursor: pointer; }
+.kinds .more-btn::before { content: "▼"; display: inline-block; margin-right: 6px; font-size: .7em; vertical-align: 1px; } .kinds .more-btn[aria-expanded="true"]::before { content: "▲"; }
+.kinds .more-btn:hover { color: var(--ink); }
+.asks-all { margin: var(--space-40) 0 0; }
+@media (max-width: 900px) { .kinds { grid-template-columns: 1fr; gap: var(--space-24); } }
