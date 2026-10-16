@@ -1221,9 +1221,8 @@ body .why-help a.help-more { display: block; width: fit-content; margin-top: var
 .kinds h3 { margin: 0 0 var(--space-12); font-family: var(--serif); font-size: 24px; font-weight: 400; line-height: 1.15; color: var(--ink); }
 .kinds a { display: block; padding: 10px 14px; background: var(--track-strong); border-radius: 16px; border-top-right-radius: 4px; font-size: 14px; line-height: 1.45; color: var(--ink); text-decoration: none; }
 .kinds a:hover { background: color-mix(in srgb, var(--track-strong) 85%, var(--ink)); }
-.ctl-h { margin: var(--space-64) 0 var(--space-24); padding-top: var(--space-32); border-top: 1px solid var(--rule); font-family: var(--serif); font-size: 26px; font-weight: 400; color: var(--ink); }
-.kinds.ctl h3 { font-size: 20px; color: var(--ink-2); }
-.kinds.ctl a { background: transparent; border: 1px solid var(--rule-strong); color: var(--ink-2); }
+.kinds .ctl h3 { color: var(--ink-2); }
+.kinds .ctl a { background: transparent; border: 1px solid var(--rule-strong); color: var(--ink-2); }
 .kinds .msgs { display: grid; gap: 10px; }
 .kinds .extra { display: none; }
 .kinds .all .extra { display: block; }
