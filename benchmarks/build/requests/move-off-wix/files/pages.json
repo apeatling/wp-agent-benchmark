@@ -1,0 +1,11 @@
+[
+ {"path": "/", "slug": "home", "kind": "page", "title": "Learn to surf at Trevone", "text": ["Surf lessons for everyone from age six, on one of the friendliest beaches in North Cornwall.", "All our instructors are qualified with Surfing England, and we supply wetsuits and boards."]},
+ {"path": "/about-us", "slug": "about", "kind": "page", "title": "About us", "text": ["Trevone Surf School was started in 2012 by Ben and Lucy Hocking, who grew up surfing this beach.", "We teach small groups of no more than eight, so everyone gets time with an instructor."]},
+ {"path": "/lessons-1", "slug": "lessons", "kind": "page", "title": "Lessons", "text": ["Group lessons run twice a day from Easter to October, and last two and a half hours.", "Private lessons and family lessons can be booked any day, tide permitting."]},
+ {"path": "/prices", "slug": "prices", "kind": "page", "title": "Prices", "text": ["Group lesson: £45 per person.", "Private lesson: £90 for one person, £60 each for two.", "Family lesson for up to four people: £170."]},
+ {"path": "/contact-8", "slug": "contact", "kind": "page", "title": "Contact", "text": ["Find us in the green hut at the top of Trevone Beach.", "Call or text 07700 900 418, or email surf@trevonesurf.test."]},
+ {"path": "/blog", "slug": "blog", "kind": "blog", "title": "Blog", "text": []},
+ {"path": "/post/best-beaches-for-beginners", "slug": "best-beaches-for-beginners", "kind": "post", "date": "2024-04-12", "title": "The best beaches for beginners near Padstow", "text": ["Trevone, Harlyn and Constantine all have gentle, sandy breaks that are good for your first waves.", "Always surf between the red and yellow flags when the lifeguards are on."]},
+ {"path": "/post/what-to-wear-surfing-in-cornwall", "slug": "what-to-wear-surfing-in-cornwall", "kind": "post", "date": "2024-06-03", "title": "What to wear surfing in Cornwall", "text": ["Even in August the sea here rarely gets above 17 degrees, so you will want a full wetsuit.", "We lend 5mm wetsuits, boots and gloves in spring and autumn."]},
+ {"path": "/post/our-new-surf-van", "slug": "our-new-surf-van", "kind": "post", "date": "2025-03-21", "title": "Our new surf van", "text": ["Say hello to Doris, our 1979 VW camper, who will be carrying boards to the beach this summer.", "Look out for her in the car park, she is very hard to miss."]}
+]

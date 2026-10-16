@@ -6,19 +6,138 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/site.css?v=209">
+<link rel="stylesheet" href="/site.css?v=210">
 <link rel="stylesheet" href="/vt.css?v=7">
 <link rel="icon" href="/favicon-light.png?v=4" sizes="32x32" media="(prefers-color-scheme: light)"><link rel="icon" href="/favicon-dark.png?v=4" sizes="32x32" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg?v=4" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png?v=4"><link rel="manifest" href="/site.webmanifest">
 <meta name="description" content="When someone asks an AI agent for a website and doesn't name a platform, does it choose WordPress? Real agents, real requests, every month.">
 <meta property="og:type" content="website"><meta property="og:site_name" content="WordPress Agent Benchmarks"><meta property="og:image" content="https://wpab.view.fast/social-card.png?v=1"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When WordPress isn't mentioned, do agents choose it? 0% of the sites agents built used WordPress.">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://wpab.view.fast/social-card.png?v=1">
 <!-- /shared head -->
-<!-- The front page goes straight to the Choosing dashboard. -->
-<meta http-equiv="refresh" content="0; url=choose/">
-<script>location.replace('choose/' + location.hash);</script>
+<!-- Hold the first render until the page is complete, so the page transition moves the finished header and numbers -->
+<link rel="expect" href="#vt-ready" blocking="render">
 <title>WordPress Agent Benchmarks</title>
 </head>
 <body>
-<p><a href="choose/">WordPress Agent Benchmarks: Choosing WordPress</a></p>
+<style>
+body { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+main.selector { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-top: 64px; padding-bottom: calc(64px + 10vh); } /* extra space below lifts the centred content by 5% of the window */
+.brand { display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+.brand svg { width: 104px; height: 104px; }
+.brand h1 { margin: 0; font-family: var(--serif); font-weight: 600; font-size: clamp(40px, 5vw, 60px); line-height: 1; letter-spacing: -.01em; }
+.brand p { margin: 0; color: var(--muted); font-size: var(--fs-small); }
+.picker.hero { padding-top: 88px; padding-bottom: 0; }
+.picker .hero-cols { grid-template-rows: repeat(6, auto); }
+.picker .hero-col { grid-row: span 6; }
+.open-dash { margin-top: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 14px 26px; border: 1px solid var(--rule-strong); border-radius: var(--radius-m); color: var(--ink); text-decoration: none; font: 500 var(--fs-ui) var(--sans); transition: border-color .15s, background .15s; }
+.open-dash:hover { border-color: var(--wp); background: color-mix(in srgb, var(--wp) 10%, transparent); }
+@media (max-width: 900px) {  .brand svg { width: 76px; height: 76px; } .picker.hero { padding-top: 56px; } .picker .hero-col { grid-row: auto; } }
+/* Phones: one column, tighter rhythm, every block clearly its own. The date and the About link sit on their own lines. */
+@media (max-width: 600px) {
+  main.selector { justify-content: flex-start; padding-top: 36px; padding-bottom: 48px; }
+  .brand { gap: 12px; }
+  .brand svg { width: 52px; height: 52px; }
+  .brand h1 { font-size: 34px; }
+  .brand p { display: flex; flex-direction: column; align-items: center; gap: 6px; line-height: 1.4; }
+  .brand .about-link { margin-left: 0; }
+  .picker.hero { padding-top: 40px; }
+  .picker .hero-col .question { font-size: 23px; line-height: 1.2; max-width: 17em; }
+  .picker .hero-col .stat { margin-top: 14px; font-size: 88px; }
+  .picker .hero-col .stat-caption { margin-top: 10px; font-size: 15px; max-width: 26ch; }
+  .picker .hero-col .changes { margin-top: 18px; gap: 16px; }
+  .picker .open-dash { margin-top: 24px; padding: 11px 20px; }
+  .picker .hero-col + .hero-col { margin-top: 44px; padding-top: 44px; }
+}
+/* Page transition into a benchmark: names match choose/choose.css */
+@view-transition { navigation: auto; }
+.brand svg { view-transition-name: vt-logo; }
+.brand h1 { view-transition-name: vt-brand; }
+.span-left .question { view-transition-name: vt-choose-q; }
+.span-left .stat { view-transition-name: vt-choose-stat; }
+.span-left .stat-caption { view-transition-name: vt-choose-cap; }
+.span-left .changes { view-transition-name: vt-choose-chg; width: fit-content; justify-self: center; }
+.span-right .question { view-transition-name: vt-build-q; }
+.span-right .stat { view-transition-name: vt-build-stat; }
+.span-right .stat-caption { view-transition-name: vt-build-cap; }
+.span-right .changes { view-transition-name: vt-build-chg; width: fit-content; justify-self: center; }
+/* About lives here, above both benchmarks, not inside either one: right under the title */
+.brand .about-link { margin-left: 8px; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.brand .about-link:hover { color: var(--ink); text-decoration-color: var(--ink-2); }
+.brand .about-link::after { content: "→"; display: inline-block; margin-left: .35em; text-decoration: none; transition: transform .18s cubic-bezier(.2, .7, .2, 1); }
+.brand .about-link:hover::after { transform: translateX(3px); }
+</style>
+<main class="container selector">
+  <header class="brand">
+    <svg viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M21.469 6.825c.84 1.537 1.318 3.3 1.318 5.175 0 3.979-2.156 7.456-5.363 9.325l3.295-9.527c.615-1.54.82-2.771.82-3.864 0-.405-.026-.78-.07-1.11m-7.981.105c.647-.03 1.232-.105 1.232-.105.582-.075.514-.93-.067-.899 0 0-1.755.135-2.88.135-1.064 0-2.85-.15-2.85-.15-.585-.03-.661.855-.075.885 0 0 .54.061 1.125.09l1.68 4.605-2.37 7.08L5.354 6.9c.649-.03 1.234-.1 1.234-.1.585-.075.516-.93-.065-.896 0 0-1.746.138-2.874.138-.2 0-.438-.008-.69-.015C4.911 3.15 8.235 1.215 12 1.215c2.809 0 5.365 1.072 7.286 2.833-.046-.003-.091-.009-.141-.009-1.06 0-1.812.923-1.812 1.914 0 .89.513 1.643 1.06 2.531.411.72.89 1.643.89 2.977 0 .915-.354 1.994-.821 3.479l-1.075 3.585-3.9-11.61.001.014zM12 22.784c-1.059 0-2.081-.153-3.048-.437l3.237-9.406 3.315 9.087c.024.053.05.101.078.149-1.12.393-2.325.609-3.582.609M1.211 12c0-1.564.336-3.05.935-4.39L7.29 21.709C3.694 19.96 1.212 16.271 1.211 12M12 0C5.385 0 0 5.385 0 12s5.385 12 12 12 12-5.385 12-12S18.615 0 12 0"/></svg>
+    <h1>Agent Benchmarks</h1>
+    <p><span id="batch-name"></span> <a class="about-link" href="about">How these benchmarks work</a></p>
+  </header>
+  <section class="section hero picker" aria-label="The two benchmarks">
+    <div class="grid hero-cols">
+      <div class="hero-col span-left">
+        <h2 class="question">When WordPress isn’t mentioned, do agents choose it?</h2>
+        <div class="stat" id="c-stat"></div>
+        <p class="stat-caption">of the sites agents built used WordPress.</p>
+        <div class="changes" id="c-chg"><div class="chg-i"><span class="chg-l">95% CI</span><span class="chg-v ci-v">17–20%</span></div><div class="chg-i"><span class="chg-l">1 month</span><span class="chg-v steady">Steady</span></div><div class="chg-i"><span class="chg-l">3 months</span><span class="chg-v">+5 pts</span></div><div class="chg-i"><span class="chg-l">6 months</span><span class="chg-v">+11 pts</span></div></div>
+        <a class="open-dash" href="choose/" aria-label="Explore Choosing WordPress data">Explore Data →</a>
+      </div>
+      <div class="hero-col span-right">
+        <h2 class="question">When site owners ask for help, do agents get it done?</h2>
+        <div class="stat" id="b-stat"></div>
+        <p class="stat-caption">of jobs were completed through WordPress’s MCP adapter.</p>
+        <div class="changes" id="b-chg"></div>
+        <a class="open-dash" href="build/" aria-label="Explore Building with WordPress data">Explore Data →</a>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="data/choose.js?v=15"></script>
+<script src="choose/data.js?v=67"></script>
+<script src="data/build.js?v=1"></script>
+<script>
+(function () {
+  // The headline numbers, worked out exactly as each dashboard does, from the same runs.
+  const $ = id => document.getElementById(id);
+  const ci = (lo, hi) => `<div class="chg-i"><span class="chg-l">95% CI</span><span class="chg-v ci-v">${Math.round(lo * 100)}–${Math.round(hi * 100)}%</span></div>`;
+  const C = window.CHOOSE;
+  if (C) {
+    const fits = C.RUNS.filter(r => r.m.head && !r.control), p = fits.filter(r => r.out === 'WordPress').length / fits.length, [lo, hi] = C.wilson(p, fits.length);
+    const T = C.TREND, pNow = T[T.length - 1] / 100;
+    const spans = [['1 month', 1], ['3 months', 3], ['6 months', 6]].filter(([, k]) => C.since(T, k) !== null);
+    $('batch-name').textContent = `${C.MONTH.name} results.`;
+    $('c-stat').textContent = Math.round(p * 100) + '%';
+    $('c-chg').innerHTML = ci(lo, hi) + (spans.length ? spans.map(([l, k]) => { const d = C.pts(pNow, C.since(T, k) / 100, fits.length);
+      return `<div class="chg-i"><span class="chg-l">${l}</span>${d ? `<span class="chg-v">${d}</span>` : '<span class="chg-v steady">Steady</span>'}</div>`; }).join('')
+      : '<div class="chg-i"><span class="chg-l">Change</span><span class="chg-v steady">First month</span></div>');
+  }
+  // Building: runs completed through WordPress's MCP adapter, within the access given. Plain counts: every need has the same number of runs.
+  const D = (window.WPAB_DATA || {}).build;
+  if (D) {
+    const rs = D.runs.filter(r => r.kind === 'official');
+    const p = rs.filter(r => r.success_within).length / rs.length;
+    const n = rs.length, z = 1.96, d = 1 + z * z / n, c = p + z * z / (2 * n), m = z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n));
+    $('b-stat').textContent = Math.round(p * 100) + '%';
+    $('b-chg').innerHTML = ci(Math.max(0, (c - m) / d), Math.min(1, (c + m) / d))
+      + `<div class="chg-i"><span class="chg-l">Change</span><span class="chg-v steady">${D.batch.id === 'base-1' ? 'First batch' : 'Not comparable yet'}</span></div>`;
+  }
+})();
+</script>
+<script>
+// Fit the front door to the window: if the logo, title and both benchmarks are taller than the space
+// below the banner, scale the whole page down (never up) so it all shows at once. Not when the
+// columns stack on narrow screens, where the page is meant to scroll.
+(function () {
+  const main = document.querySelector('main.selector');
+  const fit = () => {
+    main.style.zoom = '';
+    if (innerWidth <= 900) return;
+    const first = main.firstElementChild.getBoundingClientRect(), last = main.lastElementChild.getBoundingClientRect();
+    const cs = getComputedStyle(main), need = last.bottom - first.top + parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom), room = innerHeight;
+    if (need > room) main.style.zoom = Math.max(.6, room / need).toFixed(3);
+  };
+  fit(); addEventListener('resize', fit);
+  if (document.fonts) document.fonts.ready.then(fit);
+})();
+</script>
+<div id="vt-ready" hidden></div>
 </body>
 </html>

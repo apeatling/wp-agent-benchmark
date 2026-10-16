@@ -1,0 +1,3 @@
+# Ruth's site's plugins: a contact form and an SEO plugin, the most-installed for each (versions as the bakery's).
+contact-form-7 6.2.2
+wordpress-seo 28.7

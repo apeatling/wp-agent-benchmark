@@ -1,0 +1,16 @@
+# The Sunnyside Bakery site: a small bakery that takes cake orders online. Twenty Twenty-Five (block theme) and
+# WooCommerce, with the most-installed plugin for each job a small shop's site does, from different companies:
+# WooCommerce (Automattic), Contact Form 7 (Takayuki Miyoshi), Yoast SEO (Yoast), Site Kit (Google), Complianz
+# (Really Simple Plugins), W3 Total Cache (BoldGrid), Smush (WPMU DEV), MC4WP (ibericode), Smash Balloon
+# Instagram Feed (Awesome Motive), Duplicate Post (Yoast), Redirection (John Godley), and inactive:
+# Classic Editor (WordPress contributors) and TablePress (Tobias Bäthge). Plus the bakery's own specials plugin.
+# Test values for a throwaway site that only exists inside a run's sandbox.
+# They're filled into seed/seed.sh, the request (password), the connector (connector_password), the solution
+# (password) and the checks (monitor_password) when tasks are built.
+host = "sunnysidebakery.test"
+user = "sunnyside"
+password = "3uEizkFmlA9rFkx3lZFkau9H"          # the owner's application password, which the request gives the agent
+connector_password = "ZcdEPwnU6s64qZM8KgWVbmtn"  # a third, held only by the connector container
+monitor_password = "JJfmPOF25gvJndjw5X73ETzl"  # a second application password, used only by the checks
+db_password = "oWOK1NFr1isa9s6669VrYAVa"  # the site's database; only the site has it, never the agent
+admin_password = "GjszQar7zOpyql6JudOZ"    # the owner's login password; not given to anyone

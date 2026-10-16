@@ -8,9 +8,12 @@ The nudge is recorded on the host, next to the step's logs, never inside the age
 Harnesses that can't continue a session (Grok Build, Cursor) don't get the reply; their runs record
 nudged as null. Antigravity can, through its conversation IDs; see AntigravityCli below.
 """
+import asyncio
 import json
 import os
 from pathlib import Path
+
+from . import defs
 
 from harbor.agents.capabilities import AgentCapabilities
 from harbor.agents.installed.antigravity_cli import AntigravityCli as HarborAntigravityCli
@@ -242,3 +245,125 @@ class AntigravityCli(NudgeOnce, HarborAntigravityCli):
             record(self, nudged=nudged)
             if nudged:
                 await self.resume(NUDGE, environment, context)
+
+
+class SiteOwner:
+    """Building: the site owner replies between turns (see wpab.owner and benchmarks/build/owner.toml).
+
+    After each turn: keep a copy of the turn's output, run the checks as a snapshot, and ask the owner for a
+    reply. The conversation ends when the owner has nothing to say or has replied max_replies times. Everything
+    is written next to the step's logs on the host (owner-dialogue.json, with the agent's messages, so it's a
+    transcript: never committed), and a summary goes in wpab.json.
+
+    The task's checks are found by its instruction: tasks/build/*/*/instruction.md. Its checks are the same in
+    every sandbox profile.
+    """
+    STREAM = None  # the file the harness writes each turn's output to, in logs_dir
+
+    def _last_message(self, text):
+        raise NotImplementedError
+
+    def _task_dir(self, instruction):
+        return next((f.parent for f in sorted((defs.ROOT / 'tasks' / 'build').glob('*/*/instruction.md'))
+                     if f.read_text().strip() == instruction.strip()), None)
+
+    async def _snapshot(self, environment, task_dir):
+        """The checks right now, copied into the sandbox with their settings, run and deleted while the agent is
+        between turns, so nothing is left behind for the agent to find. Copied as a file, not sent in the command,
+        so the logged command stays one line and never includes the checks' key."""
+        import secrets
+        import tempfile
+        site = json.dumps(json.loads((task_dir / 'tests' / 'site.json').read_text()))
+        script = f"import os\nos.environ['WPAB_SITE'] = {site!r}\n" + (task_dir / 'tests' / 'checks.py').read_text()
+        target = f'/tmp/.wpab-{secrets.token_hex(8)}.py'
+        with tempfile.NamedTemporaryFile('w', suffix='.py', delete=False) as f:
+            f.write(script)
+        try:
+            await environment.upload_file(f.name, target)
+            result = await self.exec_as_root(environment, f'chmod 600 {target}; python3 {target} --snapshot 2>&1; rm -f {target}', timeout_sec=180)
+        finally:
+            Path(f.name).unlink(missing_ok=True)
+        lines = [l for l in (result.stdout or '').splitlines() if l.startswith('{')]
+        return json.loads(lines[-1]) if lines else {'error': (result.stdout or '')[-300:]}
+
+    async def run(self, instruction, environment, context):
+        if self._resume or self._load:
+            return await super().run(instruction, environment, context)
+        await super().run(instruction, environment, context)
+        from . import owner  # imported here: owner imports classify, which the agents don't otherwise need
+        logs = Path(self.logs_dir)
+        task_dir = self._task_dir(instruction)
+        request_id, facts, follow = owner.card(instruction)
+        max_replies = owner.rules()['max_replies']
+        dialogue, replies, end, turn = [], 0, None, 1
+        path = logs.parent / 'owner-dialogue.json'
+        while True:
+            stream = logs / self.STREAM
+            text = stream.read_text(errors='replace') if stream.exists() else ''
+            (logs / f'turn-{turn}-{self.STREAM}').write_text(text)
+            message = self._last_message(text) or ''
+            entry = {'turn': turn, 'message': message, 'checks': await self._snapshot(environment, task_dir) if task_dir else None}
+            dialogue.append(entry)
+            if replies >= max_replies:
+                end = 'reply_limit'
+            else:
+                try:
+                    model, probs, fact = await asyncio.to_thread(owner.classify_turn, message, facts)
+                    sent = any('follow_up' in (e.get('reply_ids') or []) for e in dialogue)
+                    if owner.satisfied(probs, follow, sent):
+                        entry.update(classifier=model, answers=probs, fact=fact, reply_ids=[], unsure=[], reply=None, lines=[])
+                        end = 'done'
+                        path.write_text(json.dumps({'request_id': request_id, 'turns': dialogue, 'end': end}, indent=2, ensure_ascii=False))
+                        break
+                    said, ids, unsure = owner.reply(probs, fact, facts, already={l for e in dialogue for l in e.get('lines', [])})
+                    lines = owner.lines(ids, fact, facts)
+                    more = owner.follow_up(probs, follow, sent)
+                    if more:
+                        said, ids, lines = owner.with_follow_up(ids, lines, more)
+                    entry.update(classifier=model, answers=probs, fact=fact, reply_ids=ids, unsure=unsure, reply=said, lines=lines)
+                    end = None if said else 'owner_has_nothing_to_say'
+                except Exception as e:  # the run keeps what it has; the classifier failing is recorded
+                    entry['error'] = str(e)[:300]
+                    end = 'classifier_error'
+            path.write_text(json.dumps({'request_id': request_id, 'turns': dialogue, 'end': end}, indent=2, ensure_ascii=False))
+            if end:
+                break
+            replies += 1
+            turn += 1
+            await self.resume(entry['reply'], environment, context)
+        found, mcp = owner.workarounds((logs / f'turn-{n}-{self.STREAM}').read_text(errors='replace') for n in range(1, turn + 1))
+        record(self, owner={'request_id': request_id, 'turns': turn, 'replies': replies, 'end': end,
+                            'workarounds': found, 'connector_calls': mcp,
+                            'reply_ids': [e.get('reply_ids') for e in dialogue],
+                            'success_by_turn': [(e.get('checks') or {}).get('success') for e in dialogue]})
+
+
+class ClaudeCodeWithOwner(SiteOwner, HarborClaudeCode):
+    STREAM = 'claude-code.txt'
+
+    def _last_message(self, text):
+        out = None
+        for line in text.splitlines():
+            try:
+                m = json.loads(line)
+            except ValueError:
+                continue
+            if m.get('type') == 'result':
+                out = m.get('result')
+        return out
+
+
+class CodexWithOwner(SiteOwner, HarborCodex):
+    STREAM = 'codex.txt'
+
+    def _last_message(self, text):
+        out = None
+        for line in text.splitlines():
+            try:
+                m = json.loads(line)
+            except ValueError:
+                continue
+            item = m.get('item') or {}
+            if m.get('type') == 'item.completed' and item.get('type') == 'agent_message':
+                out = item.get('text')
+        return out

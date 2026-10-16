@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css?v=210">
+<link rel="stylesheet" href="../choose/choose.css?v=265">
+<link rel="stylesheet" href="../vt.css?v=7">
+<title>Runs · Building with WordPress · Agent Benchmarks</title>
+<style>
+  .page-runs .runs td.res small { display: block; margin-top: 2px; color: var(--muted); }
+  /* Runs table for Building: six columns, the result shown as worked (blue) or what went wrong. */
+  .runs col.c-id { width: 104px; }
+  .runs col.c-who { width: 220px; }
+  .runs col.c-kind { width: auto; }
+  .runs col.c-setup { width: 170px; }
+  .runs td.setup { color: var(--ink-2); }
+  .runs td.setup small { display: block; font-size: 13px; color: var(--muted); }
+  .runs--build col.c-res { width: 250px; }
+  .runs col.c-said { width: 88px; }
+  .runs col.c-stop { width: 160px; }
+  .runs td.res .iid { margin-left: 8px; font-size: 15px; color: var(--muted); white-space: nowrap; }
+  .runs td.said, .runs td.stop { color: var(--ink-2); }
+  .runs td .none { color: var(--muted); }
+  .runs td.res .said-m { display: none; }
+  @media (max-width: 900px) { .runs--build col.c-res { width: 42%; } }
+  @media (max-width: 600px) {
+    .runs tr.run td.res { grid-area: res; padding-bottom: 4px; }
+    .runs td.res .said-m { display: inline; margin-left: 8px; font-size: 15px; color: var(--muted); }
+  }
+</style>
+</head>
+<body data-page="runs">
+<main class="container page-runs">
+  <header class="page-head">
+    <h1 class="title">Runs</h1>
+    <p class="lede" id="lede"></p>
+  </header>
+  <div class="filters filters--sticky rf">
+    <div class="rf-main">
+      <label>Agent<select id="f-agent"></select></label>
+      <label>Setup<select id="f-route"></select></label>
+      <label>Need<select id="f-need"></select></label>
+      <label>Result<select id="f-result"></select></label>
+      <button type="button" class="rf-more" id="f-more" aria-expanded="false" aria-controls="rf-extra">More filters<span id="f-more-n"></span></button>
+    </div>
+    <div class="rf-extra" id="rf-extra" hidden>
+      <label>What stopped it<select id="f-cause"></select></label>
+      <label>Told the owner<select id="f-told"></select></label>
+      <label>Prompt<select id="f-req"></select></label>
+    </div>
+  </div>
+  <section class="section section--tight section--last">
+    <div class="rf-head"><span class="count" id="count"></span><button type="button" class="btn-link" id="f-clear" hidden>Reset filters</button></div>
+    <div class="table-scroll runs-wide">
+      <table class="table runs">
+        <colgroup><col class="c-id"><col class="c-date"><col class="c-who"><col class="c-kind"><col class="c-res"><col class="c-why"><col class="c-go"></colgroup>
+        <thead><tr></tr></thead>
+        <tbody id="body"></tbody>
+      </table>
+    </div>
+    <button type="button" class="btn-quiet runs-more" id="more">Show 50 more</button>
+  </section>
+</main>
+<script src="chrome.js?v=21"></script>
+<script src="../data/choose.js?v=15"></script>
+<script src="../choose/data.js?v=67"></script>
+<script src="../data/build.js?v=1"></script>
+<script src="real.js?v=11"></script>
+<script>
+(function () {
+  // Every run in the batch, laid out as Choosing's Runs page: the main filters, more behind "More filters", sortable
+  // columns, everything in the address so any view can be linked to, and the list as it was on coming back.
+  const R = window.REAL, { D, esc } = R, C = window.CHOOSE, $ = id => document.getElementById(id);
+  const opt = (v, l) => `<option value="${esc(v)}">${esc(l)}</option>`;
+  const group = (label, opts) => `<optgroup label="${esc(label)}">${opts}</optgroup>`;
+  const has = f => D.runs.some(f);
+  const COLS = [['id', 'Run'], ['date', 'Date'], ['agent', 'Agent'], ['req', 'Prompt'], ['res', 'Result'], ['why', 'What stopped it']];
+  document.querySelector('.runs thead tr').innerHTML = COLS.map(([k, l]) => `<th aria-sort="none" data-k="${k}"><button type="button" class="th-sort">${l}<span class="th-arrow" aria-hidden="true"></span></button></th>`).join('') + '<th><span class="sr-only">Open</span></th>';
+  $('lede').textContent = 'Every run, whether the agent completed it, and what stopped it when it didn’t.';
+  $('f-agent').innerHTML = opt('', 'Every agent') + D.agents.map(a => opt(a.id, `${a.name} in ${a.harness}`)).join('');
+  $('f-route').innerHTML = opt('', 'With or without the MCP adapter') + opt('base', R.ROUTE.base) + opt('official', R.ROUTE.official) + (has(r => r.kind === 'third') ? opt('third', R.ROUTE.third) + opt('all', 'Every route') : '');
+  $('f-need').innerHTML = opt('', 'Any need') + D.needs.filter(n => has(r => r.need === n.id)).map(n => opt(n.id, n.name)).join('');
+  $('f-result').innerHTML = opt('', 'Any result') + opt('done', 'Completed') + opt('not', 'Not completed');
+  const causes = r => [...new Set(Object.values(r.checks).filter(R.failing).map(c => c.cause).filter(Boolean))];
+  $('f-cause').innerHTML = opt('', 'Anything') + Object.entries(R.CAUSE).filter(([k]) => has(r => causes(r).includes(k))).map(([k, v]) => opt(k, v)).join('');
+  $('f-told').innerHTML = opt('', 'Either') + opt('yes', 'Told the owner it couldn’t') + opt('no', 'Didn’t say');
+  $('f-req').innerHTML = opt('', 'Any prompt') + D.needs.map(n => { const qs = D.requests.filter(q => q.need === n.id && has(r => r.request === q.id));
+    return qs.length ? group(n.name, qs.map(q => opt(q.id, `“${R.short(q)}”`)).join('')) : ''; }).join('');
+
+  const KEYS = { agent: 'f-agent', route: 'f-route', need: 'f-need', result: 'f-result', cause: 'f-cause', told: 'f-told', request: 'f-req' };
+  const EXTRA = ['f-cause', 'f-told', 'f-req'];
+  const params = new URLSearchParams(location.search);
+  Object.entries(KEYS).forEach(([k, id]) => { const v = params.get(k); if (v !== null && [...$(id).options].some(o => o.value === v)) $(id).value = v; });
+  const setMore = open => { $('rf-extra').hidden = !open; $('f-more').setAttribute('aria-expanded', open); };
+  setMore(EXTRA.some(id => $(id).value));
+  $('f-more').addEventListener('click', () => setMore($('rf-extra').hidden));
+
+  // The first thing that stopped a run, in plain words, with its kind on a quiet second line.
+  const stop = r => { const c = Object.values(r.checks).filter(R.failing).find(c => c.what_stopped) || Object.values(r.checks).find(R.failing); return c || null; };
+  const result = r => r.success_within ? 'done' : r.success ? 'esc' : 'not';
+  let shown = 50;
+  function matches(r) {
+    const v = k => $(KEYS[k]).value;
+    if (v('agent') && r.agent !== v('agent')) return false;
+    const route = v('route'); if (route === '' ? r.kind === 'third' : route !== 'all' && r.kind !== route) return false;
+    if (v('need') && r.need !== v('need')) return false;
+    if (v('result') && (v('result') === 'done') !== !!r.success_within) return false;
+    if (v('cause') && !causes(r).includes(v('cause'))) return false;
+    if (v('told') && (v('told') === 'yes') !== (!r.success_within && !!r.told_owner)) return false;
+    if (v('request') && r.request !== v('request')) return false;
+    return true;
+  }
+  const SORT = { id: r => r.id, date: r => r.started || '', agent: r => R.agents[r.agent].name, req: r => R.short(R.requests[r.request]),
+    res: r => ({ done: 0, esc: 1, not: 2 })[result(r)] + R.ROUTE[r.kind], why: r => { const c = stop(r); return c ? (R.CAUSE[c.cause] || '~' + (c.detail || '')) : '~~'; } };
+  let sort = SORT[params.get('sort')] ? params.get('sort') : 'id', dir = params.get('dir') === 'desc' ? -1 : 1;
+  document.querySelectorAll('.runs th[data-k] .th-sort').forEach(b => b.addEventListener('click', () => {
+    const k = b.parentElement.dataset.k; dir = sort === k ? -dir : 1; sort = k; render(); }));
+  function render() {
+    const runs = D.runs.filter(matches).sort((a, b) => dir * (SORT[sort](a) < SORT[sort](b) ? -1 : SORT[sort](a) > SORT[sort](b) ? 1 : a.id < b.id ? -1 : 1));
+    document.querySelectorAll('.runs th[data-k]').forEach(th => th.setAttribute('aria-sort', th.dataset.k === sort ? (dir > 0 ? 'ascending' : 'descending') : 'none'));
+    $('body').innerHTML = runs.slice(0, shown).map(r => {
+      const href = `run?id=${r.id}`, a = R.agents[r.agent], q = R.requests[r.request], c = r.success_within ? null : stop(r);
+      const res = result(r) === 'done' ? '<span class="res-wp">Completed</span>' : `<span class="res-no">${result(r) === 'esc' ? 'Completed with access it gave itself' : 'Not completed'}</span>`;
+      const why = c ? `<span class="why-n">${esc(R.CAUSE[c.cause] || c.detail || 'Not completed')}</span><small>${r.told_owner ? 'told the owner' : 'didn’t say'}</small>` : '<span class="none">–</span>';
+      return `<tr class="run" data-href="${href}" data-id="${r.id}"><td class="id"><a href="${href}">${r.id}</a></td><td class="date">${r.started ? `${new Date(r.started).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })}<small>${new Date(r.started).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' })} UTC</small>` : ''}</td><td class="who">${C.logo({ id: a.logo }, 14)}${esc(a.name)}<small>${esc(a.harness)}</small></td><td class="kind">${esc(R.short(q))}</td><td class="res">${res}<small>${esc(R.ROUTE[r.kind])}</small></td><td class="why">${why}</td><td class="go-c" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></td></tr>`;
+    }).join('') || '<tr><td colspan="7" style="padding:32px 12px;color:var(--ink-2)">No runs match these filters. Reset them to see every run.</td></tr>';
+    $('count').textContent = `${Math.min(shown, runs.length)} of ${runs.length} runs`;
+    $('more').hidden = shown >= runs.length;
+    const qs = new URLSearchParams();
+    Object.entries(KEYS).forEach(([k, id]) => { if ($(id).value) qs.set(k, $(id).value); });
+    if (sort !== 'id' || dir < 0) { qs.set('sort', sort); if (dir < 0) qs.set('dir', 'desc'); }
+    const extra = EXTRA.filter(id => $(id).value).length;
+    $('f-more-n').textContent = extra ? ` (${extra})` : '';
+    history.replaceState(null, '', qs.toString() ? '?' + qs : location.pathname);
+    $('f-clear').hidden = !qs.toString();
+  }
+  Object.values(KEYS).forEach(id => $(id).addEventListener('change', () => { shown = 50; render(); }));
+  $('more').addEventListener('click', () => { shown += 50; render(); });
+  $('f-clear').addEventListener('click', () => { Object.values(KEYS).forEach(id => $(id).selectedIndex = 0); sort = 'id'; dir = 1; shown = 50; render(); });
+  $('body').addEventListener('click', e => { const row = e.target.closest('tr[data-href]'); if (row && !e.target.closest('a')) location.href = row.dataset.href; });
+  // Coming back from a run, the list returns as it was: the same filters, as many runs shown, the same place.
+  const KEY = 'wpab-build-runs:' + location.search;
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  $('body').addEventListener('click', e => { const row = e.target.closest('tr[data-href]'); if (!row) return;
+    try { sessionStorage.setItem('wpab-build-runs:' + location.search, JSON.stringify({ shown, y: scrollY, id: row.dataset.id })); } catch (err) {} }, true);
+  const back = performance.getEntriesByType('navigation')[0]?.type === 'back_forward' || /\/build\/run(?:\.html)?(?:[?#]|$)/.test(document.referrer);
+  let was = null; try { was = back && JSON.parse(sessionStorage.getItem(KEY)); } catch (e) {}
+  if (was && was.shown > shown) shown = was.shown;
+  render();
+  if (was && was.id) { const row = document.querySelector(`tr[data-id="${CSS.escape(was.id)}"]`); if (row) row.classList.add('last'); }
+  if (was) document.fonts.ready.then(() => setTimeout(() => scrollTo(0, was.y), 0));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+body { font-family: Georgia, serif; margin: 0; color: #233; }
+.site-header { background: #1f5f5b; color: #fff; padding: 1em 2em; display: flex; justify-content: space-between; }
+.site-header a { color: #fff; margin-left: 1em; }
+.logo { font-size: 1.5em; font-weight: bold; margin: 0 !important; }
+main { max-width: 760px; margin: 2em auto; padding: 0 1em; }
+.site-footer { background: #eee; padding: 1em 2em; font-size: .85em; }
+img { max-width: 100%; height: auto; }

@@ -1,0 +1,8 @@
+# The plugins as they were before the last few updates (the fixture has the latest, seed/plugins.txt).
+the-events-calendar 6.17.5.1
+akismet 5.7.1
+wordfence 9.0.1
+litespeed-cache 7.9
+wp-optimize 4.6.1
+contact-form-7 6.2.1
+tablepress 3.4

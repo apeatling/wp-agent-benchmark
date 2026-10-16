@@ -1,0 +1,14 @@
+# Plugins on the site: "<slug> <version> [inactive]", from wordpress.org, the latest on 13 Oct 2026. The most
+# installed plugin for each job a small trade's site does, from different companies (see fixture.toml).
+elementor 4.3.5
+header-footer-elementor 2.9.5
+essential-addons-for-elementor-lite 6.8.5
+wpforms-lite 2.0.2.2
+seo-by-rank-math 1.0.280
+updraftplus 1.26.8
+really-simple-ssl 9.8.3
+cookie-law-info 3.5.6
+ewww-image-optimizer 8.8.0
+insert-headers-and-footers 2.4.0
+wp-statistics 14.16.16
+wordpress-importer 0.9.6 inactive

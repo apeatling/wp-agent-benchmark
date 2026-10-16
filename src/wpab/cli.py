@@ -546,6 +546,10 @@ def advise(args):
 
 
 def site(args):
+    if args.benchmark == 'build':
+        data = sitedata.build('build', args.batch)
+        print(f"{defs.SITE_DATA.relative_to(defs.ROOT)}/build.json: {len(data['runs'])} runs, batch {args.batch}.")
+        return 0
     if not defs.runs_file(args.benchmark, args.batch).exists():
         sys.exit(f"No runs for {args.batch} in {defs.runs_file(args.benchmark, args.batch).parent.relative_to(defs.ROOT)}/ yet. "
                  "Run some agents with `wpab run` first (`wpab try` runs aren't added to any results).")
@@ -830,7 +834,13 @@ def main():
     argv = sys.argv[1:]
     if len(argv) > 1 and argv[1] == 'choose':
         argv.pop(1)
+    # Building has its own site data so far: `wpab site build --batch base-1`.
+    building = len(argv) > 1 and argv[0] == 'site' and argv[1] == 'build'
+    if building:
+        argv.pop(1)
     args = p.parse_args(argv)
+    if building:
+        args.benchmark = 'build'
     if not args.publish:
         defs.use_local()
     sys.exit(args.fn(args))

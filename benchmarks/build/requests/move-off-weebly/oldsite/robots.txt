@@ -1,0 +1,6 @@
+Sitemap: http://www.penhallowbnb.test/sitemap.xml
+User-agent: NetcraftSurveyAgent
+Disallow: /
+User-agent: *
+Disallow: /ajax/
+Disallow: /apps/

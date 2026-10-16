@@ -1,0 +1,14 @@
+# Plugins on the site: "<slug> <version> [inactive]", from wordpress.org, the latest on 13 Oct 2026. The most
+# installed plugin for each job a club's site does, from different companies (see fixture.toml).
+the-events-calendar 6.18.0
+akismet 5.7.2
+wordfence 9.0.2
+litespeed-cache 7.9.1
+contact-form-7 6.2.2
+classic-editor 1.7.0
+user-role-editor 4.66.2
+tablepress 3.4.1
+wp-optimize 4.7.0
+advanced-custom-fields 6.8.10
+regenerate-thumbnails 3.1.6
+all-in-one-wp-migration 7.112 inactive

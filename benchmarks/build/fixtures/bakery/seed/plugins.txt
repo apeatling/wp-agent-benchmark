@@ -1,0 +1,15 @@
+# Plugins on the site: "<slug> <version> [inactive]", from wordpress.org, the latest on 13 Oct 2026. The most
+# installed plugin for each job a small shop's site does, from different companies (see fixture.toml).
+woocommerce 11.2.1
+contact-form-7 6.2.2
+wordpress-seo 28.7
+google-site-kit 1.189.0
+complianz-gdpr 7.5.6
+w3-total-cache 2.10.7
+wp-smushit 4.3.4
+mailchimp-for-wp 4.14.1
+instagram-feed 6.14.0
+duplicate-post 4.7
+redirection 5.10.1
+classic-editor 1.7.0 inactive
+tablepress 3.4.1 inactive

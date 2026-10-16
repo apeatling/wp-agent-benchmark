@@ -1,0 +1,17 @@
+# Harbour Plumbing and Heating: a two-van family plumbing business in Portwen, Cornwall. Built a few years ago
+# by a freelancer with Elementor (Elementor) on Hello Elementor, with the most-installed plugin for each job a
+# small trade's site does, from different companies: Ultimate Addons / Header Footer Elementor (Brainstorm Force)
+# for the header and footer, Essential Addons (WPDeveloper), WPForms Lite (Awesome Motive), Rank Math SEO
+# (Rank Math), UpdraftPlus (Team Updraft), Really Simple Security (Really Simple Plugins), CookieYes (CookieYes),
+# EWWW Image Optimizer (Exactly WWW), WPCode (WPCode), WP Statistics (VeronaLabs), and inactive: WordPress
+# Importer (WordPress contributors).
+# Test values for a throwaway site that only exists inside a run's sandbox.
+# They're filled into seed/seed.sh, the request (password), the connector (connector_password), the solution
+# (password) and the checks (monitor_password) when tasks are built.
+host = "harbourplumbing.test"
+user = "harbourplumbing"
+password = "KMm7O0XLNsJJDvZyKXjKJpwD"          # the owner's application password, which the request gives the agent
+connector_password = "CEA37M9eGkrr5OIjKBFMFZIs"  # a third, held only by the connector container
+monitor_password = "CZ0kSwFL9tKQXxM4pl6vas4a"  # a second application password, used only by the checks
+db_password = "HQO9H0EF8ez3gFusE4jgFJZ4"  # the site's database; only the site has it, never the agent
+admin_password = "k5RjsTo5mIkebFPWPJdK"    # the owner's login password; not given to anyone
