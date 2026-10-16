@@ -96,10 +96,11 @@
   // A month's ideas in the order the pages show them: the three that matter most, then the rest by impact and by how
   // many sites they reach. The three: showing agents the one-command start (that WordPress needs a server was the most
   // common wrong claim), an open way to take that local site live (agents favoured what they could hand over at once),
-  // and answering upkeep and security (the two most common reasons). Another month falls back to the advice's own order.
+  // and turning existing HTML into WordPress (agents kept hand-coded sites to avoid a rebuild). Another month falls
+  // back to the advice's own order.
   const TOP_IDEAS = ['publish-the-one-command-wordpress-start-where-agents-already-look',
     'define-an-open-host-neutral-way-to-take-a-local-wordpress-site-live',
-    'update-wordpress-org-s-security-page-with-a-dated-account-of-what-updates-itself'];
+    'bring-html-to-wordpress-conversion-into-the-open-project-and-announce-it'];
   const IMPACT = ['high', 'medium', 'low'];
   const ideas = A => {
     const all = (A?.sections || []).filter(s => s.recommendation && IMPACT.includes(s.impact))

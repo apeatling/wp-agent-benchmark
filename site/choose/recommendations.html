@@ -40,7 +40,7 @@
 </main>
 <script src="chrome.js?v=61"></script>
 <script src="../data/choose.js?v=15"></script>
-<script src="data.js?v=69"></script>
+<script src="data.js?v=70"></script>
 <script>
 (function () {
   // The month's advice (advice.md, split by the build): the three that matter most, then every other idea in a row
@@ -58,7 +58,7 @@
   const monthName = b => new Date(b + '-01T12:00:00').toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
   if (!A) { $('intro').innerHTML = '<p>No recommendations for this month yet.</p>'; return; }
   const earlier = Object.keys(H).filter(b => b !== batch).sort().reverse();
-  $('intro').innerHTML = `<p>More and more people ask AI agents to build their websites, and unless they name WordPress, agents rarely reach for it. These ideas are where we think help would make the most difference: first showing agents how quickly WordPress starts, then answering the worries that steer them away. ${monthName(batch)} batch.` +
+  $('intro').innerHTML = `<p>More and more people ask AI agents to build their websites, and unless they name WordPress, agents rarely reach for it. These ideas are where we think help would make the most difference: first making WordPress as quick to start, take live and move a site into as what agents reach for now, then answering the worries that steer them away. ${monthName(batch)} batch.` +
     (old ? ` <a class="see-inline" href="recommendations">See the latest</a>` : '') +
     (earlier.length ? ` Earlier months: ${earlier.map(b => `<a href="?batch=${b}">${monthName(b)}</a>`).join(', ')}.` : '') + '</p>';
   const clean = t => t.replace(/^\d+\.\s*/, '');
