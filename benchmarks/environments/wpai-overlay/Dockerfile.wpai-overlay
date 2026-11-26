@@ -1,0 +1,27 @@
+# Harbor environment overlay for WPAI Conditions B and C on top of apeatling/wp-agent-benchmark.
+#
+# Build from the root of the wp-agent-experience repository:
+#   docker build -t wpab-wpai-cond-c:latest \
+#     --build-arg BASE_IMAGE=wpab-dev-machine:latest \
+#     --build-arg WPAI_CONDITION=C \
+#     -f benchmarks/wpab-integration/Dockerfile.wpai-overlay .
+
+ARG BASE_IMAGE=ubuntu:24.04
+FROM ${BASE_IMAGE}
+
+ARG WPAI_CONDITION=C
+ENV WPAI_CONDITION=${WPAI_CONDITION}
+ENV WPAI_HOME=/opt/wpai
+
+# Copy only public, credential-free WPAI artifacts into /opt/wpai
+WORKDIR /opt/wpai
+COPY skills/wp-platform-selection /opt/wpai/skills/wp-platform-selection
+COPY registry/wp-capabilities.json /opt/wpai/registry/wp-capabilities.json
+COPY registry/schema/wp-capabilities.schema.json /opt/wpai/registry/schema/wp-capabilities.schema.json
+COPY blueprints /opt/wpai/blueprints
+COPY benchmarks/wpab-integration/setup-wpai-env.sh /opt/wpai/setup-wpai-env.sh
+
+RUN chmod +x /opt/wpai/setup-wpai-env.sh \
+    && /opt/wpai/setup-wpai-env.sh --condition "${WPAI_CONDITION}" --wpai-home /opt/wpai
+
+WORKDIR /app
